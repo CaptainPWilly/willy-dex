@@ -4,7 +4,7 @@ const $=id=>document.getElementById(id);
 const screen=$('draw-screen'),launcher=$('random-draw-open'),close=$('draw-close'),picker=$('draw-picker'),find=$('draw-find'),chosen=$('draw-chosen'),chooseVisible=$('draw-select-visible'),clear=$('draw-clear'),shuffle=$('draw-shuffle'),draw=$('draw-next'),reveal=$('draw-reveal'),reshuffle=$('draw-reshuffle'),back=$('draw-back'),count=$('draw-count'),status=$('draw-status'),scene=$('draw-scene'),badge=$('draw-progress');
 if(!screen||!launcher)return;
 let catalog=[],pool=[],deck=[],current=null,faceUp=false,selection=new Set(),phase='choose';
-const available=c=>!!c&&c.name&&c.name!=='???'&&(!!c.image||!!c.portrait);
+const available=c=>!!c&&c.name&&c.name!=='???';
 function cardsNow(){if(typeof window.willyDexGetCards==='function')return window.willyDexGetCards().filter(available);return catalog.filter(available)}
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
 function rand(max){if(max<=1)return 0;const box=new Uint32Array(1),limit=4294967296-(4294967296%max);do{crypto.getRandomValues(box)}while(box[0]>=limit);return box[0]%max}
