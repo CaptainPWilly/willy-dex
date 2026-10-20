@@ -72,7 +72,7 @@
   {
     "number": "004",
     "name": "EvilSanta",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1409,
     "date": "20 October 2026",
@@ -83,7 +83,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-004",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "45 minutes ago"
   },
   {
@@ -109,7 +111,7 @@
   {
     "number": "006",
     "name": "Gimbly",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2126,
     "date": "20 October 2026",
@@ -120,13 +122,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-006",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 hour ago"
   },
   {
     "number": "007",
     "name": "Titant8",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 5817,
     "date": "20 October 2026",
@@ -137,13 +141,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-007",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 hours ago"
   },
   {
     "number": "008",
     "name": "Sulfrum",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 18874,
     "date": "20 October 2026",
@@ -154,13 +160,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-008",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "4 hours ago"
   },
   {
     "number": "009",
     "name": "g0jiraz",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 39201,
     "date": "20 October 2026",
@@ -171,13 +179,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-009",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "8 hours ago"
   },
   {
     "number": "010",
     "name": "JoyBoy",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1714,
     "date": "20 October 2026",
@@ -188,13 +198,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-010",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "16 hours ago"
   },
   {
     "number": "011",
     "name": "Perompax",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 8726,
     "date": "20 October 2026",
@@ -205,13 +217,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-011",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "20 hours ago"
   },
   {
     "number": "012",
     "name": "Mr cofee cup",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1379,
     "date": "20 October 2026",
@@ -222,13 +236,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-012",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 day ago"
   },
   {
     "number": "013",
     "name": "Hannahbae",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1182,
     "date": "20 October 2026",
@@ -239,7 +255,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-013",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 days ago"
   },
   {
@@ -264,7 +282,7 @@
   {
     "number": "015",
     "name": "Roronoa Zoro",
-    "type": "[ARG] Warrior",
+    "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 5372,
     "date": "20 October 2026",
@@ -276,14 +294,15 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-015",
     "tags": [
-      "Warrior"
+      "Warrior",
+      "Member"
     ],
     "last_active": "2 days ago"
   },
   {
     "number": "016",
     "name": "Godslayer",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1337,
     "date": "20 October 2026",
@@ -294,13 +313,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-016",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 days ago"
   },
   {
     "number": "017",
     "name": "Tyxx113",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 913,
     "date": "20 October 2026",
@@ -311,13 +332,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-017",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "3 days ago"
   },
   {
     "number": "018",
     "name": "AsdAsd998",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 5392,
     "date": "20 October 2026",
@@ -328,7 +351,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-018",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "3 days ago"
   },
   {
@@ -353,7 +378,7 @@
   {
     "number": "020",
     "name": "Boink Pow Boom",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2906,
     "date": "20 October 2026",
@@ -364,13 +389,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-020",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "5 days ago"
   },
   {
     "number": "021",
     "name": "DARDMAN",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 60,
     "date": "20 October 2026",
@@ -381,13 +408,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-021",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "5 days ago"
   },
   {
     "number": "022",
     "name": "Roxyhoxy",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2201,
     "date": "20 October 2026",
@@ -398,13 +427,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-022",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "6 days ago"
   },
   {
     "number": "023",
     "name": "Sebulbatron",
-    "type": "[ARG] Warrior",
+    "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 5773,
     "date": "20 October 2026",
@@ -416,14 +447,15 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-023",
     "tags": [
-      "Warrior"
+      "Warrior",
+      "Member"
     ],
     "last_active": "1 week ago"
   },
   {
     "number": "024",
     "name": "buckly",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 177,
     "date": "20 October 2026",
@@ -434,13 +466,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-024",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 week ago"
   },
   {
     "number": "025",
     "name": "Radiocative",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 408,
     "date": "20 October 2026",
@@ -451,13 +485,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-025",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 week ago"
   },
   {
     "number": "026",
     "name": "Mortician Of Graveyard Islands",
-    "type": "[ARG] Warrior",
+    "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 4345,
     "date": "20 October 2026",
@@ -469,14 +505,15 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-026",
     "tags": [
-      "Warrior"
+      "Warrior",
+      "Member"
     ],
     "last_active": "1 week ago"
   },
   {
     "number": "027",
     "name": "Toasty I Harbinger of Crumbs",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 5678,
     "date": "20 October 2026",
@@ -487,13 +524,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-027",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 weeks ago"
   },
   {
     "number": "028",
     "name": "Techliar",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 13257,
     "date": "20 October 2026",
@@ -504,7 +543,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-028",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 weeks ago"
   },
   {
@@ -531,7 +572,7 @@
   {
     "number": "030",
     "name": "Zcatcool",
-    "type": "[ARG] Warrior",
+    "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 1411,
     "date": "20 October 2026",
@@ -543,14 +584,15 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-030",
     "tags": [
-      "Warrior"
+      "Warrior",
+      "Member"
     ],
     "last_active": "3 weeks ago"
   },
   {
     "number": "031",
     "name": "Master of the leaves",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2859,
     "date": "20 October 2026",
@@ -561,13 +603,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-031",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 month ago"
   },
   {
     "number": "032",
     "name": "Bullishgoose3",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1156,
     "date": "20 October 2026",
@@ -578,13 +622,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-032",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 month ago"
   },
   {
     "number": "033",
     "name": "Ameruu",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2528,
     "date": "20 October 2026",
@@ -595,13 +641,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-033",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 month ago"
   },
   {
     "number": "034",
     "name": "elysecat",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2377,
     "date": "20 October 2026",
@@ -612,13 +660,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-034",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 month ago"
   },
   {
     "number": "035",
     "name": "Rickey",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 3170,
     "date": "20 October 2026",
@@ -629,13 +679,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-035",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 month ago"
   },
   {
     "number": "036",
     "name": "Scavis",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1513,
     "date": "20 October 2026",
@@ -646,13 +698,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-036",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "1 month ago"
   },
   {
     "number": "037",
     "name": "KhanPrince",
-    "type": "[ARG] Warrior",
+    "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 1167,
     "date": "20 October 2026",
@@ -664,7 +718,8 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-037",
     "tags": [
-      "Warrior"
+      "Warrior",
+      "Member"
     ],
     "last_active": "1 month ago"
   },
@@ -691,7 +746,7 @@
   {
     "number": "039",
     "name": "G0CWhiskey",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 141,
     "date": "20 October 2026",
@@ -702,13 +757,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-039",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
     "number": "040",
     "name": "FrostGuard",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2205,
     "date": "20 October 2026",
@@ -719,13 +776,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-040",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
     "number": "041",
     "name": "MooseJuice",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 93,
     "date": "20 October 2026",
@@ -736,7 +795,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-041",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
@@ -762,7 +823,7 @@
   {
     "number": "043",
     "name": "brinymouse",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1511,
     "date": "20 October 2026",
@@ -773,13 +834,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-043",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
     "number": "044",
     "name": "BaBaYaGa",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 15,
     "date": "20 October 2026",
@@ -790,13 +853,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-044",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
     "number": "045",
     "name": "SoulLucifer",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 21,
     "date": "20 October 2026",
@@ -807,13 +872,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-045",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
     "number": "046",
     "name": "Batonas",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 1617,
     "date": "20 October 2026",
@@ -824,13 +891,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-046",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
     "number": "047",
     "name": "OtherEnergy",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 5116,
     "date": "20 October 2026",
@@ -841,13 +910,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-047",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "2 months ago"
   },
   {
     "number": "048",
     "name": "Exor732",
-    "type": "[ARG] Warrior",
+    "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 2638,
     "date": "20 October 2026",
@@ -859,7 +930,8 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-048",
     "tags": [
-      "Warrior"
+      "Warrior",
+      "Member"
     ],
     "last_active": "3 months ago"
   },
@@ -886,7 +958,7 @@
   {
     "number": "050",
     "name": "Kazuma",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 790,
     "date": "20 October 2026",
@@ -897,13 +969,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-050",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "3 months ago"
   },
   {
     "number": "051",
     "name": "Tsuna57",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 471,
     "date": "20 October 2026",
@@ -914,7 +988,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-051",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "3 months ago"
   },
   {
@@ -939,7 +1015,7 @@
   {
     "number": "053",
     "name": "Future investment",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 27,
     "date": "20 October 2026",
@@ -950,13 +1026,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-053",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "3 months ago"
   },
   {
     "number": "054",
     "name": "AnskillFloy",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 587,
     "date": "20 October 2026",
@@ -967,13 +1045,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-054",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "4 months ago"
   },
   {
     "number": "055",
     "name": "Cheeseburgers and milk",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2828,
     "date": "20 October 2026",
@@ -984,13 +1064,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-055",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "4 months ago"
   },
   {
     "number": "056",
     "name": "Nergal",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 818,
     "date": "20 October 2026",
@@ -1001,13 +1083,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-056",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "4 months ago"
   },
   {
     "number": "057",
     "name": "saapas",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 3394,
     "date": "20 October 2026",
@@ -1018,13 +1102,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-057",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "4 months ago"
   },
   {
     "number": "058",
     "name": "Eugenyy",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 68,
     "date": "20 October 2026",
@@ -1035,13 +1121,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-058",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "4 months ago"
   },
   {
     "number": "059",
     "name": "XxMANZZxX",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 490,
     "date": "20 October 2026",
@@ -1052,13 +1140,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-059",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "5 months ago"
   },
   {
     "number": "060",
     "name": "Byrdman",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 28,
     "date": "20 October 2026",
@@ -1069,13 +1159,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-060",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "5 months ago"
   },
   {
     "number": "061",
     "name": "Tunchi I Celestial Alignment",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 4032,
     "date": "20 October 2026",
@@ -1086,13 +1178,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-061",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "5 months ago"
   },
   {
     "number": "062",
     "name": "EdanOakborn",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2931,
     "date": "20 October 2026",
@@ -1103,13 +1197,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-062",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "6 months ago"
   },
   {
     "number": "063",
     "name": "Elleviathan",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 3754,
     "date": "20 October 2026",
@@ -1120,13 +1216,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-063",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "6 months ago"
   },
   {
     "number": "064",
     "name": "Fuhfuinfd",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 4303,
     "date": "20 October 2026",
@@ -1137,13 +1235,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-064",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "6 months ago"
   },
   {
     "number": "065",
     "name": "MarenG",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 3100,
     "date": "20 October 2026",
@@ -1154,7 +1254,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-065",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "6 months ago"
   },
   {
@@ -1184,7 +1286,7 @@
   {
     "number": "067",
     "name": "The Mighty Fish Lord",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 2026,
     "date": "20 October 2026",
@@ -1195,13 +1297,15 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-067",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "7 months ago"
   },
   {
     "number": "068",
     "name": "Chance the Stepper",
-    "type": "[ARG] ???",
+    "type": "[ARG] Member",
     "image": null,
     "level": 8889,
     "date": "20 October 2026",
@@ -1212,7 +1316,9 @@
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-068",
-    "tags": [],
+    "tags": [
+      "Member"
+    ],
     "last_active": "7 months ago"
   },
   {
