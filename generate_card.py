@@ -24,7 +24,7 @@ def publish(path):
     svg=f'''<svg xmlns="http://www.w3.org/2000/svg" width="700" height="980" viewBox="0 0 700 980">
 <defs><linearGradient id="gold"><stop stop-color="#885027"/><stop offset=".4" stop-color="#ffe0a4"/><stop offset=".75" stop-color="#bd8548"/><stop offset="1" stop-color="#ffe8b8"/></linearGradient><linearGradient id="bg" x2=".8" y2="1"><stop stop-color="#3a281d"/><stop offset=".5" stop-color="#17110e"/><stop offset="1" stop-color="#392419"/></linearGradient></defs>
 <rect width="700" height="980" rx="28" fill="#100b09"/><rect x="10" y="10" width="680" height="960" rx="22" fill="url(#bg)" stroke="url(#gold)" stroke-width="12"/><rect x="32" y="32" width="636" height="916" rx="12" fill="none" stroke="#b17a42" stroke-width="2"/>
-<text x="350" y="87" text-anchor="middle" fill="#e9c58e" font-family="Georgia" font-size="24" letter-spacing="5">WILLY CORP. · #{number}</text>
+<text x="350" y="87" text-anchor="middle" fill="#e9c58e" font-family="Georgia" font-size="24" letter-spacing="5">{name} · #{number}</text>
 <image x="175" y="125" width="350" height="350" href="data:image/jpeg;base64,{b64}"/><rect x="148" y="112" width="404" height="390" rx="14" fill="none" stroke="url(#gold)" stroke-width="5"/>
 <text x="350" y="558" text-anchor="middle" fill="#f9e7c2" font-family="Georgia" font-size="44" font-weight="bold">{name}</text><path d="M110 582H590" stroke="#b27b42" stroke-width="2"/>
 <text x="350" y="625" text-anchor="middle" fill="#dba969" font-family="Georgia" font-size="28">{tag} {typ}</text>
