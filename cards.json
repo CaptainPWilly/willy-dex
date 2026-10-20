@@ -2,7 +2,7 @@
   {
     "number": "001",
     "name": "Captain P Willy",
-    "type": "[[ARG]] Guild Lead",
+    "type": "[[ARG]] Guild Lead · Founder",
     "image": null,
     "level": 7504,
     "date": "19 October 2026",
@@ -12,10 +12,15 @@
     "smmo_joined": null,
     "card_id": "willy-dex-001",
     "tags": [
-      "Guild Lead"
+      "Guild Lead",
+      "Founder"
     ],
     "front_text": "Founder of the Pirate Cove · Joined 15 April 2022",
-    "back_text": ""
+    "back_text": "",
+    "roles": [
+      "Guild Lead",
+      "Founder"
+    ]
   },
   {
     "number": "002",
@@ -91,22 +96,28 @@
   {
     "number": "005",
     "name": "Arrogaddu",
-    "type": "[ARG] Officer Warrior",
+    "type": "[ARG] Officer · Warrior · Founder",
     "image": null,
     "level": 4104,
     "date": "20 October 2026",
     "portrait": null,
-    "description": "???",
-    "front_text": "???",
+    "description": "Pirate Cove Founder",
+    "front_text": "Pirate Cove Founder",
     "back_text": "???",
     "guild": "ARG",
     "smmo_joined": "???",
     "card_id": "willy-dex-005",
     "tags": [
       "Officer",
-      "Warrior"
+      "Warrior",
+      "Founder"
     ],
-    "last_active": "1 hour ago"
+    "last_active": "1 hour ago",
+    "roles": [
+      "Officer",
+      "Warrior",
+      "Founder"
+    ]
   },
   {
     "number": "006",
@@ -554,13 +565,13 @@
   {
     "number": "029",
     "name": "Catmaster81",
-    "type": "[ARG] Guild Co-Lead Warrior",
+    "type": "[ARG] Guild Co-Lead · Warrior · Founder",
     "image": null,
     "level": 7482,
     "date": "20 October 2026",
     "portrait": null,
-    "description": "???",
-    "front_text": "???",
+    "description": "Pirate Cove Founder",
+    "front_text": "Pirate Cove Founder",
     "back_text": "???",
     "guild": "ARG",
     "smmo_joined": "???",
@@ -568,9 +579,15 @@
     "tags": [
       "Guild",
       "Co-Lead",
-      "Warrior"
+      "Warrior",
+      "Founder"
     ],
-    "last_active": "3 weeks ago"
+    "last_active": "3 weeks ago",
+    "roles": [
+      "Guild Co-Lead",
+      "Warrior",
+      "Founder"
+    ]
   },
   {
     "number": "030",
@@ -729,22 +746,28 @@
   {
     "number": "038",
     "name": "RyderRocketship",
-    "type": "[ARG] Guild Co-Lead Warrior",
+    "type": "[ARG] Guild Co-Lead · Warrior · Founder",
     "image": null,
     "level": 8627,
     "date": "20 October 2026",
     "portrait": null,
-    "description": "???",
-    "front_text": "???",
+    "description": "Pirate Cove Founder",
+    "front_text": "Pirate Cove Founder",
     "back_text": "???",
     "guild": "ARG",
     "smmo_joined": "???",
     "card_id": "willy-dex-038",
     "tags": [
       "Guild Co-Lead",
-      "Warrior"
+      "Warrior",
+      "Founder"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "roles": [
+      "Guild Co-Lead",
+      "Warrior",
+      "Founder"
+    ]
   },
   {
     "number": "039",
@@ -806,22 +829,28 @@
   {
     "number": "042",
     "name": "Luna I The crazy cannoneer",
-    "type": "[ARG] Guild Co-Lead Warrior",
+    "type": "[ARG] Guild Co-Lead · Warrior · Founder",
     "image": null,
     "level": 10735,
     "date": "20 October 2026",
     "portrait": null,
-    "description": "???",
-    "front_text": "???",
+    "description": "Pirate Cove Founder",
+    "front_text": "Pirate Cove Founder",
     "back_text": "???",
     "guild": "ARG",
     "smmo_joined": "???",
     "card_id": "willy-dex-042",
     "tags": [
       "Guild Co-Lead",
-      "Warrior"
+      "Warrior",
+      "Founder"
     ],
-    "last_active": "2 months ago"
+    "last_active": "2 months ago",
+    "roles": [
+      "Guild Co-Lead",
+      "Warrior",
+      "Founder"
+    ]
   },
   {
     "number": "043",
@@ -1289,21 +1318,24 @@
   {
     "number": "067",
     "name": "The Mighty Fish Lord",
-    "type": "[ARG] Member",
+    "type": "[ARG] Founder",
     "image": null,
     "level": 2026,
     "date": "20 October 2026",
     "portrait": null,
-    "description": "???",
-    "front_text": "???",
+    "description": "Pirate Cove Founder",
+    "front_text": "Pirate Cove Founder",
     "back_text": "???",
     "guild": "ARG",
     "smmo_joined": "???",
     "card_id": "willy-dex-067",
     "tags": [
-      "Member"
+      "Founder"
     ],
-    "last_active": "7 months ago"
+    "last_active": "7 months ago",
+    "roles": [
+      "Founder"
+    ]
   },
   {
     "number": "068",
