@@ -99,7 +99,7 @@ function drawFilters(){const discovered=new Map();for(const c of cards){if(!c.na
 
 function drawGuildFilters(){const guilds=new Map();for(const c of cards){if(!c.name||c.name==='???')continue;const name=String(c.guild||'').trim();if(name&&name!=='???'&&!guilds.has(name.toLocaleLowerCase()))guilds.set(name.toLocaleLowerCase(),name)}
 const names=[...guilds.values()].sort((a,b)=>a.localeCompare(b,undefined,{sensitivity:'base'}));for(const active of [...activeGuilds])if(!guilds.has(active.toLocaleLowerCase()))activeGuilds.delete(active);
-guildChips.replaceChildren();for(const name of ['All Guilds',...names]){const button=document.createElement('button');button.type='button';button.className='filter-chip';button.textContent=name;button.setAttribute('aria-pressed',String(name==='All Guilds'?activeGuilds.size===0:activeGuilds.has(name)));button.addEventListener('click',()=>{if(name==='All Guilds')activeGuilds.clear();else if(activeGuilds.has(name))activeGuilds.delete(name);else activeGuilds.add(name);drawGuildFilters();refreshCards()});guildChips.append(button)}
+guildChips.replaceChildren();for(const name of ['All',...names]){const button=document.createElement('button');button.type='button';button.className='filter-chip';button.textContent=name;button.setAttribute('aria-pressed',String(name==='All'?activeGuilds.size===0:activeGuilds.has(name)));button.addEventListener('click',()=>{if(name==='All')activeGuilds.clear();else if(activeGuilds.has(name))activeGuilds.delete(name);else activeGuilds.add(name);drawGuildFilters();refreshCards()});guildChips.append(button)}
 }
 
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
