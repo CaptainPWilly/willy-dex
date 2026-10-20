@@ -45,14 +45,22 @@
     "date": "20 October 2026",
     "portrait": null,
     "description": "Dead bird",
-    "front_text": "Dead bird · Joined 29 Jan 2022",
+    "front_text": "Ldmgb · Dead bird · PNN Reporter · Joined 29 Jan 2022",
     "back_text": "",
     "guild": "Pirate Leadership",
     "smmo_joined": "2022-01-29",
     "card_id": "willy-dex-003",
     "tags": [
       "Guild Co-Lead",
-      "Pirate Leadership"
+      "Pirate Leadership",
+      "PNN Reporter"
+    ],
+    "aliases": [
+      "Ldmgb"
+    ],
+    "roles": [
+      "Guild Co-Lead",
+      "PNN Reporter"
     ]
   },
   {
