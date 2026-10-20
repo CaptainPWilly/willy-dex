@@ -25,7 +25,7 @@
   {
     "number": "002",
     "name": "ThatsVeryCheese",
-    "type": "[ARG] Guild Co-Lead",
+    "type": "[ARG] Co-Lead",
     "image": null,
     "level": 23543,
     "date": "20 October 2026",
@@ -37,12 +37,12 @@
     "smmo_joined": "2021-03-14",
     "card_id": "willy-dex-002",
     "tags": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Pirate Leadership",
       "Warrior"
     ],
     "roles": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Warrior"
     ],
     "last_active": "48 minutes ago"
@@ -50,7 +50,7 @@
   {
     "number": "003",
     "name": "The Ghost of Willys Bird",
-    "type": "[ARG] Guild Co-Lead",
+    "type": "[ARG] Co-Lead",
     "image": null,
     "level": 9357,
     "date": "20 October 2026",
@@ -62,7 +62,7 @@
     "smmo_joined": "2022-01-29",
     "card_id": "willy-dex-003",
     "tags": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Pirate Leadership",
       "PNN Reporter"
     ],
@@ -70,7 +70,7 @@
       "Ldmgb"
     ],
     "roles": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "PNN Reporter"
     ]
   },
@@ -565,7 +565,7 @@
   {
     "number": "029",
     "name": "Catmaster81",
-    "type": "[ARG] Guild Co-Lead · Warrior · Founder",
+    "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
     "level": 7482,
     "date": "20 October 2026",
@@ -577,14 +577,13 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-029",
     "tags": [
-      "Guild",
       "Co-Lead",
       "Warrior",
       "Founder"
     ],
     "last_active": "3 weeks ago",
     "roles": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Warrior",
       "Founder"
     ]
@@ -746,7 +745,7 @@
   {
     "number": "038",
     "name": "RyderRocketship",
-    "type": "[ARG] Guild Co-Lead · Warrior · Founder",
+    "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
     "level": 8627,
     "date": "20 October 2026",
@@ -758,13 +757,13 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-038",
     "tags": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Warrior",
       "Founder"
     ],
     "last_active": "1 month ago",
     "roles": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Warrior",
       "Founder"
     ]
@@ -829,7 +828,7 @@
   {
     "number": "042",
     "name": "Luna I The crazy cannoneer",
-    "type": "[ARG] Guild Co-Lead · Warrior · Founder",
+    "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
     "level": 10735,
     "date": "20 October 2026",
@@ -841,13 +840,13 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-042",
     "tags": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Warrior",
       "Founder"
     ],
     "last_active": "2 months ago",
     "roles": [
-      "Guild Co-Lead",
+      "Co-Lead",
       "Warrior",
       "Founder"
     ]
