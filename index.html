@@ -8,7 +8,7 @@
 <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-label="Collectible card" tabindex="-1"><div id="card" class="card"></div></div>
 <script>
 const cards=Array.from({length:100},(_,i)=>({number:String(i+1).padStart(3,'0'),name:'???',type:'???',placeholder:true}));
-cards[0]={number:'001',name:'Captain P Willy',type:'Guild Lead',titles:['Captain'],level:'7504',date:'19 October 2026',bio:'Proud leader of the Pirate Cove.',joined:'15 April 2022',notes:['Founded The Pirate Cove guild.','ARG!'],placeholder:false};
+cards[0]={number:'001',name:'Captain P Willy',type:'Guild Lead',tag:'[[ARG]]',titles:['Captain'],level:'7504',date:'19 October 2026',bio:'Proud leader of the Pirate Cove.',joined:'15 April 2022',notes:['Founded The Pirate Cove guild.','ARG!'],placeholder:false};
 const list=document.getElementById('selector'),search=document.getElementById('search'),overlay=document.getElementById('overlay'),card=document.getElementById('card');
 let current=null;
 function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
