@@ -46,4 +46,4 @@ fetch('cards.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);r
 window.willyDexSetCards=function(updatedCards){cards=updatedCards;drawFilters();filtered=sortedCards();position=0;build()};
 window.willyDexReload=async function(){const response=await fetch('cards.json?updated='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('Unable to reload cards');cards=await response.json();drawFilters();filtered=sortedCards();position=0;build()};
 window.addEventListener('resize',paint);drawFilters();build();
-</script><script src="assets/willy-corp-logo.js?v=1" defer></script><script src="download.js?v=3" defer></script></body></html>
+</script><script src="assets/willy-corp-logo.js?v=2" defer></script><script src="download.js?v=3" defer></script></body></html>
