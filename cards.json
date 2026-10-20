@@ -1160,21 +1160,26 @@
   {
     "number": "066",
     "name": "Requiescat",
-    "type": "[ARG] Warrior",
+    "type": "[ARG] Founder · Warrior",
     "image": null,
     "level": 2962,
     "date": "20 October 2026",
     "portrait": null,
-    "description": "???",
-    "front_text": "???",
+    "description": "Pirate Cove Founder",
+    "front_text": "Pirate Cove Founder",
     "back_text": "???",
     "guild": "???",
     "smmo_joined": "???",
     "card_id": "willy-dex-066",
     "tags": [
-      "Warrior"
+      "Warrior",
+      "Founder"
     ],
-    "last_active": "6 months ago"
+    "last_active": "6 months ago",
+    "roles": [
+      "Founder",
+      "Warrior"
+    ]
   },
   {
     "number": "067",
