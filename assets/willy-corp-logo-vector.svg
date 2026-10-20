@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+<title id="title">Willy Corp.</title><desc id="desc">Cream pirate hat above the Willy Corp wordmark, with a compass star in the O.</desc>
+<rect width="1024" height="1024" fill="#100f0e"/>
+<path d="M274 278 C315 291 353 277 380 244 C417 201 426 141 480 132 C547 110 597 151 624 212 C651 273 694 289 744 273 C756 269 762 279 756 291 C744 316 717 340 680 360 C716 337 730 314 740 288 C682 310 634 279 605 221 C579 168 547 140 493 143 C447 147 423 180 391 237 C359 296 318 315 269 288 C285 321 304 340 341 361 C298 350 267 322 254 290 C248 272 258 263 274 278 Z" fill="none" stroke="#f5e5c2" stroke-width="15" stroke-linejoin="round"/>
+<path d="M374 365 Q512 299 642 364" fill="none" stroke="#b96938" stroke-width="17" stroke-linecap="round"/>
+<g fill="#f4e4bf" font-family="Georgia, 'Times New Roman', serif" font-weight="900" text-anchor="middle">
+<text x="512" y="550" font-size="208" letter-spacing="1" textLength="770" lengthAdjust="spacingAndGlyphs">WILLY</text>
+<text x="512" y="741" font-size="197" letter-spacing="0" textLength="764" lengthAdjust="spacingAndGlyphs">CORP.</text>
+</g>
+<circle cx="414" cy="664" r="75" fill="#100f0e" stroke="#f4e4bf" stroke-width="4"/>
+<path d="M414 584 L429 641 L485 661 L432 680 L414 736 L395 678 L341 661 L395 644 Z" fill="#f4e4bf"/>
+<path d="M414 627 L424 653 L449 663 L424 671 L414 697 L405 670 L380 661 L404 652Z" fill="#100f0e"/>
+</svg>
