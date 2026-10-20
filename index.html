@@ -55,6 +55,29 @@
 .draw-physical-back,.draw-physical-front{border:0;padding:0;background:transparent;box-shadow:none;display:block}
 .draw-physical-back .collectible,.draw-physical-front .collectible{width:100%;height:100%;aspect-ratio:auto;max-height:none}
 .draw-physical-back .collectible-back{background:#100f0e}
+
+/* iOS Safari: aspect-ratio alone leaves nested percentage-height card flexboxes
+   indefinite, collapsing art/lore and pushing the footer to the top. Give the
+   draw card a resolved height before laying out the shared collectible. */
+.draw-physical{
+  width:min(76vw,330px);
+  height:min(106.4vw,462px);
+  aspect-ratio:auto;
+}
+.draw-physical-inner,.draw-physical-front,.draw-physical-back{height:100%;width:100%}
+.draw-physical-front>.collectible,.draw-physical-back>.collectible{
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  min-height:0;
+  max-height:none;
+  aspect-ratio:auto;
+  display:flex;
+  flex-direction:column;
+}
+.draw-physical-front>.collectible>.card-art{flex:1 1 0%;min-height:0}
+.draw-physical-front>.collectible>.card-lore{flex:0 0 auto;min-height:17%;max-height:20%}
+
 .draw-physical{width:min(76vw,330px)}
 .shuffle-ghost{width:min(76vw,330px)}
 </style></head><body><header><small>WILLY CORP. PRESENTS</small><h1>THE WILLY-DEX</h1><p>Pirate Cove · Collector's Registry</p></header><div class="bar"><input id="search" placeholder="Search players or card numbers" aria-label="Search cards"><span id="count">1 / 100</span></div><div class="sortbar"><label for="sort">SORT BY</label><select id="sort" aria-label="Sort cards"><option value="number">Card number</option><option value="name">Name · A–Z</option><option value="age">SMMO age · oldest first</option><option value="level">Level · highest first</option><option value="guild">Guild · A–Z</option></select><button id="reverse" type="button" aria-label="Reverse sort direction" title="Reverse sort direction">↓</button></div><div class="filterbar" role="group" aria-label="Filter cards by roles"><span class="filter-label">SHOW ONLY</span><div id="filter-chips" class="filter-chips"></div></div><div class="filterbar guild-filterbar" role="group" aria-label="Filter cards by guild"><span class="filter-label">GUILDS</span><div id="guild-chips" class="filter-chips"></div></div><div class="visibility-options"><label class="undiscovered-toggle"><input type="checkbox" id="show-undiscovered" checked><span>Show undiscovered cards</span></label></div><div class="draw-launch"><button id="random-draw-open" type="button">♠ Random Draw</button></div>
