@@ -1,0 +1,33 @@
+/* Willy-Dex card export: 1200x1680 PNG with machine-readable PNG tEXt metadata. */
+(()=>{'use strict';
+const WIDTH=1200,HEIGHT=1680;
+function text(ctx,str,x,y,size,color='#f5dcaa',align='center',weight='normal'){
+ctx.fillStyle=color;ctx.font=weight+' '+size+'px Georgia, serif';ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillText(String(str||''),x,y);
+}
+function rounded(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
+function strokes(ctx,x,y,w,h,r,color,width){ctx.strokeStyle=color;ctx.lineWidth=width;rounded(ctx,x,y,w,h,r);ctx.stroke()}
+function lines(ctx,value,maxWidth,fontSize,maxLines=4){ctx.font='normal '+fontSize+'px Georgia, serif';const words=String(value||'').split(/\s+/);const out=[];let line='';for(const word of words){const next=line?line+' '+word:word;if(ctx.measureText(next).width>maxWidth&&line){out.push(line);line=word}else line=next}if(line)out.push(line);if(out.length>maxLines){const first=out.slice(0,maxLines);first[maxLines-1]=first[maxLines-1].replace(/.{0,3}$/,'…');return first}return out}
+function writeLines(ctx,value,x,centerY,maxWidth,size,maxLines=4,spacing=1.25,color='#e8d1ab'){const ll=lines(ctx,value,maxWidth,size,maxLines),h=size*spacing;ll.forEach((line,i)=>text(ctx,line,x,centerY+(i-(ll.length-1)/2)*h,size,color))}
+function cover(ctx,img,x,y,w,h){const iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height,scale=Math.min(w/iw,h/ih),dw=iw*scale,dh=ih*scale;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
+async function portrait(source){if(!source)return null;return new Promise(resolve=>{const img=new Image();img.crossOrigin='anonymous';img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=source})}
+function hex(crc,byte){return(crc^byte)>>>0}
+const crcTable=Uint32Array.from({length:256},(_,i)=>{let n=i;for(let j=0;j<8;j++)n=(n&1)?(0xedb88320^(n>>>1)):(n>>>1);return n>>>0});
+function crc32(bytes){let crc=0xffffffff;for(const byte of bytes)crc=crcTable[(crc^byte)&255]^(crc>>>8);return(crc^0xffffffff)>>>0}
+function pngChunk(type,payload){const name=new TextEncoder().encode(type),data=new Uint8Array(12+payload.length),view=new DataView(data.buffer);view.setUint32(0,payload.length,false);data.set(name,4);data.set(payload,8);view.setUint32(data.length-4,crc32(data.subarray(4,data.length-4)),false);return data}
+function embedMetadata(png,record){const bytes=new Uint8Array(png);if(bytes.length<12||bytes[0]!==137||bytes[1]!==80||bytes[2]!==78||bytes[3]!==71)throw Error('Invalid PNG');const encoder=new TextEncoder();const records=[['WillyDexCardNumber',String(record.number)],['WillyDexMetadata',JSON.stringify(record)],['Software','Willy-Dex Card Builder']];const chunks=records.map(([key,value])=>{const k=encoder.encode(key),v=encoder.encode(value);const payload=new Uint8Array(k.length+1+v.length);payload.set(k);payload.set(v,k.length+1);return pngChunk('tEXt',payload)});const parts=[bytes.subarray(0,8)];let i=8;while(i+12<=bytes.length){const size=new DataView(bytes.buffer,bytes.byteOffset+i,4).getUint32(0,false),end=i+12+size;if(end>bytes.length)throw Error('Corrupt PNG');const kind=String.fromCharCode(...bytes.subarray(i+4,i+8));if(kind==='IEND')parts.push(...chunks);parts.push(bytes.subarray(i,end));i=end;if(kind==='IEND')break}return new Blob(parts,{type:'image/png'})}
+function draw(c,image){const canvas=document.createElement('canvas');canvas.width=WIDTH;canvas.height=HEIGHT;const g=canvas.getContext('2d');
+const bg=g.createLinearGradient(0,0,WIDTH,HEIGHT);bg.addColorStop(0,'#63462d');bg.addColorStop(.42,'#302221');bg.addColorStop(1,'#11111b');g.fillStyle=bg;rounded(g,0,0,WIDTH,HEIGHT,35);g.fill();
+g.save();rounded(g,20,20,1160,1640,30);g.clip();const vignette=g.createRadialGradient(600,480,100,600,700,1000);vignette.addColorStop(0,'#9c795326');vignette.addColorStop(1,'#00000099');g.fillStyle=vignette;g.fillRect(20,20,1160,1640);g.restore();
+strokes(g,25,25,1150,1630,34,'#d1a160',20);strokes(g,53,53,1094,1574,22,'#f3d493',3);strokes(g,69,69,1062,1542,17,'#986d3b',2);
+text(g,c.name||'UNKNOWN PIRATE',113,172,Math.min(60, c.name?.length>20?46:60),'#ffe1aa','left','bold');text(g,'#'+String(c.number).padStart(3,'0'),1070,172,48,'#f2c887','right','bold');
+g.fillStyle='#ab804e';g.fillRect(108,236,984,4);
+const artX=111,artY=280,artW=978,artH=780;const artBg=g.createRadialGradient(600,600,70,600,640,650);artBg.addColorStop(0,'#806549');artBg.addColorStop(1,'#262128');g.fillStyle=artBg;rounded(g,artX,artY,artW,artH,15);g.fill();strokes(g,artX,artY,artW,artH,15,'#c99d5d',8);
+g.save();rounded(g,artX+10,artY+10,artW-20,artH-20,8);g.clip();if(image)cover(g,image,artX+12,artY+12,artW-24,artH-24);else text(g,'PORTRAIT UNAVAILABLE',600,668,42,'#d4b181');g.restore();
+g.fillStyle='#a77945';g.fillRect(110,1102,980,3);writeLines(g,c.type||'PIRATE COVE',600,1157,950,48,2,1.1,'#ffdf9e');g.fillStyle='#a77945';g.fillRect(110,1215,980,2);
+writeLines(g,c.description||'Proud member of the Pirate Cove.',600,1330,930,36,3,1.35,'#e7cb9e');
+g.fillStyle='#ab804e';g.fillRect(108,1480,984,3);text(g,'LVL '+(c.level??'—'),112,1561,46,'#ffe1aa','left','bold');text(g,c.date||'',1088,1561,34,'#edc798','right');
+return canvas}
+function toBlob(canvas){return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('PNG export failed')),'image/png'))}
+async function download(c){const button=document.getElementById('download-card'),status=document.getElementById('download-status');if(!button||!status)return;button.disabled=true;status.textContent='Preparing high-resolution PNG…';try{const src=c.portrait||c.image;const picture=await portrait(src);const canvas=draw(c,picture);const blob=await toBlob(canvas);const record={schema:'willy-dex-card/v1',number:String(c.number),name:c.name||null,guild:c.guild||null,role:c.type||null,level:c.level??null,level_recorded:c.date||null,smmo_joined:c.smmo_joined||null,description:c.description||null,portrait:src||null};const file=embedMetadata(await blob.arrayBuffer(),record);const url=URL.createObjectURL(file);const link=document.createElement('a');link.href=url;link.download='Willy-Dex-'+String(c.number).padStart(3,'0')+'-'+String(c.name||'card').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').slice(0,55)+'.png';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);status.textContent='PNG ready · Card #'+c.number+' metadata embedded.'}catch(e){status.textContent='Could not export: '+e.message}finally{button.disabled=false}}
+window.willyDexDownload=download;
+})();
