@@ -19,17 +19,41 @@
   },
   {
     "number": "002",
-    "name": "???",
-    "type": "???",
+    "name": "ThatsVeryCheese",
+    "type": "[ARG] Guild Co-Lead",
     "image": null,
-    "card_id": "willy-dex-002"
+    "level": 23543,
+    "date": "20 October 2026",
+    "portrait": null,
+    "description": "Cheese collector",
+    "front_text": "Cheese collector",
+    "back_text": "",
+    "guild": "Pirate Leadership",
+    "smmo_joined": "2021-03-14",
+    "card_id": "willy-dex-002",
+    "tags": [
+      "Guild Co-Lead",
+      "Pirate Leadership"
+    ]
   },
   {
     "number": "003",
-    "name": "???",
-    "type": "???",
+    "name": "The Ghost of Willys Bird",
+    "type": "[ARG] Guild Co-Lead",
     "image": null,
-    "card_id": "willy-dex-003"
+    "level": 9357,
+    "date": "20 October 2026",
+    "portrait": null,
+    "description": "Dead bird",
+    "front_text": "Dead bird",
+    "back_text": "",
+    "guild": "Pirate Leadership",
+    "smmo_joined": "2022-01-29",
+    "card_id": "willy-dex-003",
+    "tags": [
+      "Guild Co-Lead",
+      "Pirate Leadership"
+    ]
   },
   {
     "number": "004",
