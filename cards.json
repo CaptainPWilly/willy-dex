@@ -1,1 +1,606 @@
-[{"number":"001","name":"Captain P Willy","type":"[[ARG]] Guild Lead","image":"cards/001.svg","level":7504,"date":"19 October 2026"},{"number":"002","name":"???","type":"???","image":null},{"number":"003","name":"???","type":"???","image":null},{"number":"004","name":"???","type":"???","image":null},{"number":"005","name":"???","type":"???","image":null},{"number":"006","name":"???","type":"???","image":null},{"number":"007","name":"???","type":"???","image":null},{"number":"008","name":"???","type":"???","image":null},{"number":"009","name":"???","type":"???","image":null},{"number":"010","name":"???","type":"???","image":null},{"number":"011","name":"???","type":"???","image":null},{"number":"012","name":"???","type":"???","image":null},{"number":"013","name":"???","type":"???","image":null},{"number":"014","name":"???","type":"???","image":null},{"number":"015","name":"???","type":"???","image":null},{"number":"016","name":"???","type":"???","image":null},{"number":"017","name":"???","type":"???","image":null},{"number":"018","name":"???","type":"???","image":null},{"number":"019","name":"???","type":"???","image":null},{"number":"020","name":"???","type":"???","image":null},{"number":"021","name":"???","type":"???","image":null},{"number":"022","name":"???","type":"???","image":null},{"number":"023","name":"???","type":"???","image":null},{"number":"024","name":"???","type":"???","image":null},{"number":"025","name":"???","type":"???","image":null},{"number":"026","name":"???","type":"???","image":null},{"number":"027","name":"???","type":"???","image":null},{"number":"028","name":"???","type":"???","image":null},{"number":"029","name":"???","type":"???","image":null},{"number":"030","name":"???","type":"???","image":null},{"number":"031","name":"???","type":"???","image":null},{"number":"032","name":"???","type":"???","image":null},{"number":"033","name":"???","type":"???","image":null},{"number":"034","name":"???","type":"???","image":null},{"number":"035","name":"???","type":"???","image":null},{"number":"036","name":"???","type":"???","image":null},{"number":"037","name":"???","type":"???","image":null},{"number":"038","name":"???","type":"???","image":null},{"number":"039","name":"???","type":"???","image":null},{"number":"040","name":"???","type":"???","image":null},{"number":"041","name":"???","type":"???","image":null},{"number":"042","name":"???","type":"???","image":null},{"number":"043","name":"???","type":"???","image":null},{"number":"044","name":"???","type":"???","image":null},{"number":"045","name":"???","type":"???","image":null},{"number":"046","name":"???","type":"???","image":null},{"number":"047","name":"???","type":"???","image":null},{"number":"048","name":"???","type":"???","image":null},{"number":"049","name":"???","type":"???","image":null},{"number":"050","name":"???","type":"???","image":null},{"number":"051","name":"???","type":"???","image":null},{"number":"052","name":"???","type":"???","image":null},{"number":"053","name":"???","type":"???","image":null},{"number":"054","name":"???","type":"???","image":null},{"number":"055","name":"???","type":"???","image":null},{"number":"056","name":"???","type":"???","image":null},{"number":"057","name":"???","type":"???","image":null},{"number":"058","name":"???","type":"???","image":null},{"number":"059","name":"???","type":"???","image":null},{"number":"060","name":"???","type":"???","image":null},{"number":"061","name":"???","type":"???","image":null},{"number":"062","name":"???","type":"???","image":null},{"number":"063","name":"???","type":"???","image":null},{"number":"064","name":"???","type":"???","image":null},{"number":"065","name":"???","type":"???","image":null},{"number":"066","name":"???","type":"???","image":null},{"number":"067","name":"???","type":"???","image":null},{"number":"068","name":"???","type":"???","image":null},{"number":"069","name":"???","type":"???","image":null},{"number":"070","name":"???","type":"???","image":null},{"number":"071","name":"???","type":"???","image":null},{"number":"072","name":"???","type":"???","image":null},{"number":"073","name":"???","type":"???","image":null},{"number":"074","name":"???","type":"???","image":null},{"number":"075","name":"???","type":"???","image":null},{"number":"076","name":"???","type":"???","image":null},{"number":"077","name":"???","type":"???","image":null},{"number":"078","name":"???","type":"???","image":null},{"number":"079","name":"???","type":"???","image":null},{"number":"080","name":"???","type":"???","image":null},{"number":"081","name":"???","type":"???","image":null},{"number":"082","name":"???","type":"???","image":null},{"number":"083","name":"???","type":"???","image":null},{"number":"084","name":"???","type":"???","image":null},{"number":"085","name":"???","type":"???","image":null},{"number":"086","name":"???","type":"???","image":null},{"number":"087","name":"???","type":"???","image":null},{"number":"088","name":"???","type":"???","image":null},{"number":"089","name":"???","type":"???","image":null},{"number":"090","name":"???","type":"???","image":null},{"number":"091","name":"???","type":"???","image":null},{"number":"092","name":"???","type":"???","image":null},{"number":"093","name":"???","type":"???","image":null},{"number":"094","name":"???","type":"???","image":null},{"number":"095","name":"???","type":"???","image":null},{"number":"096","name":"???","type":"???","image":null},{"number":"097","name":"???","type":"???","image":null},{"number":"098","name":"???","type":"???","image":null},{"number":"099","name":"???","type":"???","image":null},{"number":"100","name":"???","type":"???","image":null}]
+[
+  {
+    "number": "001",
+    "name": "Captain P Willy",
+    "type": "[[ARG]] Guild Lead",
+    "image": "cards/001.svg",
+    "level": 7504,
+    "date": "19 October 2026",
+    "portrait": "cards/001-portrait.svg",
+    "description": "Founder of the Pirate Cove · Joined 15 April 2022"
+  },
+  {
+    "number": "002",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "003",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "004",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "005",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "006",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "007",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "008",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "009",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "010",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "011",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "012",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "013",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "014",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "015",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "016",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "017",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "018",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "019",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "020",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "021",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "022",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "023",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "024",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "025",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "026",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "027",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "028",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "029",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "030",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "031",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "032",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "033",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "034",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "035",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "036",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "037",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "038",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "039",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "040",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "041",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "042",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "043",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "044",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "045",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "046",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "047",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "048",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "049",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "050",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "051",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "052",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "053",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "054",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "055",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "056",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "057",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "058",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "059",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "060",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "061",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "062",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "063",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "064",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "065",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "066",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "067",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "068",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "069",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "070",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "071",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "072",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "073",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "074",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "075",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "076",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "077",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "078",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "079",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "080",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "081",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "082",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "083",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "084",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "085",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "086",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "087",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "088",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "089",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "090",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "091",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "092",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "093",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "094",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "095",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "096",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "097",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "098",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "099",
+    "name": "???",
+    "type": "???",
+    "image": null
+  },
+  {
+    "number": "100",
+    "name": "???",
+    "type": "???",
+    "image": null
+  }
+]
