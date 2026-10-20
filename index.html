@@ -30,7 +30,7 @@
 .overlay-actions{flex-wrap:wrap;max-width:100%}
 .overlay-actions button{transition:background .16s ease,transform .16s ease}
 .overlay-actions button:active{transform:scale(.96)}
-.slot{will-change:transform,opacity;transform-origin:center center}
+.slot{transform-origin:center center}
 .draw-scene{perspective:1400px;overflow:visible}
 .draw-physical{will-change:transform;animation:draw-arrive .42s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 18px 20px #0009)}
 .draw-physical-inner{will-change:transform;transition:transform .78s cubic-bezier(.19,.72,.19,1)}
@@ -88,11 +88,11 @@ wheel.addEventListener('pointerdown',e=>{if(e.button!==0||!filtered.length)retur
 wheel.addEventListener('pointermove',e=>{if(!dragging)return;const now=performance.now(),dx=e.clientX-dragLast,dt=Math.max(1,now-dragTime),amount=-dx/Math.max(75,wheel.clientWidth*.20);position+=amount;const instant=amount/(dt/16.667);velocity=velocity*.55+instant*.45;travel+=Math.abs(dx);dragLast=e.clientX;dragTime=now;paint()});
 function release(){if(!dragging)return;dragging=false;ignoreClickUntil=travel>7?performance.now()+250:0;if(reduced.matches){position=Math.round(position);velocity=0;paint();return}if(performance.now()-dragTime>100)velocity=0;velocity=Math.max(-.65,Math.min(.65,velocity*1.2));run()}
 wheel.addEventListener('pointerup',release);wheel.addEventListener('pointercancel',release);wheel.addEventListener('lostpointercapture',release);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(overlay.classList.contains('open')&&(e.key==='f'||e.key==='F')&&!e.repeat&&!e.target.closest('input,textarea,select')){e.preventDefault();flipOpenCard()}if(overlay.classList.contains('open')||document.activeElement===search)return;if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();step(1)}if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();step(-1)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))close();if(overlay.classList.contains('open')&&(e.key==='f'||e.key==='F')&&!e.repeat&&!e.target.closest('input,textarea,select')){e.preventDefault();flipOpenCard()}if(overlay.classList.contains('open')||document.activeElement===search)return;if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();step(1)}if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();step(-1)}});
 showUndiscovered.onchange=refreshCards;search.oninput=refreshCards;sortSelect.onchange=refreshCards;reverseButton.onclick=()=>{descending=!descending;reverseButton.textContent=descending?'↑':'↓';reverseButton.setAttribute('aria-label',descending?'Use reverse sorting':'Use default sorting');refreshCards()};
 fetch('cards.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()}).then(data=>{cards=data;drawFilters();filtered=sortedCards();position=0;build()}).catch(()=>build());
 window.willyDexGetCards=()=>cards.slice();
 window.willyDexSetCards=function(updatedCards){cards=updatedCards;drawFilters();filtered=sortedCards();position=0;build()};
 window.willyDexReload=async function(){const response=await fetch('cards.json?updated='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('Unable to reload cards');cards=await response.json();drawFilters();filtered=sortedCards();position=0;build()};
 window.addEventListener('resize',paint);drawFilters();build();
-</script><script src="download.js?v=3" defer></script><script src="random-draw.js?v=1" defer></script></body></html>
+</script><script src="download.js?v=3" defer></script><script src="random-draw.js?v=2" defer></script></body></html>
