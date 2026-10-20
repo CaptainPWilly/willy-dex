@@ -18,12 +18,12 @@ function displayPhase(){const selecting=phase==='choose';$('draw-selection').hid
 function open(){screen.hidden=false;document.body.classList.add('draw-active');phase='choose';catalog=cardsNow();selection=new Set(catalog.map(c=>c.number));find.value='';displayPhase()}
 function hide(){shuffleEpoch++;shuffling=false;scene.classList.remove('is-shuffling');scene.querySelectorAll('.shuffle-ghost').forEach(el=>el.remove());screen.hidden=true;document.body.classList.remove('draw-active')}
 function start(){if(shuffling)return;pool=cardsNow().filter(c=>selection.has(c.number));if(!pool.length){status.textContent='Select at least one published card.';return}deck=mixed(pool);current=null;faceUp=false;phase='play';displayPhase();animateShuffle()}
-function cardFace(c){const image=c?.portrait||c?.image||'';return '<div class="draw-front"><div class="draw-front-header"><span>'+escapeHtml(c?.name)+'</span><small>#'+escapeHtml(c?.number)+'</small></div><div class="draw-art">'+(image?'<img draggable="false" src="'+escapeHtml(encodeURI(image))+'" alt="" onerror="this.hidden=true">':'')+'</div><div class="draw-front-role">'+escapeHtml(c?.type||'PIRATE COVE')+'</div><div class="draw-front-footer"><span>LVL '+escapeHtml(c?.level??'—')+'</span><span>'+escapeHtml(c?.date||'')+'</span></div></div>'}
 function renderScene(){const drawn=pool.length-deck.length;
 badge.textContent=drawn+' / '+pool.length+' drawn';
 scene.innerHTML='';
 const card=document.createElement('div');card.className='draw-physical'+(faceUp?' revealed':'');card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label',!current?'Deck face down':faceUp?'Drawn card '+current.name:'Reveal drawn card');
-card.innerHTML='<div class="draw-physical-inner"><div class="draw-physical-back"><img src="assets/willy-corp-logo-vector.svg" alt="Willy Corp" draggable="false"></div><div class="draw-physical-front">'+(current?cardFace(current):'')+'</div></div>';
+const surfaces=window.willyDexCardFaces;if(!surfaces)throw Error('Shared Willy-Dex card faces not loaded');
+card.innerHTML='<div class="draw-physical-inner"><div class="draw-physical-back">'+(current?surfaces.back(current):'<article class="collectible collectible-back"><div class="back-logo"><img src="assets/willy-corp-logo-vector.svg?v=1" alt="Willy Corp logo"></div></article>')+'</div><div class="draw-physical-front">'+(current?surfaces.front(current):'')+'</div></div>';
 card.addEventListener('click',()=>{if(current&&!faceUp)showCard()});card.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&current&&!faceUp){e.preventDefault();showCard()}});scene.append(card);
 reveal.hidden=!(current&&!faceUp);
 draw.disabled=!deck.length||!!(current&&!faceUp);
