@@ -101,4 +101,4 @@ window.willyDexGetCards=()=>cards.slice();
 window.willyDexSetCards=function(updatedCards){cards=updatedCards;drawFilters();drawGuildFilters();filtered=sortedCards();position=0;build()};
 window.willyDexReload=async function(){const response=await fetch('cards.json?updated='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('Unable to reload cards');cards=await response.json();drawFilters();drawGuildFilters();filtered=sortedCards();position=0;build()};
 window.addEventListener('resize',paint);drawFilters();drawGuildFilters();build();
-</script><script src="download.js?v=3" defer></script><script src="random-draw.js?v=2" defer></script></body></html>
+</script><script src="download.js?v=3" defer></script><script src="random-draw.js?v=3" defer></script></body></html>
