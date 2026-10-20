@@ -32,7 +32,7 @@ const stateMessage=!current?'Shuffled and face down. Draw when ready.':!faceUp?'
 $('draw-instructions').textContent=stateMessage;
 }
 function next(){if(current&&!faceUp){showCard();return}if(!deck.length)return;current=deck.pop();faceUp=false;renderScene()}
-function showCard(){if(!current)return;faceUp=true;renderScene()}
+function showCard(){if(!current||faceUp)return;faceUp=true;const card=scene.querySelector('.draw-physical');if(card){card.classList.add('revealed');card.setAttribute('aria-label','Drawn card '+current.name)}reveal.hidden=true;draw.disabled=!deck.length;draw.textContent=deck.length?'Draw Next Card':'Deck Empty';$('draw-instructions').textContent=deck.length?'Draw again for another random card.':'Every card has been drawn.'}
 function restart(){deck=mixed(pool);current=null;faceUp=false;renderScene()}
 launcher.addEventListener('click',open);close.addEventListener('click',hide);back.addEventListener('click',()=>{phase='choose';displayPhase()});find.addEventListener('input',populate);
 chooseVisible.addEventListener('change',()=>{for(const c of cardsNow().filter(filterMatch))chooseVisible.checked?selection.add(c.number):selection.delete(c.number);populate()});
