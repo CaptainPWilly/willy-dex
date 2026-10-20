@@ -10,7 +10,10 @@
     "description": "Founder of the Pirate Cove · Joined 15 April 2022",
     "guild": "Pirate Cove",
     "smmo_joined": null,
-    "card_id": "willy-dex-001"
+    "card_id": "willy-dex-001",
+    "tags": [
+      "Guild Lead"
+    ]
   },
   {
     "number": "002",
