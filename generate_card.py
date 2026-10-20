@@ -11,8 +11,13 @@ def publish(path):
     number=str(d["number"]).zfill(3)
     if not re.fullmatch(r"\d{3}",number) or not 1<=int(number)<=100: raise ValueError("Card number must be 001–100")
     logo=ROOT/"assets"/"willy-corp.jpeg"
-    if not logo.exists(): raise FileNotFoundError("Place the official logo at assets/willy-corp.jpeg")
-    b64=base64.b64encode(logo.read_bytes()).decode("ascii")
+    if logo.exists():
+        b64=base64.b64encode(logo.read_bytes()).decode("ascii")
+    else:
+        existing=(ROOT/"cards"/"001.svg").read_text(encoding="utf-8")
+        match=re.search(r"data:image/jpeg;base64,([A-Za-z0-9+/=]+)",existing)
+        if not match: raise FileNotFoundError("Missing Willy Corp logo")
+        b64=match.group(1)
     name=esc(d["name"]); typ=esc(d.get("type","Member")); tag=esc(d.get("tag","")); bio=esc(d.get("bio",""))
     notes=[esc(n) for n in d.get("notes",[])][:3]
     note_svg="".join(f'<text x="350" y="{745+i*36}" text-anchor="middle" font-family="Georgia" font-size="21" fill="#d9b17a">{n}</text>' for i,n in enumerate(notes))
