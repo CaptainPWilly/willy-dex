@@ -36,4 +36,4 @@ fetch('cards.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);r
 window.willyDexSetCards=function(updatedCards){cards=updatedCards;filtered=sortedCards();position=0;build()};
 window.willyDexReload=async function(){const response=await fetch('cards.json?updated='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('Unable to reload cards');cards=await response.json();filtered=sortedCards();position=0;build()};
 window.addEventListener('resize',paint);build();
-</script><script src="admin.js?v=2" defer></script></body></html>
+</script><script>window.EDITOR_API_URL="https://willy-dex-editor.onrender.com";</script><script src="password-admin.js?v=2" defer></script></body></html>
