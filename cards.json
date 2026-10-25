@@ -1357,45 +1357,129 @@
   },
   {
     "number": "069",
-    "name": "???",
-    "type": "???",
+    "name": "BOBBY Jon",
+    "type": "[ARG] Recruit",
     "image": null,
-    "card_id": "willy-dex-069"
+    "card_id": "willy-dex-069",
+    "level": "???",
+    "date": "???",
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ]
   },
   {
     "number": "070",
-    "name": "???",
-    "type": "???",
+    "name": "Demon",
+    "type": "[ARG] Recruit",
     "image": null,
-    "card_id": "willy-dex-070"
+    "card_id": "willy-dex-070",
+    "level": "???",
+    "date": "???",
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ]
   },
   {
     "number": "071",
-    "name": "???",
-    "type": "???",
+    "name": "Unspeakable Deep III",
+    "type": "[ARG] Recruit",
     "image": null,
-    "card_id": "willy-dex-071"
+    "card_id": "willy-dex-071",
+    "level": "???",
+    "date": "???",
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ]
   },
   {
     "number": "072",
-    "name": "???",
-    "type": "???",
+    "name": "Scarlet",
+    "type": "[ARG] Recruit",
     "image": null,
-    "card_id": "willy-dex-072"
+    "card_id": "willy-dex-072",
+    "level": "???",
+    "date": "???",
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ]
   },
   {
     "number": "073",
-    "name": "???",
-    "type": "???",
+    "name": "ChezShork",
+    "type": "[ARG] Recruit",
     "image": null,
-    "card_id": "willy-dex-073"
+    "card_id": "willy-dex-073",
+    "level": "???",
+    "date": "???",
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ]
   },
   {
     "number": "074",
-    "name": "???",
-    "type": "???",
+    "name": "TurtleHermit",
+    "type": "[ARG] Recruit",
     "image": null,
-    "card_id": "willy-dex-074"
+    "card_id": "willy-dex-074",
+    "level": "???",
+    "date": "???",
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ]
   },
   {
     "number": "075",
