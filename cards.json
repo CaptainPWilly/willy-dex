@@ -1419,7 +1419,7 @@
   {
     "number": "072",
     "name": "Scarlet",
-    "type": "[ARG] Recruit",
+    "type": "[ARG] Officer",
     "image": null,
     "card_id": "willy-dex-072",
     "level": "???",
@@ -1431,10 +1431,10 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Recruit"
+      "Officer"
     ],
     "roles": [
-      "Recruit"
+      "Officer"
     ]
   },
   {
