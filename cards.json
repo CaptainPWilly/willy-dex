@@ -4,8 +4,8 @@
     "name": "Captain P Willy",
     "type": "[[ARG]] Guild Lead · Founder",
     "image": null,
-    "level": 7504,
-    "date": "19 October 2026",
+    "level": 7544,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Founder of the Pirate Cove · Joined 15 April 2022",
     "guild": "ARG",
@@ -13,22 +13,34 @@
     "card_id": "willy-dex-001",
     "tags": [
       "Guild Lead",
-      "Founder"
+      "Founder",
+      "Warrior"
     ],
     "front_text": "Founder of the Pirate Cove · Joined 15 April 2022",
     "back_text": "",
     "roles": [
       "Guild Lead",
       "Founder"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-19",
+        "level": 7504
+      },
+      {
+        "date": "2026-10-26",
+        "level": 7544
+      }
+    ],
+    "last_active": "8 seconds ago"
   },
   {
     "number": "002",
     "name": "ThatsVeryCheese",
     "type": "[ARG] Co-Lead",
     "image": null,
-    "level": 23543,
-    "date": "20 October 2026",
+    "level": 23613,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Cheese collector",
     "front_text": "Cheese collector · Joined 14 Mar 2021",
@@ -44,15 +56,25 @@
       "Co-Lead",
       "Warrior"
     ],
-    "last_active": "48 minutes ago"
+    "last_active": "45 minutes ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 23543
+      },
+      {
+        "date": "2026-10-26",
+        "level": 23613
+      }
+    ]
   },
   {
     "number": "003",
     "name": "The Ghost of Willys Bird",
     "type": "[ARG] Co-Lead",
     "image": null,
-    "level": 9357,
-    "date": "20 October 2026",
+    "level": 9398,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Dead bird",
     "front_text": "Ldmgb · Dead bird · PNN Reporter · Joined 29 Jan 2022",
@@ -62,7 +84,8 @@
     "card_id": "willy-dex-003",
     "tags": [
       "Co-Lead",
-      "PNN Reporter"
+      "PNN Reporter",
+      "Warrior"
     ],
     "aliases": [
       "Ldmgb"
@@ -70,15 +93,26 @@
     "roles": [
       "Co-Lead",
       "PNN Reporter"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 9357
+      },
+      {
+        "date": "2026-10-26",
+        "level": 9398
+      }
+    ],
+    "last_active": "20 minutes ago"
   },
   {
     "number": "004",
     "name": "EvilSanta",
     "type": "[ARG] Member",
     "image": null,
-    "level": 1409,
-    "date": "20 October 2026",
+    "level": 1412,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -89,15 +123,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "45 minutes ago"
+    "last_active": "3 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1409
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1412
+      }
+    ]
   },
   {
     "number": "005",
     "name": "Arrogaddu",
     "type": "[ARG] Officer · Warrior · Founder",
     "image": null,
-    "level": 4104,
-    "date": "20 October 2026",
+    "level": 4122,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -110,11 +154,21 @@
       "Warrior",
       "Founder"
     ],
-    "last_active": "1 hour ago",
+    "last_active": "14 hours ago",
     "roles": [
       "Officer",
       "Warrior",
       "Founder"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 4104
+      },
+      {
+        "date": "2026-10-26",
+        "level": 4122
+      }
     ]
   },
   {
@@ -122,8 +176,8 @@
     "name": "Gimbly",
     "type": "[ARG] Member",
     "image": null,
-    "level": 2126,
-    "date": "20 October 2026",
+    "level": 2128,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -134,15 +188,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 hour ago"
+    "last_active": "3 hours ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2126
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2128
+      }
+    ]
   },
   {
     "number": "007",
     "name": "Titant8",
     "type": "[ARG] Member",
     "image": null,
-    "level": 5817,
-    "date": "20 October 2026",
+    "level": 5891,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -153,15 +217,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 hours ago"
+    "last_active": "1 hour ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 5817
+      },
+      {
+        "date": "2026-10-26",
+        "level": 5891
+      }
+    ]
   },
   {
     "number": "008",
     "name": "Sulfrum",
     "type": "[ARG] Member",
     "image": null,
-    "level": 18874,
-    "date": "20 October 2026",
+    "level": 18903,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -172,15 +246,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "4 hours ago"
+    "last_active": "4 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 18874
+      },
+      {
+        "date": "2026-10-26",
+        "level": 18903
+      }
+    ]
   },
   {
     "number": "009",
     "name": "g0jiraz",
     "type": "[ARG] Member",
     "image": null,
-    "level": 39201,
-    "date": "20 October 2026",
+    "level": 39422,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -191,15 +275,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "8 hours ago"
+    "last_active": "12 hours ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 39201
+      },
+      {
+        "date": "2026-10-26",
+        "level": 39422
+      }
+    ]
   },
   {
     "number": "010",
     "name": "JoyBoy",
     "type": "[ARG] Member",
     "image": null,
-    "level": 1714,
-    "date": "20 October 2026",
+    "level": 1726,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -210,7 +304,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "16 hours ago"
+    "last_active": "2 hours ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1714
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1726
+      }
+    ]
   },
   {
     "number": "011",
@@ -218,7 +322,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 8726,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -229,7 +333,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "20 hours ago"
+    "last_active": "6 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 8726
+      },
+      {
+        "date": "2026-10-26",
+        "level": 8726
+      }
+    ]
   },
   {
     "number": "012",
@@ -237,7 +351,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1379,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -248,15 +362,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 day ago"
+    "last_active": "1 week ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1379
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1379
+      }
+    ]
   },
   {
     "number": "013",
     "name": "Hannahbae",
     "type": "[ARG] Member",
     "image": null,
-    "level": 1182,
-    "date": "20 October 2026",
+    "level": 1194,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -267,15 +391,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 days ago"
+    "last_active": "5 hours ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1182
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1194
+      }
+    ]
   },
   {
     "number": "014",
     "name": "C H I M C K E N",
     "type": "[ARG] Officer",
     "image": null,
-    "level": 63462,
-    "date": "20 October 2026",
+    "level": 63614,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -286,15 +420,25 @@
     "tags": [
       "Officer"
     ],
-    "last_active": "2 days ago"
+    "last_active": "4 hours ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 63462
+      },
+      {
+        "date": "2026-10-26",
+        "level": 63614
+      }
+    ]
   },
   {
     "number": "015",
     "name": "Roronoa Zoro",
     "type": "[ARG] Member · Warrior",
     "image": null,
-    "level": 5372,
-    "date": "20 October 2026",
+    "level": 5384,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -306,15 +450,25 @@
       "Warrior",
       "Member"
     ],
-    "last_active": "2 days ago"
+    "last_active": "2 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 5372
+      },
+      {
+        "date": "2026-10-26",
+        "level": 5384
+      }
+    ]
   },
   {
     "number": "016",
     "name": "Godslayer",
     "type": "[ARG] Member",
     "image": null,
-    "level": 1337,
-    "date": "20 October 2026",
+    "level": 1338,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -325,7 +479,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 days ago"
+    "last_active": "2 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1337
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1338
+      }
+    ]
   },
   {
     "number": "017",
@@ -333,7 +497,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 913,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -344,7 +508,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "3 days ago"
+    "last_active": "1 day ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 913
+      },
+      {
+        "date": "2026-10-26",
+        "level": 913
+      }
+    ]
   },
   {
     "number": "018",
@@ -352,7 +526,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 5392,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -363,15 +537,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "3 days ago"
+    "last_active": "1 week ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 5392
+      },
+      {
+        "date": "2026-10-26",
+        "level": 5392
+      }
+    ]
   },
   {
     "number": "019",
     "name": "Lilith",
     "type": "[ARG] Officer",
     "image": null,
-    "level": 31365,
-    "date": "20 October 2026",
+    "level": 31387,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -382,7 +566,17 @@
     "tags": [
       "Officer"
     ],
-    "last_active": "4 days ago"
+    "last_active": "4 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 31365
+      },
+      {
+        "date": "2026-10-26",
+        "level": 31387
+      }
+    ]
   },
   {
     "number": "020",
@@ -390,7 +584,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2906,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -401,15 +595,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "5 days ago"
+    "last_active": "1 week ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2906
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2906
+      }
+    ]
   },
   {
     "number": "021",
     "name": "DARDMAN",
     "type": "[ARG] Member",
     "image": null,
-    "level": 60,
-    "date": "20 October 2026",
+    "level": 61,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -420,7 +624,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "5 days ago"
+    "last_active": "18 hours ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 60
+      },
+      {
+        "date": "2026-10-26",
+        "level": 61
+      }
+    ]
   },
   {
     "number": "022",
@@ -428,7 +642,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2201,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -439,7 +653,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "6 days ago"
+    "last_active": "3 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2201
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2201
+      }
+    ]
   },
   {
     "number": "023",
@@ -447,7 +671,7 @@
     "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 5773,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -459,7 +683,17 @@
       "Warrior",
       "Member"
     ],
-    "last_active": "1 week ago"
+    "last_active": "5 days ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 5773
+      },
+      {
+        "date": "2026-10-26",
+        "level": 5773
+      }
+    ]
   },
   {
     "number": "024",
@@ -467,7 +701,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 177,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -478,7 +712,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 week ago"
+    "last_active": "1 week ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 177
+      },
+      {
+        "date": "2026-10-26",
+        "level": 177
+      }
+    ]
   },
   {
     "number": "025",
@@ -486,7 +730,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 408,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -497,15 +741,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 week ago"
+    "last_active": "2 weeks ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 408
+      },
+      {
+        "date": "2026-10-26",
+        "level": 408
+      }
+    ]
   },
   {
     "number": "026",
     "name": "Mortician Of Graveyard Islands",
     "type": "[ARG] Member · Warrior",
     "image": null,
-    "level": 4345,
-    "date": "20 October 2026",
+    "level": 4350,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -517,7 +771,17 @@
       "Warrior",
       "Member"
     ],
-    "last_active": "1 week ago"
+    "last_active": "33 minutes ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 4345
+      },
+      {
+        "date": "2026-10-26",
+        "level": 4350
+      }
+    ]
   },
   {
     "number": "027",
@@ -525,7 +789,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 5678,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -536,7 +800,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 weeks ago"
+    "last_active": "2 weeks ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 5678
+      },
+      {
+        "date": "2026-10-26",
+        "level": 5678
+      }
+    ]
   },
   {
     "number": "028",
@@ -544,7 +818,7 @@
     "type": "[ARG] Founder",
     "image": null,
     "level": 13257,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -555,9 +829,19 @@
     "tags": [
       "Founder"
     ],
-    "last_active": "2 weeks ago",
+    "last_active": "3 weeks ago",
     "roles": [
       "Founder"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 13257
+      },
+      {
+        "date": "2026-10-26",
+        "level": 13257
+      }
     ]
   },
   {
@@ -566,7 +850,7 @@
     "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
     "level": 7482,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -579,11 +863,21 @@
       "Warrior",
       "Founder"
     ],
-    "last_active": "3 weeks ago",
+    "last_active": "4 weeks ago",
     "roles": [
       "Co-Lead",
       "Warrior",
       "Founder"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 7482
+      },
+      {
+        "date": "2026-10-26",
+        "level": 7482
+      }
     ]
   },
   {
@@ -592,7 +886,7 @@
     "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 1411,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -604,7 +898,17 @@
       "Warrior",
       "Member"
     ],
-    "last_active": "3 weeks ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1411
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1411
+      }
+    ]
   },
   {
     "number": "031",
@@ -612,7 +916,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2859,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -623,7 +927,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2859
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2859
+      }
+    ]
   },
   {
     "number": "032",
@@ -631,7 +945,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1156,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -642,7 +956,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1156
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1156
+      }
+    ]
   },
   {
     "number": "033",
@@ -650,7 +974,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2528,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -661,7 +985,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2528
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2528
+      }
+    ]
   },
   {
     "number": "034",
@@ -669,7 +1003,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2377,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -680,7 +1014,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2377
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2377
+      }
+    ]
   },
   {
     "number": "035",
@@ -688,7 +1032,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 3170,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -699,7 +1043,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 3170
+      },
+      {
+        "date": "2026-10-26",
+        "level": 3170
+      }
+    ]
   },
   {
     "number": "036",
@@ -707,7 +1061,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1513,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -718,7 +1072,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1513
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1513
+      }
+    ]
   },
   {
     "number": "037",
@@ -726,7 +1090,7 @@
     "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 1167,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -738,15 +1102,25 @@
       "Warrior",
       "Member"
     ],
-    "last_active": "1 month ago"
+    "last_active": "1 month ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1167
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1167
+      }
+    ]
   },
   {
     "number": "038",
     "name": "RyderRocketship",
     "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
-    "level": 8627,
-    "date": "20 October 2026",
+    "level": 8700,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -759,11 +1133,21 @@
       "Warrior",
       "Founder"
     ],
-    "last_active": "1 month ago",
+    "last_active": "9 hours ago",
     "roles": [
       "Co-Lead",
       "Warrior",
       "Founder"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 8627
+      },
+      {
+        "date": "2026-10-26",
+        "level": 8700
+      }
     ]
   },
   {
@@ -772,7 +1156,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 141,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -783,7 +1167,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "2 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 141
+      },
+      {
+        "date": "2026-10-26",
+        "level": 141
+      }
+    ]
   },
   {
     "number": "040",
@@ -791,7 +1185,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2205,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -802,7 +1196,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "2 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2205
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2205
+      }
+    ]
   },
   {
     "number": "041",
@@ -810,7 +1214,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 93,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -821,15 +1225,25 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "2 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 93
+      },
+      {
+        "date": "2026-10-26",
+        "level": 93
+      }
+    ]
   },
   {
     "number": "042",
     "name": "Luna I The crazy cannoneer",
     "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
-    "level": 10735,
-    "date": "20 October 2026",
+    "level": 10840,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -842,11 +1256,21 @@
       "Warrior",
       "Founder"
     ],
-    "last_active": "2 months ago",
+    "last_active": "4 minutes ago",
     "roles": [
       "Co-Lead",
       "Warrior",
       "Founder"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 10735
+      },
+      {
+        "date": "2026-10-26",
+        "level": 10840
+      }
     ]
   },
   {
@@ -855,7 +1279,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1511,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -866,7 +1290,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "2 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1511
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1511
+      }
+    ]
   },
   {
     "number": "044",
@@ -874,7 +1308,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 15,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -885,7 +1319,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "2 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 15
+      },
+      {
+        "date": "2026-10-26",
+        "level": 15
+      }
+    ]
   },
   {
     "number": "045",
@@ -893,7 +1337,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 21,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -904,7 +1348,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "2 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 21
+      },
+      {
+        "date": "2026-10-26",
+        "level": 21
+      }
+    ]
   },
   {
     "number": "046",
@@ -912,7 +1366,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1617,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -923,7 +1377,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "3 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 1617
+      },
+      {
+        "date": "2026-10-26",
+        "level": 1617
+      }
+    ]
   },
   {
     "number": "047",
@@ -931,7 +1395,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 5116,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -942,7 +1406,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 months ago"
+    "last_active": "3 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 5116
+      },
+      {
+        "date": "2026-10-26",
+        "level": 5116
+      }
+    ]
   },
   {
     "number": "048",
@@ -950,7 +1424,7 @@
     "type": "[ARG] Member · Warrior",
     "image": null,
     "level": 2638,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -962,7 +1436,17 @@
       "Warrior",
       "Member"
     ],
-    "last_active": "3 months ago"
+    "last_active": "3 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2638
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2638
+      }
+    ]
   },
   {
     "number": "049",
@@ -970,7 +1454,7 @@
     "type": "[ARG] Officer Warrior",
     "image": null,
     "level": 27504,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -982,7 +1466,17 @@
       "Officer",
       "Warrior"
     ],
-    "last_active": "3 months ago"
+    "last_active": "3 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 27504
+      },
+      {
+        "date": "2026-10-26",
+        "level": 27504
+      }
+    ]
   },
   {
     "number": "050",
@@ -990,7 +1484,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 790,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1001,7 +1495,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "3 months ago"
+    "last_active": "3 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 790
+      },
+      {
+        "date": "2026-10-26",
+        "level": 790
+      }
+    ]
   },
   {
     "number": "051",
@@ -1009,7 +1513,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 471,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1020,7 +1524,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "3 months ago"
+    "last_active": "3 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 471
+      },
+      {
+        "date": "2026-10-26",
+        "level": 471
+      }
+    ]
   },
   {
     "number": "052",
@@ -1028,7 +1542,7 @@
     "type": "[ARG] Officer",
     "image": null,
     "level": 15562,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1039,7 +1553,17 @@
     "tags": [
       "Officer"
     ],
-    "last_active": "3 months ago"
+    "last_active": "4 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 15562
+      },
+      {
+        "date": "2026-10-26",
+        "level": 15562
+      }
+    ]
   },
   {
     "number": "053",
@@ -1047,7 +1571,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 27,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1058,7 +1582,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "3 months ago"
+    "last_active": "4 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 27
+      },
+      {
+        "date": "2026-10-26",
+        "level": 27
+      }
+    ]
   },
   {
     "number": "054",
@@ -1066,7 +1600,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 587,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1077,7 +1611,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "4 months ago"
+    "last_active": "4 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 587
+      },
+      {
+        "date": "2026-10-26",
+        "level": 587
+      }
+    ]
   },
   {
     "number": "055",
@@ -1085,7 +1629,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2828,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1096,7 +1640,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "4 months ago"
+    "last_active": "4 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2828
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2828
+      }
+    ]
   },
   {
     "number": "056",
@@ -1104,7 +1658,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 818,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1115,7 +1669,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "4 months ago"
+    "last_active": "4 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 818
+      },
+      {
+        "date": "2026-10-26",
+        "level": 818
+      }
+    ]
   },
   {
     "number": "057",
@@ -1123,7 +1687,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 3394,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1134,7 +1698,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "4 months ago"
+    "last_active": "4 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 3394
+      },
+      {
+        "date": "2026-10-26",
+        "level": 3394
+      }
+    ]
   },
   {
     "number": "058",
@@ -1142,7 +1716,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 68,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1153,7 +1727,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "4 months ago"
+    "last_active": "4 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 68
+      },
+      {
+        "date": "2026-10-26",
+        "level": 68
+      }
+    ]
   },
   {
     "number": "059",
@@ -1161,7 +1745,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 490,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1172,7 +1756,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "5 months ago"
+    "last_active": "5 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 490
+      },
+      {
+        "date": "2026-10-26",
+        "level": 490
+      }
+    ]
   },
   {
     "number": "060",
@@ -1180,7 +1774,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 28,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1191,7 +1785,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "5 months ago"
+    "last_active": "5 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 28
+      },
+      {
+        "date": "2026-10-26",
+        "level": 28
+      }
+    ]
   },
   {
     "number": "061",
@@ -1199,7 +1803,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 4032,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1210,7 +1814,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "5 months ago"
+    "last_active": "5 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 4032
+      },
+      {
+        "date": "2026-10-26",
+        "level": 4032
+      }
+    ]
   },
   {
     "number": "062",
@@ -1218,7 +1832,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2931,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1229,7 +1843,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "6 months ago"
+    "last_active": "6 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2931
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2931
+      }
+    ]
   },
   {
     "number": "063",
@@ -1237,7 +1861,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 3754,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1248,7 +1872,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "6 months ago"
+    "last_active": "6 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 3754
+      },
+      {
+        "date": "2026-10-26",
+        "level": 3754
+      }
+    ]
   },
   {
     "number": "064",
@@ -1256,7 +1890,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 4303,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1267,7 +1901,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "6 months ago"
+    "last_active": "6 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 4303
+      },
+      {
+        "date": "2026-10-26",
+        "level": 4303
+      }
+    ]
   },
   {
     "number": "065",
@@ -1275,7 +1919,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 3100,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1286,7 +1930,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "6 months ago"
+    "last_active": "6 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 3100
+      },
+      {
+        "date": "2026-10-26",
+        "level": 3100
+      }
+    ]
   },
   {
     "number": "066",
@@ -1294,7 +1948,7 @@
     "type": "[ARG] Founder · Warrior",
     "image": null,
     "level": 2962,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -1310,6 +1964,16 @@
     "roles": [
       "Founder",
       "Warrior"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2962
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2962
+      }
     ]
   },
   {
@@ -1318,7 +1982,7 @@
     "type": "[ARG] Founder",
     "image": null,
     "level": 2026,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -1332,6 +1996,16 @@
     "last_active": "7 months ago",
     "roles": [
       "Founder"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 2026
+      },
+      {
+        "date": "2026-10-26",
+        "level": 2026
+      }
     ]
   },
   {
@@ -1340,7 +2014,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 8889,
-    "date": "20 October 2026",
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1351,7 +2025,17 @@
     "tags": [
       "Member"
     ],
-    "last_active": "7 months ago"
+    "last_active": "7 months ago",
+    "level_snapshots": [
+      {
+        "date": "2026-10-20",
+        "level": 8889
+      },
+      {
+        "date": "2026-10-26",
+        "level": 8889
+      }
+    ]
   },
   {
     "number": "069",
@@ -1359,8 +2043,8 @@
     "type": "[ARG] Recruit",
     "image": null,
     "card_id": "willy-dex-069",
-    "level": "???",
-    "date": "???",
+    "level": 413,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1372,7 +2056,14 @@
     ],
     "roles": [
       "Recruit"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-26",
+        "level": 413
+      }
+    ],
+    "last_active": "19 hours ago"
   },
   {
     "number": "070",
@@ -1380,8 +2071,8 @@
     "type": "[ARG] Recruit",
     "image": null,
     "card_id": "willy-dex-070",
-    "level": "???",
-    "date": "???",
+    "level": 87,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1393,7 +2084,14 @@
     ],
     "roles": [
       "Recruit"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-26",
+        "level": 87
+      }
+    ],
+    "last_active": "1 day ago"
   },
   {
     "number": "071",
@@ -1401,8 +2099,8 @@
     "type": "[ARG] Recruit",
     "image": null,
     "card_id": "willy-dex-071",
-    "level": "???",
-    "date": "???",
+    "level": 2875,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1414,7 +2112,14 @@
     ],
     "roles": [
       "Recruit"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-26",
+        "level": 2875
+      }
+    ],
+    "last_active": "9 minutes ago"
   },
   {
     "number": "072",
@@ -1422,8 +2127,8 @@
     "type": "[ARG] Officer",
     "image": null,
     "card_id": "willy-dex-072",
-    "level": "???",
-    "date": "???",
+    "level": 12293,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1431,11 +2136,19 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Officer"
+      "Officer",
+      "Warrior"
     ],
     "roles": [
       "Officer"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-26",
+        "level": 12293
+      }
+    ],
+    "last_active": "9 hours ago"
   },
   {
     "number": "073",
@@ -1443,8 +2156,8 @@
     "type": "[ARG] Cove Intern",
     "image": null,
     "card_id": "willy-dex-073",
-    "level": "???",
-    "date": "???",
+    "level": 200,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1456,7 +2169,14 @@
     ],
     "roles": [
       "Cove Intern"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-26",
+        "level": 200
+      }
+    ],
+    "last_active": "9 hours ago"
   },
   {
     "number": "074",
@@ -1464,8 +2184,8 @@
     "type": "[ARG] Recruit",
     "image": null,
     "card_id": "willy-dex-074",
-    "level": "???",
-    "date": "???",
+    "level": 60,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1477,7 +2197,14 @@
     ],
     "roles": [
       "Recruit"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-26",
+        "level": 60
+      }
+    ],
+    "last_active": "3 hours ago"
   },
   {
     "number": "075",
@@ -1485,8 +2212,8 @@
     "type": "[ARG] Recruit",
     "image": null,
     "card_id": "willy-dex-075",
-    "level": "???",
-    "date": "???",
+    "level": 1355,
+    "date": "26 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1498,7 +2225,14 @@
     ],
     "roles": [
       "Recruit"
-    ]
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-26",
+        "level": 1355
+      }
+    ],
+    "last_active": "53 minutes ago"
   },
   {
     "number": "076",
