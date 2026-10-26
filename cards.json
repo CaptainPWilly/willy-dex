@@ -1481,10 +1481,24 @@
   },
   {
     "number": "075",
-    "name": "???",
-    "type": "???",
+    "name": "DoubleDs",
+    "type": "[ARG] Recruit",
     "image": null,
-    "card_id": "willy-dex-075"
+    "card_id": "willy-dex-075",
+    "level": "???",
+    "date": "???",
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ]
   },
   {
     "number": "076",
