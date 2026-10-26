@@ -150,11 +150,11 @@ function levelHistory(c){
 function historyContent(c){
  const rows=levelHistory(c);if(!rows.length)return '<div class="history-empty">NO LEVEL SNAPSHOTS YET</div>';
  const first=rows[0],last=rows[rows.length-1],gain=last.level-first.level,delta=(gain>0?'+':'')+gain.toLocaleString('en-US');
- const graph=(expanded,mode='total')=>{
+ const graph=(expanded)=>{
  const width=expanded?Math.max(310,rows.length*95):300,height=170,left=expanded?44:12,right=expanded?44:12,top=expanded?30:16,bottom=expanded?40:16;
  const timestamps=rows.map(r=>Date.parse(r.date)),timeStart=timestamps[0],timeSpan=Math.max(1,timestamps[timestamps.length-1]-timeStart);
- const vals=mode==='gain'?rows.map((r,i)=>i?(r.level-rows[i-1].level)/Math.max(1,(timestamps[i]-timestamps[i-1])/86400000):0):rows.map(r=>r.level);
- const lowVal=Math.min(...vals),highVal=Math.max(...vals),spread=Math.max(1,highVal-lowVal),lo=Math.max(mode==='total'?0:-Infinity,lowVal-spread*.2),hi=highVal+spread*.2;
+ const vals=rows.map(r=>r.level);
+ const lowVal=Math.min(...vals),highVal=Math.max(...vals),spread=Math.max(1,highVal-lowVal),lo=Math.max(0,lowVal-spread*.2),hi=highVal+spread*.2;
  const x=i=>left+(rows.length===1?(width-left-right)/2:(timestamps[i]-timeStart)/timeSpan*(width-left-right));
  const y=v=>top+(hi-v)/(hi-lo)*(height-top-bottom);
  const p=vals.map((v,i)=>[x(i),y(v)]),line=p.map((v,i)=>(i?'L':'M')+v[0].toFixed(1)+' '+v[1].toFixed(1)).join(' ');
@@ -164,12 +164,11 @@ function historyContent(c){
  return '<svg class="history-line" width="'+width+'" height="170" viewBox="0 0 '+width+' '+height+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Recorded level progression">'+guides+'<path d="'+line+'" fill="none" stroke="#e4b572" stroke-width="'+(expanded?3:3.6)+'" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+dots+labels+'</svg>';
  };
  const preview='<div class="history-preview"><div class="history-preview-title">LEVEL PROGRESSION</div><div class="history-preview-graph">'+graph(false)+'</div><div class="history-preview-footer"><strong>'+safe(last.level.toLocaleString('en-US'))+' LVL</strong><span>'+safe(rows.length>1?delta+' GAIN':'FIRST RECORD')+'</span></div></div>';
- const details='<div class="history-detail"><div class="history-heading"><span>LEVEL HISTORY</span><span>'+rows.length+' RECORD'+(rows.length===1?'':'S')+'</span></div><div class="history-metrics"><strong>LVL '+safe(last.level.toLocaleString('en-US'))+'</strong><span>'+safe(rows.length>1?delta+' GAIN':'FIRST RECORD')+'</span></div><div class="history-modes"><button type="button" class="history-mode active" data-mode="total" aria-pressed="true">TOTAL LEVEL</button><button type="button" class="history-mode" data-mode="gain" aria-pressed="false">GAIN / DAY</button></div><div class="history-scroll" tabindex="0" aria-label="Scroll history horizontally"><div class="history-graph-total">'+graph(true)+'</div><div class="history-graph-gain" hidden>'+graph(true,'gain')+'</div></div><div class="history-inspect" aria-live="polite">Tap a point for level and date</div></div>';
+ const details='<div class="history-detail"><div class="history-heading"><span>LEVEL HISTORY</span><span>'+rows.length+' RECORD'+(rows.length===1?'':'S')+'</span></div><div class="history-metrics"><strong>LVL '+safe(last.level.toLocaleString('en-US'))+'</strong><span>'+safe(rows.length>1?delta+' GAIN':'FIRST RECORD')+'</span></div><div class="history-scroll" tabindex="0" aria-label="Scroll history horizontally"><div class="history-graph-total">'+graph(true)+'</div></div><div class="history-inspect" aria-live="polite">Tap a point for level and date</div></div>';
  return '<div class="level-history">'+preview+details+'</div>';
 }
 function wireHistory(overlayEl,c){
- const history=overlayEl.querySelector('.history-detail');if(!history)return;const rows=levelHistory(c),scroll=history.querySelector('.history-scroll'),inspect=history.querySelector('.history-inspect');
- history.querySelectorAll('.history-mode').forEach(button=>button.addEventListener('click',e=>{e.stopPropagation();const gain=button.dataset.mode==='gain';history.querySelector('.history-graph-total').hidden=gain;history.querySelector('.history-graph-gain').hidden=!gain;history.querySelectorAll('.history-mode').forEach(b=>{b.classList.toggle('active',b===button);b.setAttribute('aria-pressed',String(b===button))});scroll.scrollLeft=0;inspect.textContent=gain?'Levels gained per day between snapshots':'Tap a point for level and date'}));
+ const history=overlayEl.querySelector('.history-detail');if(!history)return;const rows=levelHistory(c),inspect=history.querySelector('.history-inspect');
  history.querySelectorAll('.history-dot').forEach(point=>point.addEventListener('click',e=>{e.stopPropagation();const i=Number(point.dataset.point),r=rows[i];if(r)inspect.textContent=r.date+' · Level '+r.level.toLocaleString('en-US')+(i?' · '+(r.level-rows[i-1].level>=0?'+':'')+(r.level-rows[i-1].level).toLocaleString('en-US')+' since prior record':' · First record')}));
 }
 
