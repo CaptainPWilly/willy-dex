@@ -1,0 +1,42 @@
+name: Import war snapshot
+on:
+  issues:
+    types: [opened, labeled]
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: war-snapshot-import
+  cancel-in-progress: false
+jobs:
+  import:
+    if: contains(github.event.issue.labels.*.name, 'war-snapshot') && (github.event.issue.author_association == 'OWNER' || github.event.issue.author_association == 'MEMBER' || github.event.issue.author_association == 'COLLABORATOR')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Import snapshot
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: node scripts/import-war-issue.cjs
+      - name: Commit history
+        run: |
+          git config user.name "willy-dex-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wars.json
+          git diff --cached --quiet || (git commit -m "War snapshot from issue #${{ github.event.issue.number }}" && git push)
+      - name: Confirm import
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue comment "${{ github.event.issue.number }}" --body "War snapshot imported into wars.json."
+      - name: Report import failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue comment "${{ github.event.issue.number }}" --body "Import failed. Check the workflow run and the input format."
