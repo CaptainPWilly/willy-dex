@@ -1,5 +1,215 @@
 {
   "version": 1,
   "threshold": 1500,
-  "snapshots": []
+  "snapshots": [
+    {
+      "id": "1e648452-bfe4-4e47-aadb-3bd089bebdee",
+      "issueNumber": "2",
+      "capturedAt": "2026-10-27T22:52:00.000Z",
+      "savedAt": "2026-10-27T22:53:07.876Z",
+      "raw": "Helheim\nOrder of Derp\n945 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nMotherland\n954 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nRain Factory\nETERNAL GLADIATORS\n303 Kills\n13 Kills\nThis war started 2 days ago\n\nInspect War\nAttackable Players\n\nUmbral\nRain Factory\n254 Kills\n101 Kills\nThis war started 3 days ago\n\nInspect War\nAttackable Players\n\nRain Factory\nAnarchy\n388 Kills\n0 Kills\nThis war started 2 days ago\n\nInspect War\nAttackable Players\n\nRain Factory\nThe Abyss\n307 Kills\n0 Kills\nThis war started 2 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nIce Age\n921 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nDeathstar\n898 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nArcane\n908 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nRain Factory\nIndonesia\n578 Kills\n0 Kills\nThis war started 2 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nThe Asylum\n957 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nEgo\n902 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nBlack Dragon\n926 Kills\n3 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nRain Factory\nZealous Zenith Kitties\n222 Kills\n0 Kills\nThis war started 2 days ago\n\nInspect War\nAttackable Players\n\nRain Factory\nSweet Contenders\n1,244 Kills\n2 Kills\nThis war started 1 month ago\n\nInspect War\nAttackable Players\n\nBlack Dragon\nThe Myphist\n687 Kills\n0 Kills\nThis war started 3 months ago\n\nInspect War\nAttackable Players\n\nHelheim\nKnights of Da Boodi\n911 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nRain Factory\n[Slums] Guild\n1,176 Kills\n2 Kills\nThis war started 1 week ago\n\nInspect War\nAttackable Players\n\nHelheim\nZealous Zenith Kitties\n816 Kills\n0 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nMasochism\n823 Kills\n22 Kills\nThis war started 4 days ago\n\nInspect War\nAttackable Players",
+      "wars": [
+        {
+          "guildA": "Helheim",
+          "guildB": "Order of Derp",
+          "killsA": 945,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-145a82f1-e610-44c2-8ddb-bb818974611a"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Motherland",
+          "killsA": 954,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-5c4dc7f4-1814-4d78-a132-12a238f580c1"
+        },
+        {
+          "guildA": "Rain Factory",
+          "guildB": "ETERNAL GLADIATORS",
+          "killsA": 303,
+          "killsB": 13,
+          "ageText": "This war started 2 days ago",
+          "ageDays": 2,
+          "status": "active",
+          "warId": "war-a6ab7733-7e0a-40ae-9f54-958193cd0a1a"
+        },
+        {
+          "guildA": "Umbral",
+          "guildB": "Rain Factory",
+          "killsA": 254,
+          "killsB": 101,
+          "ageText": "This war started 3 days ago",
+          "ageDays": 3,
+          "status": "active",
+          "warId": "war-3a4c304b-2cdf-454e-a873-b2a18f855169"
+        },
+        {
+          "guildA": "Rain Factory",
+          "guildB": "Anarchy",
+          "killsA": 388,
+          "killsB": 0,
+          "ageText": "This war started 2 days ago",
+          "ageDays": 2,
+          "status": "active",
+          "warId": "war-0ce6fef6-fb3f-4347-b07c-74b4cede4f83"
+        },
+        {
+          "guildA": "Rain Factory",
+          "guildB": "The Abyss",
+          "killsA": 307,
+          "killsB": 0,
+          "ageText": "This war started 2 days ago",
+          "ageDays": 2,
+          "status": "active",
+          "warId": "war-7c1301b7-a82a-4127-89bf-6c8ffd622362"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Ice Age",
+          "killsA": 921,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-f748b3bf-40ca-4025-ab47-2abde5941c19"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Deathstar",
+          "killsA": 898,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-2a107dcf-1f2a-4b9c-8bb2-562f2b7d0c3c"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Arcane",
+          "killsA": 908,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-b9b1b2e5-7c81-4539-8806-399d5e4a5880"
+        },
+        {
+          "guildA": "Rain Factory",
+          "guildB": "Indonesia",
+          "killsA": 578,
+          "killsB": 0,
+          "ageText": "This war started 2 days ago",
+          "ageDays": 2,
+          "status": "active",
+          "warId": "war-25c0a118-a82a-4cfd-a8b7-20d9bf6d3f88"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "The Asylum",
+          "killsA": 957,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-cc039c93-2bd6-4a9d-9f9d-23937575664a"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Ego",
+          "killsA": 902,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-57ac8ac2-e56b-4d26-8f21-539c77d990f4"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Black Dragon",
+          "killsA": 926,
+          "killsB": 3,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-09260a1b-ac45-4892-8b3b-8368e2ecb02c"
+        },
+        {
+          "guildA": "Rain Factory",
+          "guildB": "Zealous Zenith Kitties",
+          "killsA": 222,
+          "killsB": 0,
+          "ageText": "This war started 2 days ago",
+          "ageDays": 2,
+          "status": "active",
+          "warId": "war-61243616-b67f-4208-846a-e7f0eb897eda"
+        },
+        {
+          "guildA": "Rain Factory",
+          "guildB": "Sweet Contenders",
+          "killsA": 1244,
+          "killsB": 2,
+          "ageText": "This war started 1 month ago",
+          "ageDays": 30.44,
+          "status": "active",
+          "warId": "war-10aadac2-271f-4360-a32e-31ae335ba5e3"
+        },
+        {
+          "guildA": "Black Dragon",
+          "guildB": "The Myphist",
+          "killsA": 687,
+          "killsB": 0,
+          "ageText": "This war started 3 months ago",
+          "ageDays": 91.32000000000001,
+          "status": "active",
+          "warId": "war-eb0a1793-bad9-4679-9b83-c5c14799c156"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Knights of Da Boodi",
+          "killsA": 911,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-74717a12-90fa-45cf-9fb7-3e153565264d"
+        },
+        {
+          "guildA": "Rain Factory",
+          "guildB": "[Slums] Guild",
+          "killsA": 1176,
+          "killsB": 2,
+          "ageText": "This war started 1 week ago",
+          "ageDays": 7,
+          "status": "active",
+          "warId": "war-6e2e0745-be7f-41b5-9b31-aa15bee8aeb0"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Zealous Zenith Kitties",
+          "killsA": 816,
+          "killsB": 0,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-91ee4651-a181-46de-ae67-e218db5a6650"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "Masochism",
+          "killsA": 823,
+          "killsB": 22,
+          "ageText": "This war started 4 days ago",
+          "ageDays": 4,
+          "status": "active",
+          "warId": "war-d4a069f2-d763-4489-bf04-e7dc366b211b"
+        }
+      ]
+    }
+  ]
 }
