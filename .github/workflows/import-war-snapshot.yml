@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   import:
-    if: contains(github.event.issue.labels.*.name, 'war-snapshot') && (github.event.issue.author_association == 'OWNER' || github.event.issue.author_association == 'MEMBER' || github.event.issue.author_association == 'COLLABORATOR')
+    if: contains(github.event.issue.body, 'WILLY-DEX WAR SNAPSHOT') && (github.event.issue.author_association == 'OWNER' || github.event.issue.author_association == 'MEMBER' || github.event.issue.author_association == 'COLLABORATOR')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
