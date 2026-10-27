@@ -25,6 +25,35 @@ if(req.url==='/api/cards'&&req.method==='POST'){if(!authorized(req))return json(
 let number;if(action==='delete'){number=String(data.number);if(!/^\d{3}$/.test(number))throw Error('Invalid number');const idx=list.findIndex(x=>x.number===number);if(idx<0)throw Error('Card not found');list[idx]={number,name:'???',type:'???',image:null}}
 else{const c=validate(data.card);number=c.number;const idx=list.findIndex(x=>x.number===number);if(idx<0)throw Error('Card slot not found');list[idx]=c}
 await git('cards.json','PUT',{message:'Willy-Dex: '+action+' card #'+number,sha:file.sha,content:Buffer.from(JSON.stringify(list,null,2)+'\n').toString('base64')});return json(res,200,{ok:true,number})}
+if(req.url==='/api/wars'&&req.method==='POST'){
+if(!authorized(req))return json(res,401,{error:'Editor locked'});
+const data=await read(req);
+if(typeof data.raw!=='string'||!data.raw.trim()||data.raw.length>200000)throw Error('Invalid raw snapshot');
+if(!data.capturedAt||!Number.isFinite(Date.parse(data.capturedAt))||new Date(data.capturedAt).toISOString()!==data.capturedAt)throw Error('Invalid capture timestamp');
+if(Date.parse(data.capturedAt)>Date.now()+3600000)throw Error('Capture timestamp is in the future');
+if(!Array.isArray(data.wars)||data.wars.length<1||data.wars.length>300)throw Error('Expected 1–300 wars');
+const cleanName=s=>{if(typeof s!=='string'||!s.trim()||s.length>120)throw Error('Invalid guild name');return s.trim()};
+const wars=data.wars.map(w=>{
+const guildA=cleanName(w.guildA),guildB=cleanName(w.guildB);
+if(guildA.toLowerCase()===guildB.toLowerCase())throw Error('Same guild on both sides');
+const killsA=w.killsA,killsB=w.killsB;
+if(!Number.isSafeInteger(killsA)||killsA<0||!Number.isSafeInteger(killsB)||killsB<0)throw Error('Invalid kill count');
+if(typeof w.warId!=='string'||!/^[-a-zA-Z0-9_]{3,100}$/.test(w.warId))throw Error('Invalid war ID');
+return {warId:w.warId,guildA,guildB,killsA,killsB,ageText:String(w.ageText||'').slice(0,100),ageDays:Number.isFinite(w.ageDays)&&w.ageDays>=0?w.ageDays:null,status:'active'}
+});
+if(new Set(wars.map(w=>w.warId)).size!==wars.length)throw Error('Duplicate war ID in snapshot');
+const file=await git('wars.json'),doc=JSON.parse(Buffer.from(file.content,'base64').toString('utf8'));
+if(!doc||doc.version!==1||!Array.isArray(doc.snapshots))throw Error('Invalid war registry');
+const normalized=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const signatures=new Map();
+for(const s of doc.snapshots)for(const w of (s.wars||[])){const sig=[normalized(w.guildA),normalized(w.guildB)].sort().join('|');if(!signatures.has(w.warId))signatures.set(w.warId,sig);}
+for(const w of wars){const sig=[normalized(w.guildA),normalized(w.guildB)].sort().join('|');if(signatures.has(w.warId)&&signatures.get(w.warId)!==sig)throw Error('War ID belongs to another guild pair: '+w.warId)}
+if(doc.snapshots.some(s=>s.capturedAt===data.capturedAt&&s.raw===data.raw))return json(res,409,{error:'This exact snapshot was already saved'});
+const id=crypto.randomUUID(),snapshot={id,capturedAt:data.capturedAt,savedAt:new Date().toISOString(),raw:data.raw,wars};
+doc.snapshots.push(snapshot);doc.snapshots.sort((a,b)=>Date.parse(a.capturedAt)-Date.parse(b.capturedAt));
+await git('wars.json','PUT',{message:'Willy DEX: record war snapshot '+data.capturedAt,sha:file.sha,content:Buffer.from(JSON.stringify(doc,null,2)+'\n').toString('base64')});
+return json(res,200,{ok:true,id,count:wars.length});
+}
 if(req.url==='/api/portrait'&&req.method==='POST'){if(!authorized(req))return json(res,401,{error:'Editor locked'});const data=await read(req);if(!/^\d{3}$/.test(data.number||'')||Number(data.number)<1||Number(data.number)>100)throw Error('Invalid card number');if(!['png','jpg','webp','gif'].includes(data.ext))throw Error('Unsupported portrait type');if(typeof data.base64!=='string'||data.base64.length>4*1024*1024||!/^[A-Za-z0-9+/]*={0,2}$/.test(data.base64))throw Error('Invalid upload');const path='cards/'+data.number+'-upload.'+data.ext;let sha;try{sha=(await git(path)).sha}catch(e){if(!String(e.message).includes('404'))throw e}await git(path,'PUT',{message:'Willy-Dex: update card portrait #'+data.number,content:data.base64,...(sha?{sha}:{})});return json(res,200,{path})}
 return json(res,404,{error:'Not found'});
 }catch(e){console.error(e.message);return json(res,400,{error:e.message})}
