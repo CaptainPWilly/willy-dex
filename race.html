@@ -38,10 +38,10 @@ const movers=b.guilds.filter(g=>old.has(g.name)&&old.get(g.name).rank!==g.rank).
 const entrants=b.guilds.filter(g=>!old.has(g.name)).map(g=>({name:g.name,to:g.rank,type:'entry'}));
 const exits=a.guilds.filter(g=>!next.has(g.name)).map(g=>({name:g.name,from:g.rank,type:'exit'}));
 const events=[...movers,...entrants,...exits];
-const reveal=.17,display=phase<reveal?a:b;
+const seconds=Number($('duration').value)||90;const reveal=Math.min(.35,1/Math.max(1,seconds/intervals));const display=phase<reveal?a:b;
 // Rank changes are presented only after the complete next verified board is revealed.
-const highlightPhase=Math.max(0,Math.min(1,(phase-reveal)/.77)),position=highlightPhase*events.length,eventIndex=Math.min(events.length-1,Math.floor(position));
-const current=phase>=reveal&&phase<.97?events[eventIndex]:null,part=position-Math.floor(position),pulse=current?Math.sin(Math.PI*Math.min(1,part)):0;
+const highlightPhase=Math.max(0,Math.min(1,(phase-reveal)/Math.max(.001,1-reveal-.035))),position=highlightPhase*events.length,eventIndex=Math.min(events.length-1,Math.floor(position));
+const current=phase>=reveal&&phase<.995?events[eventIndex]:null,part=position-Math.floor(position),pulse=current?Math.sin(Math.PI*Math.min(1,part)):0;
 let roster=display.guilds.slice().sort((x,y)=>x.rank-y.rank);const selectedMode=$('scope').value==='selected';if(selectedMode)roster=roster.filter(g=>selected.has(g.name));
 const count=selectedMode?Math.max(1,roster.length):50,cols=Math.min(5,Math.max(1,Math.ceil(count/10))),rows=Math.ceil(count/cols),gap=8,cw=(996-gap*(cols-1))/cols,rh=Math.min(115,Math.floor(1165/rows)),top=412;
 const point=i=>({x:43+Math.floor(i/rows)*(cw+gap),y:top+(i%rows)*rh});
