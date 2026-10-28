@@ -54,6 +54,29 @@ doc.snapshots.push(snapshot);doc.snapshots.sort((a,b)=>Date.parse(a.capturedAt)-
 await git('wars.json','PUT',{message:'Willy DEX: record war snapshot '+data.capturedAt,sha:file.sha,content:Buffer.from(JSON.stringify(doc,null,2)+'\n').toString('base64')});
 return json(res,200,{ok:true,id,count:wars.length});
 }
+
+if(req.url==='/api/glb'&&req.method==='POST'){
+if(!authorized(req))return json(res,401,{error:'Editor locked'});
+const data=await read(req);
+if(!Number.isSafeInteger(data.season)||data.season<1||data.season>999)throw Error('Invalid season');
+if(typeof data.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(data.date)||!Number.isFinite(Date.parse(data.date+'T00:00:00Z')))throw Error('Invalid snapshot date');
+if(data.date>new Date().toISOString().slice(0,10))throw Error('Future snapshot dates not allowed');
+if(!Array.isArray(data.guilds)||data.guilds.length!==50)throw Error('Expected top 50 guilds');
+const ranks=new Set(),names=new Set();
+const guilds=data.guilds.map(g=>{
+if(!g||!Number.isSafeInteger(g.rank)||g.rank<1||g.rank>50||typeof g.name!=='string'||!g.name.trim()||g.name.length>120||!Number.isSafeInteger(g.experience)||g.experience<0)throw Error('Invalid guild record');
+const name=g.name.trim(),key=name.toLocaleLowerCase();if(ranks.has(g.rank)||names.has(key))throw Error('Duplicate rank or guild');ranks.add(g.rank);names.add(key);
+return {rank:g.rank,name,experience:g.experience}
+}).sort((a,b)=>a.rank-b.rank);
+const file=await git('glb.json'),doc=JSON.parse(Buffer.from(file.content,'base64').toString('utf8'));
+if(doc.version!==1||!Array.isArray(doc.snapshots))throw Error('Invalid GLB registry');
+const snapshot={date:data.date,season:data.season,capturedAt:new Date().toISOString(),guilds};
+const index=doc.snapshots.findIndex(s=>(s.season||15)===data.season&&s.date===data.date);
+if(index>=0)doc.snapshots[index]=snapshot;else doc.snapshots.push(snapshot);
+doc.season=data.season;doc.snapshots.sort((a,b)=>(a.season||15)-(b.season||15)||a.date.localeCompare(b.date));
+await git('glb.json','PUT',{message:'Willy DEX: GLB season '+data.season+' snapshot '+data.date,sha:file.sha,content:Buffer.from(JSON.stringify(doc,null,2)+'\n').toString('base64')});
+return json(res,200,{ok:true,season:data.season,date:data.date,count:guilds.length});
+}
 if(req.url==='/api/portrait'&&req.method==='POST'){if(!authorized(req))return json(res,401,{error:'Editor locked'});const data=await read(req);if(!/^\d{3}$/.test(data.number||'')||Number(data.number)<1||Number(data.number)>100)throw Error('Invalid card number');if(!['png','jpg','webp','gif'].includes(data.ext))throw Error('Unsupported portrait type');if(typeof data.base64!=='string'||data.base64.length>4*1024*1024||!/^[A-Za-z0-9+/]*={0,2}$/.test(data.base64))throw Error('Invalid upload');const path='cards/'+data.number+'-upload.'+data.ext;let sha;try{sha=(await git(path)).sha}catch(e){if(!String(e.message).includes('404'))throw e}await git(path,'PUT',{message:'Willy-Dex: update card portrait #'+data.number,content:data.base64,...(sha?{sha}:{})});return json(res,200,{path})}
 return json(res,404,{error:'Not found'});
 }catch(e){console.error(e.message);return json(res,400,{error:e.message})}
