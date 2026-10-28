@@ -6,7 +6,7 @@ function color(n){if(n==='The Pirate Cove')return '#f5d28d';let h=0;for(const ch
 const stamp=s=>s.capturedAt||s.date+"T00:00:00Z";
 const hour=s=>{const d=new Date(stamp(s));return Number.isFinite(d.getTime())?Math.floor(d.getTime()/3600000)*3600000:0};
 const showTime=s=>{if(!s)return "—";if(!s.capturedAt)return s.date+" · time unknown";return new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",month:"short",day:"numeric",hour:"numeric",hour12:true,timeZoneName:"short"}).format(new Date(hour(s)))};
-const exactTime=s=>s.capturedAt?new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",dateStyle:"medium",timeStyle:"short",timeZoneName:"short"}).format(new Date(s.capturedAt)):s.date+" · time unknown";
+const exactTime=s=>s.capturedAt?new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short"}).format(new Date(s.capturedAt)):s.date+" · time unknown";
 const key=s=>s.capturedAt||s.date;
 const snaps=()=>doc.snapshots.filter(s=>(s.season||15)===doc.season).slice().sort((a,b)=>hour(a)-hour(b)||stamp(a).localeCompare(stamp(b)));
 const selected=()=>snaps().find(s=>key(s)===day)||snaps().at(-1);
