@@ -50,5 +50,52 @@ function cryptoRandom(){return Math.random().toString(36).slice(2,10)}
 $('previewBtn').onclick=()=>{const date=$('captured').value;const d=new Date(date);if(!date||!Number.isFinite(d.getTime()))return$('status').textContent='Choose a valid capture date.';const wars=assign(parse($('raw').value),d.toISOString());if(!wars.length){pending=null;$('saveControls').hidden=true;return $('preview').innerHTML='<p class="err">No recognized war blocks. Expected two guild names, two “Kills” lines, and a war age line.</p>'}pending={capturedAt:d.toISOString(),raw:$('raw').value,wars};$('preview').innerHTML='<h3>'+wars.length+' parsed wars</h3>'+wars.map((w,i)=>'<div class="match"><b>'+escapeHTML(w.guildA)+' — '+fmt(w.killsA)+'</b> vs <b>'+escapeHTML(w.guildB)+' — '+fmt(w.killsB)+'</b><p class="muted">'+escapeHTML(w.ageText)+'</p><label>War identity (edit if mismatched)</label><input data-war="'+i+'" value="'+escapeHTML(w.warId)+'" style="width:100%" maxlength="100">'+(w.issue?'<p class="warning">'+escapeHTML(w.issue)+'</p>':'')+'</div>').join('');$('saveControls').hidden=false;$('status').textContent='Review names, scores, and war identities before saving.'};
 $('preview').addEventListener('input',e=>{const i=e.target.dataset.war;if(pending&&i!==undefined)pending.wars[Number(i)].warId=e.target.value.trim()});
 $('saveBtn').onclick=()=>{if(!pending)return;const wars=pending.wars;if(wars.some(w=>!w.warId||!/^[a-zA-Z0-9_-]{3,100}$/.test(w.warId)))return $('status').textContent='Invalid war identity.';if(new Set(wars.map(w=>w.warId)).size!==wars.length)return $('status').textContent='Two entries share the same war identity.';const body=['WILLY-DEX WAR SNAPSHOT','','Captured at: '+pending.capturedAt,'','=== WAR LIST START ===',pending.raw.trim(),'=== WAR LIST END ==='].join(String.fromCharCode(10));const title='War snapshot '+pending.capturedAt.slice(0,16)+' ('+wars.length+' wars)';const url='https://github.com/CaptainPWilly/willy-dex/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);if(url.length>7500){$('status').textContent='This list is too long for the prefilled GitHub issue link. Split into smaller lists or create the issue manually and paste the source between the markers.';return;}window.open(url,'_blank','noopener,noreferrer');$('status').textContent='Create the GitHub issue in the opened tab. Approved contributor submissions are imported automatically. Refresh the dashboard after GitHub Actions finishes.'};
-async function reload(){const r=await fetch('wars.json?updated='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('Could not load wars.json');registry=await r.json();render()}
+
+function warShortOptions(){
+const select=$('warShortGuild'),warSelect=$('warShortWar'),rows=statsRows().sort((a,b)=>b.kills-a.kills),keep=select.value;
+select.innerHTML=rows.map(r=>'<option value="'+escapeHTML(r.key)+'">'+escapeHTML(r.name)+'</option>').join('');
+if(rows.some(r=>r.key===keep))select.value=keep;else if(rows.some(r=>r.name==='The Pirate Cove'))select.value=rows.find(r=>r.name==='The Pirate Cove').key;
+const row=rows.find(r=>r.key===select.value),old=warSelect.value;
+warSelect.innerHTML=(row?.wars||[]).map(({war:g})=>{const w=g.latest,opp=norm(w.guildA)===row.key?w.guildB:w.guildA;return '<option value="'+escapeHTML(g.id)+'">vs '+escapeHTML(opp)+'</option>'}).join('');
+if(row?.wars.some(x=>x.war.id===old))warSelect.value=old;drawWarShort();
+}
+function drawWarShort(){
+const canvas=$('warShortCanvas');if(!canvas)return null;
+const ctx=canvas.getContext('2d'),W=1080,H=1920;
+ctx.fillStyle='#111715';ctx.fillRect(0,0,W,H);
+const shade=ctx.createLinearGradient(0,0,W,H);shade.addColorStop(0,'#263127');shade.addColorStop(1,'#201710');ctx.fillStyle=shade;ctx.fillRect(0,0,W,H);
+ctx.fillStyle='#bfab82';ctx.fillRect(64,70,7,104);ctx.fillStyle='#e6d2ac';ctx.font='bold 32px sans-serif';ctx.fillText('WILLY CORP / WAR INTELLIGENCE',90,110);
+ctx.font='25px monospace';ctx.fillStyle='#b8ab91';ctx.fillText('RECORDED WAR OBSERVATIONS',90,151);
+ctx.fillStyle='#e7c892';ctx.font='bold 65px Georgia';ctx.fillText('CONFLICT BRIEFING',64,257);ctx.fillRect(64,303,952,3);
+const row=statsRows().find(r=>r.key===$('warShortGuild').value),match=row?.wars.find(x=>x.war.id===$('warShortWar').value);
+if(!row||!match){ctx.font='30px sans-serif';ctx.fillStyle='#cab89b';ctx.fillText('No war observation selected',65,480);return canvas}
+const w=match.war.latest,opponent=norm(w.guildA)===row.key?w.guildB:w.guildA,m=match.measure,opp=measurements(match.war,opponent),pct=m.last==null?null:100*m.last/threshold;
+const fit=(txt,max)=>{while(ctx.measureText(txt).width>max&&txt.length>4)txt=txt.slice(0,-2)+'…';return txt};
+ctx.fillStyle='#d7c29b';ctx.font='30px monospace';ctx.fillText('GUILD',65,390);
+ctx.fillStyle='#f2dfb7';ctx.font='bold 57px Georgia';ctx.fillText(fit(row.name,940),65,461);
+ctx.fillStyle='#d7c29b';ctx.font='30px monospace';ctx.fillText('VERSUS',65,546);
+ctx.fillStyle='#f2dfb7';ctx.font='bold 49px Georgia';ctx.fillText(fit(opponent,945),65,613);
+ctx.fillStyle='#c2ad86';ctx.font='27px monospace';ctx.fillText('CAPTURED '+dateFmt(w.capturedAt),65,704);
+ctx.fillStyle='#e9d1a8';ctx.font='bold 96px Georgia';ctx.fillText(fmt(m.last),65,860);
+ctx.fillStyle='#b6a790';ctx.font='30px sans-serif';ctx.fillText('RECORDED KILLS',65,910);
+ctx.fillStyle='#d4bd93';ctx.font='bold 63px monospace';ctx.fillText(pct==null?'UNKNOWN':pct.toFixed(1)+'%',65,1055);
+ctx.font='27px monospace';ctx.fillStyle='#a9b1a1';ctx.fillText('OF 1,500-KILL REFERENCE',65,1110);
+ctx.fillStyle='#323a31';ctx.fillRect(65,1149,947,28);ctx.fillStyle='#dcb879';ctx.fillRect(65,1149,947*Math.max(0,Math.min(1,(pct||0)/100)),28);
+ctx.fillStyle='#dac7a6';ctx.font='32px sans-serif';ctx.fillText('OPPONENT: '+fmt(opp.last)+' KILLS',65,1268);
+ctx.fillText('OBSERVED GAIN: '+(m.gain==null?'—':fmt(m.gain)),65,1330);
+ctx.fillText('OBSERVATIONS: '+m.count,65,1392);
+ctx.fillText('MEASURED RATE: '+(m.rate==null?'UNAVAILABLE':fmt(m.rate)+'/DAY'),65,1454);
+ctx.fillStyle='#b6a790';ctx.font='23px monospace';ctx.fillText('METRICS ARE OBSERVED, NOT ESTIMATED',65,1609);
+ctx.fillText('1,500 KILLS IS A TRACKING BENCHMARK',65,1655);
+ctx.fillStyle='#c9ad7a';ctx.fillRect(65,1720,945,3);ctx.font='bold 28px sans-serif';ctx.fillText('THE PIRATE COVE · WILLY DEX',65,1795);
+ctx.font='23px monospace';ctx.fillStyle='#b6a790';ctx.fillText('SOURCE: CAPTURED SMMO WAR LISTS',65,1855);
+return canvas;
+}
+function warShortBlob(){return new Promise((resolve,reject)=>drawWarShort().toBlob(b=>b?resolve(b):reject(Error('PNG generation failed')),'image/png'))}
+function saveWarShort(blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='war-intelligence-shorts.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000)}
+$('warShortGuild').onchange=warShortOptions;$('warShortWar').onchange=drawWarShort;
+$('warShortSave').onclick=async()=>{try{saveWarShort(await warShortBlob());$('warShortStatus').textContent='Saved 1080 × 1920 war briefing image'}catch(e){$('warShortStatus').textContent=e.message}};
+$('warShortCopy').onclick=async()=>{try{if(!navigator.clipboard?.write||!window.ClipboardItem)throw Error('Clipboard not supported');await navigator.clipboard.write([new ClipboardItem({'image/png':warShortBlob()})]);$('warShortStatus').textContent='War intelligence image copied'}catch(e){saveWarShort(await warShortBlob());$('warShortStatus').textContent='PNG downloaded instead of copying'}};
+
+async function reload(){const r=await fetch('wars.json?updated='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('Could not load wars.json');registry=await r.json();render();warShortOptions()}
 $('search').oninput=render;$('sort').onchange=render;reload().catch(e=>$('status').textContent=e.message);
