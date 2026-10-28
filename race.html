@@ -46,8 +46,10 @@ ctx.fillStyle='#344438';ctx.fillRect(40,332,1000,5);ctx.fillStyle='#d2ac73';ctx.
 ctx.font='21px monospace';ctx.fillStyle='#aaa990';ctx.fillText(guilds.length+' GUILDS VISIBLE · '+changes+' PLACEMENT CHANGES',41,382);
 if(!guilds.length){ctx.font='27px system-ui';ctx.fillText('Select guilds to begin',41,500);return}
 const cols=Math.min(5,Math.max(1,Math.ceil(guilds.length/10))),rows=Math.ceil(guilds.length/cols),gap=8,colW=(1000-gap*(cols-1))/cols,rowH=Math.min(117,Math.floor(1190/rows)),top=410;
-const sorted=guilds.slice().sort((x,y)=>x.position-y.position);const positions=new Map(sorted.map((g,i)=>[g.name,i]));
-guilds.forEach(g=>{const slot=positions.get(g.name),col=Math.floor(slot/rows),r=slot%rows,x=40+col*(colW+gap),y=top+r*rowH,highlight=g.name==='The Pirate Cove',actual=g.actual;
+guilds.slice().sort((a,b)=>b.position-a.position).forEach(g=>{
+const fromRank=(g.old||g.next).rank-1,toRank=(g.next||g.old).rank-1;
+const fromCol=Math.floor(fromRank/10),fromRow=fromRank%10,toCol=Math.floor(toRank/10),toRow=toRank%10;
+const x=40+(fromCol+(toCol-fromCol)*ease)*(colW+gap),y=top+(fromRow+(toRow-fromRow)*ease)*rowH,highlight=g.name==='The Pirate Cove',actual=g.actual;
 ctx.fillStyle=highlight?'#55432a':'#253229';ctx.fillRect(x,y,colW,rowH-5);ctx.strokeStyle=highlight?'#e5b86d':'#5b655440';ctx.lineWidth=highlight?2:1;ctx.strokeRect(x+.5,y+.5,colW-1,rowH-6);
 ctx.fillStyle=highlight?'#f5ce80':'#d0b99b';ctx.font='bold 21px monospace';ctx.fillText('#'+actual.rank,x+8,y+25);
 ctx.fillStyle='#f5e5cc';ctx.font='bold 17px system-ui';let name=g.name;while(ctx.measureText(name).width>colW-16&&name.length>3)name=name.slice(0,-2)+'…';ctx.fillText(name,x+8,y+51);
