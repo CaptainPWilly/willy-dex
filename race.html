@@ -24,55 +24,72 @@ function snapshots(){const list=raw();if($('source').value==='raw')return list;c
 function download(blob,name){if(!blob||blob.size<100)throw Error('Empty export');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),120000)}
 function frameBlob(){return new Promise((resolve,reject)=>main.toBlob(b=>b?resolve(b):reject(Error('PNG unavailable')),'image/png'))}
 function resize(){const n=Number($('quality').value);main.width=n;main.height=Math.round(n*16/9);ctx.setTransform(main.width/1080,0,0,main.height/1920,0,0);render(Number($('seek').value)/1000)}
+function buildEvents(a,b){
+const before=a.guilds.slice().sort((x,y)=>x.rank-y.rank).map(g=>g.name);
+const target=b.guilds.slice().sort((x,y)=>x.rank-y.rank).map(g=>g.name);
+const known=new Map([...a.guilds,...b.guilds].map(g=>[g.name,g]));
+const events=[],work=before.slice();
+const commit=(name,next,type)=>{const old=work.slice(),from=work.indexOf(name);if(from>=0)work.splice(from,1);if(next>=0)work.splice(next,0,name);events.push({name,type,from,to:next,old,after:work.slice()})};
+for(const name of before){if(!target.includes(name))commit(name,-1,'exit')}
+for(let i=0;i<target.length;i++){const name=target[i];if(!work.includes(name))commit(name,i,'entry')}
+for(let i=0;i<target.length;i++){if(work[i]!==target[i])commit(target[i],i,'move')}
+return events;
+}
+const eventCache=new Map();
 function render(progress){
 const W=1080,H=1920,p=Math.max(0,Math.min(1,progress)),ss=snapshots();
 ctx.setTransform(main.width/W,0,0,main.height/H,0,0);
-const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#21332b');grad.addColorStop(.55,'#101c17');grad.addColorStop(1,'#241c14');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
-ctx.fillStyle='#cba874';ctx.fillRect(43,60,6,104);ctx.font='bold 29px system-ui';ctx.fillStyle='#edddbb';ctx.fillText('WILLY CORP // INTELLIGENCE',71,104);ctx.fillStyle='#afa991';ctx.font='23px monospace';ctx.fillText('PLACEMENT OBSERVATORY  /  SEASON '+season,71,150);
-ctx.font='bold 58px Georgia';ctx.fillStyle='#f1dbb4';ctx.fillText('THE LIVING HIERARCHY',43,245);
-if(!ss.length){ctx.fillText('NO VERIFIED CAPTURES',43,480);return}
-const steps=Math.max(1,ss.length-1),position=p*steps,index=Math.min(steps-1,Math.floor(position)),phase=ss.length===1?0:p===1?1:position-index;
-const a=ss[index],b=ss[Math.min(index+1,ss.length-1)],from=new Map(a.guilds.map(g=>[g.name,g])),to=new Map(b.guilds.map(g=>[g.name,g]));
-const moves=b.guilds.filter(g=>from.has(g.name)&&from.get(g.name).rank!==g.rank).sort((x,y)=>Math.abs(from.get(y.name).rank-y.rank)-Math.abs(from.get(x.name).rank-x.rank)||x.rank-y.rank);
-const entries=b.guilds.filter(g=>!from.has(g.name)),exits=a.guilds.filter(g=>!to.has(g.name));
-const events=[...moves.map(g=>({name:g.name,old:from.get(g.name),next:g})),...entries.map(g=>({name:g.name,old:null,next:g})),...exits.map(g=>({name:g.name,old:g,next:null}))];
-const intro=.10,outro=.15,run=Math.max(0,Math.min(1,(phase-intro)/(1-intro-outro))),eventIndex=Math.min(events.length-1,Math.floor(run*Math.max(1,events.length))),eventPart=events.length?Math.min(1,Math.max(0,run*events.length-eventIndex)):1;
-const ease=eventPart*eventPart*(3-2*eventPart),landed=phase>=1-outro||a===b,observed=landed?b:a;
-let pieces=[...new Set([...from.keys(),...to.keys()])].map(name=>({name,old:from.get(name),next:to.get(name)}));
-if($('scope').value==='selected')pieces=pieces.filter(g=>selected.has(g.name));
-const cells=$('scope').value==='all'?50:Math.max(1,pieces.length),columns=Math.min(5,Math.max(1,Math.ceil(cells/10))),rows=Math.ceil(cells/columns),gap=8,cw=(996-gap*(columns-1))/columns,rh=Math.min(115,Math.floor(1170/rows)),top=408;
-const rankPoint=r=>{const k=Math.max(0,Math.min(49,r-1));return{x:42+Math.floor(k/10)*(cw+gap),y:top+(k%10)*rh}};
-const slotPoint=i=>({x:42+Math.floor(i/rows)*(cw+gap),y:top+(i%rows)*rh});
-const oldSorted=pieces.filter(g=>g.old).sort((x,y)=>x.old.rank-y.old.rank),newSorted=pieces.filter(g=>g.next).sort((x,y)=>x.next.rank-y.next.rank);
-const oldIndex=new Map(oldSorted.map((g,i)=>[g.name,i])),newIndex=new Map(newSorted.map((g,i)=>[g.name,i]));
-const point=(g,useNext)=>$('scope').value==='all'?rankPoint((useNext?g.next:g.old)?.rank||(useNext?g.old:g.next).rank):slotPoint((useNext?newIndex:oldIndex).get(g.name)??(useNext?oldIndex:newIndex).get(g.name)??0);
-ctx.fillStyle='#c2b596';ctx.font='23px monospace';ctx.fillText('OBSERVATIONS  '+a.date+' → '+b.date,43,306);
-const evt=events[eventIndex],label=landed?'VERIFIED FINAL STANDINGS':phase<intro?'INITIAL RECORDED STANDINGS':evt?(evt.old&&evt.next?evt.name+'   #'+evt.old.rank+' → #'+evt.next.rank:evt.name+(evt.next?' ENTERED TOP 50':' LEFT TOP 50')):'NO PLACEMENT MOVEMENTS';
-ctx.fillStyle='#9eab9b';ctx.font='20px monospace';let labelText=label;while(ctx.measureText(labelText).width>987&&labelText.length>10)labelText=labelText.slice(0,-2)+'…';ctx.fillText(labelText,43,352);
-ctx.fillStyle='#37493d';ctx.fillRect(43,375,992,4);ctx.fillStyle='#dfbd7d';ctx.fillRect(43,375,992*p,4);
-ctx.save();ctx.beginPath();ctx.rect(40,403,1001,1160);ctx.clip();
-if($('scope').value==='all'){for(let i=1;i<=50;i++){const q=rankPoint(i);ctx.fillStyle='#1b2822';ctx.fillRect(q.x,q.y,cw,rh-5);ctx.strokeStyle='#58664f77';ctx.strokeRect(q.x+.5,q.y+.5,cw-1,rh-6);ctx.fillStyle='#728676';ctx.font='bold 14px monospace';ctx.fillText('RANK '+String(i).padStart(2,'0'),q.x+8,q.y+19)}}
-else{for(let i=0;i<cells;i++){const q=slotPoint(i);ctx.fillStyle='#1b2822';ctx.fillRect(q.x,q.y,cw,rh-5)}}
-const displayed=landed?to:from;const completed=new Set(events.slice(0,landed?events.length:Math.max(0,eventIndex)).map(e=>e.name));
-for(const g of pieces){
-const currentEvent=evt&&evt.name===g.name&&!landed&&phase>=intro&&phase<1-outro;
-const recorded=displayed.get(g.name);const finished=completed.has(g.name);
-if(!recorded&&!currentEvent&&!finished)continue;
-const start=point(g,false),end=point(g,true),fraction=currentEvent?ease:finished||landed?1:0,x=start.x+(end.x-start.x)*fraction,y=start.y+(end.y-start.y)*fraction;
-const cove=g.name==='The Pirate Cove',active=currentEvent,entry=!g.old,exit=!g.next;
-ctx.globalAlpha=entry?(active?Math.max(.05,ease):finished||landed?1:0):exit?(active?Math.max(.05,1-ease):finished||landed?0:1):1;if(ctx.globalAlpha===0)continue;
-if(active){ctx.strokeStyle=cove?'#edbe6dcc':'#83af8daa';ctx.lineWidth=cove?5:3;ctx.beginPath();ctx.moveTo(start.x+cw/2,start.y+rh/2);ctx.lineTo(x+cw/2,y+rh/2);ctx.stroke()}
-if(active){ctx.shadowColor=cove?'#f5c578':'#8fc7a6';ctx.shadowBlur=22}ctx.fillStyle=cove?'#654725':active?'#3d5946':'#283930';ctx.fillRect(x+2,y+24,cw-4,rh-31);ctx.strokeStyle=cove?'#f0c478':active?'#b2d8b1':'#546b59';ctx.lineWidth=active?2:1;ctx.strokeRect(x+2.5,y+24.5,cw-5,rh-32);
-ctx.fillStyle=cove?'#f7d28b':'#f1e3c7';ctx.font='bold 17px system-ui';let name=g.name;while(ctx.measureText(name).width>cw-17&&name.length>3)name=name.slice(0,-2)+'…';ctx.fillText(name,x+9,y+51);
-const actual=landed?g.next||g.old:g.old||g.next;ctx.font='bold 16px monospace';ctx.fillStyle='#c6b69a';ctx.fillText(Math.round(actual.experience).toLocaleString('en-US')+' XP',x+9,y+75);
-if(active&&g.old&&g.next){ctx.fillStyle=g.next.rank<g.old.rank?'#9cd3ad':'#e3a59b';ctx.textAlign='right';ctx.font='bold 16px monospace';ctx.fillText((g.next.rank<g.old.rank?'▲':'▼')+Math.abs(g.next.rank-g.old.rank),x+cw-9,y+49);ctx.textAlign='left'}
-ctx.globalAlpha=1;ctx.shadowBlur=0;
-}
+const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#1e3027');bg.addColorStop(.55,'#0d1913');bg.addColorStop(1,'#261e16');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+ctx.fillStyle='#cbaa77';ctx.fillRect(43,57,6,103);ctx.fillStyle='#f2dec0';ctx.font='bold 28px system-ui';ctx.fillText('WILLY CORP // INTELLIGENCE',70,100);
+ctx.font='23px monospace';ctx.fillStyle='#b7b09c';ctx.fillText('PLACEMENT OBSERVATORY / SEASON '+season,70,149);
+ctx.fillStyle='#f1dfb7';ctx.font='bold 57px Georgia';ctx.fillText('THE LIVING HIERARCHY',43,247);
+if(!ss.length){ctx.font='30px system-ui';ctx.fillText('NO RECORDED SNAPSHOTS',43,482);return}
+const intervals=Math.max(1,ss.length-1),at=p*intervals,index=Math.min(intervals-1,Math.floor(at)),phase=ss.length===1?1:p===1?1:at-index,a=ss[index],b=ss[Math.min(index+1,ss.length-1)];
+const cacheKey=(a.capturedAt||a.date)+'|'+(b.capturedAt||b.date);
+if(!eventCache.has(cacheKey))eventCache.set(cacheKey,buildEvents(a,b));
+const events=eventCache.get(cacheKey),intro=.12,outro=.15,portion=Math.max(0,Math.min(1,(phase-intro)/(1-intro-outro))),steps=events.length;
+const cursor=portion*steps,which=Math.min(steps-1,Math.floor(cursor)),sub=portion>=1?1:cursor-Math.floor(cursor),ease=sub*sub*(3-2*sub);
+const final=phase>=1-outro||steps===0;
+const initial=a.guilds.slice().sort((x,y)=>x.rank-y.rank).map(g=>g.name),event=events[which];
+const before=final?b.guilds.slice().sort((x,y)=>x.rank-y.rank).map(g=>g.name):event?event.old:initial;
+const after=final?before:event?event.after:initial;
+const oldMap=new Map(a.guilds.map(g=>[g.name,g])),newMap=new Map(b.guilds.map(g=>[g.name,g]));
+const allNames=[...new Set([...before,...after])];
+const selectedMode=$('scope').value==='selected';
+const visibleNames=selectedMode?allNames.filter(name=>selected.has(name)):allNames;
+const slots=selectedMode?Math.max(1,visibleNames.length):50,cols=Math.min(5,Math.max(1,Math.ceil(slots/10))),rows=Math.ceil(slots/cols),gap=8,cw=(996-gap*(cols-1))/cols,rh=Math.min(115,Math.floor(1165/rows)),top=410;
+const first=selectedMode?before.filter(n=>selected.has(n)):before,last=selectedMode?after.filter(n=>selected.has(n)):after;
+const point=(rank)=>{if(rank<0)return {x:1048,y:top+470};const k=Math.max(0,Math.min(49,rank));return{x:43+Math.floor(k/rows)*(cw+gap),y:top+(k%rows)*rh}};
+const active=!final&&phase>=intro&&event?event:null;
+ctx.fillStyle='#c8b89a';ctx.font='22px monospace';ctx.fillText('OBSERVATIONS  '+a.date+' → '+b.date,43,311);
+ctx.fillStyle='#9ab4a0';ctx.font='bold 23px monospace';
+let headline=final?'VERIFIED FINAL STANDINGS':active?(active.type==='entry'?'ENTERING TOP 50: ':active.type==='exit'?'LEAVING TOP 50: ':'MOVING GUILD: ')+active.name:phase<intro?'INITIAL VERIFIED STANDINGS':'NO CHANGE';
+while(ctx.measureText(headline).width>990&&headline.length>13)headline=headline.slice(0,-2)+'…';
+ctx.fillText(headline,43,355);
+ctx.fillStyle='#334639';ctx.fillRect(43,378,992,5);ctx.fillStyle='#d7b47c';ctx.fillRect(43,378,992*p,5);
+ctx.save();ctx.beginPath();ctx.rect(40,408,1003,1164);ctx.clip();
+for(let i=0;i<slots;i++){const q=point(i);ctx.fillStyle='#1a2921';ctx.fillRect(q.x,q.y,cw,rh-5);ctx.strokeStyle='#4f60506c';ctx.lineWidth=1;ctx.strokeRect(q.x+.5,q.y+.5,cw-1,rh-6);if(!selectedMode){ctx.fillStyle='#718774';ctx.font='bold 13px monospace';ctx.fillText('RANK '+String(i+1).padStart(2,'0'),q.x+7,q.y+18)}}
+function paint(name,featured){
+const oldPos=first.indexOf(name),nextPos=last.indexOf(name),enter=oldPos<0,leave=nextPos<0;
+const start=point(oldPos),finish=point(nextPos),t=active?ease:1;
+const x=start.x+(finish.x-start.x)*t,y=start.y+(finish.y-start.y)*t;
+const aGuild=oldMap.get(name),bGuild=newMap.get(name),record=final?(bGuild||aGuild):(aGuild||bGuild);
+const cove=name==='The Pirate Cove',moving=oldPos!==nextPos,fade=enter?Math.max(.06,t):leave?Math.max(.06,1-t):1;
+ctx.save();ctx.globalAlpha=fade;
+if(featured){ctx.shadowBlur=26;ctx.shadowColor=cove?'#edc178':'#93c9a5';}
+ctx.fillStyle=cove?'#694b2b':featured?'#426149':moving?'#314739':'#28392f';
+ctx.fillRect(x+2,y+23,cw-4,rh-29);ctx.strokeStyle=cove?'#f5c77f':featured?'#b7e0b5':'#657968';ctx.lineWidth=featured?2.7:1;ctx.strokeRect(x+2.5,y+23.5,cw-5,rh-30);
+ctx.shadowBlur=0;ctx.font='bold 16px system-ui';ctx.fillStyle=cove?'#ffdfa4':'#f3e6d2';let label=name;while(ctx.measureText(label).width>cw-15&&label.length>3)label=label.slice(0,-2)+'…';ctx.fillText(label,x+9,y+51);
+ctx.font='bold 15px monospace';ctx.fillStyle='#c9b89d';ctx.fillText(record.experience.toLocaleString('en-US')+' XP',x+9,y+75);
 ctx.restore();
-ctx.fillStyle='#d2b077';ctx.fillRect(43,1645,992,2);ctx.fillStyle='#e9d4af';ctx.font='bold 28px Georgia';ctx.fillText('FIXED RANKS. MOVING GUILDS.',43,1710);
-ctx.fillStyle='#bcb4a1';ctx.font='21px monospace';ctx.fillText('NO SYNTHETIC XP · VERIFIED SNAPSHOT VALUES ONLY',43,1770);
-ctx.fillText('TRANSITIONS SHOW PATHS, NOT UNOBSERVED EVENTS',43,1810);
-ctx.fillStyle='#e0b678';ctx.font='bold 26px system-ui';ctx.fillText('THE PIRATE COVE / WILLY DEX',43,1875);
+}
+for(const name of visibleNames){if(active&&name===active.name)continue;paint(name,false)}
+if(active&&visibleNames.includes(active.name)){const beforeP=point(first.indexOf(active.name)),afterP=point(last.indexOf(active.name));ctx.strokeStyle='#e3c28e77';ctx.lineWidth=3;ctx.setLineDash([7,7]);ctx.beginPath();ctx.moveTo(beforeP.x+cw/2,beforeP.y+rh/2);ctx.lineTo(afterP.x+cw/2,afterP.y+rh/2);ctx.stroke();ctx.setLineDash([]);paint(active.name,true)}
+ctx.restore();
+ctx.fillStyle='#d0ab75';ctx.fillRect(43,1652,992,2);ctx.fillStyle='#e7d5b2';ctx.font='bold 27px Georgia';ctx.fillText(active?'FOCUS / '+active.name:'FIXED RANKS. MOVING GUILDS.',43,1712);
+ctx.fillStyle='#bcb49f';ctx.font='21px monospace';ctx.fillText(active?'EVENT '+(which+1)+' OF '+steps+' · DISPLACED CARDS MOVE TOGETHER':'FINAL DATA ALWAYS MATCHES RECORDED CAPTURES',43,1765);
+ctx.fillText('NO SYNTHETIC XP · INTERMEDIATE POSITIONS ARE ANIMATION',43,1812);
+ctx.fillStyle='#e5bf81';ctx.font='bold 25px system-ui';ctx.fillText('THE PIRATE COVE / WILLY DEX',43,1875);
 }
 function seek(p){$('seek').value=Math.round(p*1000);$('pct').textContent=Math.round(p*100)+'%';render(p)}
 function stop(){stopRequested=true;if(raf)cancelAnimationFrame(raf)}
