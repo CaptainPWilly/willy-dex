@@ -519,14 +519,6 @@
       "date": "2026-10-28",
       "capturedAt": "2026-10-28T14:50:00-07:00",
       "season": 15,
-      "partial": true,
-      "missing": [
-        {
-          "rank": 50,
-          "name": "The oncoming storm",
-          "experience": null
-        }
-      ],
       "guilds": [
         {
           "rank": 1,
@@ -772,6 +764,11 @@
           "rank": 49,
           "name": "GorillaWizards",
           "experience": 23000
+        },
+        {
+          "rank": 50,
+          "name": "The oncoming storm",
+          "experience": 18259
         }
       ]
     }
