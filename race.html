@@ -74,12 +74,12 @@ const oldPos=first.indexOf(name),nextPos=last.indexOf(name),enter=oldPos<0,leave
 const start=point(oldPos),finish=point(nextPos),t=active?ease:1;
 const x=start.x+(finish.x-start.x)*t,y=start.y+(finish.y-start.y)*t;
 const aGuild=oldMap.get(name),bGuild=newMap.get(name),record=final?(bGuild||aGuild):(aGuild||bGuild);
-const cove=name==='The Pirate Cove',moving=oldPos!==nextPos,fade=enter?Math.max(.06,t):leave?Math.max(.06,1-t):1;
+const moving=oldPos!==nextPos,fade=enter?Math.max(.06,t):leave?Math.max(.06,1-t):1;
 ctx.save();ctx.globalAlpha=fade;
-if(featured){ctx.shadowBlur=26;ctx.shadowColor=cove?'#edc178':'#93c9a5';}
-ctx.fillStyle=cove?'#694b2b':featured?'#426149':moving?'#314739':'#28392f';
-ctx.fillRect(x+2,y+23,cw-4,rh-29);ctx.strokeStyle=cove?'#f5c77f':featured?'#b7e0b5':'#657968';ctx.lineWidth=featured?2.7:1;ctx.strokeRect(x+2.5,y+23.5,cw-5,rh-30);
-ctx.shadowBlur=0;ctx.font='bold 16px system-ui';ctx.fillStyle=cove?'#ffdfa4':'#f3e6d2';let label=name;while(ctx.measureText(label).width>cw-15&&label.length>3)label=label.slice(0,-2)+'…';ctx.fillText(label,x+9,y+51);
+if(featured){ctx.shadowBlur=26;ctx.shadowColor='#93c9a5';}
+ctx.fillStyle=featured?'#426149':moving?'#314739':'#28392f';
+ctx.fillRect(x+2,y+23,cw-4,rh-29);ctx.strokeStyle=featured?'#b7e0b5':'#657968';ctx.lineWidth=featured?2.7:1;ctx.strokeRect(x+2.5,y+23.5,cw-5,rh-30);
+ctx.shadowBlur=0;ctx.font='bold 16px system-ui';ctx.fillStyle='#f3e6d2';let label=name;while(ctx.measureText(label).width>cw-15&&label.length>3)label=label.slice(0,-2)+'…';ctx.fillText(label,x+9,y+51);
 ctx.font='bold 15px monospace';ctx.fillStyle='#c9b89d';ctx.fillText(record.experience.toLocaleString('en-US')+' XP',x+9,y+75);
 ctx.restore();
 }
