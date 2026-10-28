@@ -164,10 +164,10 @@ ctx.font='bold 58px Georgia';ctx.fillStyle='#f5e1bb';ctx.fillText(scope==='all'?
 if(!ss.length){ctx.font='26px monospace';ctx.fillText('NO RECORDED SNAPSHOTS',43,420);return canvas}
 const n=Math.max(1,ss.length-1),at=p*n,idx=Math.min(n-1,Math.floor(at)),t=p===1?1:at-idx,a=ss[idx],b=ss[Math.min(idx+1,ss.length-1)],state=raceState(a,b,t);
 const chosen=scope==='all'?state:state.filter(g=>racePicked.has(g.name));
-const total=chosen.length,cols=scope==='all'?5:Math.min(5,Math.max(1,Math.ceil(total/10))),perCol=Math.max(10,Math.ceil(total/cols)),cellW=194,gap=10,gridW=cols*cellW+(cols-1)*gap,gridX=(W-gridW)/2,rowH=117,gridTop=405;
+const total=chosen.length,cols=scope==='all'?5:Math.min(5,Math.max(1,Math.ceil(total/10))),perCol=Math.max(10,Math.ceil(total/cols)),cellW=194,gap=10,gridW=cols*cellW+(cols-1)*gap,gridX=(W-gridW)/2,rowH=Math.min(117,Math.floor(1180/perCol)),gridTop=405;
 ctx.fillStyle='#bfac8e';ctx.font='23px monospace';ctx.fillText(a.date+'   →   '+b.date,43,308);
 ctx.fillStyle='#9d8a69';ctx.fillRect(43,329,993,4);ctx.fillStyle='#e6bd79';ctx.fillRect(43,329,993*p,4);
-ctx.fillStyle='#d7c49f';ctx.font='20px monospace';ctx.fillText('ALL RANKS VISIBLE  //  '+total+' GUILDS  //  5-COLUMN INTELLIGENCE GRID',43,376);
+ctx.fillStyle='#d7c49f';ctx.font='20px monospace';ctx.fillText('ALL RANKS VISIBLE  //  '+total+' GUILDS  //  '+cols+'-COLUMN INTELLIGENCE GRID',43,376);
 if(!total){ctx.font='27px sans-serif';ctx.fillText('Select guilds in the watchlist to begin.',43,480);return canvas}
 const maxXP=Math.max(1,...state.map(g=>g.xp||0));
 for(let i=0;i<total;i++){
