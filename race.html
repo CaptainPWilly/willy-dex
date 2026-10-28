@@ -9,7 +9,7 @@
 <section class="panel"><h2>Direction &amp; export</h2><div class="controls" style="margin-top:12px">
 <label>Roster<select id="scope"><option value="all">All Top 50</option><option value="selected">Selected guilds</option></select></label>
 <label>Observations<select id="source"><option value="daily">Daily latest</option><option value="raw">All snapshots</option></select></label>
-<label>Duration<select id="duration"><option value="15">15 seconds</option><option value="30">30 seconds</option><option value="45">45 seconds</option><option value="60" selected>60 seconds</option><option value="90">90 seconds</option><option value="120">120 seconds</option></select></label>
+<label>Duration<select id="duration"><option value="15">15 seconds</option><option value="30">30 seconds</option><option value="45">45 seconds</option><option value="60">60 seconds</option><option value="90" selected>90 seconds</option><option value="120">120 seconds</option></select></label>
 <label>Resolution<select id="quality"><option value="1080">1080 × 1920</option><option value="540">540 × 960 (fast)</option></select></label>
 </div><div id="watchlist" hidden><div class="hint" style="margin-top:10px">Choose guilds</div><div class="guildPicker" id="guilds"></div></div>
 <div class="buttons"><button class="primary" id="play">▶ Play preview</button><button id="stop">■ Stop</button><button id="export" class="primary wide">Export animated video</button><button id="png">Save current frame</button><button id="frames">Save snapshot slides</button></div>
@@ -53,7 +53,7 @@ if(!ss.length){ctx.fillText('NO RECORDED SNAPSHOTS',43,475);return}
 const span=Math.max(1,ss.length-1),pos=p*span,index=Math.min(span-1,Math.floor(pos)),phase=ss.length===1?1:p===1?1:pos-index,a=ss[index],b=ss[Math.min(index+1,ss.length-1)];
 const key=(a.capturedAt||a.date)+'|'+(b.capturedAt||b.date);
 if(!eventCache.has(key))eventCache.set(key,buildEvents(a,b));
-const events=eventCache.get(key),intro=.18,outro=.16,run=Math.max(0,Math.min(1,(phase-intro)/(1-intro-outro))),steps=events.length;
+const events=eventCache.get(key),intro=.07,outro=.19,run=Math.max(0,Math.min(1,(phase-intro)/(1-intro-outro))),steps=events.length;
 const cursor=run*steps,which=Math.max(0,Math.min(steps-1,Math.floor(cursor))),sub=run>=1?1:cursor-Math.floor(cursor);
 const hold=.14,settle=.17,t=Math.max(0,Math.min(1,(sub-hold)/(1-hold-settle))),ease=t*t*(3-2*t),final=phase>=1-outro||!steps;
 const initial=a.guilds.slice().sort((x,y)=>x.rank-y.rank).map(g=>g.name),evt=events[which];
