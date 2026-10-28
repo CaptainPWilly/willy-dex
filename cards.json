@@ -560,11 +560,11 @@
   },
   {
     "number": "016",
-    "name": "Godslayer",
+    "name": "SocietyWithered",
     "type": "[ARG] Member",
     "image": null,
-    "level": 1338,
-    "date": "26 October 2026",
+    "level": 1398,
+    "date": "28 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -575,7 +575,7 @@
     "tags": [
       "Member"
     ],
-    "last_active": "2 days ago",
+    "last_active": "3 hours ago",
     "level_snapshots": [
       {
         "date": "2026-10-20",
@@ -584,7 +584,14 @@
       {
         "date": "2026-10-26",
         "level": 1338
+      },
+      {
+        "date": "2026-10-28",
+        "level": 1398
       }
+    ],
+    "aliases": [
+      "Godslayer"
     ]
   },
   {
@@ -2712,30 +2719,13 @@
   },
   {
     "number": "077",
-    "name": "SocietyWithered",
-    "type": "[ARG] Member",
+    "name": "???",
+    "type": "???",
+    "level": null,
+    "date": "???",
     "image": null,
-    "card_id": "willy-dex-077",
-    "guild": "ARG",
-    "description": "???",
     "portrait": null,
-    "tags": [
-      "Member"
-    ],
-    "roles": [
-      "Member"
-    ],
-    "front_text": "???",
-    "back_text": "",
-    "level_snapshots": [
-      {
-        "date": "2026-10-28",
-        "level": 1398
-      }
-    ],
-    "level": 1398,
-    "date": "28 October 2026",
-    "last_active": "3 hours ago"
+    "description": "???"
   },
   {
     "number": "078",
