@@ -70,10 +70,14 @@ return {rank:g.rank,name,experience:g.experience}
 }).sort((a,b)=>a.rank-b.rank);
 const file=await git('glb.json'),doc=JSON.parse(Buffer.from(file.content,'base64').toString('utf8'));
 if(doc.version!==1||!Array.isArray(doc.snapshots))throw Error('Invalid GLB registry');
-const snapshot={date:data.date,season:data.season,capturedAt:new Date().toISOString(),guilds};
-const index=doc.snapshots.findIndex(s=>(s.season||15)===data.season&&s.date===data.date);
+const capturedAt=new Date().toISOString();
+const snapshot={date:data.date,season:data.season,capturedAt,guilds};
+// Retain one snapshot per UTC hour instead of overwriting the whole day.
+// Keep full capturedAt precision so the UI can display the actual capture time.
+const captureHour=Math.floor(Date.parse(capturedAt)/3600000);
+const index=doc.snapshots.findIndex(s=>(s.season||15)===data.season&&s.capturedAt&&Math.floor(Date.parse(s.capturedAt)/3600000)===captureHour);
 if(index>=0)doc.snapshots[index]=snapshot;else doc.snapshots.push(snapshot);
-doc.season=data.season;doc.snapshots.sort((a,b)=>(a.season||15)-(b.season||15)||a.date.localeCompare(b.date));
+doc.season=data.season;doc.snapshots.sort((a,b)=>(a.season||15)-(b.season||15)||Date.parse(a.capturedAt||a.date)-Date.parse(b.capturedAt||b.date));
 await git('glb.json','PUT',{message:'Willy DEX: GLB season '+data.season+' snapshot '+data.date,sha:file.sha,content:Buffer.from(JSON.stringify(doc,null,2)+'\n').toString('base64')});
 return json(res,200,{ok:true,season:data.season,date:data.date,count:guilds.length});
 }
