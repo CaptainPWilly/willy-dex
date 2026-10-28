@@ -25,45 +25,56 @@ function download(blob,name){if(!blob||blob.size<100)throw Error('Empty export')
 function frameBlob(){return new Promise((resolve,reject)=>main.toBlob(b=>b?resolve(b):reject(Error('PNG unavailable')),'image/png'))}
 function resize(){const n=Number($('quality').value);main.width=n;main.height=Math.round(n*16/9);ctx.setTransform(main.width/1080,0,0,main.height/1920,0,0);render(Number($('seek').value)/1000)}
 function render(progress){
-const W=1080,H=1920,p=Math.max(0,Math.min(1,progress)),ss=snapshots();ctx.setTransform(main.width/W,0,0,main.height/H,0,0);
-const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#203127');bg.addColorStop(.55,'#0c1912');bg.addColorStop(1,'#251d15');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+const W=1080,H=1920,p=Math.max(0,Math.min(1,progress)),ss=snapshots();
+ctx.setTransform(main.width/W,0,0,main.height/H,0,0);
+const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#213328');bg.addColorStop(.55,'#0c1913');bg.addColorStop(1,'#261e16');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
 ctx.fillStyle='#cbaa77';ctx.fillRect(43,57,6,103);ctx.fillStyle='#f2dec0';ctx.font='bold 28px system-ui';ctx.fillText('WILLY CORP // INTELLIGENCE',70,100);
 ctx.fillStyle='#b7b09c';ctx.font='23px monospace';ctx.fillText('VERIFIED PLACEMENTS / SEASON '+season,70,149);
 ctx.fillStyle='#f1dfb7';ctx.font='bold 57px Georgia';ctx.fillText('THE LIVING HIERARCHY',43,247);
 if(!ss.length){ctx.fillText('NO RECORDED SNAPSHOTS',43,475);return}
-const intervals=Math.max(1,ss.length-1),at=p*intervals,idx=Math.min(intervals-1,Math.floor(at)),phase=ss.length===1?0:p===1?1:at-idx;
-const before=ss[idx],after=ss[Math.min(idx+1,ss.length-1)];
-// One complete, observed board at a time. No fabricated intermediate rank occupancy.
-const showNext=phase>=.80,display=showNext?after:before;
-const oldMap=new Map(before.guilds.map(g=>[g.name,g])),newMap=new Map(after.guilds.map(g=>[g.name,g]));
-const changed=after.guilds.filter(g=>oldMap.has(g.name)&&oldMap.get(g.name).rank!==g.rank);
-const entrants=after.guilds.filter(g=>!oldMap.has(g.name));
-const exits=before.guilds.filter(g=>!newMap.has(g.name));
-let roster=display.guilds.slice().sort((a,b)=>a.rank-b.rank);
-const selectedMode=$('scope').value==='selected';
-if(selectedMode)roster=roster.filter(g=>selected.has(g.name));
+const intervals=Math.max(1,ss.length-1),at=p*intervals,index=Math.min(intervals-1,Math.floor(at)),phase=ss.length===1?1:p===1?1:at-index;
+const a=ss[index],b=ss[Math.min(index+1,ss.length-1)],old=new Map(a.guilds.map(g=>[g.name,g])),next=new Map(b.guilds.map(g=>[g.name,g]));
+const movers=b.guilds.filter(g=>old.has(g.name)&&old.get(g.name).rank!==g.rank).map(g=>({name:g.name,from:old.get(g.name).rank,to:g.rank,type:'move'})).sort((x,y)=>Math.abs(y.to-y.from)-Math.abs(x.to-x.from)||x.to-y.to);
+const entrants=b.guilds.filter(g=>!old.has(g.name)).map(g=>({name:g.name,to:g.rank,type:'entry'}));
+const exits=a.guilds.filter(g=>!next.has(g.name)).map(g=>({name:g.name,from:g.rank,type:'exit'}));
+const events=[...movers,...entrants,...exits];
+const reveal=.17,display=phase<reveal?a:b;
+// Rank changes are presented only after the complete next verified board is revealed.
+const highlightPhase=Math.max(0,Math.min(1,(phase-reveal)/.77)),position=highlightPhase*events.length,eventIndex=Math.min(events.length-1,Math.floor(position));
+const current=phase>=reveal&&phase<.97?events[eventIndex]:null,part=position-Math.floor(position),pulse=current?Math.sin(Math.PI*Math.min(1,part)):0;
+let roster=display.guilds.slice().sort((x,y)=>x.rank-y.rank);const selectedMode=$('scope').value==='selected';if(selectedMode)roster=roster.filter(g=>selected.has(g.name));
 const count=selectedMode?Math.max(1,roster.length):50,cols=Math.min(5,Math.max(1,Math.ceil(count/10))),rows=Math.ceil(count/cols),gap=8,cw=(996-gap*(cols-1))/cols,rh=Math.min(115,Math.floor(1165/rows)),top=412;
 const point=i=>({x:43+Math.floor(i/rows)*(cw+gap),y:top+(i%rows)*rh});
-ctx.fillStyle='#c8b89a';ctx.font='23px monospace';ctx.fillText('VERIFIED CAPTURE  '+display.date,43,311);
-ctx.fillStyle='#a9c1af';ctx.font='21px monospace';ctx.fillText(showNext?'NEW VERIFIED STANDINGS':'CURRENT VERIFIED STANDINGS',43,352);
+ctx.fillStyle='#c8b89a';ctx.font='22px monospace';ctx.fillText('VERIFIED SNAPSHOT  '+display.date,43,308);
+ctx.fillStyle='#a9c1af';ctx.font='bold 22px monospace';
+let headline=current?(current.type==='move'?'RANK CHANGE: ':current.type==='entry'?'ENTERED TOP 50: ':'LEFT TOP 50: ')+current.name:phase<reveal?'EARLIER RECORDED STANDINGS':'LATEST VERIFIED STANDINGS';
+while(ctx.measureText(headline).width>992&&headline.length>12)headline=headline.slice(0,-2)+'…';ctx.fillText(headline,43,354);
 ctx.fillStyle='#344839';ctx.fillRect(43,378,992,5);ctx.fillStyle='#d5b27a';ctx.fillRect(43,378,992*p,5);
 ctx.save();ctx.beginPath();ctx.rect(40,409,1002,1162);ctx.clip();
 for(let i=0;i<count;i++){
-const q=point(i),guild=roster[i];ctx.fillStyle='#192920';ctx.fillRect(q.x,q.y,cw,rh-5);ctx.strokeStyle='#4b60516c';ctx.lineWidth=1;ctx.strokeRect(q.x+.5,q.y+.5,cw-1,rh-6);
-ctx.fillStyle='#758774';ctx.font='bold 13px monospace';ctx.fillText('RANK '+String(guild?guild.rank:i+1).padStart(2,'0'),q.x+8,q.y+19)
-if(!guild)continue;
-const changedRank=oldMap.get(guild.name)?.rank!==newMap.get(guild.name)?.rank;
-const spotlight=changedRank&&phase>(showNext?.80:.53);
-ctx.fillStyle=spotlight?'#3a5543':'#28392f';ctx.fillRect(q.x+2,q.y+23,cw-4,rh-29);
-ctx.strokeStyle=spotlight?'#a5c8ad':'#5b715e';ctx.strokeRect(q.x+2.5,q.y+23.5,cw-5,rh-30);
-ctx.fillStyle='#f2e5ce';ctx.font='bold 16px system-ui';let label=guild.name;while(ctx.measureText(label).width>cw-16&&label.length>3)label=label.slice(0,-2)+'…';ctx.fillText(label,q.x+9,q.y+51);
-ctx.font='bold 14px monospace';ctx.fillStyle='#cbbca1';ctx.fillText(guild.experience.toLocaleString('en-US')+' XP',q.x+9,q.y+74);
+const q=point(i),g=roster[i];ctx.fillStyle='#192920';ctx.fillRect(q.x,q.y,cw,rh-5);ctx.strokeStyle='#4b60516c';ctx.lineWidth=1;ctx.strokeRect(q.x+.5,q.y+.5,cw-1,rh-6);
+ctx.fillStyle='#758774';ctx.font='bold 13px monospace';ctx.fillText('RANK '+String(g?g.rank:i+1).padStart(2,'0'),q.x+8,q.y+19);
+if(!g)continue;
+const featured=current&&current.name===g.name,glow=featured?pulse:0;
+ctx.save();if(glow){ctx.shadowBlur=32*glow;ctx.shadowColor='#b0e0bb';}
+ctx.fillStyle=featured?'#355744':'#28392f';ctx.fillRect(q.x+2,q.y+23,cw-4,rh-29);ctx.strokeStyle=featured?'#d0ecc8':'#5b715e';ctx.lineWidth=featured?1.5+2*glow:1;ctx.strokeRect(q.x+2.5,q.y+23.5,cw-5,rh-30);ctx.restore();
+ctx.fillStyle='#f2e5ce';ctx.font='bold 16px system-ui';let label=g.name;while(ctx.measureText(label).width>cw-16&&label.length>3)label=label.slice(0,-2)+'…';ctx.fillText(label,q.x+9,q.y+51);
+ctx.font='bold 14px monospace';ctx.fillStyle='#cbbca1';ctx.fillText(g.experience.toLocaleString('en-US')+' XP',q.x+9,q.y+74);
 }
 ctx.restore();
-ctx.fillStyle='#d0ac76';ctx.fillRect(43,1653,992,2);ctx.fillStyle='#f0d8ad';ctx.font='bold 27px Georgia';ctx.fillText('OBSERVED PLACEMENT CHANGES',43,1711);
-ctx.fillStyle='#bcb6a5';ctx.font='21px monospace';ctx.fillText(changed.length+' RANK MOVERS · '+entrants.length+' TOP-50 ENTRIES · '+exits.length+' EXITS',43,1767);
-ctx.fillText('NO ESTIMATED RANKS · NO SYNTHETIC XP · VERIFIED ONLY',43,1812);
-ctx.fillStyle='#e0bf86';ctx.font='bold 25px system-ui';ctx.fillText('WILLY DEX / PLACEMENT INTELLIGENCE',43,1874);
+// The cinematic indicator calls out only a verified BEFORE and AFTER rank, never an intermediate occupancy.
+ctx.fillStyle='#d0ac76';ctx.fillRect(43,1620,992,2);
+if(current){
+ctx.fillStyle='#e7d5b2';ctx.font='bold 29px Georgia';let name=current.name;while(ctx.measureText(name).width>985&&name.length>10)name=name.slice(0,-2)+'…';ctx.fillText(name,43,1686);
+const statement=current.type==='move'?'#'+current.from+'  →  #'+current.to+'    '+(current.to<current.from?'▲ '+(current.from-current.to):'▼ '+(current.to-current.from))+' RANKS':current.type==='entry'?'ENTERED TOP 50  ·  #'+current.to:'EXITED TOP 50  ·  LAST OBSERVED #'+current.from;
+ctx.fillStyle='#b6d8b9';ctx.font='bold 30px monospace';ctx.fillText(statement,43,1740);
+ctx.fillStyle='#bcb6a5';ctx.font='21px monospace';ctx.fillText('OBSERVED CHANGE '+(eventIndex+1)+' / '+events.length+'   •   VERIFIED ENDPOINTS',43,1790);
+}else{
+ctx.fillStyle='#e7d5b2';ctx.font='bold 27px Georgia';ctx.fillText(phase<reveal?'BEFORE / RECORDED STANDINGS':'AFTER / VERIFIED STANDINGS',43,1692);
+ctx.fillStyle='#bcb6a5';ctx.font='21px monospace';ctx.fillText(movers.length+' RANK MOVERS · '+entrants.length+' ENTRIES · '+exits.length+' EXITS',43,1750);
+}
+ctx.fillStyle='#bcb6a5';ctx.font='20px monospace';ctx.fillText('NO INTERMEDIATE RANKS SHOWN · NO SYNTHETIC XP',43,1830);
+ctx.fillStyle='#e0bf86';ctx.font='bold 25px system-ui';ctx.fillText('WILLY DEX / PLACEMENT INTELLIGENCE',43,1882);
 }
 function seek(p){$('seek').value=Math.round(p*1000);$('pct').textContent=Math.round(p*100)+'%';render(p)}
 function stop(){stopRequested=true;if(raf)cancelAnimationFrame(raf)}
