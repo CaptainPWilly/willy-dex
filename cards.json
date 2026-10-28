@@ -2667,12 +2667,12 @@
   },
   {
     "number": "075",
-    "name": "DoubleDs",
+    "name": "The Ghostwriter",
     "type": "[ARG] Recruit",
     "image": null,
     "card_id": "willy-dex-075",
-    "level": 1355,
-    "date": "26 October 2026",
+    "level": 1525,
+    "date": "28 October 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2689,36 +2689,26 @@
       {
         "date": "2026-10-26",
         "level": 1355
-      }
-    ],
-    "last_active": "53 minutes ago"
-  },
-  {
-    "number": "076",
-    "name": "The Ghostwriter",
-    "type": "[ARG] Member",
-    "image": null,
-    "card_id": "willy-dex-076",
-    "guild": "ARG",
-    "description": "???",
-    "portrait": null,
-    "tags": [
-      "Member"
-    ],
-    "roles": [
-      "Member"
-    ],
-    "front_text": "???",
-    "back_text": "",
-    "level_snapshots": [
+      },
       {
         "date": "2026-10-28",
         "level": 1525
       }
     ],
-    "level": 1525,
-    "date": "28 October 2026",
-    "last_active": "2 minutes ago"
+    "last_active": "2 minutes ago",
+    "aliases": [
+      "DoubleDs"
+    ]
+  },
+  {
+    "number": "076",
+    "name": "???",
+    "type": "???",
+    "level": null,
+    "date": "???",
+    "image": null,
+    "portrait": null,
+    "description": "???"
   },
   {
     "number": "077",
