@@ -18,74 +18,72 @@
 'use strict';
 const $=id=>document.getElementById(id),fmt=n=>Math.round(n).toLocaleString('en-US');
 let archive=[],season=15,selected=new Set(),playing=false,stopRequested=false,raf=0;
-const main=$('stage'),ctx=main.getContext('2d'),status=s=>$('status').textContent=s;
+const main=$('stage'),ctx=main.getContext('2d',{alpha:false}),status=s=>$('status').textContent=s;
+const boardCache=new Map();
 const raw=()=>archive;
 function snapshots(){const list=raw();if($('source').value==='raw')return list;const days=new Map();list.forEach(s=>days.set(s.date,s));return [...days.values()]}
 function download(blob,name){if(!blob||blob.size<100)throw Error('Empty export');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),120000)}
 function frameBlob(){return new Promise((resolve,reject)=>main.toBlob(b=>b?resolve(b):reject(Error('PNG unavailable')),'image/png'))}
-function resize(){const n=Number($('quality').value);main.width=n;main.height=Math.round(n*16/9);ctx.setTransform(main.width/1080,0,0,main.height/1920,0,0);render(Number($('seek').value)/1000)}
+function resize(){boardCache.clear();const n=Number($('quality').value);main.width=n;main.height=Math.round(n*16/9);ctx.setTransform(main.width/1080,0,0,main.height/1920,0,0);render(Number($('seek').value)/1000)}
+function buildBoard(snapshot,selectedMode){
+const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1920;const c=canvas.getContext('2d',{alpha:false});
+const bg=c.createLinearGradient(0,0,1080,1920);bg.addColorStop(0,'#213328');bg.addColorStop(.55,'#0c1913');bg.addColorStop(1,'#261e16');c.fillStyle=bg;c.fillRect(0,0,1080,1920);
+c.fillStyle='#cbaa77';c.fillRect(43,57,6,103);c.fillStyle='#f2dec0';c.font='bold 28px system-ui';c.fillText('WILLY CORP // INTELLIGENCE',70,100);
+c.fillStyle='#b7b09c';c.font='23px monospace';c.fillText('VERIFIED PLACEMENTS / SEASON '+season,70,149);
+c.fillStyle='#f1dfb7';c.font='bold 57px Georgia';c.fillText('THE LIVING HIERARCHY',43,247);
+let roster=snapshot.guilds.slice().sort((a,b)=>a.rank-b.rank);
+if(selectedMode)roster=roster.filter(g=>selected.has(g.name));
+const count=selectedMode?Math.max(1,roster.length):50,cols=Math.min(5,Math.max(1,Math.ceil(count/10))),rows=Math.ceil(count/cols),gap=8,cw=(996-gap*(cols-1))/cols,rh=Math.min(115,Math.floor(1165/rows)),top=412;
+c.fillStyle='#c8b89a';c.font='22px monospace';c.fillText('VERIFIED SNAPSHOT  '+snapshot.date,43,308);
+c.save();c.beginPath();c.rect(40,409,1002,1162);c.clip();
+for(let i=0;i<count;i++){const g=roster[i],x=43+Math.floor(i/rows)*(cw+gap),y=top+(i%rows)*rh;
+c.fillStyle='#192920';c.fillRect(x,y,cw,rh-5);c.strokeStyle='#4b60516c';c.lineWidth=1;c.strokeRect(x+.5,y+.5,cw-1,rh-6);
+c.fillStyle='#758774';c.font='bold 13px monospace';c.fillText('RANK '+String(g?g.rank:i+1).padStart(2,'0'),x+8,y+19);if(!g)continue;
+c.fillStyle='#28392f';c.fillRect(x+2,y+23,cw-4,rh-29);c.strokeStyle='#5b715e';c.strokeRect(x+2.5,y+23.5,cw-5,rh-30);
+c.fillStyle='#f2e5ce';c.font='bold 16px system-ui';let label=g.name;while(c.measureText(label).width>cw-16&&label.length>3)label=label.slice(0,-2)+'…';c.fillText(label,x+9,y+51);
+c.fillStyle='#cbbca1';c.font='bold 14px monospace';c.fillText(g.experience.toLocaleString('en-US')+' XP',x+9,y+74);
+}
+c.restore();c.fillStyle='#d0ac76';c.fillRect(43,1620,992,2);c.fillStyle='#bcb6a5';c.font='20px monospace';c.fillText('NO INTERMEDIATE RANKS SHOWN · NO SYNTHETIC XP',43,1830);c.fillStyle='#e0bf86';c.font='bold 25px system-ui';c.fillText('WILLY DEX / PLACEMENT INTELLIGENCE',43,1882);
+return canvas;
+}
 function render(progress){
-const W=1080,H=1920,p=Math.max(0,Math.min(1,progress)),ss=snapshots();
-ctx.setTransform(main.width/W,0,0,main.height/H,0,0);
-const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#213328');bg.addColorStop(.55,'#0c1913');bg.addColorStop(1,'#261e16');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-ctx.fillStyle='#cbaa77';ctx.fillRect(43,57,6,103);ctx.fillStyle='#f2dec0';ctx.font='bold 28px system-ui';ctx.fillText('WILLY CORP // INTELLIGENCE',70,100);
-ctx.fillStyle='#b7b09c';ctx.font='23px monospace';ctx.fillText('VERIFIED PLACEMENTS / SEASON '+season,70,149);
-ctx.fillStyle='#f1dfb7';ctx.font='bold 57px Georgia';ctx.fillText('THE LIVING HIERARCHY',43,247);
-if(!ss.length){ctx.fillText('NO RECORDED SNAPSHOTS',43,475);return}
+const p=Math.max(0,Math.min(1,progress)),ss=snapshots();ctx.setTransform(main.width/1080,0,0,main.height/1920,0,0);
+if(!ss.length){ctx.fillStyle='#111a14';ctx.fillRect(0,0,1080,1920);return}
 const intervals=Math.max(1,ss.length-1),at=p*intervals,index=Math.min(intervals-1,Math.floor(at)),phase=ss.length===1?1:p===1?1:at-index;
 const a=ss[index],b=ss[Math.min(index+1,ss.length-1)],old=new Map(a.guilds.map(g=>[g.name,g])),next=new Map(b.guilds.map(g=>[g.name,g]));
-const movers=b.guilds.filter(g=>old.has(g.name)&&old.get(g.name).rank!==g.rank).map(g=>({name:g.name,from:old.get(g.name).rank,to:g.rank,type:'move'})).sort((x,y)=>Math.abs(y.to-y.from)-Math.abs(x.to-x.from)||x.to-y.to);
-const entrants=b.guilds.filter(g=>!old.has(g.name)).map(g=>({name:g.name,to:g.rank,type:'entry'}));
-const exits=a.guilds.filter(g=>!next.has(g.name)).map(g=>({name:g.name,from:g.rank,type:'exit'}));
-const events=[...movers,...entrants,...exits];
-const seconds=Number($('duration').value)||90;const reveal=Math.min(.35,1/Math.max(1,seconds/intervals));const display=phase<reveal?a:b;
-// Rank changes are presented only after the complete next verified board is revealed.
-const highlightPhase=Math.max(0,Math.min(1,(phase-reveal)/Math.max(.001,1-reveal-.035))),position=highlightPhase*events.length,eventIndex=Math.min(events.length-1,Math.floor(position));
-const current=phase>=reveal&&phase<.995?events[eventIndex]:null,part=position-Math.floor(position),pulse=current?Math.sin(Math.PI*Math.min(1,part)):0;
-let roster=display.guilds.slice().sort((x,y)=>x.rank-y.rank);const selectedMode=$('scope').value==='selected';if(selectedMode)roster=roster.filter(g=>selected.has(g.name));
-const count=selectedMode?Math.max(1,roster.length):50,cols=Math.min(5,Math.max(1,Math.ceil(count/10))),rows=Math.ceil(count/cols),gap=8,cw=(996-gap*(cols-1))/cols,rh=Math.min(115,Math.floor(1165/rows)),top=412;
-const point=i=>({x:43+Math.floor(i/rows)*(cw+gap),y:top+(i%rows)*rh});
-ctx.fillStyle='#c8b89a';ctx.font='22px monospace';ctx.fillText('VERIFIED SNAPSHOT  '+display.date,43,308);
-ctx.fillStyle='#a9c1af';ctx.font='bold 22px monospace';
-let headline=current?(current.type==='move'?'RANK CHANGE: ':current.type==='entry'?'ENTERED TOP 50: ':'LEFT TOP 50: ')+current.name:phase<reveal?'EARLIER RECORDED STANDINGS':'LATEST VERIFIED STANDINGS';
-while(ctx.measureText(headline).width>992&&headline.length>12)headline=headline.slice(0,-2)+'…';ctx.fillText(headline,43,354);
+const entrants=b.guilds.filter(g=>!old.has(g.name)),exits=a.guilds.filter(g=>!next.has(g.name));
+const events=[...b.guilds.filter(g=>old.has(g.name)&&old.get(g.name).rank!==g.rank).map(g=>({name:g.name,from:old.get(g.name).rank,to:g.rank,type:'move'})),...entrants.map(g=>({name:g.name,to:g.rank,type:'entry'})),...exits.map(g=>({name:g.name,from:g.rank,type:'exit'}))].sort((x,y)=>x.type==='move'&&y.type==='move'?Math.abs(y.to-y.from)-Math.abs(x.to-x.from):0);
+const seconds=Number($('duration').value)||90,reveal=Math.min(.35,1/Math.max(1,seconds/intervals)),transition=.04;
+const selectedMode=$('scope').value==='selected';
+function cached(snapshot){const id=(snapshot.capturedAt||snapshot.date)+'|'+selectedMode+'|'+[...selected].sort().join('|');if(!boardCache.has(id)){if(boardCache.size>12)boardCache.clear();boardCache.set(id,buildBoard(snapshot,selectedMode))}return boardCache.get(id)}
+const first=cached(a),second=cached(b);
+ctx.globalAlpha=1;ctx.drawImage(first,0,0);
+const blend=Math.max(0,Math.min(1,(phase-reveal)/transition)),smooth=blend*blend*(3-2*blend);
+if(smooth>0){ctx.globalAlpha=smooth;ctx.drawImage(second,0,0);ctx.globalAlpha=1}
+const afterReveal=phase>=reveal+transition,elapsed=Math.max(0,(phase-reveal-transition)/(Math.max(.001,1-reveal-transition-.025))),position=elapsed*events.length,eventIndex=Math.max(0,Math.min(events.length-1,Math.floor(position))),part=position-Math.floor(position),pulse=Math.sin(Math.PI*Math.min(1,part)),current=afterReveal&&phase<.99?events[eventIndex]:null;
 ctx.fillStyle='#344839';ctx.fillRect(43,378,992,5);ctx.fillStyle='#d5b27a';ctx.fillRect(43,378,992*p,5);
-ctx.save();ctx.beginPath();ctx.rect(40,409,1002,1162);ctx.clip();
-for(let i=0;i<count;i++){
-const q=point(i),g=roster[i];ctx.fillStyle='#192920';ctx.fillRect(q.x,q.y,cw,rh-5);ctx.strokeStyle='#4b60516c';ctx.lineWidth=1;ctx.strokeRect(q.x+.5,q.y+.5,cw-1,rh-6);
-ctx.fillStyle='#758774';ctx.font='bold 13px monospace';ctx.fillText('RANK '+String(g?g.rank:i+1).padStart(2,'0'),q.x+8,q.y+19);
-if(!g)continue;
-const featured=current&&current.name===g.name,glow=featured?pulse:0;
-ctx.save();if(glow){ctx.shadowBlur=32*glow;ctx.shadowColor='#b0e0bb';}
-ctx.fillStyle=featured?'#355744':'#28392f';ctx.fillRect(q.x+2,q.y+23,cw-4,rh-29);ctx.strokeStyle=featured?'#d0ecc8':'#5b715e';ctx.lineWidth=featured?1.5+2*glow:1;ctx.strokeRect(q.x+2.5,q.y+23.5,cw-5,rh-30);ctx.restore();
-ctx.fillStyle='#f2e5ce';ctx.font='bold 16px system-ui';let label=g.name;while(ctx.measureText(label).width>cw-16&&label.length>3)label=label.slice(0,-2)+'…';ctx.fillText(label,q.x+9,q.y+51);
-ctx.font='bold 14px monospace';ctx.fillStyle='#cbbca1';ctx.fillText(g.experience.toLocaleString('en-US')+' XP',q.x+9,q.y+74);
-}
-ctx.restore();
-// The cinematic indicator calls out only a verified BEFORE and AFTER rank, never an intermediate occupancy.
-ctx.fillStyle='#d0ac76';ctx.fillRect(43,1620,992,2);
+ctx.fillStyle='#a9c1af';ctx.font='bold 22px monospace';
+let headline=current?(current.type==='move'?'RANK CHANGE / ':current.type==='entry'?'ENTERED TOP 50 / ':'LEFT TOP 50 / ')+current.name:afterReveal?'VERIFIED SNAPSHOT · '+b.date:'VERIFIED SNAPSHOT · '+a.date;
+while(ctx.measureText(headline).width>992&&headline.length>12)headline=headline.slice(0,-2)+'…';ctx.fillText(headline,43,354);
 if(current){
-ctx.fillStyle='#e7d5b2';ctx.font='bold 29px Georgia';let name=current.name;while(ctx.measureText(name).width>985&&name.length>10)name=name.slice(0,-2)+'…';ctx.fillText(name,43,1686);
-const statement=current.type==='move'?'#'+current.from+'  →  #'+current.to+'    '+(current.to<current.from?'▲ '+(current.from-current.to):'▼ '+(current.to-current.from))+' RANKS':current.type==='entry'?'ENTERED TOP 50  ·  #'+current.to:'EXITED TOP 50  ·  LAST OBSERVED #'+current.from;
-ctx.fillStyle='#b6d8b9';ctx.font='bold 30px monospace';ctx.fillText(statement,43,1740);
-ctx.fillStyle='#bcb6a5';ctx.font='21px monospace';ctx.fillText('OBSERVED CHANGE '+(eventIndex+1)+' / '+events.length+'   •   VERIFIED ENDPOINTS',43,1790);
-}else{
-ctx.fillStyle='#e7d5b2';ctx.font='bold 27px Georgia';ctx.fillText(phase<reveal?'BEFORE / RECORDED STANDINGS':'AFTER / VERIFIED STANDINGS',43,1692);
-ctx.fillStyle='#bcb6a5';ctx.font='21px monospace';ctx.fillText(movers.length+' RANK MOVERS · '+entrants.length+' ENTRIES · '+exits.length+' EXITS',43,1750);
-}
-ctx.fillStyle='#bcb6a5';ctx.font='20px monospace';ctx.fillText('NO INTERMEDIATE RANKS SHOWN · NO SYNTHETIC XP',43,1830);
-ctx.fillStyle='#e0bf86';ctx.font='bold 25px system-ui';ctx.fillText('WILLY DEX / PLACEMENT INTELLIGENCE',43,1882);
+const roster=b.guilds.slice().sort((x,y)=>x.rank-y.rank).filter(g=>!selectedMode||selected.has(g.name)),g=roster.find(x=>x.name===current.name);
+if(g){const count=selectedMode?Math.max(1,roster.length):50,cols=Math.min(5,Math.max(1,Math.ceil(count/10))),rows=Math.ceil(count/cols),gap=8,cw=(996-gap*(cols-1))/cols,rh=Math.min(115,Math.floor(1165/rows)),i=roster.indexOf(g),x=43+Math.floor(i/rows)*(cw+gap),y=412+(i%rows)*rh;
+ctx.strokeStyle='#bfdfbb';ctx.lineWidth=1.8+2*pulse;ctx.shadowColor='#9fcdb1';ctx.shadowBlur=14*pulse;ctx.strokeRect(x+2,y+23,cw-4,rh-29);ctx.shadowBlur=0}
+ctx.fillStyle='#e7d5b2';ctx.font='bold 29px Georgia';ctx.fillText(current.name,43,1686);
+const change=current.type==='move'?'#'+current.from+' → #'+current.to+'  '+(current.to<current.from?'▲ '+(current.from-current.to):'▼ '+(current.to-current.from))+' RANKS':current.type==='entry'?'ENTERED TOP 50 · #'+current.to:'EXITED TOP 50 · LAST OBSERVED #'+current.from;
+ctx.fillStyle='#b6d8b9';ctx.font='bold 30px monospace';ctx.fillText(change,43,1740);ctx.fillStyle='#bcb6a5';ctx.font='21px monospace';ctx.fillText('OBSERVED CHANGE '+(eventIndex+1)+' / '+events.length,43,1790);
+}else{ctx.fillStyle='#e7d5b2';ctx.font='bold 27px Georgia';ctx.fillText(afterReveal?'LATEST VERIFIED STANDINGS':'EARLIER VERIFIED STANDINGS',43,1692);ctx.fillStyle='#bcb6a5';ctx.font='21px monospace';ctx.fillText(events.length+' RECORDED MOVEMENT EVENTS',43,1750)}
 }
 function seek(p){$('seek').value=Math.round(p*1000);$('pct').textContent=Math.round(p*100)+'%';render(p)}
 function stop(){stopRequested=true;if(raf)cancelAnimationFrame(raf)}
-function animate(seconds){return new Promise(resolve=>{const started=performance.now();function tick(t){if(stopRequested){resolve(false);return}const p=Math.min(1,(t-started)/(seconds*1000));seek(p);if(p>=1)resolve(true);else raf=requestAnimationFrame(tick)}raf=requestAnimationFrame(tick)})}
+function animate(seconds){return new Promise(resolve=>{const started=performance.now();let last=-Infinity;function tick(t){if(stopRequested){resolve(false);return}const p=Math.min(1,(t-started)/(seconds*1000));if(p>=1||t-last>=1000/30){seek(p);last=t}if(p>=1)resolve(true);else raf=requestAnimationFrame(tick)}raf=requestAnimationFrame(tick)})}
 function videoMime(){if(!window.MediaRecorder||!main.captureStream)return null;return ['video/mp4','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(t=>MediaRecorder.isTypeSupported(t))||null}
 async function run(record){if(playing)return;playing=true;stopRequested=false;$('play').disabled=true;$('export').disabled=true;let recorder,stream;
 try{const seconds=Number($('duration').value);if(record){const mime=videoMime();if(!mime)throw Error('Video recording unavailable on this browser. Use snapshot slides or desktop Chrome.');seek(0);stream=main.captureStream(30);const chunks=[];recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:6500000});recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};const done=new Promise((resolve,reject)=>{recorder.onstop=resolve;recorder.onerror=ev=>reject(ev.error||Error('Video recorder error'))});recorder.start(1000);status('Recording video…');const completed=await animate(seconds);if(recorder.state==='recording')recorder.stop();await done;if(completed){download(new Blob(chunks,{type:mime}),'willydex-season-'+season+'-race.'+(mime.includes('mp4')?'mp4':'webm'));status('Video exported. On iPhone, use Share → Save to Files if it opens in a viewer.')}else status('Recording cancelled.')}else{status('Playing season race…');const completed=await animate(seconds);status(completed?'Preview complete':'Preview stopped')}}catch(e){status('Error: '+e.message);console.error(e)}finally{if(recorder?.state==='recording')recorder.stop();stream?.getTracks().forEach(t=>t.stop());playing=false;$('play').disabled=false;$('export').disabled=false}}
 $('play').onclick=()=>run(false);$('export').onclick=()=>run(true);$('stop').onclick=()=>{stop();status('Stopped')};$('seek').oninput=e=>{stop();seek(Number(e.target.value)/1000)};
 $('png').onclick=async()=>{try{download(await frameBlob(),'willydex-race-frame.png');status('Frame PNG saved')}catch(e){status(e.message)}};
 $('frames').onclick=async()=>{try{stop();const ss=snapshots(),prior=Number($('seek').value)/1000;for(let i=0;i<ss.length;i++){seek(ss.length===1?0:i/(ss.length-1));download(await frameBlob(),'willydex-race-'+String(i+1).padStart(2,'0')+'.png')}seek(prior);status('Exported '+ss.length+' snapshot slides. Your browser may require multiple-download permission.')}catch(e){status(e.message)}};
-function picker(){const latest=archive.at(-1);if(!latest)return;const names=latest.guilds.slice().sort((a,b)=>a.rank-b.rank);$('guilds').innerHTML=names.map(g=>'<label><input type="checkbox" data-name="'+g.name.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'" '+(selected.has(g.name)?'checked':'')+'> #'+g.rank+' '+g.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</label>').join('');$('guilds').querySelectorAll('input').forEach(x=>x.onchange=()=>{x.checked?selected.add(x.dataset.name):selected.delete(x.dataset.name);seek(Number($('seek').value)/1000)})}
+function picker(){boardCache.clear();const latest=archive.at(-1);if(!latest)return;const names=latest.guilds.slice().sort((a,b)=>a.rank-b.rank);$('guilds').innerHTML=names.map(g=>'<label><input type="checkbox" data-name="'+g.name.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'" '+(selected.has(g.name)?'checked':'')+'> #'+g.rank+' '+g.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</label>').join('');$('guilds').querySelectorAll('input').forEach(x=>x.onchange=()=>{x.checked?selected.add(x.dataset.name):selected.delete(x.dataset.name);seek(Number($('seek').value)/1000)})}
 $('scope').onchange=()=>{$('watchlist').hidden=$('scope').value!=='selected';seek(Number($('seek').value)/1000)};
 ['source','duration'].forEach(id=>$(id).onchange=()=>seek(0));$('quality').onchange=resize;$('refresh').onclick=()=>location.reload();
 async function load(){try{const r=await fetch('glb.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('Leaderboard data HTTP '+r.status);const data=await r.json();if(!Array.isArray(data.snapshots))throw Error('Invalid leaderboard archive');for(const snapshot of data.snapshots){if(!Array.isArray(snapshot.guilds)||snapshot.guilds.length!==50||new Set(snapshot.guilds.map(g=>g.rank)).size!==50||snapshot.guilds.some(g=>!Number.isInteger(g.rank)||g.rank<1||g.rank>50||!Number.isFinite(g.experience)||typeof g.name!=='string'))throw Error('Snapshot failed strict rank validation: '+(snapshot.capturedAt||snapshot.date));}season=data.season;archive=data.snapshots.filter(x=>(x.season||15)===season).sort((a,b)=>Date.parse(a.capturedAt||a.date)-Date.parse(b.capturedAt||b.date));picker();resize();status(archive.length+' archived snapshots loaded · '+snapshots().length+' daily points. Ready to preview.')}catch(e){status('Load failed: '+e.message);resize()}}load();
