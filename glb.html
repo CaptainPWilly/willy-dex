@@ -136,6 +136,7 @@ return canvas;
 }
 function shortDownload(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000)}
 function shortBlob(){return new Promise((resolve,reject)=>drawShort().toBlob(b=>b?resolve(b):reject(Error('PNG rendering failed')),'image/png'))}
+['date','resolution','moversBaseline'].forEach(id=>$(id).addEventListener('change',()=>queueMicrotask(()=>drawShort())));
 $('shortsKind').onchange=()=>drawShort();$('shortsRows').onchange=()=>drawShort();
 $('shortsSave').onclick=async()=>{try{shortDownload(await shortBlob(),'glb-shorts-'+$('shortsKind').value+'.png');$('shortsStatus').textContent='1080 × 1920 PNG exported'}catch(e){$('shortsStatus').textContent=e.message}};
 $('shortsCopy').onclick=async()=>{try{if(!navigator.clipboard?.write||!window.ClipboardItem)throw Error('Image clipboard unavailable');await navigator.clipboard.write([new ClipboardItem({'image/png':shortBlob()})]);$('shortsStatus').textContent='9:16 image copied to clipboard'}catch(e){shortDownload(await shortBlob(),'glb-shorts.png');$('shortsStatus').textContent='Clipboard unavailable; downloaded PNG instead'}};
