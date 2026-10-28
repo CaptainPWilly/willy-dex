@@ -25,41 +25,52 @@ function download(blob,name){if(!blob||blob.size<100)throw Error('Empty export')
 function frameBlob(){return new Promise((resolve,reject)=>main.toBlob(b=>b?resolve(b):reject(Error('PNG unavailable')),'image/png'))}
 function resize(){const n=Number($('quality').value);main.width=n;main.height=Math.round(n*16/9);ctx.setTransform(main.width/1080,0,0,main.height/1920,0,0);render(Number($('seek').value)/1000)}
 function render(progress){
-ctx.setTransform(main.width/1080,0,0,main.height/1920,0,0);
-const p=Math.max(0,Math.min(1,progress)),ss=snapshots(),grad=ctx.createLinearGradient(0,0,1080,1920);
-grad.addColorStop(0,'#27372f');grad.addColorStop(.55,'#111d18');grad.addColorStop(1,'#281f17');ctx.fillStyle=grad;ctx.fillRect(0,0,1080,1920);
-ctx.fillStyle='#cfaa70';ctx.fillRect(40,55,7,113);ctx.fillStyle='#f4e2c4';ctx.font='bold 29px system-ui';ctx.fillText('WILLY CORP // SEASON INTELLIGENCE',70,100);
-ctx.font='23px monospace';ctx.fillStyle='#c0b4a0';ctx.fillText('TOP 50 / SEASON '+season,70,151);ctx.font='bold 55px Georgia';ctx.fillStyle='#f0d9af';ctx.fillText('THE PLACEMENT RACE',40,249);
-if(!ss.length){ctx.font='30px system-ui';ctx.fillText('No captured leaderboard yet',42,500);return}
-const span=Math.max(1,ss.length-1),pos=p*span,index=Math.min(span-1,Math.floor(pos)),fraction=ss.length===1?0:p===1?1:pos-index;
-// Movement is visual only. The displayed XP and ranks remain the exact recorded values for the current capture.
-const move=fraction<.16?0:fraction>.83?1:(fraction-.16)/.67,ease=move*move*(3-2*move);
-const a=ss[index],b=ss[Math.min(index+1,ss.length-1)],aMap=new Map(a.guilds.map(g=>[g.name,g])),bMap=new Map(b.guilds.map(g=>[g.name,g]));
-const finalCapture=fraction>=.83||a===b,observed=finalCapture?b:a,display=new Map(observed.guilds.map(g=>[g.name,g]));
-let guilds=[...new Set([...aMap.keys(),...bMap.keys()])].map(name=>{
-const old=aMap.get(name),next=bMap.get(name),actual=display.get(name);return{name,old,next,actual,position:old&&next?old.rank+(next.rank-old.rank)*ease:(old||next).rank}
-}).filter(g=>g.actual);
-if($('scope').value==='selected')guilds=guilds.filter(g=>selected.has(g.name));
-const source=observed.date+' · RECORDED',changes=b.guilds.filter(g=>aMap.has(g.name)&&aMap.get(g.name).rank!==g.rank).length;
-ctx.font='23px monospace';ctx.fillStyle='#d1bc99';ctx.fillText(source,41,312);
-ctx.fillStyle='#344438';ctx.fillRect(40,332,1000,5);ctx.fillStyle='#d2ac73';ctx.fillRect(40,332,1000*p,5);
-ctx.font='21px monospace';ctx.fillStyle='#aaa990';ctx.fillText(guilds.length+' GUILDS VISIBLE · '+changes+' PLACEMENT CHANGES',41,382);
-if(!guilds.length){ctx.font='27px system-ui';ctx.fillText('Select guilds to begin',41,500);return}
-const cols=Math.min(5,Math.max(1,Math.ceil(guilds.length/10))),rows=Math.ceil(guilds.length/cols),gap=8,colW=(1000-gap*(cols-1))/cols,rowH=Math.min(117,Math.floor(1190/rows)),top=410;
-guilds.slice().sort((a,b)=>b.position-a.position).forEach(g=>{
-const fromRank=(g.old||g.next).rank-1,toRank=(g.next||g.old).rank-1;
-const fromCol=Math.floor(fromRank/10),fromRow=fromRank%10,toCol=Math.floor(toRank/10),toRow=toRank%10;
-const x=40+(fromCol+(toCol-fromCol)*ease)*(colW+gap),y=top+(fromRow+(toRow-fromRow)*ease)*rowH,highlight=g.name==='The Pirate Cove',actual=g.actual;
-ctx.fillStyle=highlight?'#55432a':'#253229';ctx.fillRect(x,y,colW,rowH-5);ctx.strokeStyle=highlight?'#e5b86d':'#5b655440';ctx.lineWidth=highlight?2:1;ctx.strokeRect(x+.5,y+.5,colW-1,rowH-6);
-ctx.fillStyle=highlight?'#f5ce80':'#d0b99b';ctx.font='bold 21px monospace';ctx.fillText('#'+actual.rank,x+8,y+25);
-ctx.fillStyle='#f5e5cc';ctx.font='bold 17px system-ui';let name=g.name;while(ctx.measureText(name).width>colW-16&&name.length>3)name=name.slice(0,-2)+'…';ctx.fillText(name,x+8,y+51);
-ctx.font='bold 18px monospace';ctx.fillStyle=highlight?'#ffdc97':'#dfc6a0';ctx.fillText(fmt(actual.experience)+' XP',x+8,y+78);
-if(g.old&&g.next&&g.old.rank!==g.next.rank){ctx.font='bold 14px monospace';ctx.textAlign='right';ctx.fillStyle=g.next.rank<g.old.rank?'#92d6a7':'#e4a39a';ctx.fillText((g.next.rank<g.old.rank?'▲':'▼')+Math.abs(g.old.rank-g.next.rank),x+colW-9,y+26);ctx.textAlign='left'}
-if(!g.old||!g.next){ctx.fillStyle='#d6b789';ctx.font='13px monospace';ctx.textAlign='right';ctx.fillText(!g.old?'NEW':'OUT',x+colW-8,y+25);ctx.textAlign='left'}
-});
-ctx.fillStyle='#b69a67';ctx.fillRect(41,1658,998,2);ctx.font='bold 27px Georgia';ctx.fillStyle='#e4cfaa';ctx.fillText('VERIFIED PLACEMENT INTELLIGENCE',41,1719);
-ctx.font='22px monospace';ctx.fillStyle='#bcb29f';ctx.fillText('XP AND RANK LABELS: RECORDED SNAPSHOTS ONLY',41,1775);
-ctx.fillText('MOVEMENT ANIMATED · NO GENERATED STATISTICS',41,1814);ctx.font='bold 26px system-ui';ctx.fillStyle='#ddb67a';ctx.fillText('THE PIRATE COVE / WILLY DEX',41,1878);
+const W=1080,H=1920,p=Math.max(0,Math.min(1,progress)),ss=snapshots();
+ctx.setTransform(main.width/W,0,0,main.height/H,0,0);
+const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#21332b');grad.addColorStop(.55,'#101c17');grad.addColorStop(1,'#241c14');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+ctx.fillStyle='#cba874';ctx.fillRect(43,60,6,104);ctx.font='bold 29px system-ui';ctx.fillStyle='#edddbb';ctx.fillText('WILLY CORP // INTELLIGENCE',71,104);ctx.fillStyle='#afa991';ctx.font='23px monospace';ctx.fillText('PLACEMENT OBSERVATORY  /  SEASON '+season,71,150);
+ctx.font='bold 58px Georgia';ctx.fillStyle='#f1dbb4';ctx.fillText('THE LIVING HIERARCHY',43,245);
+if(!ss.length){ctx.fillText('NO VERIFIED CAPTURES',43,480);return}
+const steps=Math.max(1,ss.length-1),position=p*steps,index=Math.min(steps-1,Math.floor(position)),phase=ss.length===1?0:p===1?1:position-index;
+const a=ss[index],b=ss[Math.min(index+1,ss.length-1)],from=new Map(a.guilds.map(g=>[g.name,g])),to=new Map(b.guilds.map(g=>[g.name,g]));
+const motion=phase<=.18?0:phase>=.78?1:(phase-.18)/.60,ease=motion*motion*(3-2*motion),landed=phase>=.78||a===b,observed=landed?b:a;
+const union=[...new Set([...from.keys(),...to.keys()])];
+let pieces=union.map(name=>({name,old:from.get(name),next:to.get(name)}));
+if($('scope').value==='selected')pieces=pieces.filter(g=>selected.has(g.name));
+const cells=$('scope').value==='all'?50:Math.max(1,pieces.length),columns=Math.min(5,Math.max(1,Math.ceil(cells/10))),rows=Math.ceil(cells/columns),gap=8,cw=(996-gap*(columns-1))/columns,rh=Math.min(115,Math.floor(1170/rows)),top=408;
+const rankPoint=r=>{const k=Math.max(0,Math.min(49,r-1));return{x:42+Math.floor(k/10)*(cw+gap),y:top+(k%10)*rh}};
+const slotPoint=i=>({x:42+Math.floor(i/rows)*(cw+gap),y:top+(i%rows)*rh});
+const oldSorted=pieces.filter(g=>g.old).sort((x,y)=>x.old.rank-y.old.rank),newSorted=pieces.filter(g=>g.next).sort((x,y)=>x.next.rank-y.next.rank);
+const oldIndex=new Map(oldSorted.map((g,i)=>[g.name,i])),newIndex=new Map(newSorted.map((g,i)=>[g.name,i]));
+const point=(g,useNext)=>$('scope').value==='all'?rankPoint((useNext?g.next:g.old)?.rank||(useNext?g.old:g.next).rank):slotPoint((useNext?newIndex:oldIndex).get(g.name)??(useNext?oldIndex:newIndex).get(g.name)??0);
+ctx.fillStyle='#c2b596';ctx.font='23px monospace';ctx.fillText('RECORDED '+observed.date,43,306);
+const changed=b.guilds.filter(g=>from.has(g.name)&&from.get(g.name).rank!==g.rank).length;
+ctx.fillStyle='#9eab9b';ctx.font='22px monospace';ctx.fillText(changed+' RECORDED RANK CHANGES   •   '+(landed?'POSITIONS VERIFIED':'POSITION TRANSITION'),43,352);
+ctx.fillStyle='#37493d';ctx.fillRect(43,375,992,4);ctx.fillStyle='#dfbd7d';ctx.fillRect(43,375,992*p,4);
+ctx.save();ctx.beginPath();ctx.rect(40,403,1001,1160);ctx.clip();
+if($('scope').value==='all'){for(let i=1;i<=50;i++){const q=rankPoint(i);ctx.fillStyle='#1b2822';ctx.fillRect(q.x,q.y,cw,rh-5);ctx.strokeStyle='#58664f77';ctx.strokeRect(q.x+.5,q.y+.5,cw-1,rh-6);ctx.fillStyle='#728676';ctx.font='bold 14px monospace';ctx.fillText('RANK '+String(i).padStart(2,'0'),q.x+8,q.y+19)}}
+else{for(let i=0;i<cells;i++){const q=slotPoint(i);ctx.fillStyle='#1b2822';ctx.fillRect(q.x,q.y,cw,rh-5)}}
+pieces.sort((u,v)=>{const um=u.old&&u.next&&u.old.rank!==u.next.rank?1:0,vm=v.old&&v.next&&v.old.rank!==v.next.rank?1:0;return um-vm});
+for(const g of pieces){
+const start=point(g,false),end=point(g,true),x=start.x+(end.x-start.x)*ease,y=start.y+(end.y-start.y)*ease;
+const active=g.old&&g.next&&g.old.rank!==g.next.rank,cove=g.name==='The Pirate Cove',entry=!g.old,exit=!g.next;
+const visible=entry?Math.max(.08,ease):exit?Math.max(.08,1-ease):1;
+ctx.globalAlpha=visible;
+if(active&&motion>0&&motion<1){ctx.strokeStyle=cove?'#edbe6d88':'#83af8d77';ctx.lineWidth=cove?4:2;ctx.beginPath();ctx.moveTo(start.x+cw/2,start.y+rh/2);ctx.lineTo(x+cw/2,y+rh/2);ctx.stroke()}
+ctx.fillStyle=cove?'#654725':active?'#30483b':'#283930';ctx.fillRect(x+2,y+24,cw-4,rh-31);
+ctx.strokeStyle=cove?'#f0c478':active?'#9fbd9c':'#546b59';ctx.lineWidth=cove?2:1;ctx.strokeRect(x+2.5,y+24.5,cw-5,rh-32);
+const recorded=(landed?g.next:g.old)||(g.next||g.old);
+ctx.fillStyle=cove?'#f7d28b':'#f1e3c7';ctx.font='bold 17px system-ui';let label=g.name;while(ctx.measureText(label).width>cw-17&&label.length>3)label=label.slice(0,-2)+'…';ctx.fillText(label,x+9,y+51);
+ctx.font='bold 16px monospace';ctx.fillStyle='#c6b69a';ctx.fillText(recorded?Math.round(recorded.experience).toLocaleString('en-US')+' XP':'—',x+9,y+75);
+if(active){ctx.fillStyle=g.next.rank<g.old.rank?'#9cd3ad':'#e3a59b';ctx.textAlign='right';ctx.font='bold 16px monospace';ctx.fillText((g.next.rank<g.old.rank?'▲':'▼')+Math.abs(g.next.rank-g.old.rank),x+cw-9,y+49);ctx.textAlign='left'}
+if(entry||exit){ctx.font='bold 12px monospace';ctx.fillStyle='#e6bd81';ctx.textAlign='right';ctx.fillText(entry?'IN':'OUT',x+cw-9,y+70);ctx.textAlign='left'}
+ctx.globalAlpha=1;
+}
+ctx.restore();
+ctx.fillStyle='#d2b077';ctx.fillRect(43,1645,992,2);ctx.fillStyle='#e9d4af';ctx.font='bold 28px Georgia';ctx.fillText('FIXED RANKS. MOVING GUILDS.',43,1710);
+ctx.fillStyle='#bcb4a1';ctx.font='21px monospace';ctx.fillText('NO SYNTHETIC XP · VERIFIED SNAPSHOT VALUES ONLY',43,1770);
+ctx.fillText('TRANSITIONS SHOW PATHS, NOT UNOBSERVED EVENTS',43,1810);
+ctx.fillStyle='#e0b678';ctx.font='bold 26px system-ui';ctx.fillText('THE PIRATE COVE / WILLY DEX',43,1875);
 }
 function seek(p){$('seek').value=Math.round(p*1000);$('pct').textContent=Math.round(p*100)+'%';render(p)}
 function stop(){stopRequested=true;if(raf)cancelAnimationFrame(raf)}
