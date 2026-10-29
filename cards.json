@@ -778,6 +778,16 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notification batch supplied 2026-10-29",
+        "identityAmbiguous": false
+      }
     ]
   },
   {
@@ -1258,6 +1268,24 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notification batch supplied 2026-10-29",
+        "identityAmbiguous": false
+      },
+      {
+        "date": null,
+        "reportedAge": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notification batch supplied 2026-10-29",
+        "identityAmbiguous": false
+      }
     ]
   },
   {
@@ -1572,6 +1600,16 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "11 months ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notification batch supplied 2026-10-29",
+        "identityAmbiguous": false
+      }
     ]
   },
   {
@@ -1717,6 +1755,16 @@
         "precision": "relative-only",
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
+      }
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notification batch supplied 2026-10-29",
+        "identityAmbiguous": false
       }
     ]
   },
@@ -3289,6 +3337,16 @@
         "precision": "relative-only",
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
+      }
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "11 months ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notification batch supplied 2026-10-29",
+        "identityAmbiguous": false
       }
     ]
   },
