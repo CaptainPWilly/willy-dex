@@ -119,6 +119,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "5 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -210,6 +220,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -231,6 +251,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -244,6 +274,16 @@
           "ageText": "2 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -308,6 +348,24 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        },
+        {
+          "left": null,
+          "ageText": "3 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -321,6 +379,16 @@
           "ageText": "2 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -336,6 +404,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -349,6 +427,16 @@
           "ageText": "4 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -370,6 +458,16 @@
           "ageText": "5 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -398,6 +496,16 @@
           "ageText": "4 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -441,6 +549,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "5 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -454,6 +572,16 @@
           "ageText": "5 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -483,6 +611,24 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        },
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -496,6 +642,16 @@
           "ageText": "5 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -595,6 +751,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -623,6 +789,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -643,6 +819,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "5 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -700,6 +886,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -741,6 +937,16 @@
           "ageText": "6 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -840,6 +1046,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -931,6 +1147,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "7 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -958,6 +1184,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1141,6 +1377,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1154,6 +1400,16 @@
           "ageText": "8 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1197,6 +1453,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1238,6 +1504,16 @@
           "ageText": "8 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1295,6 +1571,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1308,6 +1594,16 @@
           "ageText": "8 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1365,6 +1661,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "7 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1392,6 +1698,16 @@
           "ageText": "8 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1477,6 +1793,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1533,6 +1859,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1560,6 +1896,16 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1659,6 +2005,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "5 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1700,6 +2056,16 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1770,6 +2136,16 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -1883,6 +2259,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -1988,6 +2374,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2044,6 +2440,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2057,6 +2463,16 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2142,6 +2558,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2169,6 +2595,16 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2345,6 +2781,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2415,6 +2861,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2456,6 +2912,16 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "9 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2569,6 +3035,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "10 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2582,6 +3058,16 @@
           "ageText": "10 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "10 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2660,6 +3146,24 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": true
+        },
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": true
+        }
       ]
     },
     {
@@ -2701,6 +3205,16 @@
           "ageText": "11 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2758,6 +3272,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "5 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2785,6 +3309,16 @@
           "ageText": "11 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2877,6 +3411,24 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "10 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        },
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2919,6 +3471,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -2932,6 +3494,16 @@
           "ageText": "11 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2960,6 +3532,16 @@
           "ageText": "11 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "11 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -2995,6 +3577,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3073,6 +3665,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3108,6 +3710,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3121,6 +3733,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3164,6 +3786,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3177,6 +3809,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3234,6 +3876,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3248,6 +3900,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3261,6 +3923,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 month ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3318,6 +3990,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3360,6 +4042,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3387,6 +4079,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3472,6 +4174,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3556,6 +4268,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3583,6 +4305,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "10 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3682,6 +4414,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3709,6 +4451,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3766,6 +4518,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3808,6 +4570,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3821,6 +4593,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3878,6 +4660,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3891,6 +4683,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -3976,6 +4778,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -3989,6 +4801,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4214,6 +5036,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4256,6 +5088,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4269,6 +5111,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4382,6 +5234,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4395,6 +5257,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4438,6 +5310,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4451,6 +5333,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4507,6 +5399,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4634,6 +5536,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4648,6 +5560,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4661,6 +5583,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4690,6 +5622,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4703,6 +5645,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4746,6 +5698,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4759,6 +5721,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4843,6 +5815,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -4949,6 +5931,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -4983,6 +5975,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5026,6 +6028,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -5039,6 +6051,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5095,6 +6117,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5165,6 +6197,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5249,6 +6291,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5460,6 +6512,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -5473,6 +6535,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5530,6 +6602,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -5557,6 +6639,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5726,6 +6818,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -5739,6 +6841,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "8 months ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5754,6 +6866,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -5767,6 +6889,16 @@
           "ageText": "1 year ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5816,6 +6948,24 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        },
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5873,6 +7023,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -5900,6 +7060,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -5942,6 +7112,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6013,6 +7193,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6041,6 +7231,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6054,6 +7254,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6153,6 +7363,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6237,6 +7457,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6250,6 +7480,24 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        },
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6306,6 +7554,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6377,6 +7635,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6390,6 +7658,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6545,6 +7823,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6559,6 +7847,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6572,6 +7870,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6600,6 +7908,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6642,6 +7960,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6825,6 +8153,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6881,6 +8219,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6909,6 +8257,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -6936,6 +8294,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -6978,6 +8346,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7034,6 +8412,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7133,6 +8521,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7160,6 +8558,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7217,7 +8625,18 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
-      ]
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
+      ],
+      "identityAmbiguous": true
     },
     {
       "name": "ekkooo",
@@ -7230,6 +8649,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7350,6 +8779,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7364,6 +8803,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7377,6 +8826,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7399,6 +8858,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7412,6 +8881,16 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7469,6 +8948,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7496,6 +8985,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7525,6 +9024,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7538,6 +9047,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7581,6 +9100,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7594,6 +9123,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7706,6 +9245,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -7861,6 +9410,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7903,6 +9462,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -7916,6 +9485,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8099,6 +9678,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8140,6 +9729,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8183,6 +9782,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8224,6 +9833,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8323,6 +9942,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8364,6 +9993,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8407,6 +10046,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8434,6 +10083,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8463,6 +10122,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8491,6 +10160,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8504,6 +10183,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8533,6 +10222,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8560,6 +10259,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8617,6 +10326,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8659,6 +10378,16 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
       ]
     },
     {
@@ -8672,6 +10401,16 @@
           "ageText": "4 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
         }
       ]
     },
@@ -8718,6 +10457,70 @@
         }
       ],
       "cardId": "willy-dex-076"
+    },
+    {
+      "name": "Mixitiy",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
+      ]
+    },
+    {
+      "name": "mp3jun3y",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "3 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
+      ]
+    },
+    {
+      "name": "Trash Camel",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
+      ]
+    },
+    {
+      "name": "Preppy101",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "4 years ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
+      ]
     }
   ],
   "importMetadata": {
@@ -8727,5 +10530,13 @@
     "uniqueNameCount": 603,
     "relativeDatesOnly": true,
     "disclaimer": "Repeated join notifications are distinct observations, not proof of a departure in between. Identically named Deleted profiles may be different players."
+  },
+  "departureImport": {
+    "source": "SMMO guild departure notifications supplied in chat",
+    "reportedOn": "2026-10-29",
+    "eventCount": 179,
+    "distinctNames": 173,
+    "relativeDatesOnly": true,
+    "warning": "A relative departure report is not an exact departure date. Events with identical age text are preserved separately; repeated names do not establish identity across all records. Join and departure messages are not forcibly paired."
   }
 }
