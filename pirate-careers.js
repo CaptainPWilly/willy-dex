@@ -168,6 +168,7 @@ function renderRegistry(){
 }
 function eventPeriodMatch(e){
  if(state.eventPeriod==='all')return true;
+ if(state.eventPeriod.startsWith('bucket:'))return bucket(e)===state.eventPeriod.slice(7);
  const d=eventDistance(e);
  if(state.eventPeriod==='recent')return d<=31;
  if(state.eventPeriod==='mid')return d>31&&d<365;
@@ -272,7 +273,7 @@ function wire(){
   const kind=e.target.closest('[data-kind]');if(kind&&!kind.closest('.pirate')&&!kind.closest('.ledger-row')){
    state.eventType=kind.dataset.kind;$('eventType').value=state.eventType;
    if(kind.dataset.age){
-    const b=kind.dataset.age;state.eventPeriod=b==='recent'?'recent':['2-3','4-6','7-9','10-11'].includes(b)?'mid':b==='1y'?'year':'older';
+    const b=kind.dataset.age;state.eventPeriod='bucket:'+b;
     $('eventPeriod').value=state.eventPeriod;
    }else{state.eventPeriod='all';$('eventPeriod').value='all'}
    eventLimit=40;renderLedger();location.hash='ledger';
