@@ -252,6 +252,16 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "2 years ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
+      }
     ]
   },
   {
@@ -1302,6 +1312,16 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "4 months ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
+      }
     ]
   },
   {
@@ -1364,6 +1384,24 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "11 months ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
+      },
+      {
+        "date": null,
+        "reportedAge": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
+      }
     ]
   },
   {
@@ -1421,6 +1459,16 @@
         "precision": "relative-only",
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
+      }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
       }
     ]
   },
@@ -1868,6 +1916,16 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
+      }
     ]
   },
   {
@@ -2056,6 +2114,16 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
+      }
     ]
   },
   {
@@ -2109,6 +2177,16 @@
         "precision": "relative-only",
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
+      }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
       }
     ]
   },
@@ -3202,6 +3280,16 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "4 years ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
+      }
     ]
   },
   {
@@ -3425,6 +3513,16 @@
         "precision": "relative-only",
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
+      }
+    ],
+    "guild_leave_history": [
+      {
+        "date": null,
+        "reportedAge": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "precision": "relative-only",
+        "source": "SMMO departure notices posted 2026-10-29",
+        "ambiguousIdentity": false
       }
     ]
   },
