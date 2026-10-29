@@ -3295,13 +3295,32 @@
   },
   {
     "number": "076",
-    "name": "???",
-    "type": "???",
-    "level": null,
+    "name": "Beeeeezy",
+    "type": "[ARG] Recruit",
+    "level": "???",
     "date": "???",
     "image": null,
     "portrait": null,
-    "description": "???"
+    "description": "???",
+    "guild": "ARG",
+    "front_text": "???",
+    "back_text": "???",
+    "smmo_joined": "???",
+    "cove_joined": "2026-10-29",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "2 minutes ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": "2026-10-29",
+        "precision": "day confirmed; reported minute approximate"
+      }
+    ]
   },
   {
     "number": "077",
