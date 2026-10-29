@@ -8702,6 +8702,21 @@
           "datePrecision": "relative-only"
         }
       ]
+    },
+    {
+      "name": "Beeeeezy",
+      "membershipStatus": "current",
+      "periods": [
+        {
+          "joined": "2026-10-29",
+          "left": null,
+          "ageText": "2 minutes ago",
+          "reportedAt": "2026-10-29T15:05:00-07:00",
+          "estimatedJoinedAt": "2026-10-29T15:03:00-07:00",
+          "datePrecision": "day-confirmed-minute-estimated",
+          "source": "User-supplied SMMO guild join notification on 2026-10-29"
+        }
+      ]
     }
   ],
   "importMetadata": {
