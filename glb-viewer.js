@@ -79,8 +79,8 @@ fetch('glb.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error
   }
   status.textContent='Copying image…';
   navigator.clipboard.write([new ClipboardItem({'image/png':blob})])
-  .then(()=>{frame.hidden=true;status.textContent='Image copied. Paste it into Discord, Messages, or another app.'})
-  .catch(e=>showCopyFallback('Your browser blocked clipboard copying ('+(e?.name||'permission denied')+').'));
+  .then(()=>{frame.hidden=true;status.textContent='Copied to clipboard';if(typeof window.glbCopyNotice==='function')window.glbCopyNotice('Copied to clipboard')})
+  .catch(e=>{showCopyFallback('Your browser blocked clipboard copying ('+(e?.name||'permission denied')+').');if(typeof window.glbCopyNotice==='function')window.glbCopyNotice('Clipboard blocked — long-press the image','error')});
  }catch(e){showCopyFallback('Image copy failed ('+e.message+').')}
 };
 presets();render()}).catch(e=>$('chart').textContent=e.message);
