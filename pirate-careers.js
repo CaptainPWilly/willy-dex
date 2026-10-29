@@ -30,7 +30,7 @@ function eventDistance(e){
  if(e.ageText)return ageDays(e.ageText);
  const day=dayOnly(e.day);return day?Math.max(0,(REFERENCE_MS-Date.parse(day+'T12:00:00Z'))/86400000):Infinity;
 }
-function eventDate(e){return dateLabel(e.day)||(e.ageText?'~'+e.ageText:'Date unknown')}
+function eventDate(e){return dateLabel(e.day)||(e.ageText?e.ageText:'Date unknown')}
 function eventPrecision(e){
  const asOf=dateLabel(e.reportedOn)||'Oct 29, 2026';
  if(dayOnly(e.day))return (e.precision.includes('estimated')?'Day recorded; exact minute estimated':'Calendar day recorded; time unconfirmed');
@@ -44,7 +44,9 @@ function eventsFor(p){
      reportedOn:x.reportedOn||x.reportedAt||(/2026-10-29/.test(x.source||'')?REFERENCE_DATE:null),
      source:x.source||'User-supplied SMMO guild notification',
      precision:String(x.datePrecision||'relative-only'),identityAmbiguous:!!(x.identityAmbiguous||p.identityAmbiguous),
-     sourceIndex:rows.length});
+     // A per-notice ordinal proves original line order; don't invent one.
+     sourceOrder:Number.isSafeInteger(x.sourceOrder)&&x.sourceOrder>=0?x.sourceOrder:null,
+     archiveSequence:null});
   }
  };
  add(p.periods||[],'joined','joined');
@@ -52,11 +54,27 @@ function eventsFor(p){
  add(p.removals||[],'removed','removed');
  return rows;
 }
+// Original notification lists were chronological, even inside a shared vague age.
+// Alphabetical tie-breaking loses this signal. When no ordinal survived the
+// member-grouping import, archive order is a fallback, NOT a verified timestamp.
+function sourceTie(a,b){
+ if(a.kind===b.kind){
+  if(a.sourceOrder!==null&&b.sourceOrder!==null)return a.sourceOrder-b.sourceOrder;
+  // The first 601 archive members are first sightings from the original join
+  // list, stored newest-first. Other repeated notices lost their interleaving.
+  if(a.kind==='joined'&&a.index===1&&b.index===1&&a.owner._archiveIndex<601&&b.owner._archiveIndex<601)
+   return a.owner._archiveIndex-b.owner._archiveIndex;
+ }
+ return a.archiveSequence-b.archiveSequence;
+}
+function eventCompare(a,b,oldestFirst=false){
+ const d=eventDistance(a)-eventDistance(b);
+ return (oldestFirst?-d:d)||(oldestFirst?-sourceTie(a,b):sourceTie(a,b));
+}
 function sortEvents(list,mode){
- const cmp=(a,b)=>eventDistance(a)-eventDistance(b);
- return list.slice().sort((a,b)=>mode==='name'?a.owner.name.localeCompare(b.owner.name)||cmp(a,b):
-  mode==='oldest'? -cmp(a,b)||a.owner.name.localeCompare(b.owner.name):
-  cmp(a,b)||a.owner.name.localeCompare(b.owner.name)||a.kind.localeCompare(b.kind)||a.index-b.index);
+ return list.slice().sort((a,b)=>mode==='name'?
+  a.owner.name.localeCompare(b.owner.name)||eventCompare(a,b):
+  eventCompare(a,b,mode==='oldest'));
 }
 function cardFor(p){
  if(p.cardId){const linked=cardMap.get(p.cardId);if(linked&&norm(linked.name)===norm(p.name))return linked}
@@ -85,7 +103,8 @@ function joinSort(a,b,oldestFirst){
  if(!ae)return 1;
  if(!be)return -1;
  const aa=eventDistance(ae),bb=eventDistance(be);
- return (oldestFirst?bb-aa:aa-bb)||a.name.localeCompare(b.name);
+ return (oldestFirst?bb-aa:aa-bb)||
+  (oldestFirst?-sourceTie(ae,be):sourceTie(ae,be))||a.name.localeCompare(b.name);
 }
 
 
@@ -154,8 +173,9 @@ function stats(){
  $('insights').innerHTML=insights.map(x=>'<button class="insight" type="button" data-open="'+encodeURIComponent(x.name)+'"><span>'+x.title+'</span><strong>'+escape(x.name)+'</strong><small>'+escape(x.description)+'</small></button>').join('');
 }
 function hydrate(){
- for(const p of pirates)p._events=eventsFor(p);
+ for(const [i,p] of pirates.entries()){p._archiveIndex=i;p._events=eventsFor(p)}
  allEvents=pirates.flatMap(p=>p._events);
+ for(const [i,e] of allEvents.entries())e.archiveSequence=i;
  stats();renderRegistry();renderLedger();openFromHash();
 }
 function matchRegistry(p){
@@ -175,7 +195,7 @@ function compareRegistry(a,b){
   const ae=lastRecordedJoin(a),be=lastRecordedJoin(b);
   if(!ae&&!be)return a.name.localeCompare(b.name);
   if(!ae)return 1;if(!be)return -1;
-  return eventDistance(ae)-eventDistance(be)||a.name.localeCompare(b.name);
+  return eventDistance(ae)-eventDistance(be)||sourceTie(ae,be)||a.name.localeCompare(b.name);
  }
  if(sort==='name')return a.name.localeCompare(b.name);
  if(sort==='nameDesc')return b.name.localeCompare(a.name);
@@ -193,7 +213,7 @@ function registryRow(p,i){
  return '<button class="roster-entry" type="button" data-open="'+encoded+'" title="Open complete career for '+escape(p.name)+'">'+
   '<span class="roster-person"><span class="roster-rank">'+(i+1)+'</span><span class="roster-person-details"><span class="roster-person-name">'+escape(p.name)+'</span><span class="roster-sub">'+
   (card?'WILLY DEX #'+escape(card.number):'Historical name')+(p.identityAmbiguous?' · identities uncertain':'')+'</span></span></span>'+
-  '<span class="roster-date '+(first?'':'unknown')+'"><span>'+escape(main)+'</span><small>'+(first?'Approximate · '+escape(first.ageText?'source age':'day recorded'):'No guild join captured')+'</small></span>'+
+  '<span class="roster-date '+(first?'':'unknown')+'"><span>'+escape(main)+'</span><small>'+(first?'Source reported · '+escape(first.ageText?'relative age':'day recorded'):'No guild join captured')+'</small></span>'+
   '<span class="roster-date roster-last '+(last?'':'unknown')+'">'+escape(recent)+(last?'<small>Last join notice</small>':'')+'</span>'+
   '<span class="roster-numbers" aria-label="'+countsFor.joined+' joins, '+countsFor.left+' left, '+countsFor.removed+' removals"><span class="roster-number">'+countsFor.joined+'</span><span class="roster-number leave">'+countsFor.left+'</span><span class="roster-number remove">'+countsFor.removed+'</span></span>'+
   '<span class="roster-detail">View profile ›</span></button>';
