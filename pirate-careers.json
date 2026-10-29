@@ -1,5 +1,110 @@
 {
   "version": 1,
   "description": "Historical Pirate Cove membership periods. A member may have multiple join/leave intervals. Dates are never inferred.",
-  "members": []
+  "members": [
+    {
+      "name": "DoubleDs",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": "2026-10-26",
+          "left": null,
+          "precision": "notice-day",
+          "source": "Guild join notification shared October 26, 2026"
+        }
+      ]
+    },
+    {
+      "name": "SAWTOOTH",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": "2026-10-28",
+          "left": null,
+          "precision": "notice-day",
+          "source": "New join reported October 28, 2026"
+        }
+      ]
+    },
+    {
+      "name": "BOBBY Jon",
+      "cardId": "willy-dex-069",
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": "2026-10-25",
+          "left": null,
+          "precision": "approximate-day",
+          "source": "2 hours ago relative to October 25, 2026"
+        }
+      ]
+    },
+    {
+      "name": "Demon",
+      "cardId": "willy-dex-070",
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": "2026-10-25",
+          "left": null,
+          "precision": "approximate-day",
+          "source": "5 hours ago relative to October 25, 2026"
+        }
+      ]
+    },
+    {
+      "name": "Unspeakable Deep III",
+      "cardId": "willy-dex-071",
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": "2026-10-25",
+          "left": null,
+          "precision": "approximate-day",
+          "source": "5 hours ago relative to October 25, 2026"
+        }
+      ]
+    },
+    {
+      "name": "Scarlet",
+      "cardId": "willy-dex-072",
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": "2026-10-25",
+          "left": null,
+          "precision": "approximate-day",
+          "source": "10 hours ago relative to October 25, 2026"
+        }
+      ]
+    },
+    {
+      "name": "ChezShork",
+      "cardId": "willy-dex-073",
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": "2026-10-25",
+          "left": null,
+          "precision": "approximate-day",
+          "source": "12 hours ago relative to October 25, 2026"
+        }
+      ]
+    },
+    {
+      "name": "TurtleHermit",
+      "cardId": "willy-dex-074",
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "precision": "unknown",
+          "source": "Join notification alongside October 25 recruits, no offset supplied"
+        }
+      ]
+    }
+  ]
 }
