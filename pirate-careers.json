@@ -8716,7 +8716,8 @@
           "datePrecision": "day-confirmed-minute-estimated",
           "source": "User-supplied SMMO guild join notification on 2026-10-29"
         }
-      ]
+      ],
+      "cardId": "willy-dex-076"
     }
   ],
   "importMetadata": {
