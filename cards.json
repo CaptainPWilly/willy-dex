@@ -38,11 +38,14 @@
       }
     ],
     "last_active": "1 second ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 years ago",
+        "date": null,
+        "reportedAge": "4 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -83,11 +86,14 @@
         "level": 23661
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -133,11 +139,14 @@
       }
     ],
     "last_active": "2 hours ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -176,11 +185,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "8 months ago",
+        "date": null,
+        "reportedAge": "8 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -223,16 +235,22 @@
         "level": 4125
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "4 years ago",
+        "date": null,
+        "reportedAge": "4 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -271,11 +289,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -314,11 +335,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -357,11 +381,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "8 months ago",
+        "date": null,
+        "reportedAge": "8 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -400,11 +427,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "6 months ago",
+        "date": null,
+        "reportedAge": "6 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -443,11 +473,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "2 weeks ago",
+        "date": null,
+        "reportedAge": "2 weeks ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -486,11 +519,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "7 months ago",
+        "date": null,
+        "reportedAge": "7 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -529,11 +565,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -572,11 +611,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "11 months ago",
+        "date": null,
+        "reportedAge": "11 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -615,11 +657,14 @@
     "roles": [
       "Officer"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -660,11 +705,14 @@
       "Warrior",
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "11 months ago",
+        "date": null,
+        "reportedAge": "11 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -703,16 +751,22 @@
     "aliases": [
       "Godslayer"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -751,11 +805,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -794,11 +851,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -837,11 +897,14 @@
     "roles": [
       "Officer"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -880,11 +943,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -923,11 +989,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "2 months ago",
+        "date": null,
+        "reportedAge": "2 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -966,11 +1035,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1011,11 +1083,14 @@
       "Warrior",
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1054,11 +1129,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "3 weeks ago",
+        "date": null,
+        "reportedAge": "3 weeks ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1097,11 +1175,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "6 months ago",
+        "date": null,
+        "reportedAge": "6 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1142,21 +1223,30 @@
       "Warrior",
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "4 years ago",
+        "date": null,
+        "reportedAge": "4 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1195,16 +1285,22 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 months ago",
+        "date": null,
+        "reportedAge": "4 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1243,21 +1339,30 @@
         "level": 13257
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1300,16 +1405,22 @@
         "level": 7482
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "4 years ago",
+        "date": null,
+        "reportedAge": "4 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1350,11 +1461,14 @@
       "Warrior",
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1393,16 +1507,22 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1441,11 +1561,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1484,11 +1607,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1527,16 +1653,22 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "3 weeks ago",
+        "date": null,
+        "reportedAge": "3 weeks ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1575,11 +1707,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1618,11 +1753,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1663,11 +1801,14 @@
       "Warrior",
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "8 months ago",
+        "date": null,
+        "reportedAge": "8 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1710,16 +1851,22 @@
         "level": 8706
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "4 years ago",
+        "date": null,
+        "reportedAge": "4 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1758,11 +1905,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1801,11 +1951,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "2 months ago",
+        "date": null,
+        "reportedAge": "2 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1844,11 +1997,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "2 months ago",
+        "date": null,
+        "reportedAge": "2 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1891,11 +2047,14 @@
         "level": 11054
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -1934,16 +2093,22 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "2 months ago",
+        "date": null,
+        "reportedAge": "2 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2040,11 +2205,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "7 months ago",
+        "date": null,
+        "reportedAge": "7 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2083,11 +2251,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2128,11 +2299,14 @@
       "Warrior",
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "8 months ago",
+        "date": null,
+        "reportedAge": "8 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2173,11 +2347,14 @@
       "Officer",
       "Warrior"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2216,11 +2393,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2259,11 +2439,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2302,11 +2485,14 @@
     "roles": [
       "Officer"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "8 months ago",
+        "date": null,
+        "reportedAge": "8 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2345,11 +2531,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 months ago",
+        "date": null,
+        "reportedAge": "4 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2388,11 +2577,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2431,11 +2623,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "6 months ago",
+        "date": null,
+        "reportedAge": "6 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2474,11 +2669,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "6 months ago",
+        "date": null,
+        "reportedAge": "6 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2517,11 +2715,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "7 months ago",
+        "date": null,
+        "reportedAge": "7 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2560,11 +2761,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2603,11 +2807,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2646,11 +2853,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "5 months ago",
+        "date": null,
+        "reportedAge": "5 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2689,11 +2899,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2732,11 +2945,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "6 months ago",
+        "date": null,
+        "reportedAge": "6 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2775,11 +2991,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "11 months ago",
+        "date": null,
+        "reportedAge": "11 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2818,11 +3037,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "8 months ago",
+        "date": null,
+        "reportedAge": "8 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2861,11 +3083,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "10 months ago",
+        "date": null,
+        "reportedAge": "10 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2906,11 +3131,14 @@
         "level": 2962
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -2949,21 +3177,30 @@
         "level": 2026
       }
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "8 months ago",
+        "date": null,
+        "reportedAge": "8 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "3 years ago",
+        "date": null,
+        "reportedAge": "3 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "4 years ago",
+        "date": null,
+        "reportedAge": "4 years ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3002,11 +3239,14 @@
     "roles": [
       "Member"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "9 months ago",
+        "date": null,
+        "reportedAge": "9 months ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3041,11 +3281,14 @@
       }
     ],
     "last_active": "4 hours ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 days ago",
+        "date": null,
+        "reportedAge": "4 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3080,11 +3323,14 @@
       }
     ],
     "last_active": "4 hours ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 days ago",
+        "date": null,
+        "reportedAge": "4 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3119,11 +3365,14 @@
       }
     ],
     "last_active": "10 hours ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 days ago",
+        "date": null,
+        "reportedAge": "4 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3160,16 +3409,22 @@
       }
     ],
     "last_active": "2 days ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 days ago",
+        "date": null,
+        "reportedAge": "4 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       },
       {
-        "ageText": "1 year ago",
+        "date": null,
+        "reportedAge": "1 year ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3204,11 +3459,14 @@
       }
     ],
     "last_active": "5 hours ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 days ago",
+        "date": null,
+        "reportedAge": "4 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3243,11 +3501,14 @@
       }
     ],
     "last_active": "2 days ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "4 days ago",
+        "date": null,
+        "reportedAge": "4 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3285,11 +3546,14 @@
     "aliases": [
       "DoubleDs"
     ],
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "3 days ago",
+        "date": null,
+        "reportedAge": "3 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
@@ -3306,22 +3570,23 @@
     "front_text": "???",
     "back_text": "???",
     "smmo_joined": "???",
-    "cove_joined": "2026-10-29",
     "tags": [
       "Recruit"
     ],
     "roles": [
       "Recruit"
     ],
-    "cove_join_notices": [
+    "card_id": "willy-dex-076",
+    "guild_join_history": [
       {
-        "ageText": "2 minutes ago",
-        "reportedOn": "2026-10-29",
-        "exactDate": "2026-10-29",
-        "precision": "day confirmed; reported minute approximate"
+        "date": "2026-10-29",
+        "reportedAge": "2 minutes ago",
+        "reportedOn": "2026-10-29T15:05:00-07:00",
+        "precision": "day-confirmed-minute-estimated",
+        "left": null,
+        "source": "User-supplied SMMO guild join notification on 2026-10-29"
       }
-    ],
-    "card_id": "willy-dex-076"
+    ]
   },
   {
     "number": "077",
@@ -3359,11 +3624,14 @@
     "level": 4070,
     "date": "28 October 2026",
     "last_active": "15 hours ago",
-    "cove_join_notices": [
+    "guild_join_history": [
       {
-        "ageText": "2 days ago",
+        "date": null,
+        "reportedAge": "2 days ago",
         "reportedOn": "2026-10-29",
-        "exactDate": null
+        "precision": "relative-only",
+        "left": null,
+        "source": "SMMO join notification pasted 2026-10-29"
       }
     ]
   },
