@@ -117,7 +117,7 @@ function stats(){
   ['Pirates on record',pirates.length,'Distinct displayed names'],
   ['Total notices',allEvents.length,'Captured event messages'],
   ['Joined',n.joined,'Guild entry notices'],
-  ['Left',n.left,'Departed guild voluntarily'],
+  ['Left',n.left,'Recorded guild departures'],
   ['Removed',n.removed,'Removed from guild'],
   ['Multiple notices',repeats,'Repeat mentions, not service periods'],
   ['Card matches',matched,'Linked to existing Willy Dex cards'],
@@ -200,7 +200,7 @@ function registryRow(p,i){
 }
 function renderRegistry(){
  const matches=pirates.filter(matchRegistry).sort(compareRegistry),shown=matches.slice(0,registryLimit);
- const sortLabels={joinOldest:'Oldest recorded joins first',joinNewest:'Newest first joins first',lastJoined:'Most recent joins first',recent:'Latest event first',oldest:'Oldest recorded event first',name:'Pirates A–Z',nameDesc:'Pirates Z–A',events:'Most notices first',joins:'Most join notices first',exits:'Most exit notices first'};
+ const sortLabels={joinOldest:'Oldest recorded joins first',joinNewest:'Newest recorded guild joins first',lastJoined:'Most recent joins first',recent:'Latest event first',oldest:'Oldest recorded event first',name:'Pirates A–Z',nameDesc:'Pirates Z–A',events:'Most notices first',joins:'Most join notices first',exits:'Most exit notices first'};
  $('rosterOrderTitle').textContent=sortLabels[state.sort]||'Recorded guild joins';
  $('registryCount').textContent=fmt(matches.length)+' matching pirates';
  $('registryShowing').textContent='Showing '+fmt(shown.length)+' of '+fmt(matches.length);
