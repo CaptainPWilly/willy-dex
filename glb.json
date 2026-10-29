@@ -1032,7 +1032,6 @@
     {
       "date": "2026-10-29",
       "season": 15,
-      "captureTimeStatus": "awaiting_user_confirmation",
       "guilds": [
         {
           "rank": 1,
@@ -1284,7 +1283,8 @@
           "name": "GorillaWizards",
           "experience": 23200
         }
-      ]
+      ],
+      "capturedAt": "2026-10-29T14:00:00-07:00"
     }
   ]
 }
