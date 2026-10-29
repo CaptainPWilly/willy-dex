@@ -69,13 +69,18 @@ function latestAge(p){return Math.min(Infinity,...p._events.map(eventDistance))}
 function latestEvent(p){return sortEvents(p._events,'newest')[0]||null}
 
 function bucket(e){
+ const unit=String(e.ageText||'').match(/(\d+)\s+(year|month|week|day|hour|minute)s?\b/i);
+ if(unit&&unit[2].toLowerCase()==='year'){
+  const years=Number(unit[1]);
+  return years===1?'1y':years===2?'2y':years===3?'3y':'4y+';
+ }
  const v=eventDistance(e);
  if(!Number.isFinite(v))return 'other';
  if(v<=31)return 'recent';
  if(v<4*30.44)return '2-3';
  if(v<7*30.44)return '4-6';
  if(v<10*30.44)return '7-9';
- if(v<12*30.44)return '10-11';
+ if(v<365.25)return '10-11';
  if(v<2*365.25)return '1y';
  if(v<3*365.25)return '2y';
  if(v<4*365.25)return '3y';
