@@ -9,8 +9,8 @@ const REFERENCE_DATE='2026-10-29';
 const REFERENCE_MS=Date.parse(REFERENCE_DATE+'T12:00:00Z');
 const noData='<div class="empty">No matching records. Adjust the search or filters.</div>';
 const tone={joined:'join',left:'left',removed:'removed'};
-let pirates=[],allEvents=[],cardMap=new Map(),nameCards=new Map(),selected=null,priorFocus=null,registryLimit=24,eventLimit=40,alertTimer=0;
-let state={query:'',filter:'all',sort:'joinOldest',eventQuery:'',eventType:'all',eventPeriod:'all',eventSort:'newest'};
+let pirates=[],allEvents=[],cardMap=new Map(),nameCards=new Map(),selected=null,priorFocus=null,registryLimit=50,eventLimit=40,alertTimer=0;
+let state={query:'',filter:'all',sort:'joinOldest',pageSize:50,eventQuery:'',eventType:'all',eventPeriod:'all',eventSort:'newest'};
 
 function dayOnly(str){
  const day=String(str||'').slice(0,10);
@@ -170,7 +170,7 @@ function matchRegistry(p){
 function compareRegistry(a,b){
  const sa=counts(a),sb=counts(b),sort=state.sort;
  if(sort==='joinOldest')return joinSort(a,b,true);
- if(sort==='joinNewest'||sort==='joinedEarliestKnown')return joinSort(a,b,false);
+ if(sort==='joinNewest')return joinSort(a,b,false);
  if(sort==='lastJoined'){
   const ae=lastRecordedJoin(a),be=lastRecordedJoin(b);
   if(!ae&&!be)return a.name.localeCompare(b.name);
@@ -200,6 +200,8 @@ function registryRow(p,i){
 }
 function renderRegistry(){
  const matches=pirates.filter(matchRegistry).sort(compareRegistry),shown=matches.slice(0,registryLimit);
+ const sortLabels={joinOldest:'Oldest recorded joins first',joinNewest:'Newest first joins first',lastJoined:'Most recent joins first',recent:'Latest event first',oldest:'Oldest recorded event first',name:'Pirates A–Z',nameDesc:'Pirates Z–A',events:'Most notices first',joins:'Most join notices first',exits:'Most exit notices first'};
+ $('rosterOrderTitle').textContent=sortLabels[state.sort]||'Recorded guild joins';
  $('registryCount').textContent=fmt(matches.length)+' matching pirates';
  $('registryShowing').textContent='Showing '+fmt(shown.length)+' of '+fmt(matches.length);
  $('registryList').innerHTML=shown.length?shown.map((p,i)=>registryRow(p,i)).join(''):noData;
@@ -297,19 +299,20 @@ function openFromHash(){
  }else if(selected){closeProfile(false)}
 }
 function wire(){
- $('search').oninput=e=>{state.query=norm(e.target.value);registryLimit=24;renderRegistry()};
- $('filter').onchange=e=>{state.filter=e.target.value;registryLimit=24;renderRegistry()};
- $('sort').onchange=e=>{state.sort=e.target.value;registryLimit=24;renderRegistry()};
+ $('search').oninput=e=>{state.query=norm(e.target.value);registryLimit=state.pageSize;renderRegistry()};
+ $('filter').onchange=e=>{state.filter=e.target.value;registryLimit=state.pageSize;renderRegistry()};
+ $('sort').onchange=e=>{state.sort=e.target.value;registryLimit=state.pageSize;renderRegistry()};
  document.addEventListener('click',e=>{
   const heading=e.target.closest('[data-roster-sort]');if(!heading)return;
   const key=heading.dataset.rosterSort;
   state.sort=key==='joinOldest'&&state.sort==='joinOldest'?'joinNewest':key==='name'&&state.sort==='name'?'nameDesc':key;
-  $('sort').value=state.sort;registryLimit=24;renderRegistry();
+  $('sort').value=state.sort;registryLimit=state.pageSize;renderRegistry();
  });
- $('registryMore').onclick=()=>{registryLimit+=24;renderRegistry()};
+ $('rosterPageSize').onchange=e=>{state.pageSize=e.target.value==='all'?pirates.length:Number(e.target.value)||50;registryLimit=state.pageSize;renderRegistry()};
+ $('registryMore').onclick=()=>{registryLimit+=state.pageSize;renderRegistry()};
  $('quickFilters').addEventListener('click',e=>{
   const button=e.target.closest('[data-quick]');if(!button)return;
-  state.filter=button.dataset.quick;$('filter').value=state.filter;registryLimit=24;renderRegistry();
+  state.filter=button.dataset.quick;$('filter').value=state.filter;registryLimit=state.pageSize;renderRegistry();
  });
  $('eventSearch').oninput=e=>{state.eventQuery=norm(e.target.value);eventLimit=40;renderLedger()};
  $('eventType').onchange=e=>{state.eventType=e.target.value;eventLimit=40;renderLedger()};
