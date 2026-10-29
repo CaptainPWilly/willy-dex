@@ -132,7 +132,7 @@
 .collectible-back .back-history-entry:last-child{border-bottom:0;padding-bottom:2px}
 .collectible-back .back-history-index{display:block;font-size:clamp(8px,1.8vw,10px);font-weight:700;letter-spacing:.05em;color:#bba18a}
 .collectible-back .back-history-entry small{display:block;margin-top:2px;font-size:clamp(8px,2vw,11px);color:#c4ad8b;line-height:1.3}
-.collectible-back .guild-leave-history{border-color:#885a46}.collectible-back .guild-leave-history .back-record-label{color:#e6ad91}.collectible-back .guild-leave-history .back-history-index{color:#d49e84}.collectible-back .back-scroll{scrollbar-gutter:stable} </style></head><body><div class="wc-site-nav"><div class="wc-site-inner"><strong class="wc-site-brand">WILLY CORP</strong><div class="wc-site-links" role="navigation" aria-label="Willy DEX"><a href="index.html" aria-current="page">CARDS</a><a href="wars.html">WAR INTELLIGENCE</a><a href="glb.html">GLB</a><a href="pirate-careers.html">PIRATE CAREERS</a><button type="button" class="wc-refresh" aria-label="Refresh site" title="Refresh site" onclick="location.reload()">↻ Refresh</button></div></div></div>
+.collectible-back .guild-leave-history{border-color:#885a46}.collectible-back .guild-leave-history .back-record-label{color:#e6ad91}.collectible-back .guild-leave-history .back-history-index{color:#d49e84}.collectible-back .back-scroll{scrollbar-gutter:stable} .collectible-back .guild-removal-history{border-color:#935b45}.collectible-back .guild-removal-history .back-record-label{color:#eda987}.collectible-back .guild-removal-history .back-history-index{color:#c5967c} </style></head><body><div class="wc-site-nav"><div class="wc-site-inner"><strong class="wc-site-brand">WILLY CORP</strong><div class="wc-site-links" role="navigation" aria-label="Willy DEX"><a href="index.html" aria-current="page">CARDS</a><a href="wars.html">WAR INTELLIGENCE</a><a href="glb.html">GLB</a><a href="pirate-careers.html">PIRATE CAREERS</a><button type="button" class="wc-refresh" aria-label="Refresh site" title="Refresh site" onclick="location.reload()">↻ Refresh</button></div></div></div>
 <header class="wc-header"><h1>WILLY DEX</h1></header>
 <section class="wc-console" aria-label="Card search, sorting and filtering">
   <div class="wc-main-row"><div class="wc-search"><label for="search">SEARCH</label><div class="bar"><input id="search" type="search" placeholder="Name, card number, guild…" aria-label="Search cards"><span id="count" aria-live="polite">0 / 100</span></div></div>
@@ -237,13 +237,26 @@ function guildDepartureRows(c){
   return '<div class="back-history-entry"><span class="back-history-index">DEPARTURE NOTICE '+(i+1)+'</span><strong>'+safe(shown)+'</strong><small>'+safe(qualifier)+'</small></div>';
  }).join('')+'</div>';
 }
+function guildRemovalRows(c){
+ const entries=Array.isArray(c.guild_removal_history)?c.guild_removal_history:[];
+ if(!entries.length)return '';
+ return '<div class="back-record guild-removal-history"><div class="back-record-label">PIRATE COVE · GUILD REMOVAL HISTORY</div>'+
+ entries.map((p,i)=>{
+  const known=willyDateOnly(p.date);
+  const asOf=willyDateOnly(p.reportedOn);
+  const shown=known|| (p.reportedAge?'~'+String(p.reportedAge):'???');
+  const qualifier=known?'Recorded calendar date · exact time unconfirmed':asOf?'Relative to '+asOf+' · approximate':'Relative date · exact calendar day unknown';
+  return '<div class="back-history-entry"><span class="back-history-index">REMOVAL NOTICE '+(i+1)+'</span><strong>'+safe(shown)+'</strong><small>'+safe(qualifier)+(p.identityAmbiguous?' · Identity unconfirmed':'')+'</small></div>';
+ }).join('')+'</div>';
+}
 function backContent(c){
  const lore=String(c.back_text??c.description??'').trim();
  const smmo=willyDateOnly(c.smmo_joined);
  const smmoBlock=smmo?'<div class="back-record"><div class="back-record-label">SMMO JOIN DATE</div><strong>'+safe(smmo)+'</strong></div>':'';
  const guild=guildJoinRows(c);
  const departures=guildDepartureRows(c);
- const content=[lore&&lore!=='???'?'<p class="back-bio">'+safe(lore)+'</p>':'',smmoBlock,guild,departures].filter(Boolean).join('');
+ const removals=guildRemovalRows(c);
+ const content=[lore&&lore!=='???'?'<p class="back-bio">'+safe(lore)+'</p>':'',smmoBlock,guild,departures,removals].filter(Boolean).join('');
  return '<article class="collectible collectible-back"><div class="back-logo"><img src="assets/willy-corp-logo-vector.svg?v=1" alt="Willy Corp logo"></div>'+(content?'<div class="back-details"><div class="back-title">'+safe(c.name)+'</div><div class="back-scroll">'+content+'</div></div>':'')+'</article>';
 }
 function content(c){return frontContent(c)}
