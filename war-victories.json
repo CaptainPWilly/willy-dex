@@ -1,0 +1,992 @@
+{
+  "version": 1,
+  "source": "The Pirate Cove SMMO war victory history supplied 2026-10-29",
+  "capturedOn": "2026-10-29",
+  "rewards": {
+    "first": "guild_experience",
+    "second": "reported_secondary_reward_unverified"
+  },
+  "records": [
+    {
+      "id": "historical-win-001",
+      "winner": "The Pirate Cove",
+      "opponent": "Duck Hunters United",
+      "ageText": "1 day ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 1
+    },
+    {
+      "id": "historical-win-002",
+      "winner": "The Pirate Cove",
+      "opponent": "Elite",
+      "ageText": "3 days ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 2
+    },
+    {
+      "id": "historical-win-003",
+      "winner": "The Pirate Cove",
+      "opponent": "Dread Pirate's Cove",
+      "ageText": "3 days ago",
+      "rewardExp": 58886,
+      "secondaryReward": 15,
+      "sourceOrder": 3
+    },
+    {
+      "id": "historical-win-004",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "3 days ago",
+      "rewardExp": 29293,
+      "secondaryReward": 15,
+      "sourceOrder": 4
+    },
+    {
+      "id": "historical-win-005",
+      "winner": "The Pirate Cove",
+      "opponent": "Stormswords",
+      "ageText": "4 days ago",
+      "rewardExp": 11214,
+      "secondaryReward": 15,
+      "sourceOrder": 5
+    },
+    {
+      "id": "historical-win-006",
+      "winner": "The Pirate Cove",
+      "opponent": "1 INCH WINNERS",
+      "ageText": "4 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 6
+    },
+    {
+      "id": "historical-win-007",
+      "winner": "The Pirate Cove",
+      "opponent": "simplenoobs",
+      "ageText": "4 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 7
+    },
+    {
+      "id": "historical-win-008",
+      "winner": "The Pirate Cove",
+      "opponent": "XCD",
+      "ageText": "5 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 8
+    },
+    {
+      "id": "historical-win-009",
+      "winner": "The Pirate Cove",
+      "opponent": "FairyTail",
+      "ageText": "6 months ago",
+      "rewardExp": 28698,
+      "secondaryReward": 15,
+      "sourceOrder": 9
+    },
+    {
+      "id": "historical-win-010",
+      "winner": "The Pirate Cove",
+      "opponent": "Stormswords",
+      "ageText": "6 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 10
+    },
+    {
+      "id": "historical-win-011",
+      "winner": "The Pirate Cove",
+      "opponent": "Duck Hunters United",
+      "ageText": "6 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 11
+    },
+    {
+      "id": "historical-win-012",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "6 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 12
+    },
+    {
+      "id": "historical-win-013",
+      "winner": "The Pirate Cove",
+      "opponent": "simplenoobs",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 13
+    },
+    {
+      "id": "historical-win-014",
+      "winner": "The Pirate Cove",
+      "opponent": "The Myphist",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 14
+    },
+    {
+      "id": "historical-win-015",
+      "winner": "The Pirate Cove",
+      "opponent": "-Knight Oaths'-",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 15
+    },
+    {
+      "id": "historical-win-016",
+      "winner": "The Pirate Cove",
+      "opponent": "Constant Rage",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 16
+    },
+    {
+      "id": "historical-win-017",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 17
+    },
+    {
+      "id": "historical-win-018",
+      "winner": "The Pirate Cove",
+      "opponent": "Thieves Guild",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 18
+    },
+    {
+      "id": "historical-win-019",
+      "winner": "The Pirate Cove",
+      "opponent": "GorillaWizards",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 19
+    },
+    {
+      "id": "historical-win-020",
+      "winner": "The Pirate Cove",
+      "opponent": "Stormswords",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 20
+    },
+    {
+      "id": "historical-win-021",
+      "winner": "The Pirate Cove",
+      "opponent": "1 INCH WINNERS",
+      "ageText": "7 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 21
+    },
+    {
+      "id": "historical-win-022",
+      "winner": "The Pirate Cove",
+      "opponent": "Duck Hunters United",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 22
+    },
+    {
+      "id": "historical-win-023",
+      "winner": "The Pirate Cove",
+      "opponent": "simplenoobs",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 23
+    },
+    {
+      "id": "historical-win-024",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 24
+    },
+    {
+      "id": "historical-win-025",
+      "winner": "The Pirate Cove",
+      "opponent": "FairyTail",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 25
+    },
+    {
+      "id": "historical-win-026",
+      "winner": "The Pirate Cove",
+      "opponent": "Stormswords",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 26
+    },
+    {
+      "id": "historical-win-027",
+      "winner": "The Pirate Cove",
+      "opponent": "Esoterica",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 27
+    },
+    {
+      "id": "historical-win-028",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 28
+    },
+    {
+      "id": "historical-win-029",
+      "winner": "The Pirate Cove",
+      "opponent": "Elite",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 29
+    },
+    {
+      "id": "historical-win-030",
+      "winner": "The Pirate Cove",
+      "opponent": "1 INCH WINNERS",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 30
+    },
+    {
+      "id": "historical-win-031",
+      "winner": "The Pirate Cove",
+      "opponent": "simplenoobs",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 31
+    },
+    {
+      "id": "historical-win-032",
+      "winner": "The Pirate Cove",
+      "opponent": "The Ocean",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 32
+    },
+    {
+      "id": "historical-win-033",
+      "winner": "The Pirate Cove",
+      "opponent": "Duck Hunters United",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 33
+    },
+    {
+      "id": "historical-win-034",
+      "winner": "The Pirate Cove",
+      "opponent": "Stormswords",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 34
+    },
+    {
+      "id": "historical-win-035",
+      "winner": "The Pirate Cove",
+      "opponent": "Mischief and Dragons",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 35
+    },
+    {
+      "id": "historical-win-036",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 36
+    },
+    {
+      "id": "historical-win-037",
+      "winner": "The Pirate Cove",
+      "opponent": "Wizz Elves",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 37
+    },
+    {
+      "id": "historical-win-038",
+      "winner": "The Pirate Cove",
+      "opponent": "The Ministry of Silly Walks",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 38
+    },
+    {
+      "id": "historical-win-039",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 39
+    },
+    {
+      "id": "historical-win-040",
+      "winner": "The Pirate Cove",
+      "opponent": "FairyTail",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 40
+    },
+    {
+      "id": "historical-win-041",
+      "winner": "The Pirate Cove",
+      "opponent": "Primitive Man",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 41
+    },
+    {
+      "id": "historical-win-042",
+      "winner": "The Pirate Cove",
+      "opponent": "Space Pirate Guild",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 42
+    },
+    {
+      "id": "historical-win-043",
+      "winner": "The Pirate Cove",
+      "opponent": "Handsome Devils",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 43
+    },
+    {
+      "id": "historical-win-044",
+      "winner": "The Pirate Cove",
+      "opponent": "FSociety",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 44
+    },
+    {
+      "id": "historical-win-045",
+      "winner": "The Pirate Cove",
+      "opponent": "Unseen Horizon",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 45
+    },
+    {
+      "id": "historical-win-046",
+      "winner": "The Pirate Cove",
+      "opponent": "1 INCH WINNERS",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 46
+    },
+    {
+      "id": "historical-win-047",
+      "winner": "The Pirate Cove",
+      "opponent": "Deleted Guild",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 47
+    },
+    {
+      "id": "historical-win-048",
+      "winner": "The Pirate Cove",
+      "opponent": "simplenoobs",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 48
+    },
+    {
+      "id": "historical-win-049",
+      "winner": "The Pirate Cove",
+      "opponent": "Constant Rage",
+      "ageText": "8 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 49
+    },
+    {
+      "id": "historical-win-050",
+      "winner": "The Pirate Cove",
+      "opponent": "The Golden Circle",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 50
+    },
+    {
+      "id": "historical-win-051",
+      "winner": "The Pirate Cove",
+      "opponent": "Duck Hunters United",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 51
+    },
+    {
+      "id": "historical-win-052",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 52
+    },
+    {
+      "id": "historical-win-053",
+      "winner": "The Pirate Cove",
+      "opponent": "Stormswords",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 53
+    },
+    {
+      "id": "historical-win-054",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 54
+    },
+    {
+      "id": "historical-win-055",
+      "winner": "The Pirate Cove",
+      "opponent": "Kings of Devils",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 55
+    },
+    {
+      "id": "historical-win-056",
+      "winner": "The Pirate Cove",
+      "opponent": "Elite",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 56
+    },
+    {
+      "id": "historical-win-057",
+      "winner": "The Pirate Cove",
+      "opponent": "FairyTail",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 57
+    },
+    {
+      "id": "historical-win-058",
+      "winner": "The Pirate Cove",
+      "opponent": "Shadowcats of the Universe",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 58
+    },
+    {
+      "id": "historical-win-059",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 59
+    },
+    {
+      "id": "historical-win-060",
+      "winner": "The Pirate Cove",
+      "opponent": "Thieves Guild",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 60
+    },
+    {
+      "id": "historical-win-061",
+      "winner": "The Pirate Cove",
+      "opponent": "1 INCH WINNERS",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 61
+    },
+    {
+      "id": "historical-win-062",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 62
+    },
+    {
+      "id": "historical-win-063",
+      "winner": "The Pirate Cove",
+      "opponent": "Friendship Guild",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 63
+    },
+    {
+      "id": "historical-win-064",
+      "winner": "The Pirate Cove",
+      "opponent": "Demons of Sloth",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 64
+    },
+    {
+      "id": "historical-win-065",
+      "winner": "The Pirate Cove",
+      "opponent": "Deleted Guild",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 65
+    },
+    {
+      "id": "historical-win-066",
+      "winner": "The Pirate Cove",
+      "opponent": "Treated Goblins",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 66
+    },
+    {
+      "id": "historical-win-067",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "9 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 67
+    },
+    {
+      "id": "historical-win-068",
+      "winner": "The Pirate Cove",
+      "opponent": "Hell Troop",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 68
+    },
+    {
+      "id": "historical-win-069",
+      "winner": "The Pirate Cove",
+      "opponent": "Lord of the rings",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 69
+    },
+    {
+      "id": "historical-win-070",
+      "winner": "The Pirate Cove",
+      "opponent": "Demolition's Great Kingdom",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 70
+    },
+    {
+      "id": "historical-win-071",
+      "winner": "The Pirate Cove",
+      "opponent": "A Legendary Guild",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 71
+    },
+    {
+      "id": "historical-win-072",
+      "winner": "The Pirate Cove",
+      "opponent": "Sorcery & Sabotage",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 72
+    },
+    {
+      "id": "historical-win-073",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 73
+    },
+    {
+      "id": "historical-win-074",
+      "winner": "The Pirate Cove",
+      "opponent": "Underground",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 74
+    },
+    {
+      "id": "historical-win-075",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 75
+    },
+    {
+      "id": "historical-win-076",
+      "winner": "The Pirate Cove",
+      "opponent": "The Wondering Wanderers",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 76
+    },
+    {
+      "id": "historical-win-077",
+      "winner": "The Pirate Cove",
+      "opponent": "1 INCH WINNERS",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 77
+    },
+    {
+      "id": "historical-win-078",
+      "winner": "The Pirate Cove",
+      "opponent": "Dark Quarter",
+      "ageText": "10 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 78
+    },
+    {
+      "id": "historical-win-079",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 79
+    },
+    {
+      "id": "historical-win-080",
+      "winner": "The Pirate Cove",
+      "opponent": "Paragon",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 80
+    },
+    {
+      "id": "historical-win-081",
+      "winner": "The Pirate Cove",
+      "opponent": "Limited Edition",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 81
+    },
+    {
+      "id": "historical-win-082",
+      "winner": "The Pirate Cove",
+      "opponent": "Cookietown",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 82
+    },
+    {
+      "id": "historical-win-083",
+      "winner": "The Pirate Cove",
+      "opponent": "Odium",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 83
+    },
+    {
+      "id": "historical-win-084",
+      "winner": "The Pirate Cove",
+      "opponent": "Femboy Hooters",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 84
+    },
+    {
+      "id": "historical-win-085",
+      "winner": "The Pirate Cove",
+      "opponent": "Unknown guys",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 85
+    },
+    {
+      "id": "historical-win-086",
+      "winner": "The Pirate Cove",
+      "opponent": "Funkbutt",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 86
+    },
+    {
+      "id": "historical-win-087",
+      "winner": "The Pirate Cove",
+      "opponent": "1 INCH WINNERS",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 87
+    },
+    {
+      "id": "historical-win-088",
+      "winner": "The Pirate Cove",
+      "opponent": "Unbounded",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 88
+    },
+    {
+      "id": "historical-win-089",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 89
+    },
+    {
+      "id": "historical-win-090",
+      "winner": "The Pirate Cove",
+      "opponent": "Legacy",
+      "ageText": "11 months ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 90
+    },
+    {
+      "id": "historical-win-091",
+      "winner": "The Pirate Cove",
+      "opponent": "The Myphist",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 91
+    },
+    {
+      "id": "historical-win-092",
+      "winner": "The Pirate Cove",
+      "opponent": "Stormswords",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 92
+    },
+    {
+      "id": "historical-win-093",
+      "winner": "The Pirate Cove",
+      "opponent": "Deleted Guild",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 93
+    },
+    {
+      "id": "historical-win-094",
+      "winner": "The Pirate Cove",
+      "opponent": "Realm Of Fire",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 94
+    },
+    {
+      "id": "historical-win-095",
+      "winner": "The Pirate Cove",
+      "opponent": "FairyTail",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 95
+    },
+    {
+      "id": "historical-win-096",
+      "winner": "The Pirate Cove",
+      "opponent": "StormForged Legion",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 96
+    },
+    {
+      "id": "historical-win-097",
+      "winner": "The Pirate Cove",
+      "opponent": "Peaceful Crafters",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 97
+    },
+    {
+      "id": "historical-win-098",
+      "winner": "The Pirate Cove",
+      "opponent": "Abyss",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 98
+    },
+    {
+      "id": "historical-win-099",
+      "winner": "The Pirate Cove",
+      "opponent": "Legacy",
+      "ageText": "1 year ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 99
+    },
+    {
+      "id": "historical-win-100",
+      "winner": "The Pirate Cove",
+      "opponent": "Deleted Guild",
+      "ageText": "3 years ago",
+      "rewardExp": 70815,
+      "secondaryReward": 15,
+      "sourceOrder": 100
+    },
+    {
+      "id": "historical-win-101",
+      "winner": "The Pirate Cove",
+      "opponent": "The Foxes' Den",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 15,
+      "sourceOrder": 101
+    },
+    {
+      "id": "historical-win-102",
+      "winner": "The Pirate Cove",
+      "opponent": "Limited Edition",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 102
+    },
+    {
+      "id": "historical-win-103",
+      "winner": "The Pirate Cove",
+      "opponent": "Deleted Guild",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 103
+    },
+    {
+      "id": "historical-win-104",
+      "winner": "The Pirate Cove",
+      "opponent": "Our Humble Abode",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 104
+    },
+    {
+      "id": "historical-win-105",
+      "winner": "The Pirate Cove",
+      "opponent": "Valhalla",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 105
+    },
+    {
+      "id": "historical-win-106",
+      "winner": "The Pirate Cove",
+      "opponent": "Deleted Guild",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 106
+    },
+    {
+      "id": "historical-win-107",
+      "winner": "The Pirate Cove",
+      "opponent": "Deleted Guild",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 107
+    },
+    {
+      "id": "historical-win-108",
+      "winner": "The Pirate Cove",
+      "opponent": "Limited Edition",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 108
+    },
+    {
+      "id": "historical-win-109",
+      "winner": "The Pirate Cove",
+      "opponent": "Rest in WeeWee",
+      "ageText": "3 years ago",
+      "rewardExp": 120000,
+      "secondaryReward": 10,
+      "sourceOrder": 109
+    }
+  ]
+}
