@@ -210,6 +210,245 @@
           "warId": "war-d4a069f2-d763-4489-bf04-e7dc366b211b"
         }
       ]
+    },
+    {
+      "id": "cove-2026-10-29-war-report",
+      "capturedAt": "2026-10-29T19:47:00.000Z",
+      "savedAt": "2026-10-29T19:47:00.000Z",
+      "source": "User supplied SMMO guild war report, local 2026-10-29",
+      "raw": "Kairos\nThe Pirate Cove\n859 Kills\n27 Kills\nThis war started 2 weeks ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nArcane\n476 Kills\n0 Kills\nThis war started 4 months ago\n\nInspect War\nAttackable Players\n\nHelheim\nThe Pirate Cove\n1,007 Kills\n4 Kills\nThis war started 6 days ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nDeathstar\n473 Kills\n0 Kills\nThis war started 7 months ago\n\nInspect War\nAttackable Players\n\nStill Friendly Too\nThe Pirate Cove\n127 Kills\n8 Kills\nThis war started 1 week ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nOdium\n1,485 Kills\n0 Kills\nThis war started 6 months ago\n\nInspect War\nAttackable Players\n\nGolden Arrows\nThe Pirate Cove\n647 Kills\n2 Kills\nThis war started 1 month ago\n\nInspect War\nAttackable Players\n\nSanctuary\nThe Pirate Cove\n554 Kills\n4 Kills\nThis war started 3 months ago\n\nInspect War\nAttackable Players\n\nSumbosia\nThe Pirate Cove\n207 Kills\n352 Kills\nThis war started 1 month ago\n\nInspect War\nAttackable Players\n\nThe Scarlet Legion\nThe Pirate Cove\n1,271 Kills\n10 Kills\nThis war started 7 months ago\n\nInspect War\nAttackable Players\n\nUmbral\nThe Pirate Cove\n777 Kills\n0 Kills\nThis war started 5 days ago\n\nInspect War\nAttackable Players\n\nDemolition's Great Kingdom\nThe Pirate Cove\n384 Kills\n7 Kills\nThis war started 2 weeks ago\n\nInspect War\nAttackable Players\n\nWolf Pack\nThe Pirate Cove\n642 Kills\n0 Kills\nThis war started 2 weeks ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nMurder Corp\n895 Kills\n0 Kills\nThis war started 1 year ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nDuck Hunters United\n1,500 Kills\n0 Kills\nThis war ended 1 day ago\n\nInspect War\nAttackable Players\n\nCoven\nThe Pirate Cove\n678 Kills\n0 Kills\nThis war started 4 weeks ago\n\nInspect War\nAttackable Players\n\nThe Knights Who Say Yee\nThe Pirate Cove\n1,500 Kills\n6 Kills\nThis war ended 3 days ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nElite\n1,500 Kills\n0 Kills\nThis war ended 3 days ago\n\nInspect War\nAttackable Players\n\nThe Cult Of SV\nThe Pirate Cove\n1,500 Kills\n3 Kills\nThis war ended 3 days ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nDread Pirate's Cove\n1,500 Kills\n0 Kills\nThis war ended 3 days ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nThe Foxes' Den\n1,500 Kills\n0 Kills\nThis war ended 3 days ago\n\nInspect War\nAttackable Players\n\nThe Pirate Cove\nStormswords\n1,500 Kills\n0 Kills\nThis war ended 4 days ago\n\nInspect War\nAttackable Players\n\nHelheim\nThe Pirate Cove\n1,500 Kills\n0 Kills\nThis war ended 1 week ago\n\nInspect War\nAttackable Players",
+      "wars": [
+        {
+          "guildA": "Kairos",
+          "guildB": "The Pirate Cove",
+          "killsA": 859,
+          "killsB": 27,
+          "ageText": "This war started 2 weeks ago",
+          "ageDays": 14,
+          "status": "active",
+          "warId": "war-snapshot-20261029-01"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Arcane",
+          "killsA": 476,
+          "killsB": 0,
+          "ageText": "This war started 4 months ago",
+          "ageDays": 121.76,
+          "status": "active",
+          "warId": "war-snapshot-20261029-02"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "The Pirate Cove",
+          "killsA": 1007,
+          "killsB": 4,
+          "ageText": "This war started 6 days ago",
+          "ageDays": 6,
+          "status": "active",
+          "warId": "war-snapshot-20261029-03"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Deathstar",
+          "killsA": 473,
+          "killsB": 0,
+          "ageText": "This war started 7 months ago",
+          "ageDays": 213.08,
+          "status": "active",
+          "warId": "war-snapshot-20261029-04"
+        },
+        {
+          "guildA": "Still Friendly Too",
+          "guildB": "The Pirate Cove",
+          "killsA": 127,
+          "killsB": 8,
+          "ageText": "This war started 1 week ago",
+          "ageDays": 7,
+          "status": "active",
+          "warId": "war-snapshot-20261029-05"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Odium",
+          "killsA": 1485,
+          "killsB": 0,
+          "ageText": "This war started 6 months ago",
+          "ageDays": 182.64000000000001,
+          "status": "active",
+          "warId": "war-snapshot-20261029-06"
+        },
+        {
+          "guildA": "Golden Arrows",
+          "guildB": "The Pirate Cove",
+          "killsA": 647,
+          "killsB": 2,
+          "ageText": "This war started 1 month ago",
+          "ageDays": 30.44,
+          "status": "active",
+          "warId": "war-snapshot-20261029-07"
+        },
+        {
+          "guildA": "Sanctuary",
+          "guildB": "The Pirate Cove",
+          "killsA": 554,
+          "killsB": 4,
+          "ageText": "This war started 3 months ago",
+          "ageDays": 91.32000000000001,
+          "status": "active",
+          "warId": "war-snapshot-20261029-08"
+        },
+        {
+          "guildA": "Sumbosia",
+          "guildB": "The Pirate Cove",
+          "killsA": 207,
+          "killsB": 352,
+          "ageText": "This war started 1 month ago",
+          "ageDays": 30.44,
+          "status": "active",
+          "warId": "war-snapshot-20261029-09"
+        },
+        {
+          "guildA": "The Scarlet Legion",
+          "guildB": "The Pirate Cove",
+          "killsA": 1271,
+          "killsB": 10,
+          "ageText": "This war started 7 months ago",
+          "ageDays": 213.08,
+          "status": "active",
+          "warId": "war-snapshot-20261029-10"
+        },
+        {
+          "guildA": "Umbral",
+          "guildB": "The Pirate Cove",
+          "killsA": 777,
+          "killsB": 0,
+          "ageText": "This war started 5 days ago",
+          "ageDays": 5,
+          "status": "active",
+          "warId": "war-snapshot-20261029-11"
+        },
+        {
+          "guildA": "Demolition's Great Kingdom",
+          "guildB": "The Pirate Cove",
+          "killsA": 384,
+          "killsB": 7,
+          "ageText": "This war started 2 weeks ago",
+          "ageDays": 14,
+          "status": "active",
+          "warId": "war-snapshot-20261029-12"
+        },
+        {
+          "guildA": "Wolf Pack",
+          "guildB": "The Pirate Cove",
+          "killsA": 642,
+          "killsB": 0,
+          "ageText": "This war started 2 weeks ago",
+          "ageDays": 14,
+          "status": "active",
+          "warId": "war-snapshot-20261029-13"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Murder Corp",
+          "killsA": 895,
+          "killsB": 0,
+          "ageText": "This war started 1 year ago",
+          "ageDays": 365.25,
+          "status": "active",
+          "warId": "war-snapshot-20261029-14"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Duck Hunters United",
+          "killsA": 1500,
+          "killsB": 0,
+          "ageText": "This war ended 1 day ago",
+          "ageDays": 1,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-15"
+        },
+        {
+          "guildA": "Coven",
+          "guildB": "The Pirate Cove",
+          "killsA": 678,
+          "killsB": 0,
+          "ageText": "This war started 4 weeks ago",
+          "ageDays": 28,
+          "status": "active",
+          "warId": "war-snapshot-20261029-16"
+        },
+        {
+          "guildA": "The Knights Who Say Yee",
+          "guildB": "The Pirate Cove",
+          "killsA": 1500,
+          "killsB": 6,
+          "ageText": "This war ended 3 days ago",
+          "ageDays": 3,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-17"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Elite",
+          "killsA": 1500,
+          "killsB": 0,
+          "ageText": "This war ended 3 days ago",
+          "ageDays": 3,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-18"
+        },
+        {
+          "guildA": "The Cult Of SV",
+          "guildB": "The Pirate Cove",
+          "killsA": 1500,
+          "killsB": 3,
+          "ageText": "This war ended 3 days ago",
+          "ageDays": 3,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-19"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Dread Pirate's Cove",
+          "killsA": 1500,
+          "killsB": 0,
+          "ageText": "This war ended 3 days ago",
+          "ageDays": 3,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-20"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "The Foxes' Den",
+          "killsA": 1500,
+          "killsB": 0,
+          "ageText": "This war ended 3 days ago",
+          "ageDays": 3,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-21"
+        },
+        {
+          "guildA": "The Pirate Cove",
+          "guildB": "Stormswords",
+          "killsA": 1500,
+          "killsB": 0,
+          "ageText": "This war ended 4 days ago",
+          "ageDays": 4,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-22"
+        },
+        {
+          "guildA": "Helheim",
+          "guildB": "The Pirate Cove",
+          "killsA": 1500,
+          "killsB": 0,
+          "ageText": "This war ended 1 week ago",
+          "ageDays": 7,
+          "status": "ended",
+          "warId": "war-snapshot-20261029-23"
+        }
+      ]
     }
   ]
 }
