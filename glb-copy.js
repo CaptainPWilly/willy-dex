@@ -11,6 +11,9 @@ const blocksOf=(node,kind)=>{
  if(kind==='hero')return [{type:'story',label:read(node,'.news-eyeline'),title:read(node,'h3'),description:read(node,'p')}];
  if(kind==='kpis')return [...node.querySelectorAll('.news-kpi')].map(x=>({type:'stat',label:read(x,'.t'),value:read(x,'.v'),description:read(x,'.sub')}));
  if(kind==='kpi')return [{type:'stat',label:read(node,'.t'),value:read(node,'.v'),description:read(node,'.sub')}];
+ if(kind==='overview')return [...node.querySelectorAll('.stat')].map(x=>({type:'stat',label:read(x,'.muted'),value:read(x,'strong')}));
+ if(kind==='standings')return [...node.querySelectorAll('tr')].map(x=>{const cells=[...x.querySelectorAll('td')].map(txt);return {type:'row',label:cells[0]+' '+cells[1],value:cells[2]+' EXP',description:cells[3]!=='—'?'Observed change: '+cells[3]:'No comparable prior observation'}});
+
  if(kind==='story')return [{type:'story',label:txt(node.querySelector('.meta')),title:read(node,'h4'),description:read(node,'p'),value:read(node,'.fig')}];
  if(kind==='feed'){
   const all=[...node.querySelectorAll('.news-story')],visible=all.slice(0,16);
@@ -32,9 +35,11 @@ const blocksOf=(node,kind)=>{
  if(kind==='timeline-item')return [{type:'row',label:read(node,'.when'),description:read(node,'.detail')}];
  return [{type:'text',description:txt(node)}];
 };
-const titles={full:'GLB Intelligence Report',hero:'Lead Story',kpis:'GLB Scorecard',kpi:'GLB Scorecard',gainers:'EXP Gainers',movers:'Ranking Shifts',pressure:'Leaderboard Pressure',cove:'Pirate Cove Watch',feed:'Coverage Desk',story:'GLB News Bulletin',timeline:'Snapshot Chronology','timeline-item':'Recorded Snapshot'};
+const titles={overview:'Season Observatory',standings:'Recorded Standings',full:'GLB Intelligence Report',hero:'Lead Story',kpis:'GLB Scorecard',kpi:'GLB Scorecard',gainers:'EXP Gainers',movers:'Ranking Shifts',pressure:'Leaderboard Pressure',cove:'Pirate Cove Watch',feed:'Coverage Desk',story:'GLB News Bulletin',timeline:'Snapshot Chronology','timeline-item':'Recorded Snapshot'};
 function findTarget(kind,button){
  if(kind==='hero')return $('newsHero');
+ if(kind==='overview')return $('stats');
+ if(kind==='standings')return $('rows');
  if(kind==='kpi')return button.closest('.news-kpi');
  if(kind==='story')return button.closest('.news-story');
  if(kind==='timeline-item')return button.closest('.news-timeline-item');
