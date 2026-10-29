@@ -57,8 +57,8 @@ function makeGraphic(kind,button){
  function words(text,font,limit){ctx.font=font;const terms=String(text||'').split(/\s+/).filter(Boolean),lines=[];let line='';
  for(const word of terms){const candidate=line?line+' '+word:word;if(ctx.measureText(candidate).width<=limit){line=candidate;continue}if(line)lines.push(line);if(ctx.measureText(word).width<=limit){line=word;continue}let part='';for(const ch of [...word]){if(ctx.measureText(part+ch).width>limit&&part){lines.push(part);part=ch}else part+=ch}line=part}
  if(line)lines.push(line);return lines.length?lines:['—'];}
- function labelText(text,y,draw,font='600 23px system-ui',line=33,color=palette.text,max=inner){
- const lines=words(text,font,max);if(draw){ctx.font=font;ctx.textAlign='left';ctx.fillStyle=color;for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],pad,y+i*line)}return lines.length*line}
+ function labelText(text,y,draw,font='600 23px system-ui',line=33,color=palette.text,max=inner,xpos=pad){
+ const lines=words(text,font,max);if(draw){ctx.font=font;ctx.textAlign='left';ctx.fillStyle=color;for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],xpos,y+i*line)}return lines.length*line}
  function item(block,y,draw){
  const left=pad+28,right=width-pad-28,max=right-left;
  const labelFont='700 21px system-ui',titleFont='700 31px Georgia,serif',descFont='22px system-ui',valueFont='700 30px system-ui';
@@ -70,12 +70,12 @@ function makeGraphic(kind,button){
  if(block.description)height+=line(block.description,descFont,max)*33+9;
  if(block.type==='bar')height+=25;
  height=Math.max(height,110);
- if(draw){ctx.fillStyle=palette.panel;ctx.strokeStyle=palette.edge;ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(pad,y,inner,height,12);ctx.fill();ctx.stroke()}
+ if(draw){ctx.fillStyle=palette.panel;ctx.strokeStyle=palette.edge;ctx.lineWidth=1.5;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(pad,y,inner,height,12);else ctx.rect(pad,y,inner,height);ctx.fill();ctx.stroke()}
  let current=y+34;
- if(block.label){let n=labelText(block.label,current,draw,labelFont,32,palette.gold,max);current+=n+2}
- if(block.title){let n=labelText(block.title,current,draw,titleFont,41,palette.text,max);current+=n+4}
- if(block.value){let n=labelText(block.value,current,draw,valueFont,39,palette.gold,max);current+=n+2}
- if(block.description){let n=labelText(block.description,current,draw,descFont,33,palette.muted,max);current+=n+9}
+ if(block.label){let n=labelText(block.label,current,draw,labelFont,32,palette.gold,max,left);current+=n+2}
+ if(block.title){let n=labelText(block.title,current,draw,titleFont,41,palette.text,max,left);current+=n+4}
+ if(block.value){let n=labelText(block.value,current,draw,valueFont,39,palette.gold,max,left);current+=n+2}
+ if(block.description){let n=labelText(block.description,current,draw,descFont,33,palette.muted,max,left);current+=n+9}
  if(block.type==='bar'&&draw){ctx.fillStyle='#473624';ctx.fillRect(left,y+height-29,max,12);ctx.fillStyle=palette.gold;ctx.fillRect(left,y+height-29,max*Math.max(0,Math.min(100,block.progress))/100,12)}
  return y+height+12;
  }
