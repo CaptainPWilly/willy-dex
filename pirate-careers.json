@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "description": "Historical Pirate Cove membership periods. A member may have multiple join/leave intervals. Dates are never inferred.",
+  "members": []
+}
