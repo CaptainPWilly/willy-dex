@@ -5077,54 +5077,6 @@
       ]
     },
     {
-      "name": "Axxoy ",
-      "cardId": null,
-      "membershipStatus": "unknown",
-      "periods": [
-        {
-          "joined": null,
-          "left": null,
-          "ageText": "1 year ago",
-          "source": "SMMO join notification pasted 2026-10-29",
-          "datePrecision": "relative-only"
-        }
-      ],
-      "departures": [
-        {
-          "left": null,
-          "ageText": "1 year ago",
-          "reportedOn": "2026-10-29",
-          "datePrecision": "relative-only",
-          "source": "SMMO departure notices posted 2026-10-29",
-          "sameAgeRepetition": false
-        }
-      ]
-    },
-    {
-      "name": " The Last Samurai",
-      "cardId": null,
-      "membershipStatus": "unknown",
-      "periods": [
-        {
-          "joined": null,
-          "left": null,
-          "ageText": "1 year ago",
-          "source": "SMMO join notification pasted 2026-10-29",
-          "datePrecision": "relative-only"
-        }
-      ],
-      "departures": [
-        {
-          "left": null,
-          "ageText": "1 year ago",
-          "reportedOn": "2026-10-29",
-          "datePrecision": "relative-only",
-          "source": "SMMO departure notices posted 2026-10-29",
-          "sameAgeRepetition": false
-        }
-      ]
-    },
-    {
       "name": "Gaylord",
       "cardId": null,
       "membershipStatus": "unknown",
@@ -10521,22 +10473,47 @@
           "sameAgeRepetition": false
         }
       ]
+    },
+    {
+      "name": "Axxoy | The Last Samurai",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "1 year ago",
+          "source": "SMMO join notification pasted 2026-10-29",
+          "datePrecision": "relative-only"
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 year ago",
+          "reportedOn": "2026-10-29",
+          "datePrecision": "relative-only",
+          "source": "SMMO departure notices posted 2026-10-29",
+          "sameAgeRepetition": false
+        }
+      ]
     }
   ],
   "importMetadata": {
     "source": "SMMO historical join notifications pasted Oct 29 2026",
     "recordedAt": "2026-10-29",
-    "eventCount": 640,
-    "uniqueNameCount": 603,
+    "eventCount": 639,
+    "uniqueNameCount": 602,
     "relativeDatesOnly": true,
-    "disclaimer": "Repeated join notifications are distinct observations, not proof of a departure in between. Identically named Deleted profiles may be different players."
+    "disclaimer": "Repeated join notifications are distinct observations, not proof of a departure in between. Identically named Deleted profiles may be different players. Restored full name Axxoy | The Last Samurai from previously split tokens."
   },
   "departureImport": {
     "source": "SMMO guild departure notifications supplied in chat",
     "reportedOn": "2026-10-29",
-    "eventCount": 179,
-    "distinctNames": 173,
+    "eventCount": 178,
+    "distinctNames": 172,
     "relativeDatesOnly": true,
-    "warning": "A relative departure report is not an exact departure date. Events with identical age text are preserved separately; repeated names do not establish identity across all records. Join and departure messages are not forcibly paired."
+    "warning": "A relative departure report is not an exact departure date. Events with identical age text are preserved separately; repeated names do not establish identity across all records. Join and departure messages are not forcibly paired.",
+    "note": "Restored literal | within the username Axxoy | The Last Samurai; separator is part of the name."
   }
 }
