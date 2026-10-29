@@ -37,7 +37,14 @@
         "level": 7618
       }
     ],
-    "last_active": "1 second ago"
+    "last_active": "1 second ago",
+    "cove_join_notices": [
+      {
+        "ageText": "4 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "002",
@@ -74,6 +81,13 @@
       {
         "date": "2026-10-28",
         "level": 23661
+      }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
       }
     ]
   },
@@ -118,7 +132,14 @@
         "level": 9432
       }
     ],
-    "last_active": "2 hours ago"
+    "last_active": "2 hours ago",
+    "cove_join_notices": [
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "004",
@@ -154,6 +175,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "8 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -194,6 +222,18 @@
         "date": "2026-10-28",
         "level": 4125
       }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "4 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -230,6 +270,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -266,6 +313,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -302,6 +356,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "8 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -338,6 +399,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "6 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -374,6 +442,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "2 weeks ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -410,6 +485,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "7 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -446,6 +528,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -482,6 +571,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "11 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -518,6 +614,13 @@
     ],
     "roles": [
       "Officer"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -556,6 +659,13 @@
     "roles": [
       "Warrior",
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "11 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -592,6 +702,18 @@
     ],
     "aliases": [
       "Godslayer"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -628,6 +750,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -664,6 +793,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -700,6 +836,13 @@
     ],
     "roles": [
       "Officer"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -736,6 +879,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -772,6 +922,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "2 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -808,6 +965,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -846,6 +1010,13 @@
     "roles": [
       "Warrior",
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -882,6 +1053,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "3 weeks ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -918,6 +1096,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "6 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -956,6 +1141,23 @@
     "roles": [
       "Warrior",
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "4 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -992,6 +1194,18 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "4 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1027,6 +1241,23 @@
       {
         "date": "2026-10-28",
         "level": 13257
+      }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
       }
     ]
   },
@@ -1068,6 +1299,18 @@
         "date": "2026-10-28",
         "level": 7482
       }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "4 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1106,6 +1349,13 @@
     "roles": [
       "Warrior",
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1142,6 +1392,18 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1178,6 +1440,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1214,6 +1483,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1250,6 +1526,18 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "3 weeks ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1286,6 +1574,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1322,6 +1617,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1360,6 +1662,13 @@
     "roles": [
       "Warrior",
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "8 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1400,6 +1709,18 @@
         "date": "2026-10-28",
         "level": 8706
       }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "4 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1436,6 +1757,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1472,6 +1800,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "2 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1508,6 +1843,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "2 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1548,6 +1890,13 @@
         "date": "2026-10-28",
         "level": 11054
       }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1584,6 +1933,18 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "2 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1678,6 +2039,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "7 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1714,6 +2082,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1752,6 +2127,13 @@
     "roles": [
       "Warrior",
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "8 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1790,6 +2172,13 @@
     "roles": [
       "Officer",
       "Warrior"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1826,6 +2215,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1862,6 +2258,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1898,6 +2301,13 @@
     ],
     "roles": [
       "Officer"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "8 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1934,6 +2344,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "4 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -1970,6 +2387,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2006,6 +2430,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "6 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2042,6 +2473,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "6 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2078,6 +2516,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "7 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2114,6 +2559,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2150,6 +2602,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2186,6 +2645,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "5 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2222,6 +2688,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2258,6 +2731,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "6 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2294,6 +2774,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "11 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2330,6 +2817,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "8 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2366,6 +2860,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "10 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2404,6 +2905,13 @@
         "date": "2026-10-28",
         "level": 2962
       }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2439,6 +2947,23 @@
       {
         "date": "2026-10-28",
         "level": 2026
+      }
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "8 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "3 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "4 years ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
       }
     ]
   },
@@ -2476,6 +3001,13 @@
     ],
     "roles": [
       "Member"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "9 months ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2508,7 +3040,14 @@
         "level": 416
       }
     ],
-    "last_active": "4 hours ago"
+    "last_active": "4 hours ago",
+    "cove_join_notices": [
+      {
+        "ageText": "4 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "070",
@@ -2540,7 +3079,14 @@
         "level": 90
       }
     ],
-    "last_active": "4 hours ago"
+    "last_active": "4 hours ago",
+    "cove_join_notices": [
+      {
+        "ageText": "4 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "071",
@@ -2572,7 +3118,14 @@
         "level": 2931
       }
     ],
-    "last_active": "10 hours ago"
+    "last_active": "10 hours ago",
+    "cove_join_notices": [
+      {
+        "ageText": "4 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "072",
@@ -2606,7 +3159,19 @@
         "level": 12293
       }
     ],
-    "last_active": "2 days ago"
+    "last_active": "2 days ago",
+    "cove_join_notices": [
+      {
+        "ageText": "4 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      },
+      {
+        "ageText": "1 year ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "073",
@@ -2638,7 +3203,14 @@
         "level": 378
       }
     ],
-    "last_active": "5 hours ago"
+    "last_active": "5 hours ago",
+    "cove_join_notices": [
+      {
+        "ageText": "4 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "074",
@@ -2670,7 +3242,14 @@
         "level": 60
       }
     ],
-    "last_active": "2 days ago"
+    "last_active": "2 days ago",
+    "cove_join_notices": [
+      {
+        "ageText": "4 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "075",
@@ -2705,6 +3284,13 @@
     "last_active": "2 minutes ago",
     "aliases": [
       "DoubleDs"
+    ],
+    "cove_join_notices": [
+      {
+        "ageText": "3 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
     ]
   },
   {
@@ -2752,7 +3338,14 @@
     ],
     "level": 4070,
     "date": "28 October 2026",
-    "last_active": "15 hours ago"
+    "last_active": "15 hours ago",
+    "cove_join_notices": [
+      {
+        "ageText": "2 days ago",
+        "reportedOn": "2026-10-29",
+        "exactDate": null
+      }
+    ]
   },
   {
     "number": "079",
