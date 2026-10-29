@@ -10,7 +10,7 @@ const REFERENCE_MS=Date.parse(REFERENCE_DATE+'T12:00:00Z');
 const noData='<div class="empty">No matching records. Adjust the search or filters.</div>';
 const tone={joined:'join',left:'left',removed:'removed'};
 let pirates=[],allEvents=[],cardMap=new Map(),nameCards=new Map(),selected=null,priorFocus=null,registryLimit=24,eventLimit=40,alertTimer=0;
-let state={query:'',filter:'all',sort:'recent',eventQuery:'',eventType:'all',eventPeriod:'all',eventSort:'newest'};
+let state={query:'',filter:'all',sort:'joinOldest',eventQuery:'',eventType:'all',eventPeriod:'all',eventSort:'newest'};
 
 function dayOnly(str){
  const day=String(str||'').slice(0,10);
@@ -67,6 +67,27 @@ function status(p){return p.membershipStatus==='current'?'current':p.membershipS
 function statusLabel(p){return status(p)==='current'?'Confirmed current':status(p)==='former'?'Confirmed former':'Unconfirmed'}
 function latestAge(p){return Math.min(Infinity,...p._events.map(eventDistance))}
 function latestEvent(p){return sortEvents(p._events,'newest')[0]||null}
+
+function joinedEvents(p){return p._events.filter(x=>x.kind==='joined')}
+function firstRecordedJoin(p){
+ const joined=joinedEvents(p);
+ if(!joined.length)return null;
+ return joined.reduce((oldest,e)=>eventDistance(e)>eventDistance(oldest)?e:oldest);
+}
+function lastRecordedJoin(p){
+ const joined=joinedEvents(p);
+ if(!joined.length)return null;
+ return joined.reduce((newest,e)=>eventDistance(e)<eventDistance(newest)?e:newest);
+}
+function joinSort(a,b,oldestFirst){
+ const ae=firstRecordedJoin(a),be=firstRecordedJoin(b);
+ if(!ae&&!be)return a.name.localeCompare(b.name);
+ if(!ae)return 1;
+ if(!be)return -1;
+ const aa=eventDistance(ae),bb=eventDistance(be);
+ return (oldestFirst?bb-aa:aa-bb)||a.name.localeCompare(b.name);
+}
+
 
 function bucket(e){
  const unit=String(e.ageText||'').match(/(\d+)\s+(year|month|week|day|hour|minute)s?\b/i);
@@ -143,30 +164,49 @@ function matchRegistry(p){
  if(q&&!norm(terms).includes(q))return false;
  const c=counts(p),f=state.filter;
  return f==='all'||(f==='carded'&&!!card)||(f==='active'&&status(p)==='current')||(f==='unknown'&&status(p)==='unknown')||
-  (f==='joins'&&c.joined>0)||(f==='left'&&c.left>0)||(f==='removed'&&c.removed>0)||
+  (f==='joins'&&c.joined>0)||(f==='noJoin'&&c.joined===0)||(f==='left'&&c.left>0)||(f==='removed'&&c.removed>0)||
   (f==='exits'&&(c.left+c.removed)>0)||(f==='nojoin'&&(c.left+c.removed)>0&&c.joined===0)||(f==='repeat'&&p._events.length>1);
 }
 function compareRegistry(a,b){
- const sa=counts(a),sb=counts(b);
- const sort=state.sort;
+ const sa=counts(a),sb=counts(b),sort=state.sort;
+ if(sort==='joinOldest')return joinSort(a,b,true);
+ if(sort==='joinNewest'||sort==='joinedEarliestKnown')return joinSort(a,b,false);
+ if(sort==='lastJoined'){
+  const ae=lastRecordedJoin(a),be=lastRecordedJoin(b);
+  if(!ae&&!be)return a.name.localeCompare(b.name);
+  if(!ae)return 1;if(!be)return -1;
+  return eventDistance(ae)-eventDistance(be)||a.name.localeCompare(b.name);
+ }
  if(sort==='name')return a.name.localeCompare(b.name);
+ if(sort==='nameDesc')return b.name.localeCompare(a.name);
  if(sort==='events')return b._events.length-a._events.length||a.name.localeCompare(b.name);
  if(sort==='joins')return sb.joined-sa.joined||a.name.localeCompare(b.name);
  if(sort==='exits')return sb.left+sb.removed-sa.left-sa.removed||a.name.localeCompare(b.name);
  if(sort==='oldest')return latestAge(b)-latestAge(a)||a.name.localeCompare(b.name);
  return latestAge(a)-latestAge(b)||a.name.localeCompare(b.name);
 }
-function registryCard(p){
- const c=counts(p),card=cardFor(p),newest=latestEvent(p);
- return '<article class="pirate"><div class="pirate-head"><div><button class="pirate-name linklike" data-open="'+encodeURIComponent(p.name)+'" type="button">'+escape(p.name)+'</button><div class="pirate-meta">'+(card?'WILLY DEX #'+escape(card.number):'HISTORICAL RECORD')+(p.identityAmbiguous?' · IDENTITIES MAY DIFFER':'')+'</div></div><span class="status '+status(p)+'">'+statusLabel(p)+'</span></div>'+
- '<div class="mini-stats"><span class="mini-stat"><i class="dot join"></i><b>'+c.joined+'</b> Joined</span><span class="mini-stat"><i class="dot left"></i><b>'+c.left+'</b> Left</span><span class="mini-stat"><i class="dot removed"></i><b>'+c.removed+'</b> Removed</span></div>'+
- '<div class="event-summary"><span>Latest: '+escape(newest?eventDate(newest):'No event')+'</span>'+(card?'<span class="card-tag">CARD #'+escape(card.number)+'</span>':'<span>ARCHIVED ONLY</span>')+'</div></article>';
+function registryRow(p,i){
+ const countsFor=counts(p),card=cardFor(p),first=firstRecordedJoin(p),last=lastRecordedJoin(p),encoded=encodeURIComponent(p.name);
+ const main=first?eventDate(first):'No join on record';
+ const recent=last?eventDate(last):'—';
+ 
+ return '<button class="roster-entry" type="button" data-open="'+encoded+'" title="Open complete career for '+escape(p.name)+'">'+
+  '<span class="roster-person"><span class="roster-rank">'+(i+1)+'</span><span class="roster-person-details"><span class="roster-person-name">'+escape(p.name)+'</span><span class="roster-sub">'+
+  (card?'WILLY DEX #'+escape(card.number):'Historical name')+(p.identityAmbiguous?' · identities uncertain':'')+'</span></span></span>'+
+  '<span class="roster-date '+(first?'':'unknown')+'"><span>'+escape(main)+'</span><small>'+(first?'Approximate · '+escape(first.ageText?'source age':'day recorded'):'No guild join captured')+'</small></span>'+
+  '<span class="roster-date roster-last '+(last?'':'unknown')+'">'+escape(recent)+(last?'<small>Last join notice</small>':'')+'</span>'+
+  '<span class="roster-numbers" aria-label="'+countsFor.joined+' joins, '+countsFor.left+' left, '+countsFor.removed+' removals"><span class="roster-number">'+countsFor.joined+'</span><span class="roster-number leave">'+countsFor.left+'</span><span class="roster-number remove">'+countsFor.removed+'</span></span>'+
+  '<span class="roster-detail">View profile ›</span></button>';
 }
 function renderRegistry(){
  const matches=pirates.filter(matchRegistry).sort(compareRegistry),shown=matches.slice(0,registryLimit);
  $('registryCount').textContent=fmt(matches.length)+' matching pirates';
  $('registryShowing').textContent='Showing '+fmt(shown.length)+' of '+fmt(matches.length);
- $('registryList').innerHTML=shown.length?shown.map(registryCard).join(''):noData;
+ $('registryList').innerHTML=shown.length?shown.map((p,i)=>registryRow(p,i)).join(''):noData;
+ for(const sortButton of document.querySelectorAll('[data-roster-sort]')){
+  const key=sortButton.dataset.rosterSort;
+  sortButton.dataset.active=String(state.sort===key||(key==='joinOldest'&&state.sort==='joinNewest'));
+ }
  $('registryMore').hidden=shown.length>=matches.length;
  $('registryMore').textContent='Show more pirates · '+fmt(matches.length-shown.length)+' remaining';
  for(const b of $('quickFilters').querySelectorAll('[data-quick]'))b.setAttribute('aria-pressed',String(b.dataset.quick===state.filter));
@@ -260,6 +300,12 @@ function wire(){
  $('search').oninput=e=>{state.query=norm(e.target.value);registryLimit=24;renderRegistry()};
  $('filter').onchange=e=>{state.filter=e.target.value;registryLimit=24;renderRegistry()};
  $('sort').onchange=e=>{state.sort=e.target.value;registryLimit=24;renderRegistry()};
+ document.addEventListener('click',e=>{
+  const heading=e.target.closest('[data-roster-sort]');if(!heading)return;
+  const key=heading.dataset.rosterSort;
+  state.sort=key==='joinOldest'&&state.sort==='joinOldest'?'joinNewest':key==='name'&&state.sort==='name'?'nameDesc':key;
+  $('sort').value=state.sort;registryLimit=24;renderRegistry();
+ });
  $('registryMore').onclick=()=>{registryLimit+=24;renderRegistry()};
  $('quickFilters').addEventListener('click',e=>{
   const button=e.target.closest('[data-quick]');if(!button)return;
@@ -281,7 +327,7 @@ function wire(){
     const b=kind.dataset.age;state.eventPeriod='bucket:'+b;
     $('eventPeriod').value=state.eventPeriod;
    }else{state.eventPeriod='all';$('eventPeriod').value='all'}
-   eventLimit=40;renderLedger();location.hash='ledger';
+   eventLimit=40;renderLedger();$('ledgerDetails').open=true;location.hash='ledger';
   }
  });
  $('profileClose').onclick=()=>closeProfile();
