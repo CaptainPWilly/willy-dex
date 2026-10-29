@@ -1,1 +1,59 @@
-'use strict';const $=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString(),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])),norm=s=>String(s??'').trim().toLowerCase(),date=s=>s?(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(s)?new Date(s+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):esc(s)):'???';let records=[],cards=[];function status(x){return x.membershipStatus==='current'?'active':x.membershipStatus==='former'?'former':'unknown'}function render(){const q=norm($('search').value),filter=$('filter').value,sort=$('sort').value;let rows=records.filter(x=>norm(x.name).includes(q)&&(filter==='all'||status(x)===filter));const order=x=>{const p=(x.periods||[])[0];if(!p)return Infinity;const m=String(p.ageText||'').match(/(\d+)\s+(hour|day|week|month|year)s?/);return m?Number(m[1])*({hour:1/24,day:1,week:7,month:30.44,year:365.25}[m[2]]):Infinity};rows.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):sort==='periods'?(b.periods||[]).length-(a.periods||[]).length:sort==='oldest'?order(b)-order(a):order(a)-order(b));$('careers').innerHTML=rows.length?rows.map(x=>{const card=x.cardId?cards.find(c=>c.card_id===x.cardId):null,found=card||cards.find(c=>norm(c.name)===norm(x.name));const link=found?'<a class="cardlink" href="index.html">Willy Dex card #'+esc(found.number)+'</a>':'';return '<article class="career"><header><div><strong>'+esc(x.name)+'</strong> '+link+'</div><span class="tag">'+(status(x)==='active'?'Current (confirmed)':status(x)==='former'?'Former (confirmed)':'Status ???')+'</span></header><div class="periods">'+(x.periods||[]).map((p,i)=>'<div class="period"><span>Joined <b>'+(p.joined?date(p.joined):esc(p.ageText||'???'))+'</b></span><span>Join notice '+(i+1)+'</span><span>Left <b>'+date(p.left)+'</b></span></div>').join('')+'</div></article>'}).join(''):'<p class="muted">No career records yet. Join and leave notifications will populate this registry as they are supplied.</p>';$('stats').innerHTML=[['Recorded pirates',records.length],['Membership voyages',records.reduce((n,x)=>n+(x.periods||[]).length,0)],['Confirmed current',records.filter(x=>status(x)==='active').length],['Confirmed former',records.filter(x=>status(x)==='former').length]].map(([title,n])=>'<div class="stat"><span class="muted">'+title+'</span><b>'+fmt(n)+'</b></div>').join('')}Promise.all([fetch('pirate-careers.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Career registry not available');return r.json()}),fetch('cards.json?v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():[])]).then(([d,c])=>{records=d.members||[];cards=Array.isArray(c)?c:[];['search','filter','sort'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',render));render()}).catch(e=>$('careers').textContent=e.message);
+'use strict';
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n).toLocaleString('en-US');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
+const norm=s=>String(s??'').trim().toLocaleLowerCase();
+let records=[],cards=[];
+const date=s=>{
+ const day=String(s||'').slice(0,10);
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(day))return '';
+ const d=new Date(day+'T12:00:00Z');
+ return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('en-US',{timeZone:'UTC',dateStyle:'medium'}).format(d);
+};
+function status(x){return x.membershipStatus==='current'?'active':x.membershipStatus==='former'?'former':'unknown'}
+function ageDays(age){
+ const match=String(age||'').match(/(\d+)\s+(minute|hour|day|week|month|year)s?/);
+ if(!match)return Infinity;
+ return +match[1]*({minute:1/1440,hour:1/24,day:1,week:7,month:30.44,year:365.25}[match[2]]);
+}
+function eventAge(e){
+ if(e.ageText)return ageDays(e.ageText);
+ if(e.recordedDay){const age=Date.parse('2026-10-29T12:00:00Z')-Date.parse(e.recordedDay+'T12:00:00Z');return Number.isFinite(age)?Math.max(0,age/86400000):Infinity}
+ return Infinity;
+}
+function events(x){
+ const join=(x.periods||[]).map((p,i)=>({kind:'Joined',index:i+1,recordedDay:p.joined||null,ageText:p.ageText||null,reportedOn:p.reportedAt||p.reportedOn||(/2026-10-29/.test(p.source||'')?'2026-10-29':null),precision:p.datePrecision||'unknown',source:p.source||''}));
+ const leave=(x.departures||[]).map((p,i)=>({kind:'Departed',index:i+1,recordedDay:p.left||null,ageText:p.ageText||null,reportedOn:p.reportedOn||null,precision:p.datePrecision||'unknown',source:p.source||''}));
+ return [...join,...leave].sort((a,b)=>eventAge(a)-eventAge(b)||a.kind.localeCompare(b.kind));
+}
+function latest(x){return Math.min(...events(x).map(eventAge),Infinity)}
+function formatEvent(e){
+ const exact=date(e.recordedDay),approx=e.ageText?('~'+e.ageText):'???',shown=exact||approx,asOf=date(e.reportedOn);
+ const explanation=exact?'Recorded calendar date · exact time unconfirmed':asOf?'Reported '+asOf+' · approximate':'Relative date only · exact date unknown';
+ return '<div class="career-event '+(e.kind==='Departed'?'departure-event':'join-event')+'"><span class="event-type">'+(e.kind==='Departed'?'DEPARTED':'JOINED')+' <small>NOTICE '+e.index+'</small></span><div class="event-content"><strong>'+esc(shown)+'</strong><small>'+esc(explanation)+'</small></div></div>';
+}
+function cardFor(x){const direct=x.cardId?cards.find(c=>c.card_id===x.cardId):null;return direct||cards.find(c=>norm(c.name)===norm(x.name))}
+function render(){
+ const q=norm($('search').value),filter=$('filter').value,sort=$('sort').value;
+ const rows=records.filter(x=>{
+   if(!norm(x.name).includes(q))return false;
+   const joins=(x.periods||[]).length,leaves=(x.departures||[]).length;
+   if(filter==='departed')return leaves>0;
+   if(filter==='joined')return joins>0;
+   if(filter==='leaveOnly')return leaves>0&&!joins;
+   if(filter==='repeat')return joins>1||leaves>1;
+   return filter==='all'||status(x)===filter;
+ });
+ rows.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):sort==='periods'?(b.periods||[]).length-(a.periods||[]).length:sort==='departures'?(b.departures||[]).length-(a.departures||[]).length:sort==='oldest'?latest(b)-latest(a):latest(a)-latest(b));
+ $('careers').innerHTML=rows.length?rows.map(x=>{
+   const c=cardFor(x),link=c?'<a class="cardlink" href="index.html">Willy Dex #'+esc(c.number)+'</a>':'';
+   const js=(x.periods||[]).length,ls=(x.departures||[]).length,all=events(x);
+   return '<article class="career"><header><div class="career-identity"><strong>'+esc(x.name)+'</strong> '+link+'<p class="career-counts">'+js+' join notice'+(js===1?'':'s')+' · '+ls+' departure notice'+(ls===1?'':'s')+'</p></div><span class="tag">'+(status(x)==='active'?'Current (confirmed)':status(x)==='former'?'Former (confirmed)':'Status unconfirmed')+'</span></header><div class="periods">'+all.map(formatEvent).join('')+'</div></article>';
+ }).join(''):'<p class="muted">No records match this selection.</p>';
+ const joins=records.reduce((n,x)=>n+(x.periods||[]).length,0),leaves=records.reduce((n,x)=>n+(x.departures||[]).length,0),repeats=records.filter(x=>(x.periods||[]).length>1||(x.departures||[]).length>1).length;
+ $('stats').innerHTML=[['Pirates on record',records.length],['Join notices',joins],['Departure notices',leaves],['Repeat-notice histories',repeats],['Confirmed current',records.filter(x=>status(x)==='active').length],['Confirmed former',records.filter(x=>status(x)==='former').length]].map(([title,n])=>'<div class="stat"><span class="muted">'+esc(title)+'</span><b>'+fmt(n)+'</b></div>').join('');
+}
+Promise.all([
+ fetch('pirate-careers.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Career registry unavailable');return r.json()}),
+ fetch('cards.json?v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():[])
+]).then(([d,c])=>{records=d.members||[];cards=Array.isArray(c)?c:[];['search','filter','sort'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',render));render()}).catch(e=>$('careers').textContent=e.message);
