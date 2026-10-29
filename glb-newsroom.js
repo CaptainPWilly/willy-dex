@@ -37,7 +37,7 @@ function renderFeed(periods){
  const storyRows=periods.flatMap(p=>makeStories(p,snaps.indexOf(p.next)));
  allStories=storyRows.filter(e=>(cat==='all'||(cat==='xp'?e.delta!==0&&e.cat!=='entry':cat==='rank'?e.rankMovement!==0:e.cat===cat))&&(!search||(e.name+' '+e.title+' '+e.body).toLocaleLowerCase().includes(search))).sort(storySort);
  $('newsCount').textContent=fmt(allStories.length)+' reports · '+fmt(storyRows.length)+' observed guild comparisons';
- $('newsFeed').innerHTML=allStories.slice(0,displayCount).map(s=>'<article class="news-story"><div class="meta"><span class="category">'+safe({rank:'PLACEMENT',xp:'EXPERIENCE',entry:'TOP 50',steady:'UNCHANGED'}[s.cat])+'</span><span>'+safe(s.date)+'</span></div><h4>'+safe(s.title)+'</h4><p>'+safe(s.body)+'</p><span class="fig">'+safe(s.value)+'</span></article>').join('')||'<div class="news-empty">No reports match these filters.</div>';
+ $('newsFeed').innerHTML=allStories.slice(0,displayCount).map(s=>'<article class="news-story"><div class="meta"><span class="category">'+safe({rank:'PLACEMENT',xp:'EXPERIENCE',entry:'TOP 50',steady:'UNCHANGED'}[s.cat])+'</span><span>'+safe(s.date)+'</span></div><h4>'+safe(s.title)+'</h4><p>'+safe(s.body)+'</p><span class="fig">'+safe(s.value)+'</span><div class="news-story-copy-row"><button type="button" class="news-copy" data-copy-image="story">Copy Image</button></div></article>').join('')||'<div class="news-empty">No reports match these filters.</div>';
  $('newsMore').hidden=allStories.length<=displayCount;
  $('newsMore').textContent='Show more reports ('+fmt(allStories.length-displayCount)+' remaining)';
 }
@@ -68,7 +68,7 @@ function hero(p){
  const gainers=p.both.filter(g=>g.change>0).sort((a,b)=>b.change-a.change),movers=p.both.filter(g=>g.movement>0).sort((a,b)=>b.movement-a.movement),largest=gainers[0];
  const title=largest?largest.name+' leads observed EXP gains':p.entrants.length?'Top 50 lineup changes in latest comparison':'Latest standings: recorded changes';
  const body=largest?'Between '+time(p.prev)+' and '+time(p.next)+', '+largest.name+' gained '+fmt(largest.change)+' EXP'+(movers.length?'; '+movers[0].name+' recorded the largest upward rank move ('+movers[0].movement+' places).':'.'): 'Coverage is limited to the exact snapshot pair selected.';
- return '<span class="news-eyeline">LATEST SNAPSHOT REPORT · '+safe(time(p.next))+'</span><h3>'+safe(title)+'</h3><p>'+safe(body)+'</p>';
+ return '<span class="news-eyeline">LATEST SNAPSHOT REPORT · '+safe(time(p.next))+'</span><h3>'+safe(title)+'</h3><p>'+safe(body)+'</p><button type="button" class="news-copy" data-copy-image="hero">Copy Image</button>';
 }
 function kpis(p){
  const matched=p.both,add=matched.reduce((n,g)=>n+g.change,0),top=matched.filter(g=>g.change>0).sort((a,b)=>b.change-a.change)[0],movers=matched.filter(g=>g.movement!==0),c=matched.find(g=>g.name==='The Pirate Cove');
@@ -78,10 +78,10 @@ function kpis(p){
  ['Rank movers',fmt(movers.length),movers.filter(g=>g.movement>0).length+' up · '+movers.filter(g=>g.movement<0).length+' down'],
  ['Pirate Cove',c?'#'+c.rank:'Unobserved',c?sign(c.change)+' EXP · '+(c.movement>0?'up '+c.movement:c.movement<0?'down '+Math.abs(c.movement):'rank unchanged'):'Not in both snapshots']
  ];
- return cards.map(([title,val,sub])=>'<div class="news-kpi"><div class="t">'+title+'</div><div class="v">'+val+'</div><div class="sub">'+sub+'</div></div>').join('');
+ return cards.map(([title,val,sub])=>'<div class="news-kpi"><div class="t">'+title+'</div><div class="v">'+val+'</div><div class="sub">'+sub+'</div><button type="button" class="news-copy" data-copy-image="kpi">Copy Image</button></div>').join('');
 }
 function chronology(){
- const rows=snaps.slice().reverse();$('newsTimeline').innerHTML=rows.map((s,idx)=>{const i=snaps.indexOf(s),prev=i?snaps[i-1]:null;const d=prev?diff(prev,s):null;const changes=d?d.both.filter(g=>g.movement!==0).length:0;return '<div class="news-timeline-item"><span class="when">'+safe(time(s))+'</span><span class="detail">'+s.guilds.length+' recorded guilds'+(d?' · '+changes+' rank movements · '+d.entrants.length+' newly observed':' · First archive observation')+'</span></div>'}).join('');
+ const rows=snaps.slice().reverse();$('newsTimeline').innerHTML=rows.map((s,idx)=>{const i=snaps.indexOf(s),prev=i?snaps[i-1]:null;const d=prev?diff(prev,s):null;const changes=d?d.both.filter(g=>g.movement!==0).length:0;return '<div class="news-timeline-item"><span class="when">'+safe(time(s))+'</span><span class="detail">'+s.guilds.length+' recorded guilds'+(d?' · '+changes+' rank movements · '+d.entrants.length+' newly observed':' · First archive observation')+'</span><button type="button" class="news-copy" data-copy-image="timeline-item">Copy Image</button></div>'}).join('');
 }
 function render(){
  const scope=$('newsScope').value,periods=chosenPeriods(),p=periods[0];
@@ -92,7 +92,7 @@ function render(){
  $('newsGainers').innerHTML=bars(p.both);$('newsMovers').innerHTML=moverList(p.both);
  $('newsPressure').innerHTML=pressure(p.next);$('newsCove').innerHTML=coveWatch(p);
  }else{
- $('newsHero').innerHTML='<h3>Select two different snapshots</h3><p>Compare recorded captures to view the intelligence breakdown.</p>';
+ $('newsHero').innerHTML='<h3>Select two different snapshots</h3><p>Compare recorded captures to view the intelligence breakdown.</p><button type="button" class="news-copy" data-copy-image="hero">Copy Image</button>';
  for(const id of ['newsKpis','newsGainers','newsMovers','newsPressure','newsCove'])$(id).innerHTML='';
  }
  renderFeed(periods);
