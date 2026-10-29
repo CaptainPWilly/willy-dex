@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Historical Pirate Cove membership periods. A member may have multiple join/leave intervals. Dates are never inferred.",
+  "description": "Historical Pirate Cove membership join notifications and departure notifications. Reported relative ages are preserved; approximate events are not converted to invented exact dates or forcibly paired into voyages.",
   "members": [
     {
       "name": "Don866",
