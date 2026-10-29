@@ -1,0 +1,23 @@
+'use strict';
+(async function(){
+const root=document.getElementById('victoryIntel');if(!root)return;
+const q=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Number(n).toLocaleString('en-US'),norm=s=>String(s).toLowerCase();
+let data=[],sort='count',search='',view='opponents';
+try {const r=await fetch('war-victories.json?updated='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const payload=await r.json();data=payload.records||[];if(!Array.isArray(data)||data.some(w=>!w.opponent||!Number.isSafeInteger(w.rewardExp)||!w.ageText))throw Error('Invalid historical record');}
+catch(e){root.innerHTML='<h2>Historical victories</h2><p class="err">History unavailable: '+esc(e.message)+'</p>';return}
+const count=data.length,sum=data.reduce((n,r)=>n+r.rewardExp,0),other=data.reduce((n,r)=>n+r.secondaryReward,0);
+const opponents=new Map();for(const w of data){const key=norm(w.opponent),a=opponents.get(key)||{name:w.opponent,count:0,exp:0,last:null,rows:[]};a.count++;a.exp+=w.rewardExp;a.rows.push(w);if(!a.last)a.last=w.ageText;opponents.set(key,a)}
+const unique=opponents.size,full=data.filter(w=>w.rewardExp===120000).length;
+root.innerHTML='<div class="flex"><div><h2>Historical victories</h2><p class="muted">Source: recorded SMMO victory notifications · Captured 29 Oct 2026 · Ages are approximate labels, not exact dates</p></div></div>'+
+'<div class="stats victory-stats">'+[['Wins',fmt(count)],['Distinct opponent names',fmt(unique)],['Total awarded EXP',fmt(sum)],['EXP per win',fmt(Math.round(sum/count))],['120,000 EXP wins',fmt(full)],['Secondary rewards (as reported)',fmt(other)]].map(x=>'<div class="stat"><span class="muted">'+esc(x[0])+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'+
+'<div class="flex victory-tools"><div class="filters"><input id="victorySearch" placeholder="Search opponents…" aria-label="Search historical victories"><select id="victorySort" aria-label="Historical victory sort"><option value="count">Most defeated</option><option value="exp">Most EXP won</option><option value="name">Opponent A–Z</option><option value="recent">Most recently recorded</option></select><select id="victoryView" aria-label="Historical victory view"><option value="opponents">Opponent breakdown</option><option value="history">Full win history</option></select></div><p class="muted" id="victoryShown"></p></div><div id="victoryResults"></div>'+
+'<p class="muted victory-note">Each entry represents one supplied victory notification. Identically named opponents can include deleted or renamed guilds; no identity merging beyond exact name matching. The second numeric reward is shown as reported because its unit is not verified. EXP is awarded EXP, not enemy guild EXP or kill count.</p>';
+function render(){const matches=data.filter(x=>norm(x.opponent).includes(search)),rows=[...opponents.values()].filter(x=>norm(x.name).includes(search));rows.sort((a,b)=>sort==='exp'?b.exp-a.exp||b.count-a.count:sort==='name'?a.name.localeCompare(b.name):sort==='recent'?a.rows[0].sourceOrder-b.rows[0].sourceOrder:b.count-a.count||b.exp-a.exp);
+q('victoryShown').textContent=matches.length+' matching wins';
+if(view==='history'){q('victoryResults').innerHTML='<div class="table-wrap"><table class="victory-table"><thead><tr><th>#</th><th>Defeated opponent</th><th>When (reported)</th><th class="num">EXP</th><th class="num">Other</th></tr></thead><tbody>'+matches.map(w=>'<tr><td>'+w.sourceOrder+'</td><td>'+esc(w.opponent)+'</td><td>'+esc(w.ageText)+'</td><td class="num">'+fmt(w.rewardExp)+'</td><td class="num">'+fmt(w.secondaryReward)+'</td></tr>').join('')+'</tbody></table></div>';return}
+const max=rows.reduce((m,x)=>Math.max(m,x.count),1);
+q('victoryResults').innerHTML=rows.map((x,i)=>'<details class="victory-opponent"><summary><span class="victory-rank">'+String(i+1).padStart(2,'0')+'</span><span class="victory-name"><b>'+esc(x.name)+'</b><span class="victory-meter"><i style="width:'+(x.count/max*100).toFixed(2)+'%"></i></span></span><span class="victory-totals"><strong>'+fmt(x.count)+' win'+(x.count===1?'':'s')+'</strong><small>'+fmt(x.exp)+' EXP</small></span></summary><div class="victory-rounds">'+x.rows.map(w=>'<div><span>'+esc(w.ageText)+'</span><b>'+fmt(w.rewardExp)+' EXP</b><small>+'+fmt(w.secondaryReward)+' other</small></div>').join('')+'</div></details>').join('')||'<p class="muted">No matching opponents.</p>';
+}
+q('victorySearch').oninput=e=>{search=norm(e.target.value.trim());render()};q('victorySort').onchange=e=>{sort=e.target.value;render()};q('victoryView').onchange=e=>{view=e.target.value;render()};render();
+})();
