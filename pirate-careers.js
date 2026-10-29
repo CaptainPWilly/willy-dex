@@ -23,35 +23,39 @@ function eventAge(e){
 }
 function events(x){
  const join=(x.periods||[]).map((p,i)=>({kind:'Joined',index:i+1,recordedDay:p.joined||null,ageText:p.ageText||null,reportedOn:p.reportedAt||p.reportedOn||(/2026-10-29/.test(p.source||'')?'2026-10-29':null),precision:p.datePrecision||'unknown',source:p.source||''}));
- const leave=(x.departures||[]).map((p,i)=>({kind:'Departed',index:i+1,recordedDay:p.left||null,ageText:p.ageText||null,reportedOn:p.reportedOn||null,precision:p.datePrecision||'unknown',source:p.source||''}));
- return [...join,...leave].sort((a,b)=>eventAge(a)-eventAge(b)||a.kind.localeCompare(b.kind));
+ const leave=(x.departures||[]).map((p,i)=>({kind:'Left',index:i+1,recordedDay:p.left||null,ageText:p.ageText||null,reportedOn:p.reportedOn||null,precision:p.datePrecision||'unknown',source:p.source||''}));
+ const removed=(x.removals||[]).map((p,i)=>({kind:'Removed',index:i+1,recordedDay:p.removed||null,ageText:p.ageText||null,reportedOn:p.reportedOn||null,precision:p.datePrecision||'unknown',source:p.source||'',identityAmbiguous:!!p.identityAmbiguous}));
+ return [...join,...leave,...removed].sort((a,b)=>eventAge(a)-eventAge(b)||a.kind.localeCompare(b.kind));
 }
 function latest(x){return Math.min(...events(x).map(eventAge),Infinity)}
 function formatEvent(e){
  const exact=date(e.recordedDay),approx=e.ageText?('~'+e.ageText):'???',shown=exact||approx,asOf=date(e.reportedOn);
  const explanation=exact?'Recorded calendar date · exact time unconfirmed':asOf?'Reported '+asOf+' · approximate':'Relative date only · exact date unknown';
- return '<div class="career-event '+(e.kind==='Departed'?'departure-event':'join-event')+'"><span class="event-type">'+(e.kind==='Departed'?'DEPARTED':'JOINED')+' <small>NOTICE '+e.index+'</small></span><div class="event-content"><strong>'+esc(shown)+'</strong><small>'+esc(explanation)+'</small></div></div>';
+ const typeClass=e.kind==='Removed'?'removal-event':e.kind==='Left'?'departure-event':'join-event';
+ return '<div class="career-event '+typeClass+'"><span class="event-type">'+e.kind.toUpperCase()+' <small>NOTICE '+e.index+'</small></span><div class="event-content"><strong>'+esc(shown)+'</strong><small>'+esc(explanation)+(e.identityAmbiguous?' · Player identity unconfirmed':'')+'</small></div></div>';
 }
 function cardFor(x){const direct=x.cardId?cards.find(c=>c.card_id===x.cardId):null;return direct||cards.find(c=>norm(c.name)===norm(x.name))}
 function render(){
  const q=norm($('search').value),filter=$('filter').value,sort=$('sort').value;
  const rows=records.filter(x=>{
    if(!norm(x.name).includes(q))return false;
-   const joins=(x.periods||[]).length,leaves=(x.departures||[]).length;
-   if(filter==='departed')return leaves>0;
+   const joins=(x.periods||[]).length,leaves=(x.departures||[]).length,removals=(x.removals||[]).length;
+   if(filter==='departed')return leaves>0||removals>0;
+   if(filter==='voluntary')return leaves>0;
+   if(filter==='removed')return removals>0;
    if(filter==='joined')return joins>0;
-   if(filter==='leaveOnly')return leaves>0&&!joins;
-   if(filter==='repeat')return joins>1||leaves>1;
+   if(filter==='leaveOnly')return (leaves>0||removals>0)&&!joins;
+   if(filter==='repeat')return joins>1||leaves>1||removals>1;
    return filter==='all'||status(x)===filter;
  });
- rows.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):sort==='periods'?(b.periods||[]).length-(a.periods||[]).length:sort==='departures'?(b.departures||[]).length-(a.departures||[]).length:sort==='oldest'?latest(b)-latest(a):latest(a)-latest(b));
+ rows.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):sort==='periods'?(b.periods||[]).length-(a.periods||[]).length:sort==='departures'?((b.departures||[]).length+(b.removals||[]).length)-((a.departures||[]).length+(a.removals||[]).length):sort==='removals'?(b.removals||[]).length-(a.removals||[]).length:sort==='oldest'?latest(b)-latest(a):latest(a)-latest(b));
  $('careers').innerHTML=rows.length?rows.map(x=>{
    const c=cardFor(x),link=c?'<a class="cardlink" href="index.html">Willy Dex #'+esc(c.number)+'</a>':'';
-   const js=(x.periods||[]).length,ls=(x.departures||[]).length,all=events(x);
-   return '<article class="career"><header><div class="career-identity"><strong>'+esc(x.name)+'</strong> '+link+'<p class="career-counts">'+js+' join notice'+(js===1?'':'s')+' · '+ls+' departure notice'+(ls===1?'':'s')+'</p></div><span class="tag">'+(status(x)==='active'?'Current (confirmed)':status(x)==='former'?'Former (confirmed)':'Status unconfirmed')+'</span></header><div class="periods">'+all.map(formatEvent).join('')+'</div></article>';
+   const js=(x.periods||[]).length,ls=(x.departures||[]).length,rs=(x.removals||[]).length,all=events(x);
+   return '<article class="career"><header><div class="career-identity"><strong>'+esc(x.name)+'</strong> '+link+'<p class="career-counts">'+js+' joined · '+ls+' left · '+rs+' removed</p></div><span class="tag">'+(status(x)==='active'?'Current (confirmed)':status(x)==='former'?'Former (confirmed)':'Status unconfirmed')+'</span></header><div class="periods">'+all.map(formatEvent).join('')+'</div></article>';
  }).join(''):'<p class="muted">No records match this selection.</p>';
- const joins=records.reduce((n,x)=>n+(x.periods||[]).length,0),leaves=records.reduce((n,x)=>n+(x.departures||[]).length,0),repeats=records.filter(x=>(x.periods||[]).length>1||(x.departures||[]).length>1).length;
- $('stats').innerHTML=[['Pirates on record',records.length],['Join notices',joins],['Departure notices',leaves],['Repeat-notice histories',repeats],['Confirmed current',records.filter(x=>status(x)==='active').length],['Confirmed former',records.filter(x=>status(x)==='former').length]].map(([title,n])=>'<div class="stat"><span class="muted">'+esc(title)+'</span><b>'+fmt(n)+'</b></div>').join('');
+ const joins=records.reduce((n,x)=>n+(x.periods||[]).length,0),leaves=records.reduce((n,x)=>n+(x.departures||[]).length,0),removals=records.reduce((n,x)=>n+(x.removals||[]).length,0),repeats=records.filter(x=>(x.periods||[]).length>1||(x.departures||[]).length>1||(x.removals||[]).length>1).length;
+ $('stats').innerHTML=[['Pirates on record',records.length],['Join notices',joins],['Left notices',leaves],['Removed notices',removals],['Repeat-notice histories',repeats],['Confirmed current',records.filter(x=>status(x)==='active').length],['Confirmed former',records.filter(x=>status(x)==='former').length]].map(([title,n])=>'<div class="stat"><span class="muted">'+esc(title)+'</span><b>'+fmt(n)+'</b></div>').join('');
 }
 Promise.all([
  fetch('pirate-careers.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Career registry unavailable');return r.json()}),
