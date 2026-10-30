@@ -20,7 +20,7 @@ for(let i=0;i<glb.snapshots.length;i++){
 }
 const first=glb.snapshots[0],last=glb.snapshots[glb.snapshots.length-1];
 const hash=crypto.createHash('sha256').update(JSON.stringify(glb)).digest('hex');
-const stamp=(last.capturedAt||last.date||'undated').replace(/[^0-9TZ:-]/gi,'').replace(/:/g,'-').slice(0,24);
+const stamp=(last.capturedAt||last.date||'undated').replace(/[^0-9TZ:-]/gi,'').replace(/:/g,'-').slice(0,32);
 const id='s'+glb.season+'-'+stamp+'-'+hash.slice(0,12);
 const folder='checkins/editions/'+id;
 const manifestPath='checkins/manifest.json';
