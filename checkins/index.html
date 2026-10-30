@@ -28,7 +28,8 @@ a.primary{background:var(--gold);border-color:var(--gold);color:#20140d}
 <main>
 <div class="overline">WILLY CORP / GLB INTELLIGENCE / VIDEO ARCHIVE</div>
 <h1>Season check-ins, archived automatically.</h1>
-<p>Every saved GLB update has its own historical edition, exact source snapshot, and downloadable YouTube-ready MP4. No rewriting old rankings when the leaderboard changes.</p>
+<p>Each snapshot gets its own recorded edition. Use the WATCH ONLY share link for viewers or WATCH + DOWNLOAD for people allowed to download. The archive is public but unlisted from the main site.</p>
+<p><strong>Stable newest-episode links:</strong> <a href="watch.html" style="color:var(--gold)">Watch only</a> · <a href="download.html" style="color:var(--gold)">Watch + download</a></p>
 <section class="hero" id="featured" aria-live="polite"><div class="overline">LATEST ARCHIVED EDITION</div><h2>Checking the archive...</h2><p>Loading the recorded GLB catalog.</p></section>
 <div class="tool"><div><h2>Previous editions</h2><span id="count"></span></div><div><input id="search" type="search" placeholder="Search season, date or leader" aria-label="Search archived videos"><select id="season" aria-label="Choose season"><option value="">All seasons</option></select></div></div>
 <div id="list"></div><div id="message" role="status"></div>
@@ -44,8 +45,9 @@ a.primary{background:var(--gold);border-color:var(--gold);color:#20140d}
  const text='<span class="overline">SEASON '+esc(e.season)+' · '+esc(e.snapshots)+' CAPTURES</span>'+
  '<h3>'+esc(date(e.capturedAt||e.date))+'</h3>'+
  '<div class="facts">#1 '+esc(e.leader)+' · '+number(e.leaderXp)+' XP'+(e.cove?' · COVE #'+esc(e.cove.rank):'')+'</div>'+
- '<div class="actions"><a class="action primary" href="'+encodeURI(e.page)+'">▶ WATCH</a>'+
- (video(e)?'<a class="action" href="'+esc(video(e))+'">↓ DOWNLOAD MP4</a>':'')+
+ '<div class="actions"><a class="action primary" href="'+encodeURI(e.page)+'?share=watch">▶ WATCH ONLY</a>'+
+ '<a class="action" href="'+encodeURI(e.page)+'?share=download">▶ WATCH + DOWNLOAD</a>'+
+ (video(e)?'<a class="action" href="'+esc(video(e))+'">↓ MP4 FILE</a>':'')+
  '<a class="action" href="'+encodeURI(e.data)+'">SOURCE DATA</a></div>';
  return featured?'<div class="overline">LATEST ARCHIVED EDITION</div>'+text:'<article class="episode">'+text+'</article>';
  };
