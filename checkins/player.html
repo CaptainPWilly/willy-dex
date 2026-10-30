@@ -9,6 +9,7 @@
 <style>
 :root{color-scheme:dark;--bg:#100d0b;--card:#211912;--edge:#6c5035;--gold:#edbd80;--text:#f4e4cf;--muted:#c6b095}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;min-height:100dvh;color:var(--text);background:radial-gradient(ellipse 80% 40% at 50% 0,#352416,var(--bg) 78%);font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
 nav{display:flex;align-items:center;gap:16px;max-width:1060px;padding:16px 18px;margin:auto;border-bottom:1px solid #56412d}
 nav strong{margin-right:auto;font-size:13px;letter-spacing:.16em}
@@ -26,7 +27,7 @@ video{display:block;width:100%;aspect-ratio:9/16;max-height:min(78dvh,860px);mar
 .side{border:1px solid var(--edge);border-radius:13px;background:linear-gradient(145deg,#302319,var(--card));padding:20px}
 .side h2{font-size:17px;margin:0 0 4px}
 .side .hint{font-size:13px;color:var(--muted);margin:0 0 18px}
-.btn{display:flex;align-items:center;justify-content:center;gap:9px;text-align:center;width:100%;min-height:46px;padding:11px 14px;margin-top:10px;border:1px solid #97704a;border-radius:9px;background:#302319;color:var(--text);font:800 14px/1.2 inherit;text-decoration:none;cursor:pointer}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;text-align:center;width:100%;min-height:46px;padding:11px 14px;margin-top:10px;border:1px solid #97704a;border-radius:9px;background:#302319;color:var(--text);font:inherit;font-size:14px;line-height:1.2;font-weight:800;text-decoration:none;cursor:pointer}
 .btn.primary{background:var(--gold);border-color:var(--gold);color:#271809;font-weight:900}
 .btn:focus-visible,nav a:focus-visible{outline:3px solid #fff4;outline-offset:3px}
 .details{border-top:1px solid #59442e;margin-top:20px;padding-top:15px;display:grid;gap:10px}
