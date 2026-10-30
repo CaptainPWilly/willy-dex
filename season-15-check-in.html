@@ -159,9 +159,10 @@ function drawRace(seg,q){
  }
  ctx.restore();
  const updating=!firstCapture&&transition<.965;
- type(updating?'CHANGING BETWEEN TWO VERIFIED CAPTURES':'CAPTURE VERIFIED · ALL NUMBERS REPORTED',
+ type(updating?'VISUAL BAR TRANSITION · ENDPOINT XP VERIFIED':'CAPTURE VERIFIED · ALL NUMBERS REPORTED',
       LEFT,1419,24,updating?GOLD:MUTED,760,'left',705);
- type('LEADER  '+fmt(current.guilds[0].experience)+' XP  ·  '+current.guilds[0].name.toUpperCase(),
+ const visibleLeader=firstCapture||transition>=.72?current.guilds[0]:previous.guilds[0];
+ type('LEADER  '+fmt(visibleLeader.experience)+' XP  ·  '+visibleLeader.name.toUpperCase(),
       LEFT,1367,26,GOLD,870,'left',707);
  // Quiet elapsed indicator, not a shot counter.
  rect(LEFT,1445,714,4,'#3c2c1e',2);
