@@ -71,7 +71,7 @@ function badge(s,y,color=GOLD){rect(LEFT,y,6,38,color,2);type(s,LEFT+25,y+28,28,
 function captureTag(s,idx,total){return 'CAPTURE '+(idx+1)+' / '+total+'     '+localTime(s)}
 function bar(x,y,w,h,p,active){rect(x,y,w,h,'#45352a',6);rect(x,y,w*clip(p,0,1),h,active?GOLD:'#9d7751',6)}
 function drawHook(q){
- title('5 RECORDED CAPTURES  /  50 GUILDS','SEASON 15','THE BOARD MOVES','27–29 OCT 2026 · GLOBAL XP');
+ title(snapshots.length+' RECORDED CAPTURES  /  50 GUILDS','SEASON 15','THE BOARD MOVES','27–29 OCT 2026 · GLOBAL XP');
  const top=latest.guilds.slice(0,3);
  top.forEach((g,i)=>{const y=560+i*185,st=ease((q*2.2-i*.23)/.8);rect(LEFT,y,714,150,'#241b17',12);rect(LEFT,y,6,150,i===0?GOLD:'#967554');type('#'+g.rank,LEFT+23,y+66,51,GOLD,950);type(g.name.toUpperCase(),LEFT+152,y+62,37,CREAM,850,'left',520);type(fmt(g.experience)+' XP',LEFT+152,y+116,35,MUTED,800);bar(LEFT+24,y+133,663,8,st*(g.experience/top[0].experience),i===0)});
  type('REAL CAPTURES. REAL PLACEMENTS.',LEFT,1370,35,GOLD,900,'left',718);
@@ -93,7 +93,7 @@ function drawSnapshot(seg,q){
 function drawGrowth(seg,q){
  title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','TOTAL GUILD XP ADDED BETWEEN CAPTURES');
  const items=seg.items,max=items[0].gain;
- items.forEach((g,i)=>{const y=542+i*166,reveal=ease((q*seg.dur-i*.19)/1.0);
+ items.forEach((g,i)=>{const y=542+i*166,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const reveal=ease((elapsed-i*1.03)/.82);
   rect(LEFT,y,714,140,'#28201a',10);
   type('0'+(i+1),LEFT+18,y+49,34,GOLD,950);
   type(g.name.toUpperCase(),LEFT+87,y+48,34,CREAM,800,'left',447);
@@ -105,7 +105,7 @@ function drawMovers(seg,q){
  const up=seg.type==='up';
  title('CAPTURE ONE → CAPTURE '+snapshots.length,up?'BIGGEST':'BIGGEST',up?'CLIMBERS':'FALLERS','RANK CHANGES · GUILDS IN BOTH CAPTURES');
  seg.items.slice(0,5).forEach((g,i)=>{
-  const y=520+i*165,progress=ease((q*seg.dur-i*.22)/.75);
+  const y=520+i*165,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const progress=ease((elapsed-i*1.03)/.82);
   rect(LEFT,y,714,143,'#27201b',12);
   rect(LEFT,y,8,143,up?GREEN:RED,3);
   type((g.change>0?'+':'')+g.change,LEFT+25,y+83,63,up?GREEN:RED,950);
@@ -116,8 +116,8 @@ function drawMovers(seg,q){
  });
 }
 function drawTop25(seg,q){
- const start=seg.page*8,end=Math.min(start+8,25),rows=latest.guilds.slice(start,end);
- title('CURRENT TOP 25 / SCAN '+(seg.page+1)+' OF 4','THE TOP 25','IN FOCUS','AS OF '+localTime(latest));
+ const start=[0,9,17][seg.page],end=[9,17,25][seg.page],rows=latest.guilds.slice(start,end);
+ title('CURRENT TOP 25 / SCAN '+(seg.page+1)+' OF 3','THE TOP 25','IN FOCUS','AS OF '+localTime(latest));
  rows.forEach((g,i)=>{
   const y=560+i*93,progress=ease((q*seg.dur-i*.05)/.45);
   rect(LEFT,y,714,76,i%2?'#281f19':'#33251a',6);
@@ -133,29 +133,29 @@ function drawPair(seg,q){
  title('LATEST TOP 25 · ADJACENT RANKS',tight?'CLOSEST':'BIGGEST',tight?'XP FIGHTS':'XP LEADS',word+'     '+(seg.index+1)+' / '+seg.total);
  const a=pair.a,b=pair.b,gap=pair.gap;
  [[a,0],[b,1]].forEach(([g,i])=>{
-  const y=545+i*255;
+  const y=545+i*255;if(q*seg.dur<i*.75)return;
   rect(LEFT,y,714,221,'#2a211c',12);rect(LEFT,y,8,221,i===0?GOLD:'#b49178',3);
   type('RANK '+g.rank,LEFT+24,y+50,29,GOLD,900);
   type(g.name.toUpperCase(),LEFT+24,y+103,41,CREAM,900,'left',665);
   type(fmt(g.experience)+' XP',LEFT+24,y+150,37,MUTED,800);
   bar(LEFT+24,y+180,664,15,(g.experience/a.experience)*ease((q*seg.dur-i*.12)/.85),i===0);
  });
- rect(LEFT,1097,714,188,'#5b3a21',14);
+ if(q*seg.dur>=1.35){rect(LEFT,1097,714,188,'#5b3a21',14);
  type('ADJACENT RANK GAP',LEFT+27,1150,28,'#f4d9b7',850);
  type(fmt(gap)+' XP',LEFT+27,1239,72,GOLD,950,'left',680);
- type(tight?'ONE SMALL GAIN COULD CHANGE THIS PAIR':'SEPARATION BETWEEN NEIGHBORING RANKS',LEFT,1368,25,CREAM,700,'left',700);
+ type(tight?'ONE SMALL GAIN COULD CHANGE THIS PAIR':'SEPARATION BETWEEN NEIGHBORING RANKS',LEFT,1368,25,CREAM,700,'left',700);}
 }
 function drawCove(seg,q){
  const name='The Pirate Cove';
  const trail=snapshots.map(s=>({s,g:s.guilds.find(g=>g.name===name)})).filter(x=>x.g);
  const initial=trail[0].g,final=trail[trail.length-1].g;
- title('FIVE CAPTURES · THE PIRATE COVE','COVE','WATCH','ONLY RECORDED RANKS AND GUILD XP');
+ title(snapshots.length+' CAPTURES · THE PIRATE COVE','COVE','WATCH','ONLY RECORDED RANKS AND GUILD XP');
  type('#'+initial.rank+'  →  #'+final.rank,LEFT,587,71,CREAM,950);
  type('+'+fmt(final.experience-initial.experience)+' XP',LEFT,659,52,GREEN,900);
  const max=Math.max(...trail.map(x=>x.g.experience))*1.04,ground=1190,span=458;
  trail.forEach((x,i)=>{
   const col=116,x0=LEFT+26+i*138;
-  const ht=Math.max(8,span*x.g.experience/max)*ease((q*seg.dur-i*.22)/1.2);
+  const elapsed=q*seg.dur;if(elapsed<i*1.15)return;const ht=Math.max(8,span*x.g.experience/max)*ease((elapsed-i*1.15)/.85);
   const y=ground-ht;
   rect(x0,ground-span,col,span,'#28211b',8);
   rect(x0,y,col,ht,i===trail.length-1?GOLD:'#a57f56',6);
@@ -235,7 +235,7 @@ function build(d){
  add({type:'growth',items:growth},6);
  add({type:'up',items:ups},6);
  add({type:'down',items:downs},6);
- for(let i=0;i<4;i++)add({type:'top25',page:i},1.9);
+ for(let i=0;i<3;i++)add({type:'top25',page:i},1.9);
  closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},3.2));
  widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},3.2));
  add({type:'cove'},7.2);
