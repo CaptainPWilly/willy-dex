@@ -52,7 +52,7 @@ async function run(){
      };
    });
    await page.goto('http://127.0.0.1:'+port+'/checkins/editions/'+id+'/index.html',{waitUntil:'load',timeout:30000});
-   try{await page.waitForFunction(()=>!document.querySelector('#play').disabled,{timeout:18000})}
+   try{await page.waitForFunction(()=>!document.querySelector('#play').disabled,null,{timeout:18000})}
    catch(err){
      const state=await page.evaluate(()=>({
        url:location.href,base:document.baseURI,
@@ -81,7 +81,7 @@ async function run(){
      recorder.start(1000);
    });
    await page.waitForFunction(()=>Number(document.querySelector('#seek').value)>=Number(document.querySelector('#seek').max)-.02,
-                              {timeout:Math.ceil(duration*1000)+35000,polling:250});
+                              null,{timeout:Math.ceil(duration*1000)+35000,polling:250});
    const download=page.waitForEvent('download',{timeout:30000});
    await page.evaluate(async()=>{
      const rec=window.__glbRecorder;
