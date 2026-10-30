@@ -1,6 +1,8 @@
 # GLB check-in publishing
 
-**One action:** update `glb.json` on the `main` branch (normally via the existing GLB editor). A GitHub Actions workflow then automatically publishes a new source-backed edition.
+**One action:** update `glb.json` on `main` (normally via the existing GLB editor). A GitHub Actions workflow automatically generates and publishes a new edition.
+
+**Unlisted share links:** `checkins/watch.html` (view only, no download button) and `checkins/download.html` (view and download). Both point to the latest generated edition, are not linked from the main Willy Dex site, and use noindex metadata. These are public, unlisted pages, **not access-controlled or download-proof**. For historical editions append `?share=watch` or `?share=download` to the archived `index.html` link.
 
 - **Archive:** [Video Archive](https://captainpwilly.github.io/willy-dex/checkins/index.html).
 - **Newest edition:** [Latest Check-In](https://captainpwilly.github.io/willy-dex/checkins/latest.html).
