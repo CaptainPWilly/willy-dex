@@ -56,6 +56,8 @@ jobs:
           set -euo pipefail
           npm install --no-save --no-package-lock playwright
           npx playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
           ffmpeg -version
       - name: Render real H.264 YouTube MP4
         if: env.GLB_RENDER_REQUIRED == 'true'
