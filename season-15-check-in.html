@@ -132,7 +132,7 @@ function drawRace(seg,q){
    return smooth((within-start)/Math.max(.1,groupDur));
  };
  const maxXp=Math.max(...snapshots.map(s=>s.guilds[0].experience));
- const yTop=541,spacing=82;
+ const yTop=545,spacing=82;
  title('50 GUILDS   /   '+snapshots.length+' VERIFIED CAPTURES','GLOBAL','TOP TEN','SEASON 15 · XP TRACKER · CAPTURE '+(idx+1)+' / '+snapshots.length);
  dateRibbon(previous,current,firstCapture?'baseline':'compare');
  // Background rank slots never move, only the guilds occupying them.
@@ -240,7 +240,7 @@ function drawGrowth(seg,q){
  title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','GUILD XP GAINED BETWEEN THESE EXACT CAPTURES');
  dateRibbon(first,latest);
  const items=seg.items,max=items[0].gain;
- items.forEach((g,i)=>{const y=542+i*166,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const reveal=ease((elapsed-i*1.03)/.82);
+ items.forEach((g,i)=>{const y=568+i*166,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const reveal=ease((elapsed-i*1.03)/.82);
   rect(LEFT,y,714,140,'#28201a',10);
   type('0'+(i+1),LEFT+18,y+49,34,GOLD,950);
   type(g.name.toUpperCase(),LEFT+87,y+48,34,CREAM,800,'left',447);
@@ -253,7 +253,7 @@ function drawMovers(seg,q){
  title('CAPTURE ONE → CAPTURE '+snapshots.length,up?'BIGGEST':'BIGGEST',up?'CLIMBERS':'FALLERS','RANK CHANGES BETWEEN THESE EXACT CAPTURES');
  dateRibbon(first,latest);
  seg.items.slice(0,5).forEach((g,i)=>{
-  const y=520+i*165,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const progress=ease((elapsed-i*1.03)/.82);
+  const y=568+i*165,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const progress=ease((elapsed-i*1.03)/.82);
   rect(LEFT,y,714,143,'#27201b',12);
   rect(LEFT,y,8,143,up?GREEN:RED,3);
   type((g.change>0?'+':'')+g.change,LEFT+25,y+83,63,up?GREEN:RED,950);
@@ -268,7 +268,7 @@ function drawTop25(seg,q){
  title('CURRENT TOP 25 / SCAN '+(seg.page+1)+' OF 3','THE TOP 25','IN FOCUS','LATEST RECORDED STANDINGS');
  dateRibbon(latest,latest,'single');
  rows.forEach((g,i)=>{
-  const y=560+i*93,progress=ease((q*seg.dur-i*.05)/.45);
+  const y=568+i*93,progress=ease((q*seg.dur-i*.05)/.45);
   rect(LEFT,y,714,76,i%2?'#281f19':'#33251a',6);
   rect(LEFT,y,progress*5,76,GOLD,1);
   type(String(g.rank).padStart(2,'0'),LEFT+17,y+48,36,GOLD,950);
@@ -283,7 +283,7 @@ function drawPair(seg,q){
  dateRibbon(latest,latest,'single');
  const a=pair.a,b=pair.b,gap=pair.gap;
  [[a,0],[b,1]].forEach(([g,i])=>{
-  const y=545+i*255;if(q*seg.dur<i*.75)return;
+  const y=568+i*255;if(q*seg.dur<i*.75)return;
   rect(LEFT,y,714,221,'#2a211c',12);rect(LEFT,y,8,221,i===0?GOLD:'#b49178',3);
   type('RANK '+g.rank,LEFT+24,y+50,29,GOLD,900);
   type(g.name.toUpperCase(),LEFT+24,y+103,41,CREAM,900,'left',665);
