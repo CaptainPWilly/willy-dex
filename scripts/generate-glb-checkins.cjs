@@ -59,6 +59,6 @@ manifest.editions.sort((a,b)=>(b.capturedAt||b.date||'').localeCompare(a.capture
 manifest.latest=manifest.editions[0]?.id||null;
 write(manifestPath,JSON.stringify(manifest,null,2)+'\n');
 const newest=manifest.editions[0];
-write('checkins/latest.html','<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url='+encodeURI(newest.page)+'"><title>Latest GLB Check-In</title></head><body><a href="'+encodeURI(newest.page)+'">Open latest check-in</a></body></html>\n');
+write('checkins/latest.html','<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=player.html"><title>Latest GLB Video</title></head><body><a href="player.html">Watch and download latest GLB video</a></body></html>\n');
 write('.glb-last-edition',id+'\n');
 console.log(JSON.stringify({id,created:!existing,editions:manifest.editions.length,snapshots:glb.snapshots.length}));
