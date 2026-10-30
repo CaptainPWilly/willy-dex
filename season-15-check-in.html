@@ -70,26 +70,104 @@ function title(kicker,one,two,detail){type(kicker,LEFT,255,25,GOLD,900);type(one
 function badge(s,y,color=GOLD){rect(LEFT,y,6,38,color,2);type(s,LEFT+25,y+28,28,color,900)}
 function captureTag(s,idx,total){return 'CAPTURE '+(idx+1)+' / '+total+'     '+localTime(s)}
 function bar(x,y,w,h,p,active){rect(x,y,w,h,'#45352a',6);rect(x,y,w*clip(p,0,1),h,active?GOLD:'#9d7751',6)}
-function drawHook(q){
- title(snapshots.length+' RECORDED CAPTURES  /  50 GUILDS','SEASON 15','THE BOARD MOVES','27–29 OCT 2026 · GLOBAL XP');
- const top=latest.guilds.slice(0,3);
- top.forEach((g,i)=>{const y=560+i*185,st=ease((q*2.2-i*.23)/.8);rect(LEFT,y,714,150,'#241b17',12);rect(LEFT,y,6,150,i===0?GOLD:'#967554');type('#'+g.rank,LEFT+23,y+66,51,GOLD,950);type(g.name.toUpperCase(),LEFT+152,y+62,37,CREAM,850,'left',520);type(fmt(g.experience)+' XP',LEFT+152,y+116,35,MUTED,800);bar(LEFT+24,y+133,663,8,st*(g.experience/top[0].experience),i===0)});
- type('REAL CAPTURES. REAL PLACEMENTS.',LEFT,1370,35,GOLD,900,'left',718);
+function drawRace(seg,q){
+ // One permanent leaderboard layout for every recorded capture. No scene cuts.
+ const step=seg.step,elapsed=q*seg.dur;
+ const idx=Math.min(snapshots.length-1,Math.floor(elapsed/step));
+ const within=elapsed-idx*step;
+ const previous=snapshots[Math.max(0,idx-1)],current=snapshots[idx];
+ const previousByName=new Map(previous.guilds.map(g=>[g.name,g]));
+ const currentByName=new Map(current.guilds.map(g=>[g.name,g]));
+ const firstCapture=idx===0;
+ const transition=firstCapture?1:ease((within-.18)/1.20);
+ const maxXp=Math.max(...snapshots.map(s=>s.guilds[0].experience));
+ const yTop=541,spacing=82;
+ title('50 GUILDS   /   '+snapshots.length+' VERIFIED CAPTURES','GLOBAL','TOP TEN','SEASON 15 · GUILD XP TRACKER');
+ type('CAPTURE '+(idx+1)+' / '+snapshots.length,LEFT,509,28,GOLD,900);
+ type(localTime(current),RIGHT,509,23,GREEN,800,'right',462);
+ // Background rank slots never move, only the guilds occupying them.
+ for(let i=0;i<10;i++){
+   const y=yTop+i*spacing;
+   rect(LEFT,y,714,76,i%2?'#281f1a':'#30241b',7);
+   rect(LEFT+3,y+5,53,65,'#3d2d20',5);
+   type(String(i+1).padStart(2,'0'),LEFT+11,y+43,31,GOLD,900);
+ }
+ const names=new Set([...previous.guilds.slice(0,10).map(g=>g.name),...current.guilds.slice(0,10).map(g=>g.name)]);
+ const group=[...names].map(name=>{
+   const old=previousByName.get(name)||null,now=currentByName.get(name)||null;
+   const oldRank=old?old.rank:11,newRank=now?now.rank:11;
+   const shifting=!firstCapture&&oldRank!==newRank;
+   return {name,old,now,oldRank,newRank,shifting};
+ }).filter(g=>g.oldRank<=10||g.newRank<=10);
+ // Stable rows first. Active rank swaps travel in separate left/right lanes.
+ group.sort((a,b)=>Number(a.shifting)-Number(b.shifting)||a.newRank-b.newRank);
+ ctx.save();ctx.beginPath();ctx.rect(LEFT,yTop-3,714,spacing*10+8);ctx.clip();
+ for(const g of group){
+   const from=g.oldRank-1,to=g.newRank-1;
+   const motion=firstCapture?1:transition;
+   const y=yTop+(from+(to-from)*motion)*spacing;
+   if(y<yTop-90||y>yTop+spacing*10+40)continue;
+   const before=g.old||g.now,after=g.now||g.old;
+   const beforeXp=before.experience,afterXp=after.experience;
+   // Bars are a visual transition only; displayed XP numbers use exact captured endpoints.
+   const pct=(beforeXp+(afterXp-beforeXp)*motion)/maxXp;
+   const selectedXp=firstCapture?afterXp:(motion<.50?beforeXp:afterXp);
+   const active=g.newRank===1||g.oldRank===1;
+   const crossing=g.shifting&&transition>.035&&transition<.965;
+   if(crossing){
+     // Split-lane flight prevents guilds in a rank swap from covering each other.
+     const leftLane=g.newRank<g.oldRank;
+     const x=leftLane?LEFT+5:LEFT+370;
+     const w=338;
+     const lift=Math.sin(Math.PI*motion)*7;
+     rect(x,y-lift,w,77,'#52391f',9);
+     rect(x,y-lift,5,77,leftLane?GREEN:RED,3);
+     type(g.name.toUpperCase(),x+13,y+24-lift,26,CREAM,850,'left',308);
+     type('#'+g.oldRank+' → #'+g.newRank,x+13,y+49-lift,22,GOLD,900);
+     type(short(selectedXp)+' XP',x+w-10,y+49-lift,22,CREAM,800,'right');
+     bar(x+13,y+60-lift,w-27,9,pct,active);
+   }else if((firstCapture&&g.newRank<=10)||(!firstCapture&&((motion<.965&&g.oldRank<=10)||(motion>=.965&&g.newRank<=10)))){
+     const x=LEFT+69;
+     if(!firstCapture&&Math.abs(afterXp-beforeXp)>0&&motion>.02&&motion<.98){
+       rect(x-5,y+1,638,73,'#58412740',7);
+     }
+     type(g.name.toUpperCase(),x,y+28,27,CREAM,780,'left',440);
+     const valX=RIGHT-9;
+     // Exact before and after values slide like an odometer; no invented intermediate totals.
+     const flip=firstCapture?1:clip((transition-.28)/.44,0,1);
+     if(beforeXp===afterXp||firstCapture||flip===0||flip===1){
+       type(fmt(flip===1?afterXp:beforeXp),valX,y+28,25,CREAM,850,'right',200);
+     }else{
+       ctx.save();ctx.beginPath();ctx.rect(RIGHT-218,y+3,218,37);ctx.clip();
+       type(fmt(beforeXp),valX,y+28-37*flip,25,CREAM,850,'right',200);
+       type(fmt(afterXp),valX,y+65-37*flip,25,GREEN,850,'right',200);
+       ctx.restore();
+     }
+     rect(x,y+43,627,13,'#493729',6);
+     if(firstCapture){
+       // First capture is revealed, not reset between subsequent captures.
+       const reveal=ease((within-.03-(g.newRank-1)*.085)/.75);
+       rect(x,y+43,627*(afterXp/maxXp)*reveal,13,active?GOLD:'#a3805e',6);
+     }else{
+       rect(x,y+43,627*pct,13,active?GOLD:'#a3805e',6);
+       if(afterXp>beforeXp&&motion>.05&&motion<.96){
+         const pulseX=x+627*pct;
+         rect(pulseX-5,y+41,10,17,GREEN,4);
+       }
+     }
+   }
+ }
+ ctx.restore();
+ const updating=!firstCapture&&transition<.965;
+ type(updating?'CHANGING BETWEEN TWO VERIFIED CAPTURES':'CAPTURE VERIFIED · ALL NUMBERS REPORTED',
+      LEFT,1419,24,updating?GOLD:MUTED,760,'left',705);
+ type('LEADER  '+fmt(current.guilds[0].experience)+' XP  ·  '+current.guilds[0].name.toUpperCase(),
+      LEFT,1367,26,GOLD,870,'left',707);
+ // Quiet elapsed indicator, not a shot counter.
+ rect(LEFT,1445,714,4,'#3c2c1e',2);
+ rect(LEFT,1445,714*((idx+clip(within/step,0,1))/snapshots.length),4,GOLD,2);
 }
-function drawSnapshot(seg,q){
- const s=seg.snapshot,idx=seg.i,top=s.guilds.slice(0,10),max=top[0].experience;
- title('THE RACE   /   '+(idx+1)+' OF '+snapshots.length,'TOP TEN','XP TRACKER','HARD-CUT SNAPSHOTS · NEVER SIMULATED');
- type(localTime(s),LEFT,513,26,GREEN,750,'left',710);
- top.forEach((g,i)=>{
-  const y=540+i*83,lit=(Math.floor(q*seg.dur*3)%10===i),grow=ease((q*seg.dur-.14-i*.045)/.72);
-  if(lit)rect(LEFT-9,y-6,727,80,'#69472b35',7);
-  type(String(g.rank).padStart(2,'0'),LEFT,y+28,32,lit?GOLD:'#ae946f',900);
-  type(g.name.toUpperCase(),LEFT+65,y+27,30,CREAM,750,'left',424);
-  type(short(g.experience),RIGHT,y+27,29,lit?GOLD:CREAM,850,'right');
-  bar(LEFT+66,y+40,628,13,(g.experience/max)*grow,i===0);
- });
- type('EXP '+fmt(top[0].experience)+'  /  LEADER: '+top[0].name.toUpperCase(),LEFT,1434,23,GOLD,850,'left',716);
-}
+
 function drawGrowth(seg,q){
  title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','TOTAL GUILD XP ADDED BETWEEN CAPTURES');
  const items=seg.items,max=items[0].gain;
@@ -190,8 +268,7 @@ function paint(){
  for(const s of segments){if(t>=s.start&&t<s.end){seg=s;break}}
  const q=clip((t-seg.start)/seg.dur,0,1);
  switch(seg.type){
-  case 'hook':drawHook(q);break;
-  case 'snapshot':drawSnapshot(seg,q);break;
+  case 'race':drawRace(seg,q);break;
   case 'growth':drawGrowth(seg,q);break;
   case 'up':case 'down':drawMovers(seg,q);break;
   case 'top25':drawTop25(seg,q);break;
@@ -199,10 +276,6 @@ function paint(){
   case 'cove':drawCove(seg,q);break;
   case 'end':drawEnd(q);break;
  }
- rect(LEFT,1550,714,36,'#2f2018',4);
- const n=segments.indexOf(seg)+1;
- rect(LEFT,1550,714*clip((t-seg.start)/seg.dur,0,1),36,'#765033',4);
- type('SHOT '+String(n).padStart(2,'0')+' / '+String(segments.length).padStart(2,'0'),LEFT+19,1577,23,CREAM,900);
  if(showZones)drawSafe();
 }
 function validate(d){
@@ -230,8 +303,7 @@ function build(d){
  const widest=gaps.slice().sort((a,b)=>b.gap-a.gap).slice(0,4);
  segments=[];duration=0;
  function add(s,dur){s.dur=dur;s.start=duration;duration+=dur;s.end=duration;segments.push(s)}
- add({type:'hook'},2.2);
- snapshots.forEach((s,i)=>add({type:'snapshot',snapshot:s,i},3.8));
+ add({type:'race',step:3.2},snapshots.length*3.2);
  add({type:'growth',items:growth},6);
  add({type:'up',items:ups},6);
  add({type:'down',items:downs},6);
@@ -242,7 +314,7 @@ function build(d){
  add({type:'end'},1.6);
  ready=true;t=0;
  seek.disabled=false;play.disabled=false;seek.max=duration.toFixed(2);
- status.textContent='Loaded '+snapshots.length+' exact capture times · '+segments.length+' continuously directed shots · '+Math.ceil(duration)+' seconds · source-backed XP only';
+ status.textContent='Loaded '+snapshots.length+' verified captures · uninterrupted Top 10 · '+Math.ceil(duration)+' seconds · no interpolated XP figures';
  updateUI();paint();
 }
 function updateUI(){
