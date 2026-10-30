@@ -22,7 +22,13 @@ h1 em{font-size:11px;font-weight:600;letter-spacing:.06em;color:#c9ab80;font-sty
 .meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;color:#b7a08c;font-size:11px;padding-top:10px}
 .meta a{color:#e9b47b}
 #status{text-align:center;font-size:11px;color:#ab9580;padding:10px}
-a.video-export{display:block;max-width:500px;margin:14px auto;padding:14px 18px;text-align:center;border-radius:9px;text-decoration:none;background:#e9b77a;color:#1c120d;font-weight:900;font-size:15px}a.video-export:hover{background:#f4d2a0}a.video-export[hidden]{display:none!important}.archive-nav{display:block;text-align:center;color:#e9b77a;font-size:12px;font-weight:750;margin:10px}</style>
+a.video-export{display:block;max-width:500px;margin:14px auto;padding:14px 18px;text-align:center;border-radius:9px;text-decoration:none;background:#e9b77a;color:#1c120d;font-weight:900;font-size:15px}a.video-export:hover{background:#f4d2a0}a.video-export[hidden]{display:none!important}.archive-nav{display:block;text-align:center;color:#e9b77a;font-size:12px;font-weight:750;margin:10px}
+/* Unlisted public links: view-only hides download UI; this is not DRM. */
+body.share-mode .archive-nav,body.share-mode .meta,body.share-mode #zones,body.share-mode #status{display:none!important}
+body.share-watch .video-export,body.share-watch .export-video,body.share-watch #video-export{display:none!important}
+body.share-mode main{padding-top:17px}
+body.share-mode #screen{margin-bottom:12px}
+</style>
 </head>
 <body><main>
 <h1>WILLY / DEX <em>SEASON 15 / DIRECTOR CUT</em></h1>
@@ -36,6 +42,12 @@ a.video-export{display:block;max-width:500px;margin:14px auto;padding:14px 18px;
 <script>
 (function(){
 'use strict';
+const shareMode=new URLSearchParams(location.search).get('share');
+if(shareMode==='watch'||shareMode==='download'){
+ document.body.classList.add('share-mode');
+ if(shareMode==='watch')document.body.classList.add('share-watch');
+ const robots=document.createElement('meta');robots.name='robots';robots.content='noindex,nofollow,noarchive';document.head.appendChild(robots);
+}
 const cvs=document.getElementById('film'),ctx=cvs.getContext('2d');
 const play=document.getElementById('play'),seek=document.getElementById('seek'),time=document.getElementById('time'),overlay=document.getElementById('overlay');
 const zonesBtn=document.getElementById('zones'),soundBtn=document.getElementById('sound'),status=document.getElementById('status');
