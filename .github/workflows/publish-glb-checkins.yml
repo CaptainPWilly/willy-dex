@@ -1,0 +1,89 @@
+name: Publish GLB video check-ins
+on:
+  push:
+    branches: [main]
+    paths: [glb.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: glb-video-archive
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pin this GLB event and generate an immutable edition
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            git show "$GITHUB_SHA:glb.json" > "$RUNNER_TEMP/trigger-glb.json"
+          fi
+          git fetch origin main
+          git checkout -B glb-publishing origin/main
+          if [ "$GITHUB_EVENT_NAME" != "push" ]; then
+            cp glb.json "$RUNNER_TEMP/trigger-glb.json"
+          fi
+          node scripts/generate-glb-checkins.cjs "$RUNNER_TEMP/trigger-glb.json"
+          id="$(cat .glb-last-edition)"
+          printf 'GLB_EDITION_ID=%s\n' "$id" >> "$GITHUB_ENV"
+          echo "Edition: $id" >> "$GITHUB_STEP_SUMMARY"
+      - name: Check for existing permanent MP4
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "$GLB_EDITION_ID" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'GLB_RENDER_REQUIRED=false' >> "$GITHUB_ENV"
+          else
+            echo 'GLB_RENDER_REQUIRED=true' >> "$GITHUB_ENV"
+          fi
+      - name: Install Chromium video recorder
+        if: env.GLB_RENDER_REQUIRED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+          ffmpeg -version
+      - name: Render real H.264 YouTube MP4
+        if: env.GLB_RENDER_REQUIRED == 'true'
+        shell: bash
+        run: node scripts/render-glb-checkin.cjs "$GLB_EDITION_ID"
+      - name: Upload permanent MP4 release
+        if: env.GLB_RENDER_REQUIRED == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          season="$(node -p "require('./checkins/manifest.json').editions.find(x=>x.id===process.env.GLB_EDITION_ID).season")"
+          gh release create "$GLB_EDITION_ID" "checkins/output/$GLB_EDITION_ID.mp4" \
+            --repo "$GITHUB_REPOSITORY" --target main \
+            --title "Willy Dex Season $season GLB Check-In — $GLB_EDITION_ID" \
+            --notes "Automated Season check-in based only on recorded GLB snapshots. See Willy Dex checkins for exact archived data."
+          echo "Download: https://github.com/$GITHUB_REPOSITORY/releases/download/$GLB_EDITION_ID/$GLB_EDITION_ID.mp4" >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit the immutable edition and catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "willy-dex-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add checkins/editions checkins/manifest.json checkins/latest.html
+          if git diff --cached --quiet; then
+            echo "Edition already cataloged."
+          else
+            git commit -m "Archive GLB video check-in $GLB_EDITION_ID"
+            git push origin HEAD:main
+          fi
