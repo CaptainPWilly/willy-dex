@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GLB Video Archive — Willy Dex</title><meta name="theme-color" content="#100d0b">
+<style>
+:root{color-scheme:dark;--bg:#100d0b;--card:#241a13;--edge:#775739;--gold:#ebbd82;--muted:#bba78e;--text:#f4e3c8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse 75% 40% at 50% 0,#342417,var(--bg) 70%);font:15px/1.5 system-ui,sans-serif;color:var(--text)}
+nav{display:flex;align-items:center;gap:15px;flex-wrap:wrap;max-width:1070px;padding:14px 18px;border-bottom:1px solid #55412e;margin:0 auto}nav strong{letter-spacing:.15em;margin-right:auto}nav a{color:var(--gold);font-weight:800;font-size:12px;text-decoration:none}
+main{max-width:1070px;margin:auto;padding:25px 18px 85px}
+h1{font:800 clamp(30px,5vw,49px)/1.08 Georgia,serif;margin:10px 0 14px}h2{font:800 24px/1.2 Georgia,serif}
+.overline{color:var(--gold);letter-spacing:.16em;font-size:11px;font-weight:900}
+p{color:var(--muted);max-width:780px;margin:13px 0}
+.hero{border:1px solid var(--edge);border-radius:14px;background:linear-gradient(140deg,#36271a,#1e1712);padding:25px;margin:24px 0}
+.hero h2{font-size:30px;margin:9px 0}.hero .facts{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#d6bf9e}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 0}
+a.action{display:inline-block;background:#302319;border:1px solid #92704d;color:var(--text);padding:12px 16px;border-radius:8px;text-decoration:none;font-weight:850}
+a.primary{background:var(--gold);border-color:var(--gold);color:#20140d}
+.tool{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:27px 0 15px}
+.tool input,.tool select{background:#241a13;border:1px solid var(--edge);border-radius:7px;color:var(--text);font:inherit;padding:10px;max-width:100%;min-height:41px}
+#list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px}
+.episode{padding:17px;border:1px solid #655039;background:var(--card);border-radius:11px}
+.episode h3{margin:8px 0 6px;font-size:20px}.episode .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.episode .facts{font-size:12px;color:var(--muted);margin:10px 0}.episode .actions{margin:12px 0 0}.episode a.action{font-size:12px;padding:9px 12px}
+.badge{font-size:10px;font-weight:850;border:1px solid #896a45;border-radius:4px;padding:4px 7px;color:var(--gold)}
+#message{padding:12px;color:var(--muted)}code{font-size:11px;word-break:break-word;color:#baa388}
+.note{padding:14px;border-left:3px solid var(--gold);background:#221911;margin-top:25px}
+</style></head><body>
+<nav><strong>WILLY / DEX</strong><a href="../index.html">CARDS</a><a href="../glb.html">GLB</a><a href="latest.html">LATEST VIDEO</a></nav>
+<main>
+<div class="overline">WILLY CORP / GLB INTELLIGENCE / VIDEO ARCHIVE</div>
+<h1>Season check-ins, archived automatically.</h1>
+<p>Every saved GLB update has its own historical edition, exact source snapshot, and downloadable YouTube-ready MP4. No rewriting old rankings when the leaderboard changes.</p>
+<section class="hero" id="featured" aria-live="polite"><div class="overline">LATEST ARCHIVED EDITION</div><h2>Checking the archive...</h2><p>Loading the recorded GLB catalog.</p></section>
+<div class="tool"><div><h2>Previous editions</h2><span id="count"></span></div><div><input id="search" type="search" placeholder="Search season, date or leader" aria-label="Search archived videos"><select id="season" aria-label="Choose season"><option value="">All seasons</option></select></div></div>
+<div id="list"></div><div id="message" role="status"></div>
+<div class="note"><strong>How it works</strong><p>A GitHub Actions publisher creates an immutable edition whenever the repository's GLB snapshot file changes. Its MP4 is kept as a GitHub Release asset so it doesn't inflate the Willy Dex website or overwrite earlier videos. Videos aren't uploaded to YouTube automatically.</p></div>
+</main>
+<script>
+(async()=>{
+ const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+ const date=s=>{if(!s)return'Unspecified capture';const d=new Date(s);return Number.isFinite(d.valueOf())?d.toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})+' PT':s};
+ const number=n=>Number(n||0).toLocaleString('en-US');
+ const video=e=>e.video||'';
+ const card=(e,featured=false)=>{
+ const text='<span class="overline">SEASON '+esc(e.season)+' · '+esc(e.snapshots)+' CAPTURES</span>'+
+ '<h3>'+esc(date(e.capturedAt||e.date))+'</h3>'+
+ '<div class="facts">#1 '+esc(e.leader)+' · '+number(e.leaderXp)+' XP'+(e.cove?' · COVE #'+esc(e.cove.rank):'')+'</div>'+
+ '<div class="actions"><a class="action primary" href="'+encodeURI(e.page)+'">▶ WATCH</a>'+
+ (video(e)?'<a class="action" href="'+esc(video(e))+'">↓ DOWNLOAD MP4</a>':'')+
+ '<a class="action" href="'+encodeURI(e.data)+'">SOURCE DATA</a></div>';
+ return featured?'<div class="overline">LATEST ARCHIVED EDITION</div>'+text:'<article class="episode">'+text+'</article>';
+ };
+ try{
+ const res=await fetch('manifest.json',{cache:'no-store'});
+ if(!res.ok)throw Error('Catalog not published yet (HTTP '+res.status+')');
+ const m=await res.json(),editions=Array.isArray(m.editions)?m.editions:[];
+ if(!editions.length){$('featured').innerHTML='<h2>No recorded editions yet</h2><p>Videos appear here automatically when the first GLB publication finishes.</p>';return}
+ const newest=editions.find(e=>e.id===m.latest)||editions[0];
+ $('featured').innerHTML=card(newest,true);
+ const seasons=[...new Set(editions.map(e=>e.season))].sort((a,b)=>b-a);
+ for(const season of seasons){const option=document.createElement('option');option.value=season;option.textContent='Season '+season;$('season').appendChild(option)}
+ const draw=()=>{
+  const term=$('search').value.toLowerCase().trim(),s=$('season').value;
+  const visible=editions.filter(e=>(!s||String(e.season)===s)&&(!term||[e.season,e.leader,e.id,e.date,date(e.capturedAt)].some(v=>String(v||'').toLowerCase().includes(term))));
+  $('list').innerHTML=visible.map(e=>card(e)).join('');
+  $('count').textContent=visible.length+' of '+editions.length+' recorded editions';
+  $('message').textContent=visible.length?'':'Nothing matches those filters.';
+ };
+ $('search').addEventListener('input',draw);$('season').addEventListener('change',draw);draw();
+ }catch(e){$('featured').innerHTML='<h2>Archive unavailable</h2><p>'+esc(e.message)+'</p>';$('message').textContent='Please check back after the publishing workflow runs.'}
+})();
+</script></body></html>
