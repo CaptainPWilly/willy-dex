@@ -87,5 +87,17 @@ jobs:
             echo "Edition already cataloged."
           else
             git commit -m "Archive GLB video check-in $GLB_EDITION_ID"
-            git push origin HEAD:main
+            # The renderer takes longer than an ordinary GitHub commit.
+            # Rebase over any concurrent changes before publishing the catalog.
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                break
+              fi
+              if [ "$attempt" = 3 ]; then
+                echo "Could not publish the catalog after three attempts" >&2
+                exit 1
+              fi
+            done
           fi
