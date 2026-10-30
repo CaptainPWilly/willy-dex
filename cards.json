@@ -3746,13 +3746,40 @@
   },
   {
     "number": "077",
-    "name": "???",
-    "type": "???",
-    "level": null,
-    "date": "???",
+    "name": "SAWTOOTH",
+    "type": "[ARG] Recruit",
     "image": null,
+    "card_id": "willy-dex-077",
+    "level": 218374,
+    "date": "28 October 2026",
     "portrait": null,
-    "description": "???"
+    "description": "???",
+    "front_text": "???",
+    "back_text": "???",
+    "guild": "ARG",
+    "smmo_joined": "???",
+    "tags": [
+      "Recruit"
+    ],
+    "roles": [
+      "Recruit"
+    ],
+    "level_snapshots": [
+      {
+        "date": "2026-10-28",
+        "level": 218374
+      }
+    ],
+    "guild_join_history": [
+      {
+        "date": "2026-10-28",
+        "reportedAge": null,
+        "reportedOn": "2026-10-28",
+        "precision": "day-confirmed",
+        "left": null,
+        "source": "User-supplied SMMO guild recruitment announcement on 2026-10-28"
+      }
+    ]
   },
   {
     "number": "078",
