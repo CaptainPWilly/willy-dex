@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<title>Willy Dex GLB — Watch</title>
+<style>
+html{color-scheme:dark}body{background:#140f0c;color:#f3debf;font:16px/1.6 system-ui,sans-serif;min-height:80vh;display:grid;place-content:center;text-align:center;margin:0;padding:24px}
+main{max-width:360px}h1{font-size:22px}a{color:#ebba7c}small{color:#bda48b}
+</style></head><body><main><h1>Willy Dex · GLB Check-In</h1><p id="status">Opening the latest archived edition…</p><small>Watch-only sharing link</small></main>
+<script>
+(async()=>{
+ try{
+ const r=await fetch('manifest.json',{cache:'no-store'});
+ if(!r.ok)throw Error('No archived edition has been published yet.');
+ const d=await r.json(),item=d.editions?.find(x=>x.id===d.latest);
+ if(!item||!/^[a-z0-9-]+$/i.test(item.id))throw Error('No archived edition is available.');
+ const url='editions/'+encodeURIComponent(item.id)+'/index.html?share=watch';
+ location.replace(url);
+ }catch(e){
+ document.getElementById('status').textContent=e.message;
+ const a=document.createElement('a');a.href='../season-15-check-in.html?share=watch';a.textContent='Watch current Season 15 check-in';document.getElementById('status').after(a);
+ }
+})();
+</script></body></html>
