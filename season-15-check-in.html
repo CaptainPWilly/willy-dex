@@ -29,7 +29,8 @@ a.video-export{display:block;max-width:500px;margin:14px auto;padding:14px 18px;
 <div id="screen"><canvas id="film" width="1080" height="1920" aria-label="Animated Season 15 global leaderboard analysis"></canvas>
 <button id="overlay"><b>▶ PLAY SEASON 15</b><small>All recorded snapshots · Directed cut</small></button></div>
 <div class="controls"><button id="play" disabled aria-label="Play video">▶</button><input id="seek" aria-label="Scrub video" type="range" min="0" max="82" step=".05" value="0" disabled><span id="time">0:00</span><button id="sound" title="Toggle original soundtrack">♫ ON</button><button id="zones" title="Show Shorts cover regions">SAFE</button></div>
-<a href="checkins/index.html" class="archive-nav">BROWSE ALL ARCHIVED VIDEOS</a><a id="video-export" class="video-export" href="#" hidden>↓ DOWNLOAD LATEST MP4</a>\n<div class="meta"><span>9:16 Shorts framing</span><span>•</span><span>Recorded ranks only</span><span>•</span><a href="glb.json">Source: Willy Dex GLB</a></div>
+<a href="checkins/index.html" class="archive-nav">BROWSE ALL ARCHIVED VIDEOS</a><a id="video-export" class="video-export" href="#" hidden>↓ DOWNLOAD LATEST MP4</a>
+<div class="meta"><span>9:16 Shorts framing</span><span>•</span><span>Recorded ranks only</span><span>•</span><a href="glb.json">Source: Willy Dex GLB</a></div>
 <div id="status">Loading verified leaderboard snapshots...</div>
 </main>
 <script>
@@ -434,7 +435,7 @@ seek.addEventListener('input',()=>{if(!ready)return;t=+seek.value;if(playing)ori
 soundBtn.addEventListener('click',()=>{mute=!mute;soundBtn.textContent=mute?'♫ OFF':'♫ ON';if(master)master.gain.value=mute?0:.18});
 zonesBtn.addEventListener('click',()=>{showZones=!showZones;zonesBtn.textContent=showZones?'HIDE':'SAFE';paint()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)toggle()});
-fetch('checkins/manifest.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(m=>{
+if(!document.querySelector('meta[name="willy-dex-edition"]'))fetch('checkins/manifest.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(m=>{
   const latest=m&&m.editions&&m.editions.find(e=>e.id===m.latest);
   const button=document.getElementById('video-export');
   if(latest&&latest.video){button.href=latest.video;button.hidden=false}
