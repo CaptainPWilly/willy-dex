@@ -41,7 +41,7 @@ const meta={
 if(!existing){
  write(folder+'/data.json',JSON.stringify(glb,null,2)+'\n');
  let html=read('season-15-check-in.html');
- html=html.replace('<head>','<head>\n<base href="../../../">\n<meta name="willy-dex-edition" content="'+id+'">');
+ html=html.replace('<head>','<head>\n<base href="../../../">\n<meta name="robots" content="noindex,nofollow,noarchive">\n<meta name="willy-dex-edition" content="'+id+'">');
  html=html.replace(/Season 15/g,'Season '+glb.season).replace(/SEASON 15/g,'SEASON '+glb.season);
  html=html.replace(/d\.season!==15/g,'d.season!=='+glb.season);
  html=html.replace(/fetch\('glb\.json',\{cache:'no-store'\}\)/g,"fetch('"+folder+"/data.json',{cache:'no-store'})");
