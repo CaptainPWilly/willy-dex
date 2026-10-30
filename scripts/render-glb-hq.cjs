@@ -168,9 +168,11 @@ async function run(){
   },{duration:frames/fps});
   console.log('Audio '+JSON.stringify(audioInfo));
   checkFile(wav);
-  const cmd=['-hide_banner','-loglevel','warning','-y','-r',String(fps),'-f','h264','-i',h264,
-    '-i',wav,'-c:v','copy','-c:a','aac','-b:a','192k','-ar','48000','-pix_fmt','yuv420p',
-    '-movflags','+faststart','-shortest',mp4];
+  const cmd=['-hide_banner','-loglevel','warning','-y','-fflags','+genpts',
+    '-r',String(fps),'-f','h264','-i',h264,
+    '-i',wav,'-map','0:v:0','-map','1:a:0',
+    '-c:v','copy','-c:a','aac','-b:a','192k','-ar','48000',
+    '-t',(frames/fps).toFixed(6),'-movflags','+faststart',mp4];
   const ff=spawnSync('ffmpeg',cmd,{timeout:300000,stdio:'inherit'});
   if(ff.status!==0)throw Error('Mux failed with exit '+ff.status);
   const probe=spawnSync('ffprobe',['-v','error','-count_frames','-show_entries','stream=codec_name,width,height,avg_frame_rate,nb_read_frames','-of','json',mp4],{encoding:'utf8'});
@@ -179,7 +181,7 @@ async function run(){
   const v=streams.find(s=>s.codec_name==='h264');
   const a=streams.find(s=>s.codec_name==='aac');
   if(!v||!a||v.width!==1080||v.height!==1920||v.avg_frame_rate!=='60/1'||Number(v.nb_read_frames)<frames-1)
-    throw Error('QUALITY CONTROL FAILED '+JSON.stringify({v,a,frames}));
+    throw Error('QUALITY CONTROL FAILED '+JSON.stringify({v,a,frames,streams}));
   console.log('PASS H264/AAC, 1080x1920, 60fps, '+v.nb_read_frames+' source-accurate frames, '+(checkFile(mp4)/1048576).toFixed(1)+' MiB');
  }finally{
   if(browser)await browser.close().catch(()=>{});
