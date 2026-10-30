@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "latest": "s15-2026-10-29T14-00-00-07-00-61d7f08a977f",
+  "editions": [
+    {
+      "id": "s15-2026-10-29T14-00-00-07-00-61d7f08a977f",
+      "season": 15,
+      "firstCapturedAt": "2026-10-27T17:18:00-07:00",
+      "capturedAt": "2026-10-29T14:00:00-07:00",
+      "firstDate": "2026-10-27",
+      "date": "2026-10-29",
+      "snapshots": 5,
+      "guilds": 50,
+      "leader": "Umbral",
+      "leaderXp": 7860530,
+      "cove": {
+        "rank": 23,
+        "experience": 583351
+      },
+      "contentHash": "61d7f08a977f57c2520e46040442a1d65a2ed92c705795f354c39e64b6b087e1",
+      "sourceCommit": "7686f3cd3d6be2715fdcac844d5083f91bcd2833",
+      "generatedAt": "2026-10-30T01:27:53.315Z",
+      "page": "editions/s15-2026-10-29T14-00-00-07-00-61d7f08a977f/index.html",
+      "data": "editions/s15-2026-10-29T14-00-00-07-00-61d7f08a977f/data.json",
+      "video": "https://github.com/CaptainPWilly/willy-dex/releases/download/s15-2026-10-29T14-00-00-07-00-61d7f08a977f/s15-2026-10-29T14-00-00-07-00-61d7f08a977f.mp4"
+    }
+  ]
+}
