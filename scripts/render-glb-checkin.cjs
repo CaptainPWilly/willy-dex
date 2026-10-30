@@ -33,6 +33,9 @@ async function run(){
    browser=await chromium.launch({headless:true,args:['--autoplay-policy=no-user-gesture-required','--disable-background-timer-throttling','--disable-renderer-backgrounding']});
    const context=await browser.newContext({acceptDownloads:true,viewport:{width:820,height:1600}});
    const page=await context.newPage();
+   page.on('pageerror',error=>console.error('VIDEO PAGE ERROR:',error.message));
+   page.on('console',entry=>{if(entry.type()==='error')console.error('VIDEO PAGE CONSOLE:',entry.text())});
+   page.on('requestfailed',req=>console.error('VIDEO PAGE REQUEST:',req.url(),req.failure()?.errorText));
    // Tap the original audio mix once, before any envelope gain nodes are made.
    await page.addInitScript(()=>{
      const C=window.AudioContext||window.webkitAudioContext;
@@ -49,7 +52,17 @@ async function run(){
      };
    });
    await page.goto('http://127.0.0.1:'+port+'/checkins/editions/'+id+'/index.html',{waitUntil:'load',timeout:30000});
-   await page.waitForFunction(()=>!document.querySelector('#play').disabled,{timeout:30000});
+   try{await page.waitForFunction(()=>!document.querySelector('#play').disabled,{timeout:18000})}
+   catch(err){
+     const state=await page.evaluate(()=>({
+       url:location.href,base:document.baseURI,
+       status:document.getElementById('status')?.textContent,
+       playDisabled:document.getElementById('play')?.disabled,
+       meta:document.querySelector('meta[name="willy-dex-edition"]')?.content,
+       scripts:document.scripts.length
+     })).catch(e=>({failure:String(e)}));
+     throw Error('Archived player did not load: '+JSON.stringify(state)+' | '+err.message);
+   }
    const duration=await page.$eval('#seek',e=>Number(e.max));
    if(!Number.isFinite(duration)||duration<10||duration>180)throw Error('Unexpected video duration: '+duration);
    // Arm the video stream before playback, then attach the audio mix.
