@@ -69,6 +69,28 @@ function base(globalTime){
  const p=duration?clip(globalTime/duration,0,1):0;rect(0,1913,W*p,7,GOLD);
 }
 function title(kicker,one,two,detail){type(kicker,LEFT,255,25,GOLD,900);type(one,LEFT,337,67,CREAM,950,'left',715);if(two)type(two,LEFT,417,67,GOLD,950,'left',715);if(detail)type(detail,LEFT,472,23,MUTED,650,'left',712)}
+// Exact capture dates, not inferred daily averages. The labeled ribbon stays
+// on-screen during every comparison, above the unchanged XP graphics.
+function dateStamp(s){return localTime(s).replace(/ PT$/,'')}
+function dateRibbon(from,to,kind='compare'){
+ const y=484;
+ rect(LEFT,y,714,51,'#332219',8);
+ rect(LEFT,y,6,51,GOLD,2);
+ if(kind==='single'){
+   type('RECORDED',LEFT+17,y+19,17,GOLD,900);
+   type(dateStamp(to||from)+' PT',LEFT+17,y+43,24,CREAM,900,'left',518);
+   type('ONE CAPTURE',RIGHT-15,y+31,19,GREEN,900,'right',171);
+ }else if(kind==='baseline'){
+   type('BASELINE · CAPTURE 1 OF '+snapshots.length,LEFT+17,y+20,18,GOLD,900);
+   type(dateStamp(to)+' PT',LEFT+17,y+44,24,CREAM,900,'left',517);
+ }else{
+   type('FROM',LEFT+17,y+18,17,GOLD,950);
+   type(dateStamp(from),LEFT+17,y+43,23,CREAM,900,'left',294);
+   type('→',LEFT+348,y+35,33,GOLD,950,'center');
+   type('TO',LEFT+401,y+18,17,GREEN,950);
+   type(dateStamp(to),LEFT+401,y+43,23,CREAM,900,'left',292);
+ }
+}
 function badge(s,y,color=GOLD){rect(LEFT,y,6,38,color,2);type(s,LEFT+25,y+28,28,color,900)}
 function captureTag(s,idx,total){return 'CAPTURE '+(idx+1)+' / '+total+'     '+localTime(s)}
 function bar(x,y,w,h,p,active){rect(x,y,w,h,'#45352a',6);rect(x,y,w*clip(p,0,1),h,active?GOLD:'#9d7751',6)}
@@ -111,9 +133,8 @@ function drawRace(seg,q){
  };
  const maxXp=Math.max(...snapshots.map(s=>s.guilds[0].experience));
  const yTop=541,spacing=82;
- title('50 GUILDS   /   '+snapshots.length+' VERIFIED CAPTURES','GLOBAL','TOP TEN','SEASON 15 · GUILD XP TRACKER');
- type('CAPTURE '+(idx+1)+' / '+snapshots.length,LEFT,509,28,GOLD,900);
- type(localTime(current),RIGHT,509,23,GREEN,800,'right',462);
+ title('50 GUILDS   /   '+snapshots.length+' VERIFIED CAPTURES','GLOBAL','TOP TEN','SEASON 15 · XP TRACKER · CAPTURE '+(idx+1)+' / '+snapshots.length);
+ dateRibbon(previous,current,firstCapture?'baseline':'compare');
  // Background rank slots never move, only the guilds occupying them.
  for(let i=0;i<10;i++){
    const y=yTop+i*spacing;
@@ -216,7 +237,8 @@ function drawRace(seg,q){
 }
 
 function drawGrowth(seg,q){
- title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','TOTAL GUILD XP ADDED BETWEEN CAPTURES');
+ title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','GUILD XP GAINED BETWEEN THESE EXACT CAPTURES');
+ dateRibbon(first,latest);
  const items=seg.items,max=items[0].gain;
  items.forEach((g,i)=>{const y=542+i*166,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const reveal=ease((elapsed-i*1.03)/.82);
   rect(LEFT,y,714,140,'#28201a',10);
@@ -228,7 +250,8 @@ function drawGrowth(seg,q){
 }
 function drawMovers(seg,q){
  const up=seg.type==='up';
- title('CAPTURE ONE → CAPTURE '+snapshots.length,up?'BIGGEST':'BIGGEST',up?'CLIMBERS':'FALLERS','RANK CHANGES · GUILDS IN BOTH CAPTURES');
+ title('CAPTURE ONE → CAPTURE '+snapshots.length,up?'BIGGEST':'BIGGEST',up?'CLIMBERS':'FALLERS','RANK CHANGES BETWEEN THESE EXACT CAPTURES');
+ dateRibbon(first,latest);
  seg.items.slice(0,5).forEach((g,i)=>{
   const y=520+i*165,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const progress=ease((elapsed-i*1.03)/.82);
   rect(LEFT,y,714,143,'#27201b',12);
@@ -242,7 +265,8 @@ function drawMovers(seg,q){
 }
 function drawTop25(seg,q){
  const start=[0,9,17][seg.page],end=[9,17,25][seg.page],rows=latest.guilds.slice(start,end);
- title('CURRENT TOP 25 / SCAN '+(seg.page+1)+' OF 3','THE TOP 25','IN FOCUS','AS OF '+localTime(latest));
+ title('CURRENT TOP 25 / SCAN '+(seg.page+1)+' OF 3','THE TOP 25','IN FOCUS','LATEST RECORDED STANDINGS');
+ dateRibbon(latest,latest,'single');
  rows.forEach((g,i)=>{
   const y=560+i*93,progress=ease((q*seg.dur-i*.05)/.45);
   rect(LEFT,y,714,76,i%2?'#281f19':'#33251a',6);
@@ -256,6 +280,7 @@ function drawTop25(seg,q){
 function drawPair(seg,q){
  const pair=seg.pair,tight=seg.type==='tight',word=tight?'CLOSEST FIGHTS':'BIGGEST LEADS';
  title('LATEST TOP 25 · ADJACENT RANKS',tight?'CLOSEST':'BIGGEST',tight?'XP FIGHTS':'XP LEADS',word+'     '+(seg.index+1)+' / '+seg.total);
+ dateRibbon(latest,latest,'single');
  const a=pair.a,b=pair.b,gap=pair.gap;
  [[a,0],[b,1]].forEach(([g,i])=>{
   const y=545+i*255;if(q*seg.dur<i*.75)return;
@@ -275,6 +300,7 @@ function drawCove(seg,q){
  const trail=snapshots.map(s=>({s,g:s.guilds.find(g=>g.name===name)})).filter(x=>x.g);
  const initial=trail[0].g,final=trail[trail.length-1].g;
  title(snapshots.length+' CAPTURES · THE PIRATE COVE','COVE','WATCH','ONLY RECORDED RANKS AND GUILD XP');
+ dateRibbon(first,latest);
  type('#'+initial.rank+'  →  #'+final.rank,LEFT,587,71,CREAM,950);
  type('+'+fmt(final.experience-initial.experience)+' XP',LEFT,659,52,GREEN,900);
  const max=Math.max(...trail.map(x=>x.g.experience))*1.04,ground=1190,span=458;
@@ -294,6 +320,7 @@ function drawCove(seg,q){
 }
 function drawEnd(q){
  title('RECORDED · NEVER FABRICATED','EVERY XP','COUNTS.','SEASON 15 · WILLY DEX / INTELLIGENCE');
+ dateRibbon(latest,latest,'single');
  const v=latest.guilds[0];
  type('#1 '+v.name.toUpperCase(),LEFT,680,48,GOLD,900,'left',714);
  type(fmt(v.experience)+' XP',LEFT,742,44,CREAM,850);
