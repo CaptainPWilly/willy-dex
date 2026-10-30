@@ -22,7 +22,15 @@
       "generatedAt": "2026-10-30T01:27:53.315Z",
       "page": "editions/s15-2026-10-29T14-00-00-07-00-61d7f08a977f/index.html",
       "data": "editions/s15-2026-10-29T14-00-00-07-00-61d7f08a977f/data.json",
-      "video": "https://github.com/CaptainPWilly/willy-dex/releases/download/s15-2026-10-29T14-00-00-07-00-61d7f08a977f/s15-2026-10-29T14-00-00-07-00-61d7f08a977f.mp4"
+      "video": "https://github.com/CaptainPWilly/willy-dex/releases/download/s15-2026-10-29T14-00-00-07-00-61d7f08a977f/s15-2026-10-29T14-00-00-07-00-61d7f08a977f-HQ-1080p60.mp4",
+      "videoQuality": {
+        "width": 1080,
+        "height": 1920,
+        "fps": 60,
+        "codec": "H.264",
+        "audio": "AAC",
+        "version": "HQ"
+      }
     }
   ]
 }
