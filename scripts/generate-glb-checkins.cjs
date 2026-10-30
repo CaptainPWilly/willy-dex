@@ -36,7 +36,7 @@ const meta={
  cove:cove?{rank:cove.rank,experience:cove.experience}:null,
  contentHash:hash,sourceCommit:process.env.GITHUB_SHA||null,
  generatedAt:existing?.generatedAt||new Date().toISOString(),
- page:'editions/'+id+'/index.html',data:'editions/'+id+'/data.json',video:existing?.video||null
+ page:'editions/'+id+'/index.html',data:'editions/'+id+'/data.json',video:existing?.video||('https://github.com/CaptainPWilly/willy-dex/releases/download/'+id+'/'+id+'.mp4')
 };
 if(!existing){
  write(folder+'/data.json',JSON.stringify(glb,null,2)+'\n');
@@ -46,6 +46,8 @@ if(!existing){
  html=html.replace(/d\.season!==15/g,'d.season!=='+glb.season);
  html=html.replace(/fetch\('glb\.json',\{cache:'no-store'\}\)/g,"fetch('"+folder+"/data.json',{cache:'no-store'})");
  html=html.replace(/<a href="glb\.json">/g,'<a href="'+folder+'/data.json">');
+ html=html.replace('</style>','a.export-video{display:block;max-width:500px;margin:12px auto;text-align:center;background:#dbaf6e;color:#1d110b;font-size:15px;font-weight:900;padding:15px 20px;border-radius:9px;text-decoration:none}a.export-video:hover{background:#f4d29d}</style>');
+ html=html.replace('<div class="meta"><span>9:16 Shorts framing</span>','<a class="export-video" href="'+meta.video+'">↓ DOWNLOAD MP4 FOR YOUTUBE</a>\n<div class="meta"><span>9:16 Shorts framing</span>');
  html=html.replace('</main>','<div class="meta"><a href="checkins/index.html">ALL SAVED EDITIONS</a> · <span>ARCHIVE '+id+'</span></div></main>');
  check(html.includes("fetch('"+folder+"/data.json'"),'player source was not pinned');
  write(folder+'/index.html',html);
