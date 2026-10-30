@@ -1,97 +1,294 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#100f0e"><title>S15 Check-In — Willy Dex</title>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#110d0b"><title>Season 15 | Director Cut — Willy Dex</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:#0d0c0a;color:#f5e5c2;font-family:system-ui,-apple-system,Arial,sans-serif}
-body{background:radial-gradient(ellipse at top,#322014 0%,#0d0c0a 55%)}main{max-width:575px;margin:auto;padding:12px}
-h1{font-size:14px;letter-spacing:.12em;margin:8px 4px 16px;display:flex;justify-content:space-between}
-h1 em{color:#a9967c;font-style:normal;font-size:11px}
-#screen{container-type:inline-size;width:100%;max-height:calc(100dvh - 140px);aspect-ratio:9/16;position:relative;overflow:hidden;border:1px solid #543723;border-radius:9px;background:#100f0e}
-#screen:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 37px,#59422b17 38px),radial-gradient(ellipse at 50% 34%,transparent 25%,#39261821 55%,transparent 65%);pointer-events:none}
-#screen:after{content:"";position:absolute;width:150%;height:120%;border:1px solid #7a4b2e4a;border-radius:50%;left:-40%;top:-18%;transform:rotate(-25deg);pointer-events:none}
-.header,.footer{position:absolute;z-index:2;left:6%;right:6%;display:flex;justify-content:space-between;font-size:1.6cqw;color:#c5a78b;letter-spacing:.06em}
-.header{top:4%}.footer{bottom:4%;border-top:1px solid #73462e;padding-top:1.5%}
-#progress{position:absolute;bottom:0;left:0;height:4px;background:#f8bf68;width:0;z-index:4}
-.scene{position:absolute;z-index:1;inset:9% 6% 9%;display:none;flex-direction:column}
-.scene.active{display:flex;animation:in .45s ease-out both}@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.kicker{width:fit-content;padding:2% 3%;border-radius:4px;background:#3c261a;color:#f8bf68;font-size:2.3cqw;letter-spacing:.06em;font-weight:800;margin-bottom:5%}
-.huge{font-size:12cqw;font-weight:950;line-height:1.02;letter-spacing:-.04em;margin:0 0 5%}.gold{color:#f8bf68}.large{font-size:9.5cqw}.meta{font-size:2.35cqw;color:#af9679;letter-spacing:.08em;margin:3% 0}.rule{height:2px;width:100%;background:#ab683b;margin:7% 0}
-.cover{justify-content:space-between}.logo{text-align:center;margin:auto auto 10%;width:65%;max-height:36%;object-fit:contain}.season{font-size:12cqw;font-weight:950;margin-top:auto}.fifteen{font-size:28cqw;font-weight:950;color:#f8bf68;line-height:1}.checkin{font-size:10.2cqw;font-weight:950;line-height:1}
-.rank{background:#211b17;border:1px solid #453126;display:flex;align-items:center;gap:4%;border-radius:8px;padding:3%;margin:1.25% 0}.rank b.num{font-size:6cqw;background:#393025;color:#f8bf68;padding:2.5%;border-radius:8px}.rank strong{font-size:4.0cqw}.rank small{display:block;font-size:3.1cqw;color:#cbb8a2}
-.bar{height:4.2cqw;border-radius:4px;background:#29221d;overflow:hidden;margin:1.5% 0 5%}.bar i{display:block;height:100%;background:#f8bf68;width:100%}
-.gap{margin-top:auto;background:#241a14;border:1px solid #795034;border-radius:8px;padding:5%}.gap b{font-size:6.6cqw;color:#f8bf68}#screen strong{font-size:4cqw}.gap b{font-size:6.6cqw!important}
-.mover{display:flex;gap:4%;align-items:center;background:#211b17;border-radius:8px;margin:2% 0;padding:3%}.delta{font-size:5.4cqw;color:#f8bf68;font-weight:900;background:#573c2a;padding:3%;border-radius:8px}.mover strong{font-size:3.8cqw}.mover small{display:block;font-size:3.4cqw;color:#b4c7bc}
-.box{border:1px solid #64452f;background:#221b17;border-radius:8px;padding:3%}.box strong{display:block;font-size:9.8cqw}
-.barchart{display:flex;align-items:end;justify-content:space-between;gap:2%;height:38%;margin-top:auto}
-.column{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;font-size:2.0cqw;white-space:nowrap;gap:1%}
-.column .v{background:#a67f56;border-radius:5px 5px 0 0;width:95%;min-height:2px}.column:last-child .v{background:#f8bf68}
-.column b{color:#d8c5ae}.column:last-child b{color:#f8bf68}.column small{color:#b39a7b}
-.bottomgain{font-size:5.1cqw;color:#f8bf68;font-weight:950;margin:5% 0}
-.ending{justify-content:space-around}.ending .logo{margin:8% auto 0}.ending .huge{font-size:10.6cqw}
-#overlay{position:absolute;z-index:5;inset:0;border:0;color:white;background:#0005;display:grid;place-items:center;cursor:pointer}#overlay span{font-weight:800;font-size:17px;border-radius:45px;padding:16px 25px;background:#170f0fe8;border:2px solid #d59c58}
-#overlay.hidden{display:none}.ctrl{display:flex;gap:10px;align-items:center;padding:12px 0}
-.ctrl button{font-weight:800;color:#f5e5c2;border:1px solid #664a32;background:#291c15;border-radius:7px;padding:10px 14px}
-.ctrl input{flex:1;min-width:30px;accent-color:#f8bf68}.time{color:#bda98d;font-size:12px;font-variant-numeric:tabular-nums}
-p{font-size:12px;line-height:1.55;color:#ad9983}p a{color:#f8bf68}
-</style></head><body><main>
-<h1>WILLY / DEX <em>SEASON 15 · WATCH EDITION</em></h1>
-<div id="screen">
-<div class="header"><b>WILLY / DEX</b><span>GLB INTELLIGENCE</span></div>
-<section class="scene cover active">
-<img class="logo" src="assets/willy-corp-logo-vector.svg" alt="Willy Corp">
-<div class="season">SEASON</div><div class="fifteen">15</div><div class="rule"></div><div class="checkin">CHECK-IN</div><div class="meta">THE GLOBAL LEADERBOARD</div></section>
-<section class="scene">
-<div class="kicker">29 OCT / 2:00 PM PDT</div><div class="huge">THE TOP<br><span class="gold">FIVE</span></div>
-<div class="meta">SEASON XP / RECORDED TOTALS</div>
-<div class="rank"><b class="num">01</b><div><strong>UMBRAL</strong><small>7,860,530 XP</small></div></div>
-<div class="rank"><b class="num">02</b><div><strong>HELHEIM</strong><small>5,630,062 XP</small></div></div>
-<div class="rank"><b class="num">03</b><div><strong>THE CULT OF SV</strong><small>5,007,070 XP</small></div></div>
-<div class="rank"><b class="num">04</b><div><strong>ASCENDED</strong><small>4,602,756 XP</small></div></div>
-<div class="rank"><b class="num">05</b><div><strong>SOLO</strong><small>4,105,469 XP</small></div></div>
-</section>
-<section class="scene">
-<div class="kicker">LEADER REPORT</div><div class="huge">THE<br><span class="gold">GAP.</span></div>
-<div class="meta">#1 UMBRAL</div><strong>7,860,530 XP</strong><div class="bar"><i></i></div>
-<div class="meta">#2 HELHEIM</div><strong>5,630,062 XP</strong><div class="bar"><i style="width:71.62%;background:#afc3b8"></i></div>
-<div class="gap"><div class="meta">LEAD OVER #2</div><b>+2,230,468 XP</b></div>
-</section>
-<section class="scene">
-<div class="kicker">27 OCT → 29 OCT</div><div class="huge large">WHO IS<br><span class="gold">CLIMBING?</span></div>
-<div class="meta">POSITION CHANGES BETWEEN CAPTURES</div>
-<div class="mover"><div class="delta">+8</div><div><strong>THE FOREST</strong><small>#42 → #34</small></div></div>
-<div class="mover"><div class="delta">+4</div><div><strong>KAIROS</strong><small>#25 → #21</small></div></div>
-<div class="mover"><div class="delta">+4</div><div><strong>GOLDEN ARROWS</strong><small>#30 → #26</small></div></div>
-<div class="mover"><div class="delta">+3</div><div><strong>THE PIRATE COVE</strong><small>#26 → #23</small></div></div>
-</section>
-<section class="scene">
-<div class="kicker">THE PIRATE COVE</div><div class="huge">COVE<br><span class="gold">WATCH</span></div>
-<div class="box"><div class="meta">RANK</div><strong>#26 → #23</strong></div>
-<div class="meta">RECORDED GUILD XP · FIVE SNAPSHOTS</div>
-<div class="barchart">
-<div class="column"><b>307,543</b><div class="v" style="height:51.2%"></div><small>27 OCT</small><small>#26</small></div>
-<div class="column"><b>452,746</b><div class="v" style="height:75.5%"></div><small>28 OCT</small><small>#25</small></div>
-<div class="column"><b>460,948</b><div class="v" style="height:76.8%"></div><small>28 OCT</small><small>#25</small></div>
-<div class="column"><b>480,686</b><div class="v" style="height:80.1%"></div><small>29 OCT</small><small>#25</small></div>
-<div class="column"><b>583,351</b><div class="v" style="height:97.2%"></div><small>29 OCT</small><small>#23</small></div>
-</div>
-<div class="bottomgain">+275,808 XP</div><div class="meta">SINCE 27 OCT · FIRST CAPTURE</div></section>
-<section class="scene ending">
-<img class="logo" src="assets/willy-corp-logo-vector.svg" alt="Willy Corp">
-<div class="huge">THE BOARD<br><span class="gold">IS MOVING.</span></div><div class="rule"></div>
-<strong>SEASON 15 / CHECK-IN</strong>
-<div class="meta">CAPTURED 27–29 OCT 2026</div><div class="meta">LATEST: 29 OCT, 2:00 PM PDT</div>
-</section>
-<div class="footer"><span>SEASON 15 / 27–29 OCT 2026</span><span>SNAPSHOTS, NOT LIVE</span></div><div id="progress"></div>
-<button id="overlay"><span>▶ PLAY CHECK-IN</span></button>
-</div>
-<div class="ctrl"><button id="play">▶</button><input id="seek" type="range" min="0" max="44" step=".01" value="0"><span id="time" class="time">0:00 / 0:44</span></div>
-<p>Browser-playable version of the Season 15 check-in. Verified Willy Dex snapshots, October 27–29, 2026; visual transitions do not imply unrecorded leaderboard positions. <a href="glb.json">Original source data</a>.</p>
+*{box-sizing:border-box}html,body{margin:0;background:#0e0b09;color:#f4e7d1;font:500 14px/1.4 system-ui,-apple-system,Segoe UI,sans-serif}
+body{background:radial-gradient(ellipse at 50% 4%,#322117,#0e0b09 60%);min-height:100dvh}
+main{max-width:650px;margin:auto;padding:12px 14px 30px}
+h1{font-size:13px;letter-spacing:.18em;display:flex;justify-content:space-between;align-items:center;margin:6px 0 13px}
+h1 em{font-size:11px;font-weight:600;letter-spacing:.06em;color:#c9ab80;font-style:normal}
+#screen{position:relative;aspect-ratio:9/16;width:min(100%,calc(83dvh * 9 / 16));max-width:100%;margin:auto;overflow:hidden;border:1px solid #63462f;border-radius:10px;background:#110d0b;box-shadow:0 24px 70px #000a}
+#film{display:block;width:100%;height:100%}
+#overlay{position:absolute;inset:0;border:0;background:#0007;color:#fff;display:grid;place-content:center;gap:12px;text-align:center;cursor:pointer}
+#overlay b{padding:14px 27px;border:2px solid #e1ac6c;background:#26170fec;border-radius:50px;font-size:16px}
+#overlay small{color:#f4d5aa;letter-spacing:.05em}
+#overlay.hidden{display:none}
+.controls{display:flex;align-items:center;gap:9px;margin:12px auto 0;max-width:500px}
+.controls button{background:#2c1f18;color:#f4e7d1;border:1px solid #8c5a36;border-radius:8px;padding:10px 12px;cursor:pointer;font-weight:800}
+.controls button[disabled]{opacity:.4;cursor:default}.controls input{accent-color:#eeb879;min-width:0;flex:1}
+#time{font:600 12px/1.2 ui-monospace,monospace;color:#c2a17d;white-space:nowrap}
+.meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;color:#b7a08c;font-size:11px;padding-top:10px}
+.meta a{color:#e9b47b}
+#status{text-align:center;font-size:11px;color:#ab9580;padding:10px}
+</style>
+</head>
+<body><main>
+<h1>WILLY / DEX <em>SEASON 15 / DIRECTOR CUT</em></h1>
+<div id="screen"><canvas id="film" width="1080" height="1920" aria-label="Animated Season 15 global leaderboard analysis"></canvas>
+<button id="overlay"><b>▶ PLAY SEASON 15</b><small>All recorded snapshots · Directed cut</small></button></div>
+<div class="controls"><button id="play" disabled aria-label="Play video">▶</button><input id="seek" aria-label="Scrub video" type="range" min="0" max="82" step=".05" value="0" disabled><span id="time">0:00</span><button id="sound" title="Toggle original soundtrack">♫ ON</button><button id="zones" title="Show Shorts cover regions">SAFE</button></div>
+<div class="meta"><span>9:16 Shorts framing</span><span>•</span><span>Recorded ranks only</span><span>•</span><a href="glb.json">Source: Willy Dex GLB</a></div>
+<div id="status">Loading verified leaderboard snapshots...</div>
 </main>
 <script>
-(()=>{const scenes=[...document.querySelectorAll('.scene')],starts=[0,7.5,15,21,29,38,44],play=document.getElementById('play'),seek=document.getElementById('seek'),time=document.getElementById('time'),overlay=document.getElementById('overlay'),progress=document.getElementById('progress');let t=0,playing=false,origin=0,raf=0;
-function paint(){const i=starts.findIndex((v,j)=>j<starts.length-1&&t>=v&&t<starts[j+1]);const active=i<0?5:i;scenes.forEach((s,j)=>s.classList.toggle('active',j===active));seek.value=t;time.textContent='0:'+String(Math.floor(t)).padStart(2,'0')+' / 0:44';play.textContent=playing?'Ⅱ':'▶';progress.style.width=(100*t/44)+'%';overlay.classList.toggle('hidden',playing||t>0)}
-function tick(now){if(!playing)return;t=Math.min(44,(now-origin)/1000);paint();if(t>=44){playing=false;paint();return}raf=requestAnimationFrame(tick)}
-function toggle(){if(playing){playing=false;cancelAnimationFrame(raf);paint();return}if(t>=44)t=0;playing=true;origin=performance.now()-t*1000;paint();raf=requestAnimationFrame(tick)}
-play.addEventListener('click',toggle);overlay.addEventListener('click',toggle);seek.addEventListener('input',()=>{t=+seek.value;if(playing)origin=performance.now()-t*1000;paint()});paint();
+(function(){
+'use strict';
+const cvs=document.getElementById('film'),ctx=cvs.getContext('2d');
+const play=document.getElementById('play'),seek=document.getElementById('seek'),time=document.getElementById('time'),overlay=document.getElementById('overlay');
+const zonesBtn=document.getElementById('zones'),soundBtn=document.getElementById('sound'),status=document.getElementById('status');
+const W=1080,H=1920,LEFT=74,RIGHT=788,GOLD='#f4bf79',CREAM='#f4e7d1',MUTED='#bfa78e',GREEN='#a6dab5',RED='#ef988d';
+let snapshots=[],latest=null,first=null,segments=[],duration=0,records=[],t=0,playing=false,origin=0,raf=0,mute=false,showZones=false,ready=false,warning='';
+let audio=null,master=null,beatTimer=null,nextBeat=0,beatIndex=0;
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const short=n=>n>=1000000?(n/1000000).toFixed(2)+'M':n>=1000?(n/1000).toFixed(1)+'K':String(n);
+const clip=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=x=>1-Math.pow(1-clip(x,0,1),3);
+function localTime(s){if(!s.capturedAt)return (s.date||'UNKNOWN DATE')+' · TIME UNSPECIFIED';const d=new Date(s.capturedAt);if(!Number.isFinite(d.getTime()))return (s.date||'UNKNOWN')+' · TIME UNSPECIFIED';return d.toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).toUpperCase()+' PT'}
+function line(x,y,X,Y,color,width=2){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X,Y);ctx.stroke()}
+function rect(x,y,w,h,color,r=0){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
+function type(s,x,y,size=32,color=CREAM,weight=700,align='left',max=0){ctx.font=weight+' '+size+'px system-ui,-apple-system,Segoe UI,Arial,sans-serif';ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='alphabetic';if(max){let actual=size;while(ctx.measureText(String(s)).width>max&&actual>22){actual--;ctx.font=weight+' '+actual+'px system-ui,-apple-system,Segoe UI,Arial,sans-serif'}}ctx.fillText(String(s),x,y);ctx.textAlign='left'}
+function count(s,x,y,size,color,max){type(s,x,y,size,color,800,'left',max)}
+function base(globalTime){
+ const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#291b15');g.addColorStop(.48,'#130f0e');g.addColorStop(1,'#0d0c0c');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ const glow=ctx.createRadialGradient(875,420,10,875,420,900);glow.addColorStop(0,'#9f5b291d');glow.addColorStop(1,'#0000');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+ for(let x=0;x<W;x+=88)line(x,0,x,H,'#e0ad600b',1);
+ for(let y=0;y<H;y+=120)line(0,y,W,y,'#f3d19a0b',1);
+ for(let i=0;i<20;i++){let yy=(i*123+globalTime*39)%H;rect(886+(i%5)*35,yy,5,5,'#c486483e',1)}
+ ctx.save();ctx.translate(1030,450);ctx.rotate(-.24);ctx.strokeStyle='#be865022';ctx.lineWidth=3;ctx.strokeRect(-190,-300,430,740);ctx.strokeRect(-160,-268,370,680);ctx.restore();
+ rect(LEFT,98,7,50,GOLD,2);type('WILLY  /  DEX',94,129,30,CREAM,900);
+ type('SEASON 15   •   GLOBAL LEADERBOARD',LEFT,175,22,MUTED,800);
+ line(LEFT,197,RIGHT,197,'#9c734a',2);
+ line(LEFT,1470,RIGHT,1470,'#87664a',2);
+ type('SMMO  /  RECORDED SNAPSHOTS',LEFT,1512,24,MUTED,700);
+ type('NOT LIVE',RIGHT,1512,23,GOLD,800,'right');
+ // Everything essential stays left of the Shorts action rail and above its caption overlay.
+ const p=duration?clip(globalTime/duration,0,1):0;rect(0,1913,W*p,7,GOLD);
+}
+function title(kicker,one,two,detail){type(kicker,LEFT,255,25,GOLD,900);type(one,LEFT,337,67,CREAM,950,'left',715);if(two)type(two,LEFT,417,67,GOLD,950,'left',715);if(detail)type(detail,LEFT,472,23,MUTED,650,'left',712)}
+function badge(s,y,color=GOLD){rect(LEFT,y,6,38,color,2);type(s,LEFT+25,y+28,28,color,900)}
+function captureTag(s,idx,total){return 'CAPTURE '+(idx+1)+' / '+total+'     '+localTime(s)}
+function bar(x,y,w,h,p,active){rect(x,y,w,h,'#45352a',6);rect(x,y,w*clip(p,0,1),h,active?GOLD:'#9d7751',6)}
+function drawHook(q){
+ title('5 RECORDED CAPTURES  /  50 GUILDS','SEASON 15','THE BOARD MOVES','27–29 OCT 2026 · GLOBAL XP');
+ const top=latest.guilds.slice(0,3);
+ top.forEach((g,i)=>{const y=560+i*185,st=ease((q*2.2-i*.23)/.8);rect(LEFT,y,714,150,'#241b17',12);rect(LEFT,y,6,150,i===0?GOLD:'#967554');type('#'+g.rank,LEFT+23,y+66,51,GOLD,950);type(g.name.toUpperCase(),LEFT+152,y+62,37,CREAM,850,'left',520);type(fmt(g.experience)+' XP',LEFT+152,y+116,35,MUTED,800);bar(LEFT+24,y+133,663,8,st*(g.experience/top[0].experience),i===0)});
+ type('REAL CAPTURES. REAL PLACEMENTS.',LEFT,1370,35,GOLD,900,'left',718);
+}
+function drawSnapshot(seg,q){
+ const s=seg.snapshot,idx=seg.i,top=s.guilds.slice(0,10),max=top[0].experience;
+ title('THE RACE   /   '+(idx+1)+' OF '+snapshots.length,'TOP TEN','XP TRACKER','HARD-CUT SNAPSHOTS · NEVER SIMULATED');
+ type(localTime(s),LEFT,513,26,GREEN,750,'left',710);
+ top.forEach((g,i)=>{
+  const y=540+i*83,lit=(Math.floor(q*seg.dur*3)%10===i),grow=ease((q*seg.dur-.14-i*.045)/.72);
+  if(lit)rect(LEFT-9,y-6,727,80,'#69472b35',7);
+  type(String(g.rank).padStart(2,'0'),LEFT,y+28,32,lit?GOLD:'#ae946f',900);
+  type(g.name.toUpperCase(),LEFT+65,y+27,30,CREAM,750,'left',424);
+  type(short(g.experience),RIGHT,y+27,29,lit?GOLD:CREAM,850,'right');
+  bar(LEFT+66,y+40,628,13,(g.experience/max)*grow,i===0);
+ });
+ type('EXP '+fmt(top[0].experience)+'  /  LEADER: '+top[0].name.toUpperCase(),LEFT,1434,23,GOLD,850,'left',716);
+}
+function drawGrowth(seg,q){
+ title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','TOTAL GUILD XP ADDED BETWEEN CAPTURES');
+ const items=seg.items,max=items[0].gain;
+ items.forEach((g,i)=>{const y=542+i*166,reveal=ease((q*seg.dur-i*.19)/1.0);
+  rect(LEFT,y,714,140,'#28201a',10);
+  type('0'+(i+1),LEFT+18,y+49,34,GOLD,950);
+  type(g.name.toUpperCase(),LEFT+87,y+48,34,CREAM,800,'left',447);
+  type('+'+fmt(g.gain),RIGHT-14,y+90,34,GREEN,900,'right');
+  bar(LEFT+85,y+105,609,14,(g.gain/max)*reveal,i===0);
+ });
+}
+function drawMovers(seg,q){
+ const up=seg.type==='up';
+ title('CAPTURE ONE → CAPTURE '+snapshots.length,up?'BIGGEST':'BIGGEST',up?'CLIMBERS':'FALLERS','RANK CHANGES · GUILDS IN BOTH CAPTURES');
+ seg.items.slice(0,5).forEach((g,i)=>{
+  const y=520+i*165,progress=ease((q*seg.dur-i*.22)/.75);
+  rect(LEFT,y,714,143,'#27201b',12);
+  rect(LEFT,y,8,143,up?GREEN:RED,3);
+  type((g.change>0?'+':'')+g.change,LEFT+25,y+83,63,up?GREEN:RED,950);
+  type(g.name.toUpperCase(),LEFT+191,y+51,33,CREAM,900,'left',500);
+  type('#'+g.from+'  →  #'+g.rank,LEFT+191,y+96,32,GOLD,800);
+  type('XP '+(g.gain>=0?'+':'')+fmt(g.gain),RIGHT-14,y+125,24,MUTED,700,'right');
+  rect(LEFT+190,y+131,496*progress,5,up?GREEN:RED,2);
+ });
+}
+function drawTop25(seg,q){
+ const start=seg.page*8,end=Math.min(start+8,25),rows=latest.guilds.slice(start,end);
+ title('CURRENT TOP 25 / SCAN '+(seg.page+1)+' OF 4','THE TOP 25','IN FOCUS','AS OF '+localTime(latest));
+ rows.forEach((g,i)=>{
+  const y=560+i*93,progress=ease((q*seg.dur-i*.05)/.45);
+  rect(LEFT,y,714,76,i%2?'#281f19':'#33251a',6);
+  rect(LEFT,y,progress*5,76,GOLD,1);
+  type(String(g.rank).padStart(2,'0'),LEFT+17,y+48,36,GOLD,950);
+  type(g.name.toUpperCase(),LEFT+86,y+44,31,CREAM,800,'left',426);
+  type(short(g.experience),RIGHT-12,y+46,31,MUTED,800,'right');
+ });
+ type('RANKS '+(start+1)+'–'+end+'   /   RECORDED GUILD XP',LEFT,1400,28,GOLD,900);
+}
+function drawPair(seg,q){
+ const pair=seg.pair,tight=seg.type==='tight',word=tight?'CLOSEST FIGHTS':'BIGGEST LEADS';
+ title('LATEST TOP 25 · ADJACENT RANKS',tight?'CLOSEST':'BIGGEST',tight?'XP FIGHTS':'XP LEADS',word+'     '+(seg.index+1)+' / '+seg.total);
+ const a=pair.a,b=pair.b,gap=pair.gap;
+ [[a,0],[b,1]].forEach(([g,i])=>{
+  const y=545+i*255;
+  rect(LEFT,y,714,221,'#2a211c',12);rect(LEFT,y,8,221,i===0?GOLD:'#b49178',3);
+  type('RANK '+g.rank,LEFT+24,y+50,29,GOLD,900);
+  type(g.name.toUpperCase(),LEFT+24,y+103,41,CREAM,900,'left',665);
+  type(fmt(g.experience)+' XP',LEFT+24,y+150,37,MUTED,800);
+  bar(LEFT+24,y+180,664,15,(g.experience/a.experience)*ease((q*seg.dur-i*.12)/.85),i===0);
+ });
+ rect(LEFT,1097,714,188,'#5b3a21',14);
+ type('ADJACENT RANK GAP',LEFT+27,1150,28,'#f4d9b7',850);
+ type(fmt(gap)+' XP',LEFT+27,1239,72,GOLD,950,'left',680);
+ type(tight?'ONE SMALL GAIN COULD CHANGE THIS PAIR':'SEPARATION BETWEEN NEIGHBORING RANKS',LEFT,1368,25,CREAM,700,'left',700);
+}
+function drawCove(seg,q){
+ const name='The Pirate Cove';
+ const trail=snapshots.map(s=>({s,g:s.guilds.find(g=>g.name===name)})).filter(x=>x.g);
+ const initial=trail[0].g,final=trail[trail.length-1].g;
+ title('FIVE CAPTURES · THE PIRATE COVE','COVE','WATCH','ONLY RECORDED RANKS AND GUILD XP');
+ type('#'+initial.rank+'  →  #'+final.rank,LEFT,587,71,CREAM,950);
+ type('+'+fmt(final.experience-initial.experience)+' XP',LEFT,659,52,GREEN,900);
+ const max=Math.max(...trail.map(x=>x.g.experience))*1.04,ground=1190,span=458;
+ trail.forEach((x,i)=>{
+  const col=116,x0=LEFT+26+i*138;
+  const ht=Math.max(8,span*x.g.experience/max)*ease((q*seg.dur-i*.22)/1.2);
+  const y=ground-ht;
+  rect(x0,ground-span,col,span,'#28211b',8);
+  rect(x0,y,col,ht,i===trail.length-1?GOLD:'#a57f56',6);
+  type(short(x.g.experience),x0+col/2,y-23,26,CREAM,850,'center');
+  type('#'+x.g.rank,x0+col/2,1240,29,GOLD,900,'center');
+  type(x.s.date.slice(5),x0+col/2,1290,26,MUTED,750,'center');
+  const tt=x.s.capturedAt?new Date(x.s.capturedAt).toLocaleTimeString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit'}):'?';
+  type(tt,x0+col/2,1330,21,MUTED,650,'center');
+ });
+ type('RANK #'+final.rank+'  /  '+fmt(final.experience)+' XP',LEFT,1424,30,GOLD,850);
+}
+function drawEnd(q){
+ title('RECORDED · NEVER FABRICATED','EVERY XP','COUNTS.','SEASON 15 · WILLY DEX / INTELLIGENCE');
+ const v=latest.guilds[0];
+ type('#1 '+v.name.toUpperCase(),LEFT,680,48,GOLD,900,'left',714);
+ type(fmt(v.experience)+' XP',LEFT,742,44,CREAM,850);
+ line(LEFT,807,RIGHT,807,'#8c673e',3);
+ const c=latest.guilds.find(g=>g.name==='The Pirate Cove');
+ if(c){type('#'+c.rank+'  THE PIRATE COVE',LEFT,912,39,CREAM,900,'left',700);type(fmt(c.experience)+' XP',LEFT,965,38,GREEN,800)}
+ type('SOURCE: WILLY DEX GLB ARCHIVE',LEFT,1335,26,GOLD,850);
+}
+function drawSafe(){
+ ctx.fillStyle='#ea5f5e35';ctx.fillRect(814,0,266,H);ctx.fillRect(0,1550,1080,370);
+ ctx.strokeStyle='#ff8175';ctx.setLineDash([20,13]);ctx.lineWidth=4;ctx.strokeRect(LEFT,204,RIGHT-LEFT,1262);ctx.setLineDash([]);
+ type('SHORTS ACTION RAIL',850,410,28,'#fff',900,'left',200);
+ type('CAPTIONS / PROFILE',LEFT,1670,29,'#fff',800);
+}
+function paint(){
+ ctx.clearRect(0,0,W,H);base(t);
+ if(!ready){title('DATA CONNECTION',warning?'UNAVAILABLE':'LOADING','GLB DATA',warning||'Fetching recorded snapshots from Willy Dex...');return}
+ let seg=segments[segments.length-1];
+ for(const s of segments){if(t>=s.start&&t<s.end){seg=s;break}}
+ const q=clip((t-seg.start)/seg.dur,0,1);
+ switch(seg.type){
+  case 'hook':drawHook(q);break;
+  case 'snapshot':drawSnapshot(seg,q);break;
+  case 'growth':drawGrowth(seg,q);break;
+  case 'up':case 'down':drawMovers(seg,q);break;
+  case 'top25':drawTop25(seg,q);break;
+  case 'tight':case 'lead':drawPair(seg,q);break;
+  case 'cove':drawCove(seg,q);break;
+  case 'end':drawEnd(q);break;
+ }
+ rect(LEFT,1550,714,36,'#2f2018',4);
+ const n=segments.indexOf(seg)+1;
+ rect(LEFT,1550,714*clip((t-seg.start)/seg.dur,0,1),36,'#765033',4);
+ type('SHOT '+String(n).padStart(2,'0')+' / '+String(segments.length).padStart(2,'0'),LEFT+19,1577,23,CREAM,900);
+ if(showZones)drawSafe();
+}
+function validate(d){
+ if(!d||d.season!==15||!Array.isArray(d.snapshots)||d.snapshots.length<2)throw Error('Missing Season 15 captures');
+ const all=d.snapshots.map((s,i)=>{
+  if(!Array.isArray(s.guilds)||s.guilds.length<25)throw Error('Incomplete capture '+(i+1));
+  const guilds=s.guilds.slice().sort((a,b)=>a.rank-b.rank);
+  if(guilds.some((g,j)=>!g.name||g.rank!==j+1||!Number.isFinite(g.experience)||g.experience<0))throw Error('Invalid guild rank or XP in capture '+(i+1));
+  return {...s,guilds};
+ });
+ for(let i=1;i<all.length;i++){const prev=all[i-1].capturedAt,next=all[i].capturedAt;if(prev&&next&&new Date(next)<new Date(prev))throw Error('Snapshots are not in time order')}
+ return all;
+}
+function build(d){
+ snapshots=validate(d);first=snapshots[0];latest=snapshots[snapshots.length-1];
+ const old=new Map(first.guilds.map(x=>[x.name,x]));
+ const shared=latest.guilds.filter(g=>old.has(g.name)).map(g=>({...g,from:old.get(g.name).rank,change:old.get(g.name).rank-g.rank,gain:g.experience-old.get(g.name).experience}));
+ const growth=shared.slice().sort((a,b)=>b.gain-a.gain).slice(0,5);
+ const ups=shared.filter(g=>g.change>0).sort((a,b)=>b.change-a.change||b.gain-a.gain);
+ const downs=shared.filter(g=>g.change<0).sort((a,b)=>a.change-b.change||b.gain-a.gain);
+ const top=latest.guilds.slice(0,25);
+ const gaps=top.slice(0,24).map((g,i)=>({a:g,b:top[i+1],gap:g.experience-top[i+1].experience}));
+ if(gaps.some(g=>g.gap<0))throw Error('Invalid latest Top 25 XP ordering');
+ const closest=gaps.slice().sort((a,b)=>a.gap-b.gap).slice(0,4);
+ const widest=gaps.slice().sort((a,b)=>b.gap-a.gap).slice(0,4);
+ segments=[];duration=0;
+ function add(s,dur){s.dur=dur;s.start=duration;duration+=dur;s.end=duration;segments.push(s)}
+ add({type:'hook'},2.2);
+ snapshots.forEach((s,i)=>add({type:'snapshot',snapshot:s,i},3.8));
+ add({type:'growth',items:growth},6);
+ add({type:'up',items:ups},6);
+ add({type:'down',items:downs},6);
+ for(let i=0;i<4;i++)add({type:'top25',page:i},1.9);
+ closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},3.2));
+ widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},3.2));
+ add({type:'cove'},7.2);
+ add({type:'end'},1.6);
+ ready=true;t=0;
+ seek.disabled=false;play.disabled=false;seek.max=duration.toFixed(2);
+ status.textContent='Loaded '+snapshots.length+' exact capture times · '+segments.length+' continuously directed shots · '+Math.ceil(duration)+' seconds · source-backed XP only';
+ updateUI();paint();
+}
+function updateUI(){
+ seek.value=String(t);time.textContent=Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')+' / '+Math.floor(duration/60)+':'+String(Math.floor(duration%60)).padStart(2,'0');play.textContent=playing?'Ⅱ':'▶';
+ overlay.classList.toggle('hidden',playing||t>0);
+}
+function makeAudio(){
+ if(audio)return;
+ const AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC)return;
+ audio=new AC();master=audio.createGain();master.gain.value=mute?0:.18;master.connect(audio.destination);
+}
+function tone(freq,t0,dur,vol,kind='sine'){
+ if(!audio)return;
+ const osc=audio.createOscillator(),env=audio.createGain();
+ osc.type=kind;osc.frequency.setValueAtTime(freq,t0);
+ if(kind==='sine')osc.frequency.exponentialRampToValueAtTime(Math.max(40,freq*.58),t0+dur);
+ env.gain.setValueAtTime(Math.max(.0001,vol),t0);
+ env.gain.exponentialRampToValueAtTime(.001,t0+dur);
+ osc.connect(env);env.connect(master);osc.start(t0);osc.stop(t0+dur+.02);
+}
+function noise(t0,dur,vol){
+ if(!audio)return;
+ const len=Math.ceil(audio.sampleRate*dur),buf=audio.createBuffer(1,len,audio.sampleRate),d=buf.getChannelData(0);
+ for(let i=0;i<len;i++)d[i]=(Math.random()*2-1);
+ const src=audio.createBufferSource(),filter=audio.createBiquadFilter(),env=audio.createGain();
+ src.buffer=buf;filter.type='highpass';filter.frequency.value=1200;
+ env.gain.setValueAtTime(vol,t0);env.gain.exponentialRampToValueAtTime(.001,t0+dur);
+ src.connect(filter);filter.connect(env);env.connect(master);src.start(t0);src.stop(t0+dur+.01);
+}
+function musicBeat(b,when){
+ if(b%4===0||b%4===2)tone(130,when,.27,.8);
+ if(b%4===1||b%4===3)noise(when,.11,.22);
+ noise(when,.045,.075);noise(when+.25,.04,.065);
+ if(b%2===0)tone([55,55,65.4,49][Math.floor(b/4)%4],when+.03,.4,.13,'triangle');
+}
+function beginMusic(){try{makeAudio();if(!audio)return;audio.resume();nextBeat=audio.currentTime+.02;beatIndex=0;if(beatTimer)clearInterval(beatTimer);beatTimer=setInterval(()=>{if(!playing||!audio)return;while(nextBeat<audio.currentTime+.16){musicBeat(beatIndex++,nextBeat);nextBeat+=.5}},60)}catch(e){status.textContent+=' · Audio unavailable on this browser'}}
+function stopMusic(){if(beatTimer){clearInterval(beatTimer);beatTimer=null}}
+function tick(now){if(!playing)return;t=Math.min(duration,(now-origin)/1000);paint();updateUI();if(t>=duration){playing=false;stopMusic();updateUI();return}raf=requestAnimationFrame(tick)}
+function toggle(){if(!ready)return;if(playing){playing=false;cancelAnimationFrame(raf);stopMusic();updateUI();return}if(t>=duration)t=0;playing=true;origin=performance.now()-t*1000;beginMusic();updateUI();raf=requestAnimationFrame(tick)}
+play.addEventListener('click',toggle);overlay.addEventListener('click',toggle);
+seek.addEventListener('input',()=>{if(!ready)return;t=+seek.value;if(playing)origin=performance.now()-t*1000;updateUI();paint()});
+soundBtn.addEventListener('click',()=>{mute=!mute;soundBtn.textContent=mute?'♫ OFF':'♫ ON';if(master)master.gain.value=mute?0:.18});
+zonesBtn.addEventListener('click',()=>{showZones=!showZones;zonesBtn.textContent=showZones?'HIDE':'SAFE';paint()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)toggle()});
+fetch('glb.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(build).catch(err=>{warning='Data could not be verified: '+err.message;status.textContent=warning;paint()});
+paint();
 })();
 </script></body></html>
