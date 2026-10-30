@@ -45,6 +45,8 @@ const fmt=n=>Math.round(n).toLocaleString('en-US');
 const short=n=>n>=1000000?(n/1000000).toFixed(2)+'M':n>=1000?(n/1000).toFixed(1)+'K':String(n);
 const clip=(v,a,b)=>Math.max(a,Math.min(b,v));
 const ease=x=>1-Math.pow(1-clip(x,0,1),3);
+// Ease in AND out: rank cards do not teleport into a lane or jerk to a stop.
+const smooth=x=>{x=clip(x,0,1);return x*x*(3-2*x)};
 function localTime(s){if(!s.capturedAt)return (s.date||'UNKNOWN DATE')+' · TIME UNSPECIFIED';const d=new Date(s.capturedAt);if(!Number.isFinite(d.getTime()))return (s.date||'UNKNOWN')+' · TIME UNSPECIFIED';return d.toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).toUpperCase()+' PT'}
 function line(x,y,X,Y,color,width=2){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X,Y);ctx.stroke()}
 function rect(x,y,w,h,color,r=0){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
@@ -79,7 +81,34 @@ function drawRace(seg,q){
  const previousByName=new Map(previous.guilds.map(g=>[g.name,g]));
  const currentByName=new Map(current.guilds.map(g=>[g.name,g]));
  const firstCapture=idx===0;
+ // XP bar motion is intentionally unchanged from the approved cut.
  const transition=firstCapture?1:ease((within-.18)/1.20);
+ // Rank exchanges are separate, sequential, continuous animations.
+ // Group overlapping rank paths; for this archive, #4/#5 and #8/#9
+ // swap one AFTER the other, so viewers can follow the guild names.
+ const shifting=current.guilds.slice(0,10).filter(g=>{
+   const old=previousByName.get(g.name);
+   return !firstCapture && old && old.rank!==g.rank;
+ });
+ const spans=shifting.map(g=>({
+   low:Math.min(g.rank,previousByName.get(g.name).rank),
+   high:Math.max(g.rank,previousByName.get(g.name).rank)
+ })).sort((a,b)=>a.low-b.low);
+ const groups=[];
+ for(const span of spans){
+   const last=groups[groups.length-1];
+   if(last&&span.low<=last.high){last.high=Math.max(last.high,span.high)}
+   else groups.push({...span});
+ }
+ const pad=0.14, available=step-0.36;
+ const groupDur=groups.length?Math.min(1.48,available/groups.length-.12):0;
+ const groupGap=groups.length>1?(available-groups.length*groupDur)/(groups.length-1):0;
+ const rankMotion=g=>{
+   if(!g.shifting)return transition;
+   const pos=groups.findIndex(v=>Math.min(g.newRank,g.oldRank)>=v.low&&Math.max(g.newRank,g.oldRank)<=v.high);
+   const start=pad+Math.max(0,pos)*(groupDur+groupGap);
+   return smooth((within-start)/Math.max(.1,groupDur));
+ };
  const maxXp=Math.max(...snapshots.map(s=>s.guilds[0].experience));
  const yTop=541,spacing=82;
  title('50 GUILDS   /   '+snapshots.length+' VERIFIED CAPTURES','GLOBAL','TOP TEN','SEASON 15 · GUILD XP TRACKER');
@@ -99,34 +128,51 @@ function drawRace(seg,q){
    const shifting=!firstCapture&&oldRank!==newRank;
    return {name,old,now,oldRank,newRank,shifting};
  }).filter(g=>g.oldRank<=10||g.newRank<=10);
- // Stable rows first. Active rank swaps travel in separate left/right lanes.
+ // Render steady guilds before moving guilds. Moving ranks keep their names
+ // continuously visible while passing in smoothly diverging side lanes.
  group.sort((a,b)=>Number(a.shifting)-Number(b.shifting)||a.newRank-b.newRank);
  ctx.save();ctx.beginPath();ctx.rect(LEFT,yTop-3,714,spacing*10+8);ctx.clip();
  for(const g of group){
    const from=g.oldRank-1,to=g.newRank-1;
-   const motion=firstCapture?1:transition;
+   const motion=firstCapture?1:rankMotion(g);
    const y=yTop+(from+(to-from)*motion)*spacing;
    if(y<yTop-90||y>yTop+spacing*10+40)continue;
    const before=g.old||g.now,after=g.now||g.old;
    const beforeXp=before.experience,afterXp=after.experience;
    // Bars are a visual transition only; displayed XP numbers use exact captured endpoints.
    const pct=(beforeXp+(afterXp-beforeXp)*motion)/maxXp;
-   const selectedXp=firstCapture?afterXp:(motion<.50?beforeXp:afterXp);
+   const selectedXp=firstCapture?afterXp:(transition<.72?beforeXp:afterXp);
    const active=g.newRank===1||g.oldRank===1;
-   const crossing=g.shifting&&transition>.035&&transition<.965;
-   if(crossing){
-     // Split-lane flight prevents guilds in a rank swap from covering each other.
-     const leftLane=g.newRank<g.oldRank;
-     const x=leftLane?LEFT+5:LEFT+370;
-     const w=338;
-     const lift=Math.sin(Math.PI*motion)*7;
-     rect(x,y-lift,w,77,'#52391f',9);
-     rect(x,y-lift,5,77,leftLane?GREEN:RED,3);
-     type(g.name.toUpperCase(),x+13,y+24-lift,26,CREAM,850,'left',308);
-     type('#'+g.oldRank+' → #'+g.newRank,x+13,y+49-lift,22,GOLD,900);
-     type(short(selectedXp)+' XP',x+w-10,y+49-lift,22,CREAM,800,'right');
-     bar(x+13,y+60-lift,w-27,9,pct,active);
-   }else if((firstCapture&&g.newRank<=10)||(!firstCapture&&((motion<.965&&g.oldRank<=10)||(motion>=.965&&g.newRank<=10)))){
+   // One uninterrupted geometric path. Sinusoidal lane separation is zero
+   // at both ends and maximal only as two guilds cross the same rank slot.
+   // No hard branch at 3.5%/96.5%, which caused the old horizontal jump.
+   if(g.shifting){
+     const lane=Math.pow(Math.sin(Math.PI*motion),2);
+     const x0=LEFT+69, full=627, shrink=319*lane;
+     const w=full-shrink;
+     const x=x0+(g.newRank>g.oldRank?shrink:0);
+     const baseY=y;
+     if(lane>.001){
+       rect(x-6,baseY-2,w+12,78,'#51391f',9);
+       rect(x-6,baseY-2,6,78,g.newRank<g.oldRank?GREEN:RED,3);
+     }
+     // The identity/name and XP bar stay attached to the SAME moving guild.
+     const nameMax=Math.min(440,w-18);
+     type(g.name.toUpperCase(),x+8*lane,baseY+28,27-2*lane,CREAM,800,'left',nameMax);
+     // Keep exact endpoint totals, never synthetic intermediate XP values.
+     const flip=clip((transition-.28)/.44,0,1);
+     const xp=firstCapture?afterXp:(flip>=.5?afterXp:beforeXp);
+     type(fmt(xp),x+w-9,baseY+28+23*lane,25-2*lane,lane>.4?GOLD:CREAM,850,'right',Math.max(125,190-35*lane));
+     if(lane>.06){
+       ctx.save();ctx.globalAlpha=Math.min(1,lane*2);
+       type('#'+g.oldRank+' → #'+g.newRank,x+10,baseY+53,21,GREEN,850);
+       ctx.restore();
+     }
+     // Preserve the original XP bar interpolation, including its scale.
+     const barY=baseY+43+17*lane,barH=13-3*lane;
+     rect(x,barY,w,barH,'#493729',6);
+     rect(x,barY,w*pct,barH,active?GOLD:'#a3805e',6);
+   }else if((firstCapture&&g.newRank<=10)||(!firstCapture&&g.newRank<=10)){
      const x=LEFT+69;
      if(!firstCapture&&Math.abs(afterXp-beforeXp)>0&&motion>.02&&motion<.98){
        rect(x-5,y+1,638,73,'#58412740',7);
@@ -159,7 +205,7 @@ function drawRace(seg,q){
  }
  ctx.restore();
  const updating=!firstCapture&&transition<.965;
- type(updating?'VISUAL BAR TRANSITION · ENDPOINT XP VERIFIED':'CAPTURE VERIFIED · ALL NUMBERS REPORTED',
+ type(updating?'VISUAL RANK / XP TRANSITION · CAPTURE VALUES VERIFIED':'CAPTURE VERIFIED · ALL NUMBERS REPORTED',
       LEFT,1419,24,updating?GOLD:MUTED,760,'left',705);
  const visibleLeader=firstCapture||transition>=.72?current.guilds[0]:previous.guilds[0];
  type('LEADER  '+fmt(visibleLeader.experience)+' XP  ·  '+visibleLeader.name.toUpperCase(),
@@ -312,7 +358,7 @@ function build(d){
  closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},3.2));
  widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},3.2));
  add({type:'cove'},7.2);
- add({type:'end'},1.6);
+ add({type:'end'},5.2);
  ready=true;t=0;
  seek.disabled=false;play.disabled=false;seek.max=duration.toFixed(2);
  status.textContent='Loaded '+snapshots.length+' verified captures · uninterrupted Top 10 · '+Math.ceil(duration)+' seconds · no interpolated XP figures';
