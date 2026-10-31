@@ -34,7 +34,7 @@ body.share-mode #screen{margin-bottom:12px}
 <h1>WILLY / DEX <em>SEASON 15 / DIRECTOR CUT</em></h1>
 <div id="screen"><canvas id="film" width="1080" height="1920" aria-label="Animated Season 15 global leaderboard analysis"></canvas>
 <button id="overlay"><b>▶ PLAY SEASON 15</b><small>All recorded snapshots · Directed cut</small></button></div>
-<div class="controls"><button id="play" disabled aria-label="Play video">▶</button><input id="seek" aria-label="Scrub video" type="range" min="0" max="76" step=".05" value="0" disabled><span id="time">0:00</span><button id="sound" title="Toggle original soundtrack">♫ ON</button><button id="zones" title="Show Shorts cover regions">SAFE</button></div>
+<div class="controls"><button id="play" disabled aria-label="Play video">▶</button><input id="seek" aria-label="Scrub video" type="range" min="0" max="60" step=".05" value="0" disabled><span id="time">0:00</span><button id="sound" title="Toggle original soundtrack">♫ ON</button><button id="zones" title="Show Shorts cover regions">SAFE</button></div>
 <a id="video-export" class="video-export" href="#" hidden>↓ DOWNLOAD LATEST MP4</a>
 <div class="meta"><span>9:16 Shorts framing</span><span>•</span><span>Recorded ranks only</span><span>•</span><a href="glb.json">Source: Willy Dex GLB</a></div>
 <div id="status">Loading verified leaderboard snapshots...</div>
@@ -253,7 +253,7 @@ function drawGrowth(seg,q){
  title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','GUILD XP GAINED BETWEEN THESE EXACT CAPTURES');
  dateRibbon(first,latest);
  const items=seg.items,max=items[0].gain;
- items.forEach((g,i)=>{const y=568+i*166,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const reveal=ease((elapsed-i*1.03)/.82);
+ items.forEach((g,i)=>{const y=568+i*166,elapsed=q*seg.dur,entry=i*.78;if(elapsed<entry)return;const reveal=ease((elapsed-entry)/.65);
   rect(LEFT,y,714,140,'#28201a',10);
   type('0'+(i+1),LEFT+18,y+49,34,GOLD,950);
   type(g.name.toUpperCase(),LEFT+87,y+48,34,CREAM,800,'left',447);
@@ -266,7 +266,7 @@ function drawMovers(seg,q){
  title('CAPTURE ONE → CAPTURE '+snapshots.length,up?'BIGGEST':'BIGGEST',up?'CLIMBERS':'FALLERS','RANK CHANGES BETWEEN THESE EXACT CAPTURES');
  dateRibbon(first,latest);
  seg.items.slice(0,5).forEach((g,i)=>{
-  const y=568+i*165,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const progress=ease((elapsed-i*1.03)/.82);
+  const y=568+i*165,elapsed=q*seg.dur,entry=i*.75;if(elapsed<entry)return;const progress=ease((elapsed-entry)/.65);
   rect(LEFT,y,714,143,'#27201b',12);
   rect(LEFT,y,8,143,up?GREEN:RED,3);
   type((g.change>0?'+':'')+g.change,LEFT+25,y+83,63,up?GREEN:RED,950);
@@ -305,7 +305,7 @@ function drawCove(seg,q){
  const max=Math.max(...trail.map(x=>x.g.experience))*1.04,ground=1190,span=458;
  trail.forEach((x,i)=>{
   const col=116,x0=LEFT+26+i*138;
-  const elapsed=q*seg.dur;if(elapsed<i*1.15)return;const ht=Math.max(8,span*x.g.experience/max)*ease((elapsed-i*1.15)/.85);
+  const elapsed=q*seg.dur,entry=i*Math.max(0,(seg.dur-1)/(Math.max(1,trail.length-1)));if(elapsed<entry)return;const ht=Math.max(8,span*x.g.experience/max)*ease((elapsed-entry)/.7);
   const y=ground-ht;
   rect(x0,ground-span,col,span,'#28211b',8);
   rect(x0,y,col,ht,i===trail.length-1?GOLD:'#a57f56',6);
@@ -375,16 +375,20 @@ function build(d){
  const widest=gaps.slice().sort((a,b)=>b.gap-a.gap).slice(0,4);
  segments=[];duration=0;
  function add(s,dur){s.dur=dur;s.start=duration;duration+=dur;s.end=duration;segments.push(s)}
- add({type:'race',step:3.2},snapshots.length*3.2);
- add({type:'growth',items:growth},6);
- add({type:'up',items:ups},6);
- add({type:'down',items:downs},6);
- // Compact cut: skip the three Top-25 scan pages (5.7 seconds).
- // All 50 recorded guilds remain intact in the archive and rank analysis.
- closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},3.2));
- widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},3.2));
- add({type:'cove'},7.2);
- add({type:'end'},5.2);
+ // One-minute director's cut. Preserve every actual capture and all eight
+ // adjacent-rank comparisons; shorten holds and staggered reveals instead.
+ // Reserve at most 14.4s for the continuous Top 10 race, even as captures grow.
+ const raceStep=Math.min(2.4,14.4/snapshots.length);
+ add({type:'race',step:raceStep},snapshots.length*raceStep);
+ add({type:'growth',items:growth},4.8);
+ add({type:'up',items:ups},4.6);
+ add({type:'down',items:downs},4.6);
+ closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},2.55));
+ widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},2.55));
+ add({type:'cove'},6.2);
+ add({type:'end'},4.5);
+ // Exactly 59.5s with six captures; no new video may exceed the limit.
+ if(duration>59.501)throw Error('One-minute director cut exceeded runtime budget: '+duration);
  ready=true;t=0;
  seek.disabled=false;play.disabled=false;seek.max=duration.toFixed(2);
  status.textContent='Loaded '+snapshots.length+' verified captures · uninterrupted Top 10 · '+Math.ceil(duration)+' seconds · no interpolated XP figures';
