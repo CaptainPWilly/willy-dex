@@ -366,6 +366,9 @@ function build(d){
  videoMode=d.videoEdit?.mode==='segment'?'segment':'full';
  newCaptures=videoMode==='segment'?d.videoEdit.newCaptures:d.snapshots.length;
  snapshots=validate(d);first=snapshots[0];latest=snapshots[snapshots.length-1];
+ overlay.querySelector('small').textContent=videoMode==='segment'
+   ?newCaptures+' new verified capture'+(newCaptures===1?'':'s')+' · Browser preview'
+   :snapshots.length+' verified captures · Season recap';
  const old=new Map(first.guilds.map(x=>[x.name,x]));
  const shared=latest.guilds.filter(g=>old.has(g.name)).map(g=>({...g,from:old.get(g.name).rank,change:old.get(g.name).rank-g.rank,gain:g.experience-old.get(g.name).experience}));
  const growth=shared.slice().sort((a,b)=>b.gain-a.gain).slice(0,5);
@@ -448,8 +451,17 @@ if(!document.querySelector('meta[name="willy-dex-edition"]'))fetch('checkins/man
 function chosenTimeline(source){
  if(document.querySelector('meta[name="willy-dex-edition"]'))return source;
  const params=new URLSearchParams(location.search);
- if(params.get('mode')!=='segment')return {...source,videoEdit:{mode:'full',newCaptures:source.snapshots.length}};
  const all=source.snapshots||[],startAt=params.get('start'),endAt=params.get('end');
+ if(params.get('mode')!=='segment'){
+  // A shared full-season preview is a pinned range, not a moving "latest".
+  // Existing director URLs with no explicit range retain current behavior.
+  if(!startAt&&!endAt)return {...source,videoEdit:{mode:'full',newCaptures:all.length}};
+  const start=startAt?all.findIndex(s=>s.capturedAt===startAt):0;
+  const end=endAt?all.findIndex(s=>s.capturedAt===endAt):all.length-1;
+  if(start!==0||end<1||end>=all.length)throw Error('The selected full-season captures are no longer available.');
+  const selected=all.slice(0,end+1);
+  return {...source,snapshots:selected,videoEdit:{mode:'full',newCaptures:selected.length}};
+ }
  const start=startAt?all.findIndex(s=>s.capturedAt===startAt):Math.max(1,all.findIndex(s=>Date.parse(s.capturedAt)>=Date.parse('2026-10-31T14:15:00-07:00')));
  const end=endAt?all.findIndex(s=>s.capturedAt===endAt):all.length-1;
  if(start<1||end<start)throw Error('Choose an existing segment with a preceding baseline');

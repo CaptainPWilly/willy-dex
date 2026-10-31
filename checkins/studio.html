@@ -35,6 +35,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{ou
 .publish-steps strong{color:var(--text)}
 #range-publish[hidden]{display:none!important}
 .preview{min-height:220px;text-align:center}.preview h2{text-align:left}
+.preview-share{margin-top:13px;padding:15px;border:1px solid #705338;border-radius:10px;background:#19130f;text-align:left}
+.preview-share strong{display:block;font-size:13px;color:var(--gold);margin-bottom:4px}
+.preview-share p{font-size:12px;margin:0 0 10px}
+.preview-share .share-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.preview-share .share-buttons button,.preview-share .share-buttons a{display:inline-flex;align-items:center;justify-content:center;flex:1 1 110px}
+.preview-share #share-link{font-size:12px;margin:0 0 10px;width:100%;cursor:text}
+#share-preview{white-space:nowrap}
 iframe{width:100%;height:620px;border:1px solid #6b5037;border-radius:10px;background:#100d0b}
 .placeholder{padding:65px 18px;border:1px dashed #725639;border-radius:9px;color:#bba78e;font-size:13px}
 .hint{font-size:12px;line-height:1.6;color:var(--muted)}[hidden]{display:none!important}
@@ -66,7 +73,18 @@ iframe{width:100%;height:620px;border:1px solid #6b5037;border-radius:10px;backg
 <div id="published-result" hidden aria-live="polite"><a class="action primary" id="watch-result" href="player.html">Watch &amp; download video</a> <a class="action" href="index.html">Video Library</a></div>
 <p class="hint">Videos are rendered and archived as 1080×1920 MP4 files. Once published, they get a permanent <a href="index.html">watch and download page</a>. The shared queue needs the Willy Dex publishing service to be online.</p>
 </section>
-<section class="panel preview"><h2>Director preview</h2><div class="placeholder" id="placeholder">Choose a cut and select Preview. The timeline will use only your recorded captures.</div><iframe id="frame" title="Video timeline preview" hidden loading="lazy" allow="autoplay"></iframe><p class="hint">Preview is interactive; publish to create the permanent high-quality MP4.</p></section>
+<section class="panel preview"><h2>Director preview</h2><div class="placeholder" id="placeholder">Choose a cut and select Preview. The timeline will use only your recorded captures.</div><iframe id="frame" title="Video timeline preview" hidden loading="lazy" allow="autoplay"></iframe>
+<div class="preview-share" id="preview-share" hidden>
+<strong>Share this preview</strong>
+<p>A watch-only browser player. No download, render, account or Studio controls.</p>
+<input type="text" id="share-link" aria-label="Shareable preview player link" readonly>
+<div class="share-buttons">
+<button type="button" class="action primary" id="copy-preview">Copy player link</button>
+<a class="action" id="open-preview" target="_blank" rel="noopener noreferrer" href="preview.html">Open player</a>
+<button type="button" class="action" id="native-share" hidden>Share</button>
+</div>
+</div>
+<p class="hint">Browser previews play instantly from the recorded snapshot data. Share links fix the selected captures; HQ MP4s are published separately.</p></section>
 </div></main>
 <script>
 'use strict';
@@ -83,6 +101,7 @@ $('range').hidden=mode==='full';
 const a=snapshots.findIndex(s=>s.capturedAt===$('from').value),b=snapshots.findIndex(s=>s.capturedAt===$('to').value);
 const valid=mode==='full'?snapshots.length>1:a>=1&&b>=a;
 $('preview').disabled=!valid;$('generate').disabled=!valid;
+if(!valid||$('frame').dataset.previewKey!==JSON.stringify(selected()))$('preview-share').hidden=true;
 
 if(mode==='full')$('summary').textContent='Full Season '+(snapshots[0]?.season||15)+' · '+snapshots.length+' verified captures · '+fmt(snapshots[0]?.capturedAt)+' → '+fmt(snapshots[snapshots.length-1]?.capturedAt);
 else $('summary').textContent=valid?('Previous ending: '+fmt(snapshots[a-1].capturedAt)+' · '+(b-a+1)+' new capture'+(b-a===0?'':'s')+' · Through '+fmt(snapshots[b].capturedAt)):'Choose a finish at or after your start.';
@@ -99,11 +118,52 @@ start.selectedIndex=Math.max(0,defaultFrom-1);end.selectedIndex=end.options.leng
 }
 for(const id of ['segment','full'])$(id).addEventListener('click',()=>{mode=id;update()});
 for(const id of ['from','to'])$(id).addEventListener('change',update);
+function previewPlayerUrl(config){
+ const url=new URL('preview.html',location.href);
+ url.searchParams.set('mode',config.mode);
+ // Always use exact capturedAt values, including full-season end.
+ // This prevents a shared preview from silently expanding with new updates.
+ url.searchParams.set('start',config.mode==='segment'?config.startAt:snapshots[0].capturedAt);
+ url.searchParams.set('end',config.mode==='segment'?config.endAt:snapshots[snapshots.length-1].capturedAt);
+ return url;
+}
 $('preview').addEventListener('click',()=>{
-const s=selected(),url=new URL('../season-15-check-in.html',location.href);
-url.searchParams.set('mode',s.mode);
-if(s.mode==='segment'){url.searchParams.set('start',s.startAt);url.searchParams.set('end',s.endAt)}
-$('frame').src=url.href;$('frame').hidden=false;$('placeholder').hidden=true;status('Preview loaded from recorded leaderboard data.');
+ const s=selected(),link=previewPlayerUrl(s);
+ const url=new URL('../season-15-check-in.html',location.href);
+ url.search=link.search;
+ url.searchParams.set('share','watch');
+ $('frame').src=url.href;
+ $('frame').dataset.previewKey=JSON.stringify(s);
+ $('frame').hidden=false;
+ $('placeholder').hidden=true;
+ $('share-link').value=link.href;
+ $('open-preview').href=link.href;
+ $('preview-share').hidden=false;
+ $('native-share').hidden=!Boolean(navigator.share);
+ status('Preview ready. Use Copy player link to share this exact cut.');
+});
+async function copyPreviewLink(){
+ const input=$('share-link');
+ try{
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+   await navigator.clipboard.writeText(input.value);
+   status('Preview player link copied. Anyone with the link can watch.');
+   return;
+  }
+ }catch(e){}
+ input.focus();input.select();
+ try{
+  if(document.execCommand('copy')){status('Player link copied. Anyone with the link can watch.');return}
+ }catch(e){}
+ status('Player link selected. Use your device’s Copy command.');
+}
+$('copy-preview').addEventListener('click',copyPreviewLink);
+$('share-link').addEventListener('click',event=>event.target.select());
+$('native-share').addEventListener('click',async()=>{
+ const url=$('share-link').value;
+ try{
+  await navigator.share({title:'Willy Dex GLB video preview',url});
+ }catch(e){if(e.name!=='AbortError')await copyPreviewLink()}
 });
 function appendLink(parent,text,url){
  const a=document.createElement('a');a.href=url;a.textContent=text;a.className='action primary';parent.appendChild(a);
