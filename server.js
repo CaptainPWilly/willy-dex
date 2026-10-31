@@ -9,6 +9,11 @@ if(!password){console.error('Missing ADMIN_PASSWORD');process.exit(1)}
 if(!githubToken)console.warn('GITHUB_TOKEN is not configured; editor saves and uploads are disabled until configured.');
 const passSalt=crypto.randomBytes(32),passHash=crypto.scryptSync(password,passSalt,64);
 const sessions=new Map(),attempts=new Map();
+const anonymousVideoRequests=new Map();
+let anonymousVideoBusy=false;
+const VIDEO_STUDIO_URL='https://captainpwilly.github.io/willy-dex/checkins/player.html?edition=';
+const VIDEO_DAILY_CAP=6,VIDEO_HOURLY_CAP=2;
+
 const json=(r,status,data,headers={})=>{r.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...headers});r.end(JSON.stringify(data))};
 function cors(req,res){const requested=req.headers.origin;if(requested&&requested!==origin)return false;res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');res.setHeader('Access-Control-Allow-Methods','POST,OPTIONS');return true}
 function read(req){return new Promise((resolve,reject)=>{let s='',length=0;req.on('data',c=>{length+=c.length;if(length>5*1024*1024){reject(Error('Request exceeds 5MB'));req.destroy()}else s+=c});req.on('end',()=>{try{resolve(JSON.parse(s||'{}'))}catch{reject(Error('Invalid JSON'))}});req.on('error',reject)})}
@@ -80,6 +85,62 @@ if(index>=0)doc.snapshots[index]=snapshot;else doc.snapshots.push(snapshot);
 doc.season=data.season;doc.snapshots.sort((a,b)=>(a.season||15)-(b.season||15)||Date.parse(a.capturedAt||a.date)-Date.parse(b.capturedAt||b.date));
 await git('glb.json','PUT',{message:'Willy DEX: GLB season '+data.season+' snapshot '+data.date,sha:file.sha,content:Buffer.from(JSON.stringify(doc,null,2)+'\n').toString('base64')});
 return json(res,200,{ok:true,season:data.season,date:data.date,count:guilds.length});
+}
+if(req.url==='/api/public-video'&&req.method==='POST'){
+ // This anonymous endpoint can ONLY dispatch the preexisting GLB renderer.
+ // Never accept workflow, branch, repository, paths, or arbitrary code from a caller.
+ if(req.headers.origin!==origin)return json(res,403,{error:'Open the official Willy Dex Video Studio link to create a video.'});
+ if(!githubToken)return json(res,503,{error:'Team rendering is not enabled on the publishing server yet.'});
+ if(anonymousVideoBusy)return json(res,429,{error:'Another studio request is being checked. Please try again shortly.'},{'Retry-After':'15'});
+ anonymousVideoBusy=true;
+ try{
+  const body=await read(req),mode=body.mode;
+  if(mode!=='segment'&&mode!=='full')return json(res,400,{error:'Select Segment or Full Season Recap.'});
+  const startAt=mode==='segment'?String(body.startAt||''):'';
+  const endAt=mode==='segment'?String(body.endAt||''):'';
+  const stamps=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/;
+  if(mode==='segment'&&(!stamps.test(startAt)||!stamps.test(endAt)))return json(res,400,{error:'Select two recorded capture timestamps.'});
+  const glbFile=await git('glb.json');
+  const glb=JSON.parse(Buffer.from(glbFile.content,'base64').toString('utf8'));
+  if(!Array.isArray(glb.snapshots)||glb.snapshots.length<2||!Number.isInteger(glb.season))throw Error('Leaderboard archive is unavailable or incomplete.');
+  const captures=glb.snapshots;
+  if(mode==='segment'){
+   const first=captures.findIndex(s=>s.capturedAt===startAt);
+   const last=captures.findIndex(s=>s.capturedAt===endAt);
+   if(first<1||last<first)return json(res,400,{error:'This segment requires a recorded starting capture, an ending capture, and an earlier baseline.'});
+  }
+  const manifestFile=await git('checkins/manifest.json');
+  const manifest=JSON.parse(Buffer.from(manifestFile.content,'base64').toString('utf8'));
+  const edition=(manifest.editions||[]).find(e=>mode==='segment'
+   ?e.mode==='segment'&&e.rangeFrom===startAt&&e.rangeTo===endAt
+   :e.mode==='full'&&e.firstCapturedAt===captures[0].capturedAt&&e.capturedAt===captures[captures.length-1].capturedAt);
+  if(edition&&edition.id&&/^s[0-9]+-[a-zA-Z0-9-]+$/.test(edition.id)){
+   return json(res,200,{ok:true,status:'published',message:'This exact cut was already published.',watch:VIDEO_STUDIO_URL+encodeURIComponent(edition.id),download:edition.video});
+  }
+  const key=crypto.createHash('sha256').update(JSON.stringify({season:glb.season,mode,startAt,endAt,latest:captures[captures.length-1].capturedAt})).digest('hex');
+  const now=Date.now();
+  for(const [k,v] of anonymousVideoRequests)if(now-v>3600000)anonymousVideoRequests.delete(k);
+  if(anonymousVideoRequests.has(key))return json(res,202,{ok:true,status:'queued',message:'This exact video has already been requested and is being processed.',library:'https://captainpwilly.github.io/willy-dex/checkins/index.html'});
+  const actions='https://api.github.com/repos/CaptainPWilly/willy-dex/actions/workflows/publish-glb-checkins.yml/runs?event=workflow_dispatch&per_page=100';
+  const checkResponse=await fetch(actions,{headers:{Authorization:'Bearer '+githubToken,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}});
+  if(!checkResponse.ok)throw Error('The publisher could not verify its request limits (GitHub '+checkResponse.status+').');
+  const checkData=await checkResponse.json();
+  if(!Array.isArray(checkData.workflow_runs))throw Error('The publisher could not verify job activity.');
+  const recent=checkData.workflow_runs.filter(run=>run.event==='workflow_dispatch'&&Number.isFinite(Date.parse(run.created_at)));
+  const hourly=recent.filter(run=>now-Date.parse(run.created_at)<3600000).length;
+  const daily=recent.filter(run=>now-Date.parse(run.created_at)<86400000).length;
+  if(hourly>=VIDEO_HOURLY_CAP||daily>=VIDEO_DAILY_CAP)return json(res,429,{error:'Video generation is at its shared safety limit ('+VIDEO_HOURLY_CAP+' per hour, '+VIDEO_DAILY_CAP+' per day). Existing videos remain available.'},{'Retry-After':'3600'});
+  const dispatch=await fetch('https://api.github.com/repos/CaptainPWilly/willy-dex/actions/workflows/publish-glb-checkins.yml/dispatches',{
+   method:'POST',headers:{Authorization:'Bearer '+githubToken,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'},
+   body:JSON.stringify({ref:'main',inputs:{mode,start_at:startAt,end_at:endAt}})
+  });
+  if(dispatch.status!==204){
+   const error=await dispatch.json().catch(()=>({}));
+   throw Error('GitHub rejected the publishing request: '+(error.message||dispatch.status));
+  }
+  anonymousVideoRequests.set(key,now);
+  return json(res,202,{ok:true,status:'queued',message:'Render requested. The permanent video will appear in the Video Library when publishing finishes.',library:'https://captainpwilly.github.io/willy-dex/checkins/index.html'});
+ }finally{anonymousVideoBusy=false}
 }
 if(req.url==='/api/videos'&&req.method==='POST'){
 if(!authorized(req))return json(res,401,{error:'Editor locked'});

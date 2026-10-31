@@ -56,27 +56,22 @@ iframe{width:100%;height:620px;border:1px solid #6b5037;border-radius:10px;backg
 <p class="hint">The capture immediately before your start is included as a comparison baseline, not counted as a new snapshot.</p>
 </div>
 <div id="summary" aria-live="polite">Loading captured leaderboard history…</div>
-<div class="actions"><button class="action" id="preview" disabled>Preview selected cut</button><button class="action primary" id="generate" disabled>Continue to GitHub</button></div>
+<div class="actions"><button class="action" id="preview" disabled>Preview selected cut</button><button class="action primary" id="generate" disabled>Generate HQ MP4</button></div>
 <div id="publish-guide">
-<h3>Publish with your GitHub account</h3>
-<p>There is no separate studio password. Publishing is authorized by your access to the Willy Dex GitHub repository.</p>
-<div class="publish-field"><label>Video type<input id="workflow-mode" readonly value="segment" aria-label="Workflow video type"></label><button type="button" data-copy="workflow-mode">Copy</button></div>
-<div id="range-publish">
-<div class="publish-field"><label>start_at · First new capture<input id="workflow-start" readonly aria-label="Exact start capture timestamp"></label><button type="button" data-copy="workflow-start">Copy</button></div>
-<div class="publish-field"><label>end_at · Last capture<input id="workflow-end" readonly aria-label="Exact end capture timestamp"></label><button type="button" data-copy="workflow-end">Copy</button></div>
-</div>
-<ol class="publish-steps"><li>Open the GitHub publisher using the button above and sign in to GitHub if prompted.</li><li>Click <strong>Run workflow</strong> on the <strong>main</strong> branch.</li><li>Select the video type. For a segment, paste the exact start_at and end_at values shown here; for full, leave them empty.</li><li>Click the green <strong>Run workflow</strong> confirmation. Your completed video will appear in <a href="index.html">the video library</a>.</li></ol>
-<p class="hint">Only repository members with permission to run GitHub Actions can publish. Everyone can preview.</p>
+<h3>Shared video generator</h3>
+<p>Anyone with this link can preview and request a video. No login, password, or GitHub account.</p>
+<p class="hint">To protect the publisher from unlimited renders, the shared queue is capped at two new videos per hour and six per day. Existing videos can be reused instantly.</p>
 </div>
 <div id="status" role="status" aria-live="polite"></div>
-<p class="hint">Published HQ videos appear in <a href="index.html">the library</a> with their own permanent watch and download links. <a href="https://github.com/CaptainPWilly/willy-dex/actions/workflows/publish-glb-checkins.yml">Open GitHub publisher directly</a> if your browser blocks new tabs.</p>
+<div id="published-result" hidden aria-live="polite"><a class="action primary" id="watch-result" href="player.html">Watch &amp; download video</a> <a class="action" href="index.html">Video Library</a></div>
+<p class="hint">Videos are rendered and archived as 1080×1920 MP4 files. Once published, they get a permanent <a href="index.html">watch and download page</a>. The shared queue needs the Willy Dex publishing service to be online.</p>
 </section>
 <section class="panel preview"><h2>Director preview</h2><div class="placeholder" id="placeholder">Choose a cut and select Preview. The timeline will use only your recorded captures.</div><iframe id="frame" title="Video timeline preview" hidden loading="lazy" allow="autoplay"></iframe><p class="hint">Preview is interactive; publish to create the permanent high-quality MP4.</p></section>
 </div></main>
 <script>
 'use strict';
 (async()=>{
-const $=id=>document.getElementById(id),WORKFLOW='https://github.com/CaptainPWilly/willy-dex/actions/workflows/publish-glb-checkins.yml';
+const $=id=>document.getElementById(id),API='https://willy-dex-editor.onrender.com';
 const fmt=s=>{const d=new Date(s);return Number.isFinite(+d)?d.toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})+' PT':String(s)};
 let snapshots=[],mode='segment';
 const status=(message,error=false)=>{$('status').textContent=message;$('status').classList.toggle('error',error)};
@@ -88,10 +83,7 @@ $('range').hidden=mode==='full';
 const a=snapshots.findIndex(s=>s.capturedAt===$('from').value),b=snapshots.findIndex(s=>s.capturedAt===$('to').value);
 const valid=mode==='full'?snapshots.length>1:a>=1&&b>=a;
 $('preview').disabled=!valid;$('generate').disabled=!valid;
-$('workflow-mode').value=mode;
-$('range-publish').hidden=mode==='full';
-$('workflow-start').value=mode==='segment'&&valid?snapshots[a].capturedAt:'';
-$('workflow-end').value=mode==='segment'&&valid?snapshots[b].capturedAt:'';
+
 if(mode==='full')$('summary').textContent='Full Season '+(snapshots[0]?.season||15)+' · '+snapshots.length+' verified captures · '+fmt(snapshots[0]?.capturedAt)+' → '+fmt(snapshots[snapshots.length-1]?.capturedAt);
 else $('summary').textContent=valid?('Previous ending: '+fmt(snapshots[a-1].capturedAt)+' · '+(b-a+1)+' new capture'+(b-a===0?'':'s')+' · Through '+fmt(snapshots[b].capturedAt)):'Choose a finish at or after your start.';
 }
@@ -113,15 +105,56 @@ url.searchParams.set('mode',s.mode);
 if(s.mode==='segment'){url.searchParams.set('start',s.startAt);url.searchParams.set('end',s.endAt)}
 $('frame').src=url.href;$('frame').hidden=false;$('placeholder').hidden=true;status('Preview loaded from recorded leaderboard data.');
 });
-document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
- const input=$(button.dataset.copy);input.focus();input.select();
- try{await navigator.clipboard.writeText(input.value);status('Copied '+input.id.replace('workflow-','')+' for the GitHub workflow.')}
- catch(err){const ok=document.execCommand('copy');status(ok?'Copied value.':'Value selected. Copy it using your device’s Copy command.',!ok)}
-}));
-$('generate').addEventListener('click',()=>{
+function appendLink(parent,text,url){
+ const a=document.createElement('a');a.href=url;a.textContent=text;a.className='action primary';parent.appendChild(a);
+}
+let pollTimer=null;
+function matchEdition(manifest,config){
+ return (manifest.editions||[]).find(e=>config.mode==='segment'
+  ?e.mode==='segment'&&e.rangeFrom===config.startAt&&e.rangeTo===config.endAt
+  :e.mode==='full'&&e.firstCapturedAt===snapshots[0].capturedAt&&e.capturedAt===snapshots[snapshots.length-1].capturedAt);
+}
+function published(id){
+ $('watch-result').href='player.html?edition='+encodeURIComponent(id);
+ $('published-result').hidden=false;
+ status('Video is published. Watch it or download the MP4 from its permanent page.');
+}
+async function checkPublished(config){
+ try{
+ const r=await fetch('manifest.json?video-check='+Date.now(),{cache:'no-store'});
+ if(!r.ok)return false;
+ const edition=matchEdition(await r.json(),config);
+ if(!edition)return false;
+ published(edition.id);return true;
+ }catch{return false}
+}
+$('generate').addEventListener('click',async()=>{
  if($('generate').disabled)return;
- status('Open GitHub, select the video type, paste the values above, then click Run workflow. No studio password needed.');
- window.open(WORKFLOW,'_blank','noopener,noreferrer');
+ const config=selected();
+ $('published-result').hidden=true;
+ $('generate').disabled=true;
+ status('Checking the shared video queue…');
+ try{
+  const response=await fetch(API+'/api/public-video',{
+   method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(config)
+  });
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok)throw Error(result.error||'Publishing service unavailable. Please try again later.');
+  if(result.status==='published'&&result.watch){
+   const u=new URL(result.watch);
+   if(u.origin!==location.origin||u.pathname!=='/willy-dex/checkins/player.html')throw Error('Unexpected published video link');
+   published(u.searchParams.get('edition'));return;
+  }
+  status(result.message||'Video requested. It will appear in the archive after rendering.');
+  if(pollTimer)clearInterval(pollTimer);
+  let checks=0;
+  pollTimer=setInterval(async()=>{
+   checks++;
+   if(await checkPublished(config)||checks>=60){clearInterval(pollTimer);pollTimer=null}
+  },20000);
+ }catch(error){
+  status(error.message,true);
+ }finally{update()}
 });
 try{
 const response=await fetch('../glb.json',{cache:'no-store'});if(!response.ok)throw Error('Leaderboard archive unavailable');
