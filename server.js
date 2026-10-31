@@ -89,7 +89,7 @@ if(mode!=='full'&&mode!=='segment')return json(res,400,{error:'Choose full seaso
 let startAt='',endAt='';
 if(mode==='segment'){
  startAt=String(data.startAt||'');endAt=String(data.endAt||'');
- const stamp=/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:Z|[+-]\\d{2}:\\d{2})$/;
+ const stamp=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/;
  if(!stamp.test(startAt)||!stamp.test(endAt))return json(res,400,{error:'Choose recorded start and end captures'});
  const file=await git('glb.json'),doc=JSON.parse(Buffer.from(file.content,'base64').toString('utf8'));
  const arr=doc.snapshots||[],a=arr.findIndex(s=>s.capturedAt===startAt),b=arr.findIndex(s=>s.capturedAt===endAt);
