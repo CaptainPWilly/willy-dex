@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="../../../">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="willy-dex-edition" content="s15-2026-10-30T16-45-00-07-00-ccefba06409b-8d997958">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#110d0b"><title>Season 15 | Director Cut — Willy Dex</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#0e0b09;color:#f4e7d1;font:500 14px/1.4 system-ui,-apple-system,Segoe UI,sans-serif}
+body{background:radial-gradient(ellipse at 50% 4%,#322117,#0e0b09 60%);min-height:100dvh}
+main{max-width:650px;margin:auto;padding:12px 14px 30px}
+h1{font-size:13px;letter-spacing:.18em;display:flex;justify-content:space-between;align-items:center;margin:6px 0 13px}
+h1 em{font-size:11px;font-weight:600;letter-spacing:.06em;color:#c9ab80;font-style:normal}
+#screen{position:relative;aspect-ratio:9/16;width:min(100%,calc(83dvh * 9 / 16));max-width:100%;margin:auto;overflow:hidden;border:1px solid #63462f;border-radius:10px;background:#110d0b;box-shadow:0 24px 70px #000a}
+#film{display:block;width:100%;height:100%}
+#overlay{position:absolute;inset:0;border:0;background:#0007;color:#fff;display:grid;place-content:center;gap:12px;text-align:center;cursor:pointer}
+#overlay b{padding:14px 27px;border:2px solid #e1ac6c;background:#26170fec;border-radius:50px;font-size:16px}
+#overlay small{color:#f4d5aa;letter-spacing:.05em}
+#overlay.hidden{display:none}
+.controls{display:flex;align-items:center;gap:9px;margin:12px auto 0;max-width:500px}
+.controls button{background:#2c1f18;color:#f4e7d1;border:1px solid #8c5a36;border-radius:8px;padding:10px 12px;cursor:pointer;font-weight:800}
+.controls button[disabled]{opacity:.4;cursor:default}.controls input{accent-color:#eeb879;min-width:0;flex:1}
+#time{font:600 12px/1.2 ui-monospace,monospace;color:#c2a17d;white-space:nowrap}
+.meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;color:#b7a08c;font-size:11px;padding-top:10px}
+.meta a{color:#e9b47b}
+#status{text-align:center;font-size:11px;color:#ab9580;padding:10px}
+a.video-export{display:block;max-width:500px;margin:14px auto;padding:14px 18px;text-align:center;border-radius:9px;text-decoration:none;background:#e9b77a;color:#1c120d;font-weight:900;font-size:15px}a.video-export:hover{background:#f4d2a0}a.video-export[hidden]{display:none!important}.archive-nav{display:block;text-align:center;color:#e9b77a;font-size:12px;font-weight:750;margin:10px}
+/* Unlisted public links: view-only hides download UI; this is not DRM. */
+body.share-mode .archive-nav,body.share-mode .meta,body.share-mode #zones,body.share-mode #status{display:none!important}
+body.share-watch .video-export,body.share-watch .export-video,body.share-watch #video-export{display:none!important}
+body.share-mode main{padding-top:17px}
+body.share-mode #screen{margin-bottom:12px}
+a.export-video{display:block;max-width:500px;margin:12px auto;text-align:center;background:#dbaf6e;color:#1d110b;font-size:15px;font-weight:900;padding:15px 20px;border-radius:9px;text-decoration:none}a.export-video:hover{background:#f4d29d}</style>
+</head>
+<body><main>
+<h1>WILLY / DEX <em>SEASON 15 / DIRECTOR CUT</em></h1>
+<div id="screen"><canvas id="film" width="1080" height="1920" aria-label="Animated Season 15 global leaderboard analysis"></canvas>
+<button id="overlay"><b>▶ PLAY SEASON 15</b><small>All recorded snapshots · Directed cut</small></button></div>
+<div class="controls"><button id="play" disabled aria-label="Play video">▶</button><input id="seek" aria-label="Scrub video" type="range" min="0" max="76" step=".05" value="0" disabled><span id="time">0:00</span><button id="sound" title="Toggle original soundtrack">♫ ON</button><button id="zones" title="Show Shorts cover regions">SAFE</button></div>
+<a id="video-export" class="video-export" href="#" hidden>↓ DOWNLOAD LATEST MP4</a>
+<a class="export-video" href="https://github.com/CaptainPWilly/willy-dex/releases/download/s15-2026-10-30T16-45-00-07-00-ccefba06409b-8d997958/s15-2026-10-30T16-45-00-07-00-ccefba06409b-8d997958-HQ-1080p60.mp4">↓ DOWNLOAD MP4 FOR YOUTUBE</a>
+<div class="meta"><span>9:16 Shorts framing</span><span>•</span><span>Recorded ranks only</span><span>•</span><a href="checkins/editions/s15-2026-10-30T16-45-00-07-00-ccefba06409b-8d997958/data.json">Source: Willy Dex GLB</a></div>
+<div id="status">Loading verified leaderboard snapshots...</div>
+<div class="meta"><a href="checkins/index.html">ALL SAVED EDITIONS</a> · <span>ARCHIVE s15-2026-10-30T16-45-00-07-00-ccefba06409b-8d997958</span></div></main>
+<script>
+(function(){
+'use strict';
+const shareMode=new URLSearchParams(location.search).get('share');
+if(shareMode==='watch'||shareMode==='download'){
+ document.body.classList.add('share-mode');
+ if(shareMode==='watch')document.body.classList.add('share-watch');
+ const robots=document.createElement('meta');robots.name='robots';robots.content='noindex,nofollow,noarchive';document.head.appendChild(robots);
+}
+const cvs=document.getElementById('film'),ctx=cvs.getContext('2d');
+const play=document.getElementById('play'),seek=document.getElementById('seek'),time=document.getElementById('time'),overlay=document.getElementById('overlay');
+const zonesBtn=document.getElementById('zones'),soundBtn=document.getElementById('sound'),status=document.getElementById('status');
+const W=1080,H=1920,LEFT=74,RIGHT=788,GOLD='#f4bf79',CREAM='#f4e7d1',MUTED='#bfa78e',GREEN='#a6dab5',RED='#ef988d';
+let snapshots=[],latest=null,first=null,segments=[],duration=0,records=[],t=0,playing=false,origin=0,raf=0,mute=false,showZones=false,ready=false,warning='';
+let audio=null,master=null,beatTimer=null,nextBeat=0,beatIndex=0;
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const short=n=>n>=1000000?(n/1000000).toFixed(2)+'M':n>=1000?(n/1000).toFixed(1)+'K':String(n);
+const clip=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=x=>1-Math.pow(1-clip(x,0,1),3);
+// Ease in AND out: rank cards do not teleport into a lane or jerk to a stop.
+const smooth=x=>{x=clip(x,0,1);return x*x*(3-2*x)};
+function localTime(s){if(!s.capturedAt)return (s.date||'UNKNOWN DATE')+' · TIME UNSPECIFIED';const d=new Date(s.capturedAt);if(!Number.isFinite(d.getTime()))return (s.date||'UNKNOWN')+' · TIME UNSPECIFIED';return d.toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).toUpperCase()+' PT'}
+function line(x,y,X,Y,color,width=2){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X,Y);ctx.stroke()}
+function rect(x,y,w,h,color,r=0){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
+function type(s,x,y,size=32,color=CREAM,weight=700,align='left',max=0){ctx.font=weight+' '+size+'px system-ui,-apple-system,Segoe UI,Arial,sans-serif';ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='alphabetic';if(max){let actual=size;while(ctx.measureText(String(s)).width>max&&actual>22){actual--;ctx.font=weight+' '+actual+'px system-ui,-apple-system,Segoe UI,Arial,sans-serif'}}ctx.fillText(String(s),x,y);ctx.textAlign='left'}
+function count(s,x,y,size,color,max){type(s,x,y,size,color,800,'left',max)}
+function base(globalTime){
+ const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#291b15');g.addColorStop(.48,'#130f0e');g.addColorStop(1,'#0d0c0c');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ const glow=ctx.createRadialGradient(875,420,10,875,420,900);glow.addColorStop(0,'#9f5b291d');glow.addColorStop(1,'#0000');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+ for(let x=0;x<W;x+=88)line(x,0,x,H,'#e0ad600b',1);
+ for(let y=0;y<H;y+=120)line(0,y,W,y,'#f3d19a0b',1);
+ for(let i=0;i<20;i++){let yy=(i*123+globalTime*39)%H;rect(886+(i%5)*35,yy,5,5,'#c486483e',1)}
+ ctx.save();ctx.translate(1030,450);ctx.rotate(-.24);ctx.strokeStyle='#be865022';ctx.lineWidth=3;ctx.strokeRect(-190,-300,430,740);ctx.strokeRect(-160,-268,370,680);ctx.restore();
+ rect(LEFT,98,7,50,GOLD,2);type('WILLY  /  DEX',94,129,30,CREAM,900);
+ type('SEASON 15   •   GLOBAL LEADERBOARD',LEFT,175,22,MUTED,800);
+ line(LEFT,197,RIGHT,197,'#9c734a',2);
+ line(LEFT,1470,RIGHT,1470,'#87664a',2);
+ type('SMMO  /  RECORDED SNAPSHOTS',LEFT,1512,24,MUTED,700);
+ type('NOT LIVE',RIGHT,1512,23,GOLD,800,'right');
+ // Everything essential stays left of the Shorts action rail and above its caption overlay.
+ const p=duration?clip(globalTime/duration,0,1):0;rect(0,1913,W*p,7,GOLD);
+}
+function title(kicker,one,two,detail){type(kicker,LEFT,255,25,GOLD,900);type(one,LEFT,337,67,CREAM,950,'left',715);if(two)type(two,LEFT,417,67,GOLD,950,'left',715);if(detail)type(detail,LEFT,472,23,MUTED,650,'left',712)}
+// Exact capture dates, not inferred daily averages. The labeled ribbon stays
+// on-screen during every comparison, above the unchanged XP graphics.
+function dateStamp(s){return localTime(s).replace(/ PT$/,'')}
+function dateRibbon(from,to,kind='compare'){
+ const y=484;
+ rect(LEFT,y,714,51,'#332219',8);
+ rect(LEFT,y,6,51,GOLD,2);
+ if(kind==='single'){
+   type('RECORDED',LEFT+17,y+19,17,GOLD,900);
+   type(dateStamp(to||from)+' PT',LEFT+17,y+43,24,CREAM,900,'left',518);
+   type('ONE CAPTURE',RIGHT-15,y+31,19,GREEN,900,'right',171);
+ }else if(kind==='baseline'){
+   type('BASELINE · CAPTURE 1 OF '+snapshots.length,LEFT+17,y+20,18,GOLD,900);
+   type(dateStamp(to)+' PT',LEFT+17,y+44,24,CREAM,900,'left',517);
+ }else{
+   type('FROM',LEFT+17,y+18,17,GOLD,950);
+   type(dateStamp(from),LEFT+17,y+43,23,CREAM,900,'left',294);
+   type('→',LEFT+348,y+35,33,GOLD,950,'center');
+   type('TO',LEFT+401,y+18,17,GREEN,950);
+   type(dateStamp(to),LEFT+401,y+43,23,CREAM,900,'left',292);
+ }
+}
+function badge(s,y,color=GOLD){rect(LEFT,y,6,38,color,2);type(s,LEFT+25,y+28,28,color,900)}
+function captureTag(s,idx,total){return 'CAPTURE '+(idx+1)+' / '+total+'     '+localTime(s)}
+function bar(x,y,w,h,p,active){rect(x,y,w,h,'#45352a',6);rect(x,y,w*clip(p,0,1),h,active?GOLD:'#9d7751',6)}
+function drawRace(seg,q){
+ // One permanent leaderboard layout for every recorded capture. No scene cuts.
+ const step=seg.step,elapsed=q*seg.dur;
+ const idx=Math.min(snapshots.length-1,Math.floor(elapsed/step));
+ const within=elapsed-idx*step;
+ const previous=snapshots[Math.max(0,idx-1)],current=snapshots[idx];
+ const previousByName=new Map(previous.guilds.map(g=>[g.name,g]));
+ const currentByName=new Map(current.guilds.map(g=>[g.name,g]));
+ const firstCapture=idx===0;
+ // XP bar motion is intentionally unchanged from the approved cut.
+ const transition=firstCapture?1:ease((within-.18)/1.20);
+ // Rank exchanges are separate, sequential, continuous animations.
+ // Group overlapping rank paths; for this archive, #4/#5 and #8/#9
+ // swap one AFTER the other, so viewers can follow the guild names.
+ const shifting=current.guilds.slice(0,10).filter(g=>{
+   const old=previousByName.get(g.name);
+   return !firstCapture && old && old.rank!==g.rank;
+ });
+ const spans=shifting.map(g=>({
+   low:Math.min(g.rank,previousByName.get(g.name).rank),
+   high:Math.max(g.rank,previousByName.get(g.name).rank)
+ })).sort((a,b)=>a.low-b.low);
+ const groups=[];
+ for(const span of spans){
+   const last=groups[groups.length-1];
+   if(last&&span.low<=last.high){last.high=Math.max(last.high,span.high)}
+   else groups.push({...span});
+ }
+ const pad=0.14, available=step-0.36;
+ const groupDur=groups.length?Math.min(1.48,available/groups.length-.12):0;
+ const groupGap=groups.length>1?(available-groups.length*groupDur)/(groups.length-1):0;
+ const rankMotion=g=>{
+   if(!g.shifting)return transition;
+   const pos=groups.findIndex(v=>Math.min(g.newRank,g.oldRank)>=v.low&&Math.max(g.newRank,g.oldRank)<=v.high);
+   const start=pad+Math.max(0,pos)*(groupDur+groupGap);
+   return smooth((within-start)/Math.max(.1,groupDur));
+ };
+ const maxXp=Math.max(...snapshots.map(s=>s.guilds[0].experience));
+ const yTop=545,spacing=82;
+ title('50 GUILDS   /   '+snapshots.length+' VERIFIED CAPTURES','GLOBAL','TOP TEN','SEASON 15 · XP TRACKER · CAPTURE '+(idx+1)+' / '+snapshots.length);
+ dateRibbon(previous,current,firstCapture?'baseline':'compare');
+ // Background rank slots never move, only the guilds occupying them.
+ for(let i=0;i<10;i++){
+   const y=yTop+i*spacing;
+   rect(LEFT,y,714,76,i%2?'#281f1a':'#30241b',7);
+   rect(LEFT+3,y+5,53,65,'#3d2d20',5);
+   type(String(i+1).padStart(2,'0'),LEFT+11,y+43,31,GOLD,900);
+ }
+ const names=new Set([...previous.guilds.slice(0,10).map(g=>g.name),...current.guilds.slice(0,10).map(g=>g.name)]);
+ const group=[...names].map(name=>{
+   const old=previousByName.get(name)||null,now=currentByName.get(name)||null;
+   const oldRank=old?old.rank:11,newRank=now?now.rank:11;
+   const shifting=!firstCapture&&oldRank!==newRank;
+   return {name,old,now,oldRank,newRank,shifting};
+ }).filter(g=>g.oldRank<=10||g.newRank<=10);
+ // Render steady guilds before moving guilds. Moving ranks keep their names
+ // continuously visible while passing in smoothly diverging side lanes.
+ group.sort((a,b)=>Number(a.shifting)-Number(b.shifting)||a.newRank-b.newRank);
+ ctx.save();ctx.beginPath();ctx.rect(LEFT,yTop-3,714,spacing*10+8);ctx.clip();
+ for(const g of group){
+   const from=g.oldRank-1,to=g.newRank-1;
+   const motion=firstCapture?1:rankMotion(g);
+   const y=yTop+(from+(to-from)*motion)*spacing;
+   if(y<yTop-90||y>yTop+spacing*10+40)continue;
+   const before=g.old||g.now,after=g.now||g.old;
+   const beforeXp=before.experience,afterXp=after.experience;
+   // Bars are a visual transition only; displayed XP numbers use exact captured endpoints.
+   const pct=(beforeXp+(afterXp-beforeXp)*motion)/maxXp;
+   const selectedXp=firstCapture?afterXp:(transition<.72?beforeXp:afterXp);
+   const active=g.newRank===1||g.oldRank===1;
+   // One uninterrupted geometric path. Sinusoidal lane separation is zero
+   // at both ends and maximal only as two guilds cross the same rank slot.
+   // No hard branch at 3.5%/96.5%, which caused the old horizontal jump.
+   if(g.shifting){
+     const lane=Math.pow(Math.sin(Math.PI*motion),2);
+     const x0=LEFT+69, full=627, shrink=319*lane;
+     const w=full-shrink;
+     const x=x0+(g.newRank>g.oldRank?shrink:0);
+     const baseY=y;
+     if(lane>.001){
+       rect(x-6,baseY-2,w+12,78,'#51391f',9);
+       rect(x-6,baseY-2,6,78,g.newRank<g.oldRank?GREEN:RED,3);
+     }
+     // The identity/name and XP bar stay attached to the SAME moving guild.
+     const nameMax=Math.min(440,w-18);
+     type(g.name.toUpperCase(),x+8*lane,baseY+28,27-2*lane,CREAM,800,'left',nameMax);
+     // Keep exact endpoint totals, never synthetic intermediate XP values.
+     const flip=clip((transition-.28)/.44,0,1);
+     const xp=firstCapture?afterXp:(flip>=.5?afterXp:beforeXp);
+     type(fmt(xp),x+w-9,baseY+28+23*lane,25-2*lane,lane>.4?GOLD:CREAM,850,'right',Math.max(125,190-35*lane));
+     if(lane>.06){
+       ctx.save();ctx.globalAlpha=Math.min(1,lane*2);
+       type('#'+g.oldRank+' → #'+g.newRank,x+10,baseY+53,21,GREEN,850);
+       ctx.restore();
+     }
+     // Preserve the original XP bar interpolation, including its scale.
+     const barY=baseY+43+17*lane,barH=13-3*lane;
+     rect(x,barY,w,barH,'#493729',6);
+     rect(x,barY,w*pct,barH,active?GOLD:'#a3805e',6);
+   }else if((firstCapture&&g.newRank<=10)||(!firstCapture&&g.newRank<=10)){
+     const x=LEFT+69;
+     if(!firstCapture&&Math.abs(afterXp-beforeXp)>0&&motion>.02&&motion<.98){
+       rect(x-5,y+1,638,73,'#58412740',7);
+     }
+     type(g.name.toUpperCase(),x,y+28,27,CREAM,780,'left',440);
+     const valX=RIGHT-9;
+     // Exact before and after values slide like an odometer; no invented intermediate totals.
+     const flip=firstCapture?1:clip((transition-.28)/.44,0,1);
+     if(beforeXp===afterXp||firstCapture||flip===0||flip===1){
+       type(fmt(flip===1?afterXp:beforeXp),valX,y+28,25,CREAM,850,'right',200);
+     }else{
+       ctx.save();ctx.beginPath();ctx.rect(RIGHT-218,y+3,218,37);ctx.clip();
+       type(fmt(beforeXp),valX,y+28-37*flip,25,CREAM,850,'right',200);
+       type(fmt(afterXp),valX,y+65-37*flip,25,GREEN,850,'right',200);
+       ctx.restore();
+     }
+     rect(x,y+43,627,13,'#493729',6);
+     if(firstCapture){
+       // First capture is revealed, not reset between subsequent captures.
+       const reveal=ease((within-.03-(g.newRank-1)*.085)/.75);
+       rect(x,y+43,627*(afterXp/maxXp)*reveal,13,active?GOLD:'#a3805e',6);
+     }else{
+       rect(x,y+43,627*pct,13,active?GOLD:'#a3805e',6);
+       if(afterXp>beforeXp&&motion>.05&&motion<.96){
+         const pulseX=x+627*pct;
+         rect(pulseX-5,y+41,10,17,GREEN,4);
+       }
+     }
+   }
+ }
+ ctx.restore();
+ const updating=!firstCapture&&transition<.965;
+ type(updating?'VISUAL RANK / XP TRANSITION · CAPTURE VALUES VERIFIED':'CAPTURE VERIFIED · ALL NUMBERS REPORTED',
+      LEFT,1419,24,updating?GOLD:MUTED,760,'left',705);
+ const visibleLeader=firstCapture||transition>=.72?current.guilds[0]:previous.guilds[0];
+ type('LEADER  '+fmt(visibleLeader.experience)+' XP  ·  '+visibleLeader.name.toUpperCase(),
+      LEFT,1367,26,GOLD,870,'left',707);
+ // Quiet elapsed indicator, not a shot counter.
+ rect(LEFT,1445,714,4,'#3c2c1e',2);
+ rect(LEFT,1445,714*((idx+clip(within/step,0,1))/snapshots.length),4,GOLD,2);
+}
+
+function drawGrowth(seg,q){
+ title('FIRST CAPTURE → LATEST','THE BIGGEST','XP GAINS','GUILD XP GAINED BETWEEN THESE EXACT CAPTURES');
+ dateRibbon(first,latest);
+ const items=seg.items,max=items[0].gain;
+ items.forEach((g,i)=>{const y=568+i*166,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const reveal=ease((elapsed-i*1.03)/.82);
+  rect(LEFT,y,714,140,'#28201a',10);
+  type('0'+(i+1),LEFT+18,y+49,34,GOLD,950);
+  type(g.name.toUpperCase(),LEFT+87,y+48,34,CREAM,800,'left',447);
+  type('+'+fmt(g.gain),RIGHT-14,y+90,34,GREEN,900,'right');
+  bar(LEFT+85,y+105,609,14,(g.gain/max)*reveal,i===0);
+ });
+}
+function drawMovers(seg,q){
+ const up=seg.type==='up';
+ title('CAPTURE ONE → CAPTURE '+snapshots.length,up?'BIGGEST':'BIGGEST',up?'CLIMBERS':'FALLERS','RANK CHANGES BETWEEN THESE EXACT CAPTURES');
+ dateRibbon(first,latest);
+ seg.items.slice(0,5).forEach((g,i)=>{
+  const y=568+i*165,elapsed=q*seg.dur;if(elapsed<i*1.03)return;const progress=ease((elapsed-i*1.03)/.82);
+  rect(LEFT,y,714,143,'#27201b',12);
+  rect(LEFT,y,8,143,up?GREEN:RED,3);
+  type((g.change>0?'+':'')+g.change,LEFT+25,y+83,63,up?GREEN:RED,950);
+  type(g.name.toUpperCase(),LEFT+191,y+51,33,CREAM,900,'left',500);
+  type('#'+g.from+'  →  #'+g.rank,LEFT+191,y+96,32,GOLD,800);
+  type('XP '+(g.gain>=0?'+':'')+fmt(g.gain),RIGHT-14,y+125,24,MUTED,700,'right');
+  rect(LEFT+190,y+131,496*progress,5,up?GREEN:RED,2);
+ });
+}
+function drawPair(seg,q){
+ const pair=seg.pair,tight=seg.type==='tight',word=tight?'CLOSEST FIGHTS':'BIGGEST LEADS';
+ title('LATEST TOP 25 · ADJACENT RANKS',tight?'CLOSEST':'BIGGEST',tight?'XP FIGHTS':'XP LEADS',word+'     '+(seg.index+1)+' / '+seg.total);
+ dateRibbon(latest,latest,'single');
+ const a=pair.a,b=pair.b,gap=pair.gap;
+ [[a,0],[b,1]].forEach(([g,i])=>{
+  const y=568+i*255;if(q*seg.dur<i*.75)return;
+  rect(LEFT,y,714,221,'#2a211c',12);rect(LEFT,y,8,221,i===0?GOLD:'#b49178',3);
+  type('RANK '+g.rank,LEFT+24,y+50,29,GOLD,900);
+  type(g.name.toUpperCase(),LEFT+24,y+103,41,CREAM,900,'left',665);
+  type(fmt(g.experience)+' XP',LEFT+24,y+150,37,MUTED,800);
+  bar(LEFT+24,y+180,664,15,(g.experience/a.experience)*ease((q*seg.dur-i*.12)/.85),i===0);
+ });
+ if(q*seg.dur>=1.35){rect(LEFT,1097,714,188,'#5b3a21',14);
+ type('ADJACENT RANK GAP',LEFT+27,1150,28,'#f4d9b7',850);
+ type(fmt(gap)+' XP',LEFT+27,1239,72,GOLD,950,'left',680);
+ type(tight?'ONE SMALL GAIN COULD CHANGE THIS PAIR':'SEPARATION BETWEEN NEIGHBORING RANKS',LEFT,1368,25,CREAM,700,'left',700);}
+}
+function drawCove(seg,q){
+ const name='The Pirate Cove';
+ const trail=snapshots.map(s=>({s,g:s.guilds.find(g=>g.name===name)})).filter(x=>x.g);
+ const initial=trail[0].g,final=trail[trail.length-1].g;
+ title(snapshots.length+' CAPTURES · THE PIRATE COVE','COVE','WATCH','ONLY RECORDED RANKS AND GUILD XP');
+ dateRibbon(first,latest);
+ type('#'+initial.rank+'  →  #'+final.rank,LEFT,587,71,CREAM,950);
+ type('+'+fmt(final.experience-initial.experience)+' XP',LEFT,659,52,GREEN,900);
+ const max=Math.max(...trail.map(x=>x.g.experience))*1.04,ground=1190,span=458;
+ trail.forEach((x,i)=>{
+  const col=116,x0=LEFT+26+i*138;
+  const elapsed=q*seg.dur;if(elapsed<i*1.15)return;const ht=Math.max(8,span*x.g.experience/max)*ease((elapsed-i*1.15)/.85);
+  const y=ground-ht;
+  rect(x0,ground-span,col,span,'#28211b',8);
+  rect(x0,y,col,ht,i===trail.length-1?GOLD:'#a57f56',6);
+  type(short(x.g.experience),x0+col/2,y-23,26,CREAM,850,'center');
+  type('#'+x.g.rank,x0+col/2,1240,29,GOLD,900,'center');
+  type(x.s.date.slice(5),x0+col/2,1290,26,MUTED,750,'center');
+  const tt=x.s.capturedAt?new Date(x.s.capturedAt).toLocaleTimeString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit'}):'?';
+  type(tt,x0+col/2,1330,21,MUTED,650,'center');
+ });
+ type('RANK #'+final.rank+'  /  '+fmt(final.experience)+' XP',LEFT,1424,30,GOLD,850);
+}
+function drawEnd(q){
+ title('RECORDED · NEVER FABRICATED','EVERY XP','COUNTS.','SEASON 15 · WILLY DEX / INTELLIGENCE');
+ dateRibbon(latest,latest,'single');
+ const v=latest.guilds[0];
+ type('#1 '+v.name.toUpperCase(),LEFT,680,48,GOLD,900,'left',714);
+ type(fmt(v.experience)+' XP',LEFT,742,44,CREAM,850);
+ line(LEFT,807,RIGHT,807,'#8c673e',3);
+ const c=latest.guilds.find(g=>g.name==='The Pirate Cove');
+ if(c){type('#'+c.rank+'  THE PIRATE COVE',LEFT,912,39,CREAM,900,'left',700);type(fmt(c.experience)+' XP',LEFT,965,38,GREEN,800)}
+ type('SOURCE: WILLY DEX GLB ARCHIVE',LEFT,1335,26,GOLD,850);
+}
+function drawSafe(){
+ ctx.fillStyle='#ea5f5e35';ctx.fillRect(814,0,266,H);ctx.fillRect(0,1550,1080,370);
+ ctx.strokeStyle='#ff8175';ctx.setLineDash([20,13]);ctx.lineWidth=4;ctx.strokeRect(LEFT,204,RIGHT-LEFT,1262);ctx.setLineDash([]);
+ type('SHORTS ACTION RAIL',850,410,28,'#fff',900,'left',200);
+ type('CAPTIONS / PROFILE',LEFT,1670,29,'#fff',800);
+}
+function paint(){
+ ctx.clearRect(0,0,W,H);base(t);
+ if(!ready){title('DATA CONNECTION',warning?'UNAVAILABLE':'LOADING','GLB DATA',warning||'Fetching recorded snapshots from Willy Dex...');return}
+ let seg=segments[segments.length-1];
+ for(const s of segments){if(t>=s.start&&t<s.end){seg=s;break}}
+ const q=clip((t-seg.start)/seg.dur,0,1);
+ switch(seg.type){
+  case 'race':drawRace(seg,q);break;
+  case 'growth':drawGrowth(seg,q);break;
+  case 'up':case 'down':drawMovers(seg,q);break;
+  case 'tight':case 'lead':drawPair(seg,q);break;
+  case 'cove':drawCove(seg,q);break;
+  case 'end':drawEnd(q);break;
+ }
+ if(showZones)drawSafe();
+}
+function validate(d){
+ if(!d||d.season!==15||!Array.isArray(d.snapshots)||d.snapshots.length<2)throw Error('Missing Season 15 captures');
+ const all=d.snapshots.map((s,i)=>{
+  if(!Array.isArray(s.guilds)||s.guilds.length<25)throw Error('Incomplete capture '+(i+1));
+  const guilds=s.guilds.slice().sort((a,b)=>a.rank-b.rank);
+  if(guilds.some((g,j)=>!g.name||g.rank!==j+1||!Number.isFinite(g.experience)||g.experience<0))throw Error('Invalid guild rank or XP in capture '+(i+1));
+  return {...s,guilds};
+ });
+ for(let i=1;i<all.length;i++){const prev=all[i-1].capturedAt,next=all[i].capturedAt;if(prev&&next&&new Date(next)<new Date(prev))throw Error('Snapshots are not in time order')}
+ return all;
+}
+function build(d){
+ snapshots=validate(d);first=snapshots[0];latest=snapshots[snapshots.length-1];
+ const old=new Map(first.guilds.map(x=>[x.name,x]));
+ const shared=latest.guilds.filter(g=>old.has(g.name)).map(g=>({...g,from:old.get(g.name).rank,change:old.get(g.name).rank-g.rank,gain:g.experience-old.get(g.name).experience}));
+ const growth=shared.slice().sort((a,b)=>b.gain-a.gain).slice(0,5);
+ const ups=shared.filter(g=>g.change>0).sort((a,b)=>b.change-a.change||b.gain-a.gain);
+ const downs=shared.filter(g=>g.change<0).sort((a,b)=>a.change-b.change||b.gain-a.gain);
+ const top=latest.guilds.slice(0,25);
+ const gaps=top.slice(0,24).map((g,i)=>({a:g,b:top[i+1],gap:g.experience-top[i+1].experience}));
+ if(gaps.some(g=>g.gap<0))throw Error('Invalid latest Top 25 XP ordering');
+ const closest=gaps.slice().sort((a,b)=>a.gap-b.gap).slice(0,4);
+ const widest=gaps.slice().sort((a,b)=>b.gap-a.gap).slice(0,4);
+ segments=[];duration=0;
+ function add(s,dur){s.dur=dur;s.start=duration;duration+=dur;s.end=duration;segments.push(s)}
+ add({type:'race',step:3.2},snapshots.length*3.2);
+ add({type:'growth',items:growth},6);
+ add({type:'up',items:ups},6);
+ add({type:'down',items:downs},6);
+ // Compact cut: skip the three Top-25 scan pages (5.7 seconds).
+ // All 50 recorded guilds remain intact in the archive and rank analysis.
+ closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},3.2));
+ widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},3.2));
+ add({type:'cove'},7.2);
+ add({type:'end'},5.2);
+ ready=true;t=0;
+ seek.disabled=false;play.disabled=false;seek.max=duration.toFixed(2);
+ status.textContent='Loaded '+snapshots.length+' verified captures · uninterrupted Top 10 · '+Math.ceil(duration)+' seconds · no interpolated XP figures';
+ updateUI();paint();
+}
+function updateUI(){
+ seek.value=String(t);time.textContent=Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')+' / '+Math.floor(duration/60)+':'+String(Math.floor(duration%60)).padStart(2,'0');play.textContent=playing?'Ⅱ':'▶';
+ overlay.classList.toggle('hidden',playing||t>0);
+}
+function makeAudio(){
+ if(audio)return;
+ const AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC)return;
+ audio=new AC();master=audio.createGain();master.gain.value=mute?0:.18;master.connect(audio.destination);
+}
+function tone(freq,t0,dur,vol,kind='sine'){
+ if(!audio)return;
+ const osc=audio.createOscillator(),env=audio.createGain();
+ osc.type=kind;osc.frequency.setValueAtTime(freq,t0);
+ if(kind==='sine')osc.frequency.exponentialRampToValueAtTime(Math.max(40,freq*.58),t0+dur);
+ env.gain.setValueAtTime(Math.max(.0001,vol),t0);
+ env.gain.exponentialRampToValueAtTime(.001,t0+dur);
+ osc.connect(env);env.connect(master);osc.start(t0);osc.stop(t0+dur+.02);
+}
+function noise(t0,dur,vol){
+ if(!audio)return;
+ const len=Math.ceil(audio.sampleRate*dur),buf=audio.createBuffer(1,len,audio.sampleRate),d=buf.getChannelData(0);
+ for(let i=0;i<len;i++)d[i]=(Math.random()*2-1);
+ const src=audio.createBufferSource(),filter=audio.createBiquadFilter(),env=audio.createGain();
+ src.buffer=buf;filter.type='highpass';filter.frequency.value=1200;
+ env.gain.setValueAtTime(vol,t0);env.gain.exponentialRampToValueAtTime(.001,t0+dur);
+ src.connect(filter);filter.connect(env);env.connect(master);src.start(t0);src.stop(t0+dur+.01);
+}
+function musicBeat(b,when){
+ if(b%4===0||b%4===2)tone(130,when,.27,.8);
+ if(b%4===1||b%4===3)noise(when,.11,.22);
+ noise(when,.045,.075);noise(when+.25,.04,.065);
+ if(b%2===0)tone([55,55,65.4,49][Math.floor(b/4)%4],when+.03,.4,.13,'triangle');
+}
+function beginMusic(){try{makeAudio();if(!audio)return;audio.resume();nextBeat=audio.currentTime+.02;beatIndex=0;if(beatTimer)clearInterval(beatTimer);beatTimer=setInterval(()=>{if(!playing||!audio)return;while(nextBeat<audio.currentTime+.16){musicBeat(beatIndex++,nextBeat);nextBeat+=.5}},60)}catch(e){status.textContent+=' · Audio unavailable on this browser'}}
+function stopMusic(){if(beatTimer){clearInterval(beatTimer);beatTimer=null}}
+function tick(now){if(!playing)return;t=Math.min(duration,(now-origin)/1000);paint();updateUI();if(t>=duration){playing=false;stopMusic();updateUI();return}raf=requestAnimationFrame(tick)}
+function toggle(){if(!ready)return;if(playing){playing=false;cancelAnimationFrame(raf);stopMusic();updateUI();return}if(t>=duration)t=0;playing=true;origin=performance.now()-t*1000;beginMusic();updateUI();raf=requestAnimationFrame(tick)}
+play.addEventListener('click',toggle);overlay.addEventListener('click',toggle);
+seek.addEventListener('input',()=>{if(!ready)return;t=+seek.value;if(playing)origin=performance.now()-t*1000;updateUI();paint()});
+soundBtn.addEventListener('click',()=>{mute=!mute;soundBtn.textContent=mute?'♫ OFF':'♫ ON';if(master)master.gain.value=mute?0:.18});
+zonesBtn.addEventListener('click',()=>{showZones=!showZones;zonesBtn.textContent=showZones?'HIDE':'SAFE';paint()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)toggle()});
+if(!document.querySelector('meta[name="willy-dex-edition"]'))fetch('checkins/manifest.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(m=>{
+  const latest=m&&m.editions&&m.editions.find(e=>e.id===m.latest);
+  const button=document.getElementById('video-export');
+  if(latest&&latest.video){button.href=latest.video;button.hidden=false}
+}).catch(()=>{});
+fetch('checkins/editions/s15-2026-10-30T16-45-00-07-00-ccefba06409b-8d997958/data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(build).catch(err=>{warning='Data could not be verified: '+err.message;status.textContent=warning;paint()});
+paint();
+})();
+</script></body></html>
