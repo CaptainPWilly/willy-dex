@@ -375,20 +375,20 @@ function build(d){
  const widest=gaps.slice().sort((a,b)=>b.gap-a.gap).slice(0,4);
  segments=[];duration=0;
  function add(s,dur){s.dur=dur;s.start=duration;duration+=dur;s.end=duration;segments.push(s)}
- // One-minute director's cut. Preserve every actual capture and all eight
- // adjacent-rank comparisons; shorten holds and staggered reveals instead.
- // Reserve at most 14.4s for the continuous Top 10 race, even as captures grow.
- const raceStep=Math.min(2.4,14.4/snapshots.length);
+ // Sub-50-second director's cut: all real snapshots, biggest growth,
+ // climbers/fallers, four closest XP fights, two largest leads and Cove.
+ // Keep the uninterrupted Top 10 race while reducing static holds.
+ const raceStep=Math.min(2.1,12.6/snapshots.length);
  add({type:'race',step:raceStep},snapshots.length*raceStep);
- add({type:'growth',items:growth},4.8);
- add({type:'up',items:ups},4.6);
- add({type:'down',items:downs},4.6);
- closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},2.55));
- widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},2.55));
- add({type:'cove'},6.2);
- add({type:'end'},4.5);
- // Exactly 59.5s with six captures; no new video may exceed the limit.
- if(duration>59.501)throw Error('One-minute director cut exceeded runtime budget: '+duration);
+ add({type:'growth',items:growth},4.2);
+ add({type:'up',items:ups},4.1);
+ add({type:'down',items:downs},4.1);
+ closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},2.4));
+ widest.slice(0,2).forEach((pair,index)=>add({type:'lead',pair,index,total:Math.min(2,widest.length)},2.4));
+ add({type:'cove'},5.8);
+ add({type:'end'},4.6);
+ // Hard runtime ceiling for this and future snapshots: strictly under 50s.
+ if(duration>49.901)throw Error('50-second director cut exceeded runtime budget: '+duration);
  ready=true;t=0;
  seek.disabled=false;play.disabled=false;seek.max=duration.toFixed(2);
  status.textContent='Loaded '+snapshots.length+' verified captures · uninterrupted Top 10 · '+Math.ceil(duration)+' seconds · no interpolated XP figures';
