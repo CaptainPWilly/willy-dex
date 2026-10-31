@@ -19,10 +19,17 @@ iframe{display:block;width:100%;height:100%;height:100dvh;border:0;background:#0
 body.invalid{overflow:auto}
 body.invalid iframe{display:none}
 body.invalid #invalid{display:block}
+#copy-link{position:fixed;z-index:10;right:14px;bottom:max(14px,env(safe-area-inset-bottom));border:1px solid #b98b59;border-radius:999px;background:#2c2018ee;color:#f4e7d1;padding:11px 18px;min-height:44px;box-shadow:0 6px 25px #000b;font:750 13px system-ui,-apple-system,Segoe UI,sans-serif;cursor:pointer}
+#copy-link:hover,#copy-link:focus-visible{background:#4e3422;outline:2px solid #dfb57c;outline-offset:2px}
+#manual-copy{display:none;position:fixed;z-index:11;bottom:calc(70px + env(safe-area-inset-bottom));right:14px;max-width:min(92vw,410px);background:#2c2018;color:#f4e7d1;border:1px solid #c49361;padding:12px;border-radius:8px;font-size:12px}
+#manual-copy input{width:100%;padding:9px;background:#0e0b09;color:#f4e7d1;border:1px solid #8d6442;border-radius:6px;margin-top:7px}
+body.invalid #copy-link{display:none}
 </style>
 </head>
 <body>
 <iframe id="film" title="Willy Dex video preview player" allow="autoplay" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<button type="button" id="copy-link" aria-label="Copy this exact video preview link">Copy Link</button>
+<div id="manual-copy" role="status">Copy this player link:<input id="link-text" type="text" readonly aria-label="Shareable preview link"></div>
 <div id="invalid"><strong>Preview unavailable</strong><p>This preview link needs a valid recorded start and end capture.</p><a href="studio.html">Open Video Studio</a></div>
 <script>
 'use strict';
@@ -37,7 +44,41 @@ body.invalid #invalid{display:block}
  player.searchParams.set('mode',mode);
  player.searchParams.set('start',start);
  player.searchParams.set('end',end);
- document.getElementById('film').src=player.href;
+ const frame=document.getElementById('film');
+ frame.src=player.href;
+ // The public page is only a player, not a second copy of Studio.
+ // Same-origin frame: remove director headings, editor navigation, and margins.
+ frame.addEventListener('load',()=>{
+  try{
+   const doc=frame.contentDocument;
+   if(!doc||!doc.body)return;
+   const style=doc.createElement('style');
+   style.textContent='body.share-mode h1{display:none!important}body.share-mode main{padding:5px 7px 20px!important;max-width:650px}body.share-mode #screen{width:min(100%,calc(88dvh * 9 / 16))!important;box-shadow:none}body.share-mode .controls{margin-top:8px!important}body.share-mode #zones{display:none!important}';
+   doc.head.appendChild(style);
+  }catch(e){}
+ });
+ const button=document.getElementById('copy-link');
+ const manual=document.getElementById('manual-copy');
+ const field=document.getElementById('link-text');
+ button.addEventListener('click',async()=>{
+  const text=location.href;
+  try{
+   if(navigator.clipboard&&navigator.clipboard.writeText){
+    await navigator.clipboard.writeText(text);
+    button.textContent='Copied!';
+    return;
+   }
+  }catch(e){}
+  field.value=text;
+  manual.style.display='block';
+  field.focus();field.select();
+  try{
+   if(document.execCommand('copy')){
+    button.textContent='Copied!';
+    manual.style.display='none';
+   }else button.textContent='Select Link';
+  }catch(e){button.textContent='Select Link'}
+ });
 })();
 </script>
 </body>

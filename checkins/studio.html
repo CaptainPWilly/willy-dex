@@ -21,6 +21,8 @@ button,.button{font:inherit}button:disabled{opacity:.45;cursor:not-allowed!impor
 button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .actions{display:flex;flex-wrap:wrap;gap:9px;margin:20px 0 0}.action{border:1px solid #97704a;background:#35291e;border-radius:8px;padding:12px 15px;color:var(--text);cursor:pointer;text-decoration:none;font-weight:850}
 .action.primary{background:var(--gold);border-color:var(--gold);color:#21150d}.action:hover{filter:brightness(1.14)}
+.action[aria-disabled="true"]{pointer-events:none;opacity:.42}
+#copy-player{min-width:145px}
 #summary{border-top:1px solid #6c5136;padding-top:16px;margin-top:22px;color:#e4cba8;font-size:13px}
 #status{margin-top:16px;color:#e9c9a0;font-size:13px;min-height:21px}#status.error{color:#f2a994}
 #publish-guide{margin-top:19px;padding:16px;background:#1b1510;border:1px solid #634c33;border-radius:9px}
@@ -63,7 +65,7 @@ iframe{width:100%;height:620px;border:1px solid #6b5037;border-radius:10px;backg
 <p class="hint">The capture immediately before your start is included as a comparison baseline, not counted as a new snapshot.</p>
 </div>
 <div id="summary" aria-live="polite">Loading captured leaderboard history…</div>
-<div class="actions"><button class="action" id="preview" disabled>Preview selected cut</button><button class="action primary" id="generate" disabled>Generate HQ MP4</button></div>
+<div class="actions"><button class="action" id="preview" disabled>Preview selected cut</button><button class="action primary" id="copy-player" disabled>Copy Player Link</button><a class="action" id="open-player-direct" href="preview.html" target="_blank" rel="noopener noreferrer" aria-disabled="true">Open Player</a><button class="action" id="generate" disabled>Generate HQ MP4</button></div>
 <div id="publish-guide">
 <h3>Shared video generator</h3>
 <p>Anyone with this link can preview and request a video. No login, password, or GitHub account.</p>
@@ -100,7 +102,12 @@ $('full').setAttribute('aria-pressed',String(mode==='full'));
 $('range').hidden=mode==='full';
 const a=snapshots.findIndex(s=>s.capturedAt===$('from').value),b=snapshots.findIndex(s=>s.capturedAt===$('to').value);
 const valid=mode==='full'?snapshots.length>1:a>=1&&b>=a;
-$('preview').disabled=!valid;$('generate').disabled=!valid;
+$('preview').disabled=!valid;$('generate').disabled=!valid;$('copy-player').disabled=!valid;
+const link=valid?previewPlayerUrl(selected()):null;
+$('share-link').value=link?link.href:'';
+$('open-preview').href=link?link.href:'preview.html';
+$('open-player-direct').href=link?link.href:'preview.html';
+$('open-player-direct').setAttribute('aria-disabled',String(!valid));
 if(!valid||$('frame').dataset.previewKey!==JSON.stringify(selected()))$('preview-share').hidden=true;
 
 if(mode==='full')$('summary').textContent='Full Season '+(snapshots[0]?.season||15)+' · '+snapshots.length+' verified captures · '+fmt(snapshots[0]?.capturedAt)+' → '+fmt(snapshots[snapshots.length-1]?.capturedAt);
@@ -158,6 +165,7 @@ async function copyPreviewLink(){
  status('Player link selected. Use your device’s Copy command.');
 }
 $('copy-preview').addEventListener('click',copyPreviewLink);
+$('copy-player').addEventListener('click',copyPreviewLink);
 $('share-link').addEventListener('click',event=>event.target.select());
 $('native-share').addEventListener('click',async()=>{
  const url=$('share-link').value;
