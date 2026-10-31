@@ -34,7 +34,7 @@ body.share-mode #screen{margin-bottom:12px}
 <h1>WILLY / DEX <em>SEASON 15 / DIRECTOR CUT</em></h1>
 <div id="screen"><canvas id="film" width="1080" height="1920" aria-label="Animated Season 15 global leaderboard analysis"></canvas>
 <button id="overlay"><b>▶ PLAY SEASON 15</b><small>All recorded snapshots · Directed cut</small></button></div>
-<div class="controls"><button id="play" disabled aria-label="Play video">▶</button><input id="seek" aria-label="Scrub video" type="range" min="0" max="82" step=".05" value="0" disabled><span id="time">0:00</span><button id="sound" title="Toggle original soundtrack">♫ ON</button><button id="zones" title="Show Shorts cover regions">SAFE</button></div>
+<div class="controls"><button id="play" disabled aria-label="Play video">▶</button><input id="seek" aria-label="Scrub video" type="range" min="0" max="76" step=".05" value="0" disabled><span id="time">0:00</span><button id="sound" title="Toggle original soundtrack">♫ ON</button><button id="zones" title="Show Shorts cover regions">SAFE</button></div>
 <a id="video-export" class="video-export" href="#" hidden>↓ DOWNLOAD LATEST MP4</a>
 <div class="meta"><span>9:16 Shorts framing</span><span>•</span><span>Recorded ranks only</span><span>•</span><a href="glb.json">Source: Willy Dex GLB</a></div>
 <div id="status">Loading verified leaderboard snapshots...</div>
@@ -276,20 +276,6 @@ function drawMovers(seg,q){
   rect(LEFT+190,y+131,496*progress,5,up?GREEN:RED,2);
  });
 }
-function drawTop25(seg,q){
- const start=[0,9,17][seg.page],end=[9,17,25][seg.page],rows=latest.guilds.slice(start,end);
- title('CURRENT TOP 25 / SCAN '+(seg.page+1)+' OF 3','THE TOP 25','IN FOCUS','LATEST RECORDED STANDINGS');
- dateRibbon(latest,latest,'single');
- rows.forEach((g,i)=>{
-  const y=568+i*93,progress=ease((q*seg.dur-i*.05)/.45);
-  rect(LEFT,y,714,76,i%2?'#281f19':'#33251a',6);
-  rect(LEFT,y,progress*5,76,GOLD,1);
-  type(String(g.rank).padStart(2,'0'),LEFT+17,y+48,36,GOLD,950);
-  type(g.name.toUpperCase(),LEFT+86,y+44,31,CREAM,800,'left',426);
-  type(short(g.experience),RIGHT-12,y+46,31,MUTED,800,'right');
- });
- type('RANKS '+(start+1)+'–'+end+'   /   RECORDED GUILD XP',LEFT,1400,28,GOLD,900);
-}
 function drawPair(seg,q){
  const pair=seg.pair,tight=seg.type==='tight',word=tight?'CLOSEST FIGHTS':'BIGGEST LEADS';
  title('LATEST TOP 25 · ADJACENT RANKS',tight?'CLOSEST':'BIGGEST',tight?'XP FIGHTS':'XP LEADS',word+'     '+(seg.index+1)+' / '+seg.total);
@@ -358,7 +344,6 @@ function paint(){
   case 'race':drawRace(seg,q);break;
   case 'growth':drawGrowth(seg,q);break;
   case 'up':case 'down':drawMovers(seg,q);break;
-  case 'top25':drawTop25(seg,q);break;
   case 'tight':case 'lead':drawPair(seg,q);break;
   case 'cove':drawCove(seg,q);break;
   case 'end':drawEnd(q);break;
@@ -394,7 +379,8 @@ function build(d){
  add({type:'growth',items:growth},6);
  add({type:'up',items:ups},6);
  add({type:'down',items:downs},6);
- for(let i=0;i<3;i++)add({type:'top25',page:i},1.9);
+ // Compact cut: skip the three Top-25 scan pages (5.7 seconds).
+ // All 50 recorded guilds remain intact in the archive and rank analysis.
  closest.forEach((pair,index)=>add({type:'tight',pair,index,total:closest.length},3.2));
  widest.forEach((pair,index)=>add({type:'lead',pair,index,total:widest.length},3.2));
  add({type:'cove'},7.2);

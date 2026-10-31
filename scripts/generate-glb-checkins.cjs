@@ -21,7 +21,12 @@ for(let i=0;i<glb.snapshots.length;i++){
 const first=glb.snapshots[0],last=glb.snapshots[glb.snapshots.length-1];
 const hash=crypto.createHash('sha256').update(JSON.stringify(glb)).digest('hex');
 const stamp=(last.capturedAt||last.date||'undated').replace(/[^0-9TZ:-]/gi,'').replace(/:/g,'-').slice(0,32);
-const id='s'+glb.season+'-'+stamp+'-'+hash.slice(0,12);
+// Include the director template and encoder in the ID so an updated edit makes
+// a new immutable video, without overwriting or silently reusing an older MP4.
+const editSignature=crypto.createHash('sha256')
+ .update(read('season-15-check-in.html')).update('\n')
+ .update(read('scripts/render-glb-hq.cjs')).digest('hex').slice(0,8);
+const id='s'+glb.season+'-'+stamp+'-'+hash.slice(0,12)+'-'+editSignature;
 const folder='checkins/editions/'+id;
 const manifestPath='checkins/manifest.json';
 let manifest={schema:1,latest:null,editions:[]};

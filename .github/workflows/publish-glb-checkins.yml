@@ -2,7 +2,11 @@ name: Publish GLB video check-ins
 on:
   push:
     branches: [main]
-    paths: [glb.json]
+    paths:
+      - glb.json
+      - season-15-check-in.html
+      - scripts/generate-glb-checkins.cjs
+      - scripts/render-glb-hq.cjs
   workflow_dispatch:
 permissions:
   contents: write
