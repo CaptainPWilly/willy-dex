@@ -8,6 +8,21 @@ on:
       - scripts/generate-glb-checkins.cjs
       - scripts/render-glb-hq.cjs
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Video type"
+        required: true
+        type: choice
+        options: [segment, full]
+        default: segment
+      start_at:
+        description: "Segment first new capture (exact ISO timestamp, blank for Oct 31 onward)"
+        required: false
+        type: string
+      end_at:
+        description: "Segment last capture (exact ISO timestamp, blank for latest)"
+        required: false
+        type: string
 permissions:
   contents: write
 concurrency:
@@ -27,6 +42,10 @@ jobs:
         with:
           node-version: '22'
       - name: Pin this GLB event and generate an immutable edition
+        env:
+          GLB_MODE: ${{ inputs.mode || 'segment' }}
+          GLB_START_AT: ${{ inputs.start_at || '' }}
+          GLB_END_AT: ${{ inputs.end_at || '' }}
         shell: bash
         run: |
           set -euo pipefail

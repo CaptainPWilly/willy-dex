@@ -24,13 +24,14 @@ a.primary{background:var(--gold);border-color:var(--gold);color:#20140d}
 #message{padding:12px;color:var(--muted)}code{font-size:11px;word-break:break-word;color:#baa388}
 .note{padding:14px;border-left:3px solid var(--gold);background:#221911;margin-top:25px}
 </style></head><body>
-<nav><strong>WILLY / DEX</strong><a href="../index.html">CARDS</a><a href="../glb.html">GLB</a><a href="player.html">LATEST VIDEO</a></nav>
+<nav><strong>WILLY / DEX</strong><a href="../index.html">CARDS</a><a href="../glb.html">GLB</a><a href="player.html">LATEST VIDEO</a><a href="studio.html">VIDEO STUDIO</a></nav>
 <main>
 <div class="overline">WILLY CORP / GLB INTELLIGENCE / VIDEO ARCHIVE</div>
 <h1>Video library</h1>
 <p>Every published recording has its own permanent watch and download page. Play the actual MP4, save the full-quality file, or open the original interactive animation. Earlier editions stay available.</p>
 <p><strong>Always the newest video:</strong> <a href="player.html" style="color:var(--gold)">Watch &amp; download latest</a> · <a href="index.html" style="color:var(--gold)">All editions</a></p>
 <section class="hero" id="featured" aria-live="polite"><div class="overline">LATEST ARCHIVED EDITION</div><h2>Checking the archive...</h2><p>Loading the recorded GLB catalog.</p></section>
+<section class="hero"><div class="overline">MAKE A NEW VIDEO</div><h2>Video studio</h2><p>Full Season Recap or a new segment starting where the previous video ended. Pick exact recorded captures, preview the animation, and generate a permanent HQ MP4.</p><div class="actions"><a class="action primary" href="studio.html">OPEN VIDEO STUDIO</a></div></section>
 <div class="tool"><div><h2>Previous editions</h2><span id="count"></span></div><div><input id="search" type="search" placeholder="Search season, date or leader" aria-label="Search archived videos"><select id="season" aria-label="Choose season"><option value="">All seasons</option></select></div></div>
 <div id="list"></div><div id="message" role="status"></div>
 <div class="note"><strong>How it works</strong><p>A GitHub Actions publisher creates an immutable edition whenever the repository's GLB snapshot file changes. Its MP4 is kept as a GitHub Release asset so it doesn't inflate the Willy Dex website or overwrite earlier videos. Videos aren't uploaded to YouTube automatically.</p></div>
@@ -42,7 +43,8 @@ a.primary{background:var(--gold);border-color:var(--gold);color:#20140d}
  const number=n=>Number(n||0).toLocaleString('en-US');
  const video=e=>e.video||'';
  const card=(e,featured=false)=>{
- const text='<span class="overline">SEASON '+esc(e.season)+' · '+esc(e.snapshots)+' CAPTURES</span>'+
+ const label=e.mode==='segment'?('SEGMENT · '+esc(e.newCaptures||e.snapshots)+' NEW CAPTURE(S)'):(e.mode==='full'?'FULL SEASON · '+esc(e.snapshots)+' CAPTURES':esc(e.snapshots)+' CAPTURES');
+ const text='<span class="overline">SEASON '+esc(e.season)+' · '+label+'</span>'+
  '<h3>'+esc(date(e.capturedAt||e.date))+'</h3>'+
  '<div class="facts">#1 '+esc(e.leader)+' · '+number(e.leaderXp)+' XP'+(e.cove?' · COVE #'+esc(e.cove.rank):'')+'</div>'+
  '<div class="actions"><a class="action primary" href="player.html?edition='+encodeURIComponent(e.id)+'">▶ WATCH &amp; DOWNLOAD</a>'+

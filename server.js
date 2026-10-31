@@ -81,6 +81,25 @@ doc.season=data.season;doc.snapshots.sort((a,b)=>(a.season||15)-(b.season||15)||
 await git('glb.json','PUT',{message:'Willy DEX: GLB season '+data.season+' snapshot '+data.date,sha:file.sha,content:Buffer.from(JSON.stringify(doc,null,2)+'\n').toString('base64')});
 return json(res,200,{ok:true,season:data.season,date:data.date,count:guilds.length});
 }
+if(req.url==='/api/videos'&&req.method==='POST'){
+if(!authorized(req))return json(res,401,{error:'Editor locked'});
+if(!githubToken)return json(res,503,{error:'Video publisher is not configured on the server'});
+const data=await read(req),mode=String(data.mode||'');
+if(mode!=='full'&&mode!=='segment')return json(res,400,{error:'Choose full season or segment'});
+let startAt='',endAt='';
+if(mode==='segment'){
+ startAt=String(data.startAt||'');endAt=String(data.endAt||'');
+ const stamp=/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:Z|[+-]\\d{2}:\\d{2})$/;
+ if(!stamp.test(startAt)||!stamp.test(endAt))return json(res,400,{error:'Choose recorded start and end captures'});
+ const file=await git('glb.json'),doc=JSON.parse(Buffer.from(file.content,'base64').toString('utf8'));
+ const arr=doc.snapshots||[],a=arr.findIndex(s=>s.capturedAt===startAt),b=arr.findIndex(s=>s.capturedAt===endAt);
+ if(a<1||b<a)return json(res,400,{error:'Selected range needs a prior baseline and a valid ending'});
+}
+const url='https://api.github.com/repos/CaptainPWilly/willy-dex/actions/workflows/publish-glb-checkins.yml/dispatches';
+const response=await fetch(url,{method:'POST',headers:{Authorization:'Bearer '+githubToken,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'},body:JSON.stringify({ref:'main',inputs:{mode,start_at:startAt,end_at:endAt}})});
+if(response.status!==204){const detail=await response.json().catch(()=>({}));return json(res,response.status===403?503:502,{error:'GitHub video dispatch failed: '+(detail.message||response.status)+'. Check repository Actions permission.'})}
+return json(res,202,{ok:true,mode,startAt,endAt,status:'queued',runs:'https://github.com/CaptainPWilly/willy-dex/actions/workflows/publish-glb-checkins.yml'});
+}
 if(req.url==='/api/portrait'&&req.method==='POST'){if(!authorized(req))return json(res,401,{error:'Editor locked'});const data=await read(req);if(!/^\d{3}$/.test(data.number||'')||Number(data.number)<1||Number(data.number)>100)throw Error('Invalid card number');if(!['png','jpg','webp','gif'].includes(data.ext))throw Error('Unsupported portrait type');if(typeof data.base64!=='string'||data.base64.length>4*1024*1024||!/^[A-Za-z0-9+/]*={0,2}$/.test(data.base64))throw Error('Invalid upload');const path='cards/'+data.number+'-upload.'+data.ext;let sha;try{sha=(await git(path)).sha}catch(e){if(!String(e.message).includes('404'))throw e}await git(path,'PUT',{message:'Willy-Dex: update card portrait #'+data.number,content:data.base64,...(sha?{sha}:{})});return json(res,200,{path})}
 return json(res,404,{error:'Not found'});
 }catch(e){console.error(e.message);return json(res,400,{error:e.message})}

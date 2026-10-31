@@ -53,6 +53,7 @@ const play=document.getElementById('play'),seek=document.getElementById('seek'),
 const zonesBtn=document.getElementById('zones'),soundBtn=document.getElementById('sound'),status=document.getElementById('status');
 const W=1080,H=1920,LEFT=74,RIGHT=788,GOLD='#f4bf79',CREAM='#f4e7d1',MUTED='#bfa78e',GREEN='#a6dab5',RED='#ef988d';
 let snapshots=[],latest=null,first=null,segments=[],duration=0,records=[],t=0,playing=false,origin=0,raf=0,mute=false,showZones=false,ready=false,warning='';
+let videoMode='full',newCaptures=0;
 let audio=null,master=null,beatTimer=null,nextBeat=0,beatIndex=0;
 const fmt=n=>Math.round(n).toLocaleString('en-US');
 const short=n=>n>=1000000?(n/1000000).toFixed(2)+'M':n>=1000?(n/1000).toFixed(1)+'K':String(n);
@@ -94,7 +95,7 @@ function dateRibbon(from,to,kind='compare'){
    type(dateStamp(to||from)+' PT',LEFT+17,y+43,24,CREAM,900,'left',518);
    type('ONE CAPTURE',RIGHT-15,y+31,19,GREEN,900,'right',171);
  }else if(kind==='baseline'){
-   type('BASELINE · CAPTURE 1 OF '+snapshots.length,LEFT+17,y+20,18,GOLD,900);
+   type(videoMode==='segment'?'PREVIOUS ENDING · BASELINE':'BASELINE · CAPTURE 1 OF '+snapshots.length,LEFT+17,y+20,18,GOLD,900);
    type(dateStamp(to)+' PT',LEFT+17,y+44,24,CREAM,900,'left',517);
  }else{
    type('FROM',LEFT+17,y+18,17,GOLD,950);
@@ -146,7 +147,7 @@ function drawRace(seg,q){
  };
  const maxXp=Math.max(...snapshots.map(s=>s.guilds[0].experience));
  const yTop=545,spacing=82;
- title('50 GUILDS   /   '+snapshots.length+' VERIFIED CAPTURES','GLOBAL','TOP TEN','SEASON 15 · XP TRACKER · CAPTURE '+(idx+1)+' / '+snapshots.length);
+ title('50 GUILDS   /   '+(videoMode==='segment'?newCaptures+' NEW CAPTURE'+(newCaptures===1?'':'S'):snapshots.length+' VERIFIED CAPTURES'),'GLOBAL','TOP TEN','SEASON 15 · '+(videoMode==='segment'?'SEGMENT':'FULL SEASON')+' · '+(videoMode==='segment'?(idx===0?'PREVIOUS ENDING':'NEW CAPTURE '+idx+' / '+newCaptures):'CAPTURE '+(idx+1)+' / '+snapshots.length));
  dateRibbon(previous,current,firstCapture?'baseline':'compare');
  // Background rank slots never move, only the guilds occupying them.
  for(let i=0;i<10;i++){
@@ -351,7 +352,7 @@ function paint(){
  if(showZones)drawSafe();
 }
 function validate(d){
- if(!d||d.season!==15||!Array.isArray(d.snapshots)||d.snapshots.length<2)throw Error('Missing Season 15 captures');
+ if(!d||d.season!==15||!Array.isArray(d.snapshots)||d.snapshots.length<2)throw Error('Missing two source-backed Season 15 captures');
  const all=d.snapshots.map((s,i)=>{
   if(!Array.isArray(s.guilds)||s.guilds.length<25)throw Error('Incomplete capture '+(i+1));
   const guilds=s.guilds.slice().sort((a,b)=>a.rank-b.rank);
@@ -362,6 +363,8 @@ function validate(d){
  return all;
 }
 function build(d){
+ videoMode=d.videoEdit?.mode==='segment'?'segment':'full';
+ newCaptures=videoMode==='segment'?d.videoEdit.newCaptures:d.snapshots.length;
  snapshots=validate(d);first=snapshots[0];latest=snapshots[snapshots.length-1];
  const old=new Map(first.guilds.map(x=>[x.name,x]));
  const shared=latest.guilds.filter(g=>old.has(g.name)).map(g=>({...g,from:old.get(g.name).rank,change:old.get(g.name).rank-g.rank,gain:g.experience-old.get(g.name).experience}));
@@ -391,7 +394,7 @@ function build(d){
  if(duration>49.901)throw Error('50-second director cut exceeded runtime budget: '+duration);
  ready=true;t=0;
  seek.disabled=false;play.disabled=false;seek.max=duration.toFixed(2);
- status.textContent='Loaded '+snapshots.length+' verified captures · uninterrupted Top 10 · '+Math.ceil(duration)+' seconds · no interpolated XP figures';
+ status.textContent='Loaded '+(videoMode==='segment'?newCaptures+' new capture(s) and previous baseline':snapshots.length+' verified captures')+' · uninterrupted Top 10 · '+Math.ceil(duration)+' seconds · recorded rank and XP figures only';
  updateUI();paint();
 }
 function updateUI(){
@@ -442,7 +445,18 @@ if(!document.querySelector('meta[name="willy-dex-edition"]'))fetch('checkins/man
   const button=document.getElementById('video-export');
   if(latest&&latest.video){button.href=latest.video;button.hidden=false}
 }).catch(()=>{});
-fetch('glb.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(build).catch(err=>{warning='Data could not be verified: '+err.message;status.textContent=warning;paint()});
+function chosenTimeline(source){
+ if(document.querySelector('meta[name="willy-dex-edition"]'))return source;
+ const params=new URLSearchParams(location.search);
+ if(params.get('mode')!=='segment')return {...source,videoEdit:{mode:'full',newCaptures:source.snapshots.length}};
+ const all=source.snapshots||[],startAt=params.get('start'),endAt=params.get('end');
+ const start=startAt?all.findIndex(s=>s.capturedAt===startAt):Math.max(1,all.findIndex(s=>Date.parse(s.capturedAt)>=Date.parse('2026-10-31T14:15:00-07:00')));
+ const end=endAt?all.findIndex(s=>s.capturedAt===endAt):all.length-1;
+ if(start<1||end<start)throw Error('Choose an existing segment with a preceding baseline');
+ const selection=all.slice(start,end+1),baseline=all[start-1];
+ return {...source,snapshots:[baseline,...selection],videoEdit:{mode:'segment',newCaptures:selection.length,baselineCapturedAt:baseline.capturedAt,from:selection[0].capturedAt,to:selection[selection.length-1].capturedAt}};
+}
+fetch('glb.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(chosenTimeline).then(build).catch(err=>{warning='Data could not be verified: '+err.message;status.textContent=warning;paint()});
 paint();
 })();
 </script></body></html>

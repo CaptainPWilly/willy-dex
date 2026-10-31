@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#100d0b"><title>Video Studio — Willy Dex</title>
+<style>
+:root{color-scheme:dark;--bg:#100d0b;--panel:#241a13;--gold:#ebbd82;--edge:#765739;--text:#f4e3c8;--muted:#bba78e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse 80% 35% at 50% 0,#342417,var(--bg) 73%);font:15px/1.5 system-ui,-apple-system,sans-serif;color:var(--text)}a{color:var(--gold)}
+nav{max-width:1090px;margin:auto;padding:15px 18px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;border-bottom:1px solid #59422e}
+nav strong{margin-right:auto;letter-spacing:.15em;font-size:13px}nav a{text-decoration:none;font-weight:800;font-size:12px}
+main{max-width:1090px;margin:auto;padding:27px 16px 80px}.overline{letter-spacing:.14em;color:var(--gold);font-weight:850;font-size:11px}
+h1{font:800 clamp(30px,5vw,46px) Georgia,serif;margin:9px 0 4px}h2{font-size:20px;margin:0 0 12px}p{color:var(--muted);margin:8px 0 17px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,415px);gap:17px;align-items:start;margin-top:20px}
+.panel{padding:24px;background:var(--panel);border:1px solid var(--edge);border-radius:13px;min-width:0}
+.label{display:block;font-size:11px;font-weight:850;color:var(--muted);letter-spacing:.07em;margin:21px 0 8px}
+.choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.choice button{display:block;text-align:left;width:100%;min-height:100px;padding:15px;border:1px solid #725639;border-radius:10px;background:#1b1511;color:var(--text);cursor:pointer}
+.choice button[aria-pressed="true"]{background:#403020;border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.choice strong{display:block;font-size:16px}.choice small{display:block;font-size:12px;line-height:1.5;margin-top:6px;color:#c4ad90}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fields label{font-size:12px;color:var(--muted);font-weight:800}
+select,input{display:block;width:100%;margin-top:7px;padding:11px 9px;background:#140f0c;color:var(--text);border:1px solid var(--edge);border-radius:8px;font:inherit;min-width:0}
+button,.button{font:inherit}button:disabled{opacity:.45;cursor:not-allowed!important}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin:20px 0 0}.action{border:1px solid #97704a;background:#35291e;border-radius:8px;padding:12px 15px;color:var(--text);cursor:pointer;text-decoration:none;font-weight:850}
+.action.primary{background:var(--gold);border-color:var(--gold);color:#21150d}.action:hover{filter:brightness(1.14)}
+#summary{border-top:1px solid #6c5136;padding-top:16px;margin-top:22px;color:#e4cba8;font-size:13px}
+#status{margin-top:16px;color:#e9c9a0;font-size:13px;min-height:21px}#status.error{color:#f2a994}
+#auth{margin-top:19px;padding:15px;background:#1b1510;border:1px solid #634c33;border-radius:9px}
+#auth label{font-size:12px;color:#cbb399;font-weight:850}
+#auth p{font-size:12px;margin:5px 0 8px}
+.preview{min-height:220px;text-align:center}.preview h2{text-align:left}
+iframe{width:100%;height:620px;border:1px solid #6b5037;border-radius:10px;background:#100d0b}
+.placeholder{padding:65px 18px;border:1px dashed #725639;border-radius:9px;color:#bba78e;font-size:13px}
+.hint{font-size:12px;line-height:1.6;color:var(--muted)}[hidden]{display:none!important}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.panel{padding:17px}.preview{max-width:490px;width:100%;margin:auto}.fields{grid-template-columns:1fr}iframe{height:550px}}
+</style></head><body>
+<nav><strong>WILLY / DEX</strong><a href="../glb.html">GLB</a><a href="index.html">VIDEO LIBRARY</a><a href="player.html">LATEST VIDEO</a></nav>
+<main><div class="overline">WILLY CORP / GLB INTELLIGENCE</div><h1>Video studio</h1>
+<p>Build a YouTube-ready recap from verified leaderboard captures. Choose the whole season or continue from a particular snapshot. No invented positions or XP.</p>
+<div class="layout">
+<section class="panel">
+<h2>Create a cut</h2>
+<div class="choice" role="group" aria-label="Video type">
+<button type="button" id="segment" aria-pressed="true"><strong>Segment</strong><small>Start from a previous ending. Only your selected new captures.</small></button>
+<button type="button" id="full" aria-pressed="false"><strong>Full season recap</strong><small>Every verified snapshot, start to finish.</small></button>
+</div>
+<div id="range">
+<span class="label">SEGMENT CAPTURES</span>
+<div class="fields"><label>Start (first new capture)<select id="from"></select></label><label>Finish (latest included)<select id="to"></select></label></div>
+<p class="hint">The capture immediately before your start is included as a comparison baseline, not counted as a new snapshot.</p>
+</div>
+<div id="summary" aria-live="polite">Loading captured leaderboard history…</div>
+<div class="actions"><button class="action" id="preview" disabled>Preview selected cut</button><button class="action primary" id="generate" disabled>Generate HQ MP4</button></div>
+<div id="auth">
+<label for="password">Editor password · required to publish</label>
+<input id="password" type="password" autocomplete="off" placeholder="Willy Dex editor password">
+<p>This stays in the authentication request. No GitHub token is placed in the website.</p>
+</div>
+<div id="status" role="status" aria-live="polite"></div>
+<p class="hint">Published videos appear in <a href="index.html">the library</a> with their own permanent watch and download links. HQ export uses the GitHub video renderer. You can also <a href="https://github.com/CaptainPWilly/willy-dex/actions/workflows/publish-glb-checkins.yml">run it from GitHub Actions</a>.</p>
+</section>
+<section class="panel preview"><h2>Director preview</h2><div class="placeholder" id="placeholder">Choose a cut and select Preview. The timeline will use only your recorded captures.</div><iframe id="frame" title="Video timeline preview" hidden loading="lazy" allow="autoplay"></iframe><p class="hint">Preview is interactive; publish to create the permanent high-quality MP4.</p></section>
+</div></main>
+<script>
+'use strict';
+(async()=>{
+const $=id=>document.getElementById(id),API='https://willy-dex-editor.onrender.com';
+const fmt=s=>{const d=new Date(s);return Number.isFinite(+d)?d.toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})+' PT':String(s)};
+let snapshots=[],mode='segment',session='';
+const status=(message,error=false)=>{$('status').textContent=message;$('status').classList.toggle('error',error)};
+const selected=()=>({mode,startAt:$('from').value,endAt:$('to').value});
+function update(){
+$('segment').setAttribute('aria-pressed',String(mode==='segment'));
+$('full').setAttribute('aria-pressed',String(mode==='full'));
+$('range').hidden=mode==='full';
+const a=snapshots.findIndex(s=>s.capturedAt===$('from').value),b=snapshots.findIndex(s=>s.capturedAt===$('to').value);
+const valid=mode==='full'?snapshots.length>1:a>=1&&b>=a;
+$('preview').disabled=!valid;$('generate').disabled=!valid;
+if(mode==='full')$('summary').textContent='Full Season '+(snapshots[0]?.season||15)+' · '+snapshots.length+' verified captures · '+fmt(snapshots[0]?.capturedAt)+' → '+fmt(snapshots[snapshots.length-1]?.capturedAt);
+else $('summary').textContent=valid?('Previous ending: '+fmt(snapshots[a-1].capturedAt)+' · '+(b-a+1)+' new capture'+(b-a===0?'':'s')+' · Through '+fmt(snapshots[b].capturedAt)):'Choose a finish at or after your start.';
+}
+function options(){
+const start=$('from'),end=$('to');start.replaceChildren();end.replaceChildren();
+for(let i=0;i<snapshots.length;i++){
+const s=snapshots[i],label='#'+(i+1)+' · '+fmt(s.capturedAt);
+const one=new Option(label,s.capturedAt);const two=new Option(label,s.capturedAt);
+if(i>0)start.add(one);end.add(two);
+}
+const defaultFrom=snapshots.findIndex(s=>Date.parse(s.capturedAt)>=Date.parse('2026-10-31T14:15:00-07:00'));
+start.selectedIndex=Math.max(0,defaultFrom-1);end.selectedIndex=end.options.length-1;update();
+}
+for(const id of ['segment','full'])$(id).addEventListener('click',()=>{mode=id;update()});
+for(const id of ['from','to'])$(id).addEventListener('change',update);
+$('preview').addEventListener('click',()=>{
+const s=selected(),url=new URL('../season-15-check-in.html',location.href);
+url.searchParams.set('mode',s.mode);
+if(s.mode==='segment'){url.searchParams.set('start',s.startAt);url.searchParams.set('end',s.endAt)}
+$('frame').src=url.href;$('frame').hidden=false;$('placeholder').hidden=true;status('Preview loaded from recorded leaderboard data.');
+});
+async function request(path,data,token=''){
+let response;
+try{response=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify(data)})}catch{throw Error('Editor publisher could not be reached. The GitHub Actions link is available below.')}
+const result=await response.json().catch(()=>({}));
+if(!response.ok)throw Error(result.error||'Publisher request failed');
+return result;
+}
+$('generate').addEventListener('click',async()=>{
+const config=selected(),password=$('password').value;
+if(!password&&!session){status('Enter the editor password before publishing.',true);$('password').focus();return}
+$('generate').disabled=true;status('Requesting a new '+(mode==='full'?'full season recap':'segment')+' edition…');
+try{
+if(!session){const login=await request('/api/login',{password});session=login.token;$('password').value=''}
+const job=await request('/api/videos',config,session);
+status('HQ video job queued. It will appear in Video Library when the verified MP4 is published.');
+$('placeholder').textContent='Publishing requested. Preview the video or check the library.';
+}catch(e){if(/locked|401|token/i.test(e.message))session='';status(e.message,true)}
+finally{update()}
+});
+try{
+const response=await fetch('../glb.json',{cache:'no-store'});if(!response.ok)throw Error('Leaderboard archive unavailable');
+const data=await response.json();
+if(!Array.isArray(data.snapshots)||data.snapshots.length<2)throw Error('At least two captures are needed for a segment');
+snapshots=data.snapshots.slice().sort((a,b)=>Date.parse(a.capturedAt)-Date.parse(b.capturedAt));options();
+}catch(e){$('summary').textContent='Unable to load source data';status(e.message,true)}
+})();
+</script></body></html>

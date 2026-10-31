@@ -6,7 +6,30 @@ const root=path.resolve(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const write=(p,s)=>{const f=path.join(root,p);fs.mkdirSync(path.dirname(f),{recursive:true});fs.writeFileSync(f,s)};
 const raw=process.argv[2]?fs.readFileSync(path.resolve(process.argv[2]),'utf8'):read('glb.json');
-const glb=JSON.parse(raw);
+const source=JSON.parse(raw);
+const mode=String(process.env.GLB_MODE||'segment').toLowerCase();
+const requestedStart=String(process.env.GLB_START_AT||'');
+const requestedEnd=String(process.env.GLB_END_AT||'');
+const autoStart='2026-10-31T14:15:00-07:00';
+if(!['segment','full'].includes(mode))throw Error('Invalid video mode: '+mode);
+if(!Array.isArray(source.snapshots))throw Error('Missing source snapshots');
+let glb=source,videoEdit={mode:'full',newCaptures:source.snapshots.length,baselineCapturedAt:null,from:null,to:null};
+if(mode==='segment'){
+ const all=source.snapshots;
+ const find=(stamp)=>all.findIndex(s=>s.capturedAt===stamp);
+ let start=requestedStart?find(requestedStart):all.findIndex(s=>Date.parse(s.capturedAt)>=Date.parse(autoStart));
+ if(start<0&&!requestedStart)start=all.length-1;
+ const end=requestedEnd?find(requestedEnd):all.length-1;
+ if(start<1||end<start||end>=all.length)throw Error('Segment needs an existing preceding baseline and valid recorded start/end captures');
+ const selected=all.slice(start,end+1);
+ const baseline=all[start-1];
+ glb={...source,snapshots:[baseline,...selected],videoEdit:{
+  mode:'segment',newCaptures:selected.length,baselineCapturedAt:baseline.capturedAt,
+  from:selected[0].capturedAt,to:selected[selected.length-1].capturedAt
+ }};
+ videoEdit=glb.videoEdit;
+}
+
 const check=(ok,message)=>{if(!ok)throw Error('Invalid GLB: '+message)};
 check(Number.isInteger(glb.season)&&glb.season>0,'season');
 check(Array.isArray(glb.snapshots)&&glb.snapshots.length>0,'snapshots');
@@ -26,7 +49,7 @@ const stamp=(last.capturedAt||last.date||'undated').replace(/[^0-9TZ:-]/gi,'').r
 const editSignature=crypto.createHash('sha256')
  .update(read('season-15-check-in.html')).update('\n')
  .update(read('scripts/render-glb-hq.cjs')).digest('hex').slice(0,8);
-const id='s'+glb.season+'-'+stamp+'-'+hash.slice(0,12)+'-'+editSignature;
+const id='s'+glb.season+'-'+(mode==='segment'?'seg-':'full-')+stamp+'-'+hash.slice(0,12)+'-'+editSignature;
 const folder='checkins/editions/'+id;
 const manifestPath='checkins/manifest.json';
 let manifest={schema:1,latest:null,editions:[]};
@@ -35,8 +58,10 @@ check(Array.isArray(manifest.editions),'archive manifest is invalid');
 const existing=manifest.editions.find(e=>e.id===id);
 const leader=last.guilds.find(g=>g.rank===1),cove=last.guilds.find(g=>g.name==='The Pirate Cove');
 const meta={
- id,season:glb.season,firstCapturedAt:first.capturedAt||null,capturedAt:last.capturedAt||null,
- firstDate:first.date||null,date:last.date||null,snapshots:glb.snapshots.length,guilds:last.guilds.length,
+ id,season:glb.season,mode,firstCapturedAt:first.capturedAt||null,capturedAt:last.capturedAt||null,
+ baselineCapturedAt:videoEdit.baselineCapturedAt,rangeFrom:videoEdit.from,rangeTo:videoEdit.to,
+ newCaptures:videoEdit.newCaptures,sourceSnapshots:source.snapshots.length,
+ firstDate:first.date||null,date:last.date||null,snapshots:videoEdit.newCaptures,guilds:last.guilds.length,
  leader:leader?.name||'???',leaderXp:leader?.experience??null,
  cove:cove?{rank:cove.rank,experience:cove.experience}:null,
  contentHash:hash,sourceCommit:process.env.GITHUB_SHA||null,
@@ -66,4 +91,4 @@ write(manifestPath,JSON.stringify(manifest,null,2)+'\n');
 const newest=manifest.editions[0];
 write('checkins/latest.html','<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=player.html"><title>Latest GLB Video</title></head><body><a href="player.html">Watch and download latest GLB video</a></body></html>\n');
 write('.glb-last-edition',id+'\n');
-console.log(JSON.stringify({id,created:!existing,editions:manifest.editions.length,snapshots:glb.snapshots.length}));
+console.log(JSON.stringify({id,created:!existing,editions:manifest.editions.length,mode,newCaptures:videoEdit.newCaptures,snapshots:glb.snapshots.length}));

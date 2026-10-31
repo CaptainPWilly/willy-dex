@@ -42,7 +42,7 @@ footer a{color:var(--gold)}
 </style>
 </head>
 <body>
-<nav><strong>WILLY / DEX</strong><a href="index.html">VIDEO LIBRARY</a><a href="../glb.html">LEADERBOARD</a></nav>
+<nav><strong>WILLY / DEX</strong><a href="index.html">VIDEO LIBRARY</a><a href="studio.html">VIDEO STUDIO</a><a href="../glb.html">LEADERBOARD</a></nav>
 <main>
 <header>
 <div class="eyebrow">WILLY CORP / RECORDED GLB EDITION</div>
@@ -102,7 +102,7 @@ try{
  const captured=formatDate(entry.capturedAt||entry.date);
  document.title='Season '+entry.season+' · '+captured+' | Willy Dex Video';
  get('title').textContent='Season '+entry.season+' — GLB Video';
- get('subtitle').textContent=captured+' · '+entry.snapshots+' real snapshots · Top '+entry.guilds+' guilds';
+ get('subtitle').textContent=captured+' · '+(entry.mode==='segment'?(entry.newCaptures||entry.snapshots)+' new snapshot(s) + preceding baseline':entry.snapshots+' real snapshots')+' · Top '+entry.guilds+' guilds';
  get('season').textContent=entry.season;
  get('recorded').textContent=captured;
  const quality=entry.videoQuality;
