@@ -1,7 +1,43 @@
 {
   "schema": 1,
-  "latest": "s15-seg-2026-10-31T14-15-00-07-00-f6a49e0d1132-acb0ded9",
+  "latest": "s15-seg-2026-11-01T14-05-00-08-00-e4d8f1be29c6-acb0ded9",
   "editions": [
+    {
+      "id": "s15-seg-2026-11-01T14-05-00-08-00-e4d8f1be29c6-acb0ded9",
+      "season": 15,
+      "mode": "segment",
+      "firstCapturedAt": "2026-10-30T16:45:00-07:00",
+      "capturedAt": "2026-11-01T14:05:00-08:00",
+      "baselineCapturedAt": "2026-10-30T16:45:00-07:00",
+      "rangeFrom": "2026-10-31T14:15:00-07:00",
+      "rangeTo": "2026-11-01T14:05:00-08:00",
+      "newCaptures": 2,
+      "sourceSnapshots": 8,
+      "firstDate": "2026-10-30",
+      "date": "2026-11-01",
+      "snapshots": 2,
+      "guilds": 50,
+      "leader": "Umbral",
+      "leaderXp": 11893637,
+      "cove": {
+        "rank": 23,
+        "experience": 867422
+      },
+      "contentHash": "e4d8f1be29c6e0e11874fb194f38f0efd5428dbcf947f0da113ce450238f56e8",
+      "sourceCommit": "1a34354de95af9b26ab995b9409d380508033c16",
+      "generatedAt": "2026-11-01T22:06:26.175Z",
+      "page": "editions/s15-seg-2026-11-01T14-05-00-08-00-e4d8f1be29c6-acb0ded9/index.html",
+      "data": "editions/s15-seg-2026-11-01T14-05-00-08-00-e4d8f1be29c6-acb0ded9/data.json",
+      "video": "https://github.com/CaptainPWilly/willy-dex/releases/download/s15-seg-2026-11-01T14-05-00-08-00-e4d8f1be29c6-acb0ded9/s15-seg-2026-11-01T14-05-00-08-00-e4d8f1be29c6-acb0ded9-HQ-1080p60.mp4",
+      "videoQuality": {
+        "width": 1080,
+        "height": 1920,
+        "fps": 60,
+        "codec": "H.264",
+        "audio": "AAC",
+        "version": "HQ"
+      }
+    },
     {
       "id": "s15-seg-2026-10-31T14-15-00-07-00-f6a49e0d1132-acb0ded9",
       "season": 15,
