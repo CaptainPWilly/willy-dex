@@ -113,14 +113,17 @@ if(!valid||$('frame').dataset.previewKey!==JSON.stringify(selected()))$('preview
 if(mode==='full')$('summary').textContent='Full Season '+(snapshots[0]?.season||15)+' · '+snapshots.length+' verified captures · '+fmt(snapshots[0]?.capturedAt)+' → '+fmt(snapshots[snapshots.length-1]?.capturedAt);
 else $('summary').textContent=valid?('Previous ending: '+fmt(snapshots[a-1].capturedAt)+' · '+(b-a+1)+' new capture'+(b-a===0?'':'s')+' · Through '+fmt(snapshots[b].capturedAt)):'Choose a finish at or after your start.';
 }
-function options(){
+function options(lastPublishedEnd){
 const start=$('from'),end=$('to');start.replaceChildren();end.replaceChildren();
 for(let i=0;i<snapshots.length;i++){
 const s=snapshots[i],label='#'+(i+1)+' · '+fmt(s.capturedAt);
 const one=new Option(label,s.capturedAt);const two=new Option(label,s.capturedAt);
 if(i>0)start.add(one);end.add(two);
 }
-const defaultFrom=snapshots.findIndex(s=>Date.parse(s.capturedAt)>=Date.parse('2026-10-31T14:15:00-07:00'));
+// Begin a new segment after the last archived capture; never repeat it as new data.
+const cutoff=Date.parse(lastPublishedEnd||'2026-10-31T14:15:00-07:00');
+const nextUnpublished=snapshots.findIndex(s=>Date.parse(s.capturedAt)>cutoff);
+const defaultFrom=nextUnpublished>=1?nextUnpublished:snapshots.length-1;
 start.selectedIndex=Math.max(0,defaultFrom-1);end.selectedIndex=end.options.length-1;update();
 }
 for(const id of ['segment','full'])$(id).addEventListener('click',()=>{mode=id;update()});
@@ -228,7 +231,17 @@ try{
 const response=await fetch('../glb.json',{cache:'no-store'});if(!response.ok)throw Error('Leaderboard archive unavailable');
 const data=await response.json();
 if(!Array.isArray(data.snapshots)||data.snapshots.length<2)throw Error('At least two captures are needed for a segment');
-snapshots=data.snapshots.slice().sort((a,b)=>Date.parse(a.capturedAt)-Date.parse(b.capturedAt));options();
+snapshots=data.snapshots.slice().sort((a,b)=>Date.parse(a.capturedAt)-Date.parse(b.capturedAt));
+let publishedEnd='2026-10-31T14:15:00-07:00';
+try{
+ const archive=await fetch('manifest.json',{cache:'no-store'});
+ if(archive.ok){
+  const manifest=await archive.json();
+  const ends=(manifest.editions||[]).map(e=>e.rangeTo||e.capturedAt).filter(t=>Number.isFinite(Date.parse(t)));
+  if(ends.length)publishedEnd=ends.reduce((latest,t)=>Date.parse(t)>Date.parse(latest)?t:latest);
+ }
+}catch(e){}
+options(publishedEnd);
 }catch(e){$('summary').textContent='Unable to load source data';status(e.message,true)}
 })();
 </script></body></html>
