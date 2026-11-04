@@ -1158,7 +1158,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "23 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 2
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "025",
@@ -2020,7 +2032,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "23 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 3
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "040",
@@ -2574,7 +2598,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "24 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 4
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "052",
@@ -2666,7 +2702,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "23 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 1
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "054",
@@ -2712,7 +2760,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "23 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 0
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "055",
@@ -2804,7 +2864,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "24 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 5
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "057",
@@ -2896,7 +2968,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "24 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 6
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "059",
@@ -2942,7 +3026,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "24 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 7
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "060",
@@ -2988,7 +3084,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "25 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 8
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "061",
@@ -3172,7 +3280,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "25 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 9
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "065",
@@ -3218,7 +3338,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "25 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 10
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "066",
@@ -3266,7 +3398,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "25 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 11
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "067",
@@ -3342,13 +3486,23 @@
     "guild_removal_history": [
       {
         "date": null,
+        "reportedAge": "26 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 12
+      },
+      {
+        "date": null,
         "reportedAge": "11 months ago",
         "reportedOn": "2026-10-29",
         "precision": "relative-only",
         "source": "SMMO guild removal notification batch supplied 2026-10-29",
         "identityAmbiguous": false
       }
-    ]
+    ],
+    "membership_status": "former"
   },
   {
     "number": "068",
@@ -3394,7 +3548,19 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "guild_removal_history": [
+      {
+        "date": null,
+        "reportedAge": "26 minutes ago",
+        "reportedOn": "2026-11-04",
+        "precision": "relative-only",
+        "source": "SMMO guild removal notifications supplied 2026-11-04",
+        "identityAmbiguous": false,
+        "sourceOrder": 13
+      }
+    ],
+    "membership_status": "former"
   },
   {
     "number": "069",
