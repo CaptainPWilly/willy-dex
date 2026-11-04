@@ -207,7 +207,7 @@
     {
       "name": "buckly",
       "cardId": "willy-dex-024",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -215,6 +215,17 @@
           "ageText": "3 weeks ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "23 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 2
         }
       ]
     },
@@ -484,7 +495,7 @@
     {
       "name": "Future investment",
       "cardId": "willy-dex-053",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -492,6 +503,17 @@
           "ageText": "4 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "23 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 1
         }
       ]
     },
@@ -522,7 +544,7 @@
     {
       "name": "Tsuna57",
       "cardId": "willy-dex-051",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -531,12 +553,23 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "24 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 4
+        }
       ]
     },
     {
       "name": "Eugenyy",
       "cardId": "willy-dex-058",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -544,6 +577,17 @@
           "ageText": "5 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "24 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 6
         }
       ]
     },
@@ -682,7 +726,7 @@
     {
       "name": "Byrdman",
       "cardId": "willy-dex-060",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -691,12 +735,23 @@
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
         }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "25 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 8
+        }
       ]
     },
     {
       "name": "AnskillFloy",
       "cardId": "willy-dex-054",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -704,6 +759,17 @@
           "ageText": "5 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "23 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 0
         }
       ]
     },
@@ -724,7 +790,7 @@
     {
       "name": "XxMANZZxX",
       "cardId": "willy-dex-059",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -732,6 +798,17 @@
           "ageText": "5 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "24 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 7
         }
       ]
     },
@@ -1109,7 +1186,7 @@
     {
       "name": "Nergal",
       "cardId": "willy-dex-056",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -1117,6 +1194,17 @@
           "ageText": "6 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "24 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 5
         }
       ]
     },
@@ -1590,7 +1678,7 @@
     {
       "name": "The Mighty Fish Lord",
       "cardId": "willy-dex-067",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -1625,6 +1713,15 @@
         }
       ],
       "removals": [
+        {
+          "removed": null,
+          "ageText": "26 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 12
+        },
         {
           "removed": null,
           "ageText": "11 months ago",
@@ -1686,7 +1783,7 @@
     {
       "name": "Fuhfuinfd",
       "cardId": "willy-dex-064",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -1694,6 +1791,17 @@
           "ageText": "8 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "25 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 9
         }
       ]
     },
@@ -2420,7 +2528,7 @@
     {
       "name": "Chance the Stepper",
       "cardId": "willy-dex-068",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -2428,6 +2536,17 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "26 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 13
         }
       ]
     },
@@ -3255,7 +3374,7 @@
     {
       "name": "G0CWhiskey",
       "cardId": "willy-dex-039",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -3263,6 +3382,17 @@
           "ageText": "9 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "23 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 3
         }
       ]
     },
@@ -3768,7 +3898,7 @@
     {
       "name": "MarenG",
       "cardId": "willy-dex-065",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -3776,6 +3906,17 @@
           "ageText": "10 months ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "25 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 10
         }
       ]
     },
@@ -11168,7 +11309,7 @@
     {
       "name": "Requiescat",
       "cardId": "willy-dex-066",
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -11176,6 +11317,17 @@
           "ageText": "3 years ago",
           "source": "SMMO join notification pasted 2026-10-29",
           "datePrecision": "relative-only"
+        }
+      ],
+      "removals": [
+        {
+          "removed": null,
+          "ageText": "25 minutes ago",
+          "reportedOn": "2026-11-04",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild removal notifications supplied 2026-11-04",
+          "identityAmbiguous": false,
+          "sourceOrder": 11
         }
       ]
     },
@@ -14653,5 +14805,16 @@
     "distinctNames": 394,
     "relativeDatesOnly": true,
     "note": "Removed is a separate event category from voluntary Left. Same-age repetitions are retained; identity of generic Deleted accounts is not asserted; no event is forcibly paired to a join."
-  }
+  },
+  "additionalRemovalImports": [
+    {
+      "source": "SMMO guild removal notifications supplied 2026-11-04",
+      "reportedOn": "2026-11-04",
+      "eventCount": 14,
+      "distinctNames": 14,
+      "relativeDatesOnly": true,
+      "chronology": "Newest to oldest within pasted notification batch; original line order preserved with sourceOrder 0–13.",
+      "note": "Removals are distinct from voluntary departures. Relative-minute labels are preserved; no calendar minute is fabricated."
+    }
+  ]
 }
