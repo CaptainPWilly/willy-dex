@@ -2825,6 +2825,262 @@
           "experience": 75000
         }
       ]
+    },
+    {
+      "date": "2026-11-05",
+      "capturedAt": "2026-11-05T12:00:00-08:00",
+      "guilds": [
+        {
+          "rank": 1,
+          "name": "Umbral",
+          "experience": 19786632
+        },
+        {
+          "rank": 2,
+          "name": "Helheim",
+          "experience": 13801047
+        },
+        {
+          "rank": 3,
+          "name": "The Cult Of SV",
+          "experience": 10941841
+        },
+        {
+          "rank": 4,
+          "name": "Ascended",
+          "experience": 10892710
+        },
+        {
+          "rank": 5,
+          "name": "ETERNAL GLADIATORS",
+          "experience": 7700535
+        },
+        {
+          "rank": 6,
+          "name": "Rain Factory",
+          "experience": 6758749
+        },
+        {
+          "rank": 7,
+          "name": "Coven",
+          "experience": 6693922
+        },
+        {
+          "rank": 8,
+          "name": "Nein Roots",
+          "experience": 6584324
+        },
+        {
+          "rank": 9,
+          "name": "The Knights Who Say Yee",
+          "experience": 5984024
+        },
+        {
+          "rank": 10,
+          "name": "SOLO",
+          "experience": 5853805
+        },
+        {
+          "rank": 11,
+          "name": "Shadow Garden",
+          "experience": 4929939
+        },
+        {
+          "rank": 12,
+          "name": "The Resistance",
+          "experience": 3683321
+        },
+        {
+          "rank": 13,
+          "name": "Blazing Beasts",
+          "experience": 3037516
+        },
+        {
+          "rank": 14,
+          "name": "Chronos Continuum",
+          "experience": 2617344
+        },
+        {
+          "rank": 15,
+          "name": "Kairos",
+          "experience": 2410111
+        },
+        {
+          "rank": 16,
+          "name": "ПРОСТОР | PROSTOR",
+          "experience": 2281632
+        },
+        {
+          "rank": 17,
+          "name": "Lucky Ones",
+          "experience": 2280081
+        },
+        {
+          "rank": 18,
+          "name": "Dante's Inferno Room",
+          "experience": 2213513
+        },
+        {
+          "rank": 19,
+          "name": "Nightwings",
+          "experience": 2131250
+        },
+        {
+          "rank": 20,
+          "name": "Wolf Pack",
+          "experience": 1655952
+        },
+        {
+          "rank": 21,
+          "name": "Demolition's Great Kingdom",
+          "experience": 1343029
+        },
+        {
+          "rank": 22,
+          "name": "Wolf",
+          "experience": 1297339
+        },
+        {
+          "rank": 23,
+          "name": "The Scarlet Legion",
+          "experience": 1259910
+        },
+        {
+          "rank": 24,
+          "name": "The Pirate Cove",
+          "experience": 1089453
+        },
+        {
+          "rank": 25,
+          "name": "The Forest",
+          "experience": 974900
+        },
+        {
+          "rank": 26,
+          "name": "Golden Arrows",
+          "experience": 972452
+        },
+        {
+          "rank": 27,
+          "name": "Still Friendly Too",
+          "experience": 882642
+        },
+        {
+          "rank": 28,
+          "name": "Graveyard",
+          "experience": 822772
+        },
+        {
+          "rank": 29,
+          "name": "Dead Poets Society",
+          "experience": 804242
+        },
+        {
+          "rank": 30,
+          "name": "[Slums] Guild",
+          "experience": 684206
+        },
+        {
+          "rank": 31,
+          "name": "Necromancer's Den",
+          "experience": 664905
+        },
+        {
+          "rank": 32,
+          "name": "Zealous Zenith Kitties",
+          "experience": 629655
+        },
+        {
+          "rank": 33,
+          "name": "Heaven and Hell",
+          "experience": 564550
+        },
+        {
+          "rank": 34,
+          "name": "Black Dragon",
+          "experience": 525586
+        },
+        {
+          "rank": 35,
+          "name": "The Deers 🦌",
+          "experience": 314404
+        },
+        {
+          "rank": 36,
+          "name": "Rattlers",
+          "experience": 300684
+        },
+        {
+          "rank": 37,
+          "name": "Pho Bo Warriors",
+          "experience": 262127
+        },
+        {
+          "rank": 38,
+          "name": "Friendly",
+          "experience": 249594
+        },
+        {
+          "rank": 39,
+          "name": "Legacy",
+          "experience": 233813
+        },
+        {
+          "rank": 40,
+          "name": "Paul Bunyan",
+          "experience": 206887
+        },
+        {
+          "rank": 41,
+          "name": "The Bankers Guild",
+          "experience": 200000
+        },
+        {
+          "rank": 42,
+          "name": "Asgard",
+          "experience": 193631
+        },
+        {
+          "rank": 43,
+          "name": "The Light Bearers",
+          "experience": 150200
+        },
+        {
+          "rank": 44,
+          "name": "Brasil Grind 🇧🇷",
+          "experience": 148900
+        },
+        {
+          "rank": 45,
+          "name": "The Cursed Legion",
+          "experience": 123617
+        },
+        {
+          "rank": 46,
+          "name": "Magazyn Ryb",
+          "experience": 100000
+        },
+        {
+          "rank": 47,
+          "name": "Tea Garden",
+          "experience": 86449
+        },
+        {
+          "rank": 48,
+          "name": "Sumbosia",
+          "experience": 79897
+        },
+        {
+          "rank": 49,
+          "name": "Apex",
+          "experience": 75700
+        },
+        {
+          "rank": 50,
+          "name": "Teletubbies",
+          "experience": 75000
+        }
+      ]
     }
   ]
 }
