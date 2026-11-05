@@ -1,0 +1,65 @@
+/* Willy Dex application shell — one navigation/design language across all app pages. */
+:root {
+  --wc-ui-bg:#100d0b;
+  --wc-ui-raised:#1d1713;
+  --wc-ui-border:#59412e;
+  --wc-ui-gold:#dfb47d;
+  --wc-ui-text:#f3dfbd;
+  --wc-ui-muted:#a9947e;
+  color-scheme:dark;
+}
+html{background:var(--wc-ui-bg)}
+body{background:radial-gradient(ellipse 80% 35% at 50% 0,#30241b,var(--wc-ui-bg) 73%)!important}
+#wc-app-mount{min-height:110px}
+#wc-app-shell,#wc-app-shell *{box-sizing:border-box}
+#wc-app-shell{
+  position:relative;z-index:12;width:100%;min-height:108px;
+  background:linear-gradient(180deg,#1a1512,#120f0d);
+  border-bottom:1px solid #695039;
+  color:var(--wc-ui-text);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:13px;line-height:1.4;box-shadow:0 9px 24px #0003;
+}
+#wc-app-shell a{text-decoration:none}
+#wc-app-shell .wc-app-inner{width:min(100%,1180px);margin:0 auto;padding:0 20px}
+#wc-app-shell .wc-app-top{min-height:67px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+#wc-app-shell .wc-app-brand{display:flex;align-items:center;gap:11px;flex:0 0 auto;color:var(--wc-ui-text);min-width:0}
+#wc-app-shell .wc-app-emblem{width:37px;height:37px;display:grid;place-items:center;border:1px solid #9a7549;border-radius:10px;background:linear-gradient(150deg,#493422,#23190f);color:#ffe3b3;font:800 17px Georgia,serif;letter-spacing:-.06em}
+#wc-app-shell .wc-app-title{font:800 15px Georgia,serif;letter-spacing:.09em;white-space:nowrap}
+#wc-app-shell .wc-app-brand small{display:block;margin-top:3px;color:var(--wc-ui-muted);font:700 9px/1.4 system-ui,sans-serif;letter-spacing:.15em;white-space:nowrap}
+#wc-app-shell .wc-app-areas{display:flex;align-items:center;gap:5px;min-width:0}
+#wc-app-shell .wc-app-area{position:relative;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:11px 15px;border:1px solid transparent;border-radius:8px;color:#bca68d;font:750 12px/1.2 system-ui,sans-serif;letter-spacing:.02em;transition:background .15s,color .15s}
+#wc-app-shell .wc-app-area:hover{color:#ffe5c2;background:#302318}
+#wc-app-shell .wc-app-area.is-active{background:#302319;color:#ffe0b3;border-color:#735237}
+#wc-app-shell .wc-app-area.is-active:after{content:"";position:absolute;bottom:-13px;left:19px;right:19px;height:2px;border-radius:2px;background:var(--wc-ui-gold)}
+#wc-app-shell .wc-app-subwrap{border-top:1px solid #3d3026;background:#120f0e}
+#wc-app-shell .wc-app-sub{display:flex;align-items:center;gap:14px;min-height:42px}
+#wc-app-shell .wc-app-context{color:#8e7c6c;font:800 10px system-ui,sans-serif;letter-spacing:.12em;white-space:nowrap;margin-right:5px}
+#wc-app-shell .wc-app-pages{display:flex;align-items:stretch;gap:5px;flex:1;min-width:0}
+#wc-app-shell .wc-app-page{display:inline-flex;align-items:center;padding:11px 12px;color:#b5a18a;border-bottom:2px solid transparent;font:700 11px/1.3 system-ui,sans-serif;white-space:nowrap}
+#wc-app-shell .wc-app-page:hover{color:#f1d6ae}
+#wc-app-shell .wc-app-page.is-active{color:#ffe1b3;border-bottom-color:var(--wc-ui-gold)}
+#wc-app-shell .wc-app-refresh{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 auto;padding:7px 8px;min-height:30px;border:1px solid transparent;border-radius:7px;background:transparent;color:#aa9680;cursor:pointer;font:700 11px system-ui,sans-serif}
+#wc-app-shell .wc-app-refresh:hover{background:#2b211a;color:#ffe1b3;border-color:#634a36}
+#wc-app-shell .wc-app-refresh .wc-app-refresh-icon{font:20px/1 system-ui,sans-serif}
+#wc-app-shell a:focus-visible,#wc-app-shell button:focus-visible{outline:2px solid #f3d293;outline-offset:2px}
+@media(max-width:740px){
+  #wc-app-mount{min-height:135px}
+  #wc-app-shell .wc-app-inner{padding:0 12px}
+  #wc-app-shell .wc-app-top{display:block;padding-top:11px;min-height:0}
+  #wc-app-shell .wc-app-brand{margin-bottom:11px}
+  #wc-app-shell .wc-app-emblem{width:31px;height:31px;border-radius:8px;font-size:15px}
+  #wc-app-shell .wc-app-title{font-size:14px}
+  #wc-app-shell .wc-app-brand small{font-size:8px}
+  #wc-app-shell .wc-app-areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding-bottom:8px}
+  #wc-app-shell .wc-app-area{font-size:11px;padding:10px 4px}
+  #wc-app-shell .wc-app-area.is-active:after{bottom:-9px;left:20%;right:20%}
+  #wc-app-shell .wc-app-sub{min-height:44px;gap:6px}
+  #wc-app-shell .wc-app-context{display:none}
+  #wc-app-shell .wc-app-pages{overflow-x:auto;scrollbar-width:none}
+  #wc-app-shell .wc-app-pages::-webkit-scrollbar{display:none}
+  #wc-app-shell .wc-app-page{padding:12px 10px;font-size:11px}
+  #wc-app-shell .wc-app-refresh{padding:6px 4px}
+  #wc-app-shell .wc-app-refresh-label{display:none}
+}
+@media(prefers-reduced-motion:reduce){#wc-app-shell .wc-app-area{transition:none}}
