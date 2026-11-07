@@ -33,12 +33,18 @@ input::placeholder{color:#8f7d6a}
 .btn.primary{color:#21160d;background:#e7b97f;border-color:#e7b97f}
 .btn.primary:hover{background:#f7c98f}
 .btn.quiet{background:#1d1712}
+.format-row{display:flex;gap:13px;align-items:center;flex-wrap:wrap;margin:2px 0 19px}
+.format-row .field-label{margin:0}
+.format-toggle{display:flex;align-items:stretch;gap:4px;background:#120e0c;border:1px solid #73553a;border-radius:11px;padding:4px}
+.format-toggle button{display:flex;align-items:center;gap:9px;justify-content:center;min-height:42px;padding:8px 14px;background:transparent;border:1px solid transparent;border-radius:8px;color:#bca68e;font-size:12px;cursor:pointer}
+.format-toggle button[aria-pressed=true]{background:#e7b97f;color:#21160d;border-color:#e7b97f;font-weight:800}
+.format-toggle code{font-size:13px;white-space:nowrap}
 .tag-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:11px}
 .tag-card{border:1px solid #715338;background:#211913;border-radius:11px;padding:15px;min-width:0}
 .tag-top{display:flex;justify-content:space-between;align-items:start;gap:9px;margin-bottom:13px}
 .tag-name{font:700 19px/1.25 Georgia,serif;overflow-wrap:anywhere}
 .tag-kind{font-size:10px;letter-spacing:.04em;color:#a99275;margin-top:4px}
-.copy-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.copy-buttons{display:grid;grid-template-columns:1fr;gap:8px}
 .copy-btn{min-height:69px;min-width:0;border:1px solid #8e683e;border-radius:9px;background:#35271a;color:#f3dbb8;padding:9px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
 .copy-btn:hover{background:#4b3420;border-color:#ecc087}
 .copy-btn strong{font-size:12px;line-height:1.2}
@@ -59,7 +65,7 @@ input::placeholder{color:#8f7d6a}
 #toast{position:fixed;z-index:100;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#eac088;color:#27180b;border-radius:9px;padding:10px 16px;font-weight:800;font-size:12px;box-shadow:0 12px 35px #0009;max-width:calc(100vw - 32px);text-align:center}
 #toast[hidden]{display:none!important}
 .footer{margin-top:28px;color:var(--muted);font-size:12px;line-height:1.6}
-@media(max-width:650px){main{padding:22px 12px 64px}.hero{display:block}.hero .pill{display:inline-block;margin-top:15px}.panel{padding:15px}.tag-list{grid-template-columns:1fr}.copy-btn{min-height:75px}.tools .btn{flex:1 1 130px}.btn{min-height:44px}}
+@media(max-width:650px){.format-row{align-items:stretch;flex-direction:column;gap:6px}.format-toggle{width:100%}.format-toggle button{flex:1;min-width:0;padding:9px 7px}main{padding:22px 12px 64px}.hero{display:block}.hero .pill{display:inline-block;margin-top:15px}.panel{padding:15px}.tag-list{grid-template-columns:1fr}.copy-btn{min-height:75px}.tools .btn{flex:1 1 130px}.btn{min-height:44px}}
 </style>
 </head>
 <body>
@@ -72,6 +78,10 @@ input::placeholder{color:#8f7d6a}
 <button type="button" id="dismissShared" class="btn quiet">Dismiss</button>
 </div>
 <div class="controls"><input type="search" id="search" placeholder="Find a tag…" aria-label="Find a tag" autocomplete="off"><button type="button" id="sharePage" class="btn">Share page</button></div>
+<div class="format-row"><span class="field-label" id="formatLabel">Tag format</span><div class="format-toggle" role="group" aria-labelledby="formatLabel">
+<button type="button" data-format="normal" aria-pressed="true"><strong>Normal</strong><code>[[…]]</code></button>
+<button type="button" data-format="sprite" aria-pressed="false"><strong>Sprite</strong><code>[!…!]</code></button>
+</div></div>
 <section class="panel" aria-labelledby="publicTitle">
 <div class="panel-head"><div><div class="eyebrow">Shared library</div><h2 id="publicTitle">Community tags</h2></div><span id="communityCount" class="subtle">Loading…</span></div>
 <div id="communityTags" class="tag-list"></div>
@@ -96,6 +106,6 @@ input::placeholder{color:#8f7d6a}
 <p class="footer">This is a free web-based tag picker, not a native keyboard extension. iPhone and Android browsers cannot insert a custom keyboard into the system keyboard switcher. Copy here, then paste into SMMO.</p>
 </main>
 <div id="toast" role="status" aria-live="polite" hidden></div>
-<script src="smmo-tags.js?v=1" defer></script>
+<script src="smmo-tags.js?v=2" defer></script>
 </body>
 </html>
