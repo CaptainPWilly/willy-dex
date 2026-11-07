@@ -65,37 +65,31 @@ function copyText(text){
   }else if(fallbackCopy(text))toast('Copied: '+text);
   else prompt('Select and copy this tag:',text);
 }
+var editPersonal=false;
+var tagSorter=new Intl.Collator(undefined,{numeric:true,sensitivity:'base'});
 function createCard(tag,personal){
-  var article=document.createElement('article');article.className='tag-card';
-  var top=document.createElement('div');top.className='tag-top';
-  var heading=document.createElement('div');
-  var title=document.createElement('div');title.className='tag-name';title.textContent=tag.name;
-  var caption=document.createElement('div');caption.className='tag-kind';
-  caption.textContent=personal?'Personal tag':'Community tag';
-  heading.append(title,caption);top.appendChild(heading);
-  if(personal){
-    var del=document.createElement('button');del.type='button';del.className='delete';
-    del.textContent='Remove';del.setAttribute('aria-label','Remove '+tag.name);
-    del.addEventListener('click',function(){
+  var article=document.createElement('div');article.className='tag-card';
+  var button=document.createElement('button');button.type='button';button.className='tag-btn';
+  var output=format(tag.name,activeFormat);
+  button.textContent=tag.name;
+  button.title=tag.name;
+  button.setAttribute('aria-label',personal&&editPersonal?'Remove '+tag.name:'Copy '+output);
+  button.addEventListener('click',function(){
+    if(personal&&editPersonal){
       if(!confirm('Remove '+tag.name+' from this device?'))return;
       personalTags=personalTags.filter(function(t){return key(t.name)!==key(tag.name);});
       storeLocal();render();
-    });
-    top.appendChild(del);
-  }
-  article.appendChild(top);
-  var actions=document.createElement('div');actions.className='copy-buttons';
-  var output=format(tag.name,activeFormat);
-  var btn=document.createElement('button');btn.type='button';btn.className='copy-btn';
-  var label=document.createElement('strong');label.textContent='Copy tag';
-  var snippet=document.createElement('code');snippet.textContent=output;
-  btn.append(label,snippet);
-  btn.setAttribute('aria-label','Copy '+output);
-  btn.addEventListener('click',function(){copyText(output);});
-  actions.appendChild(btn);
-  article.appendChild(actions);return article;
+      toast('Removed '+tag.name);
+    }else copyText(output);
+  });
+  article.appendChild(button);
+  return article;
 }
 function render(){
+  $('personalTags').classList.toggle('is-editing',editPersonal);
+  $('editPersonal').textContent=editPersonal?'Done':'Edit';
+  $('editPersonal').setAttribute('aria-pressed',String(editPersonal));
+  $('editHint').hidden=!editPersonal;
   document.querySelectorAll('.format-toggle [data-format]').forEach(function(button){
     button.setAttribute('aria-pressed',String(button.dataset.format===activeFormat));
   });
@@ -104,12 +98,12 @@ function render(){
     {items:communityTags,list:$('communityTags'),empty:$('communityEmpty'),count:$('communityCount'),personal:false},
     {items:personalTags,list:$('personalTags'),empty:$('personalEmpty'),count:$('personalCount'),personal:true}
   ].forEach(function(section){
-    var matched=section.items.filter(function(tag){return key(tag.name).includes(term);});
+    var matched=section.items.filter(function(tag){return key(tag.name).includes(term);}).sort(function(a,b){return tagSorter.compare(a.name,b.name);});
     section.list.replaceChildren();
     var fragment=document.createDocumentFragment();
     matched.forEach(function(tag){fragment.appendChild(createCard(tag,section.personal));});
     section.list.appendChild(fragment);
-    section.count.textContent=section.items.length+' tag'+(section.items.length===1?'':'s');
+    section.count.textContent=(term?matched.length+'/':'')+section.items.length+' tag'+(section.items.length===1?'':'s')+' · A–Z';
     section.empty.hidden=matched.length!==0;
     section.empty.textContent=section.items.length?'No matching tags.':(section.personal?'No personal tags yet.':'No community tags available.');
   });
@@ -175,6 +169,7 @@ document.querySelectorAll('.format-toggle [data-format]').forEach(function(butto
   });
 });
 $('search').addEventListener('input',render);
+$('editPersonal').addEventListener('click',function(){editPersonal=!editPersonal;render();});
 $('addForm').addEventListener('submit',function(event){
   event.preventDefault();
   var field=$('tagName'),name=cleanName(field.value);
