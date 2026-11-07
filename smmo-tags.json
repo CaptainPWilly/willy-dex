@@ -33,6 +33,14 @@
     {
       "id": "captains-choice",
       "name": "Captain's Choice"
+    },
+    {
+      "id": "ahoy-chat",
+      "name": "ahoy chat"
+    },
+    {
+      "id": "ghost-of-an-npc",
+      "name": "Ghost of an NPC"
     }
   ]
 }
