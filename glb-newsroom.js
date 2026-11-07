@@ -1,11 +1,11 @@
 'use strict';
-(()=>{const $=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2}),sign=n=>(n>0?'+':'')+fmt(n),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+(()=>{const $=id=>document.getElementById(id),fmt=n=>n==null?'Unknown':Number(n).toLocaleString('en-US',{maximumFractionDigits:2}),sign=n=>(n>0?'+':'')+fmt(n),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const time=s=>s.capturedAt?new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(s.capturedAt)):s.date+' · time unconfirmed';
 let snaps=[],pageSize=14,allStories=[],displayCount=pageSize;
 const byName=s=>new Map(s.guilds.map(g=>[g.name,g]));
 function diff(prev,next){
  const old=byName(prev),now=byName(next),both=[...now.values()].filter(g=>old.has(g.name)).map(g=>{
-  const p=old.get(g.name);return {name:g.name,rank:g.rank,priorRank:p.rank,xp:g.experience,priorXp:p.experience,change:g.experience-p.experience,movement:p.rank-g.rank,kind:'matched'};
+  const p=old.get(g.name);return {name:g.name,rank:g.rank,priorRank:p.rank,xp:g.experience,priorXp:p.experience,change:g.experience==null||p.experience==null?null:g.experience-p.experience,movement:p.rank-g.rank,kind:'matched'};
  });
  const entrants=[...now.values()].filter(g=>!old.has(g.name)).map(g=>({name:g.name,rank:g.rank,xp:g.experience,kind:'entry'}));
  const departures=[...old.values()].filter(g=>!now.has(g.name)).map(g=>({name:g.name,priorRank:g.rank,priorXp:g.experience,kind:'exit'}));
@@ -17,12 +17,13 @@ function makeStories(pair,index){
  const out=[],date=time(pair.next),past=time(pair.prev),interval=pair.prev.capturedAt&&pair.next.capturedAt?date+' · since '+past:date+' · prior time unconfirmed';
  const add=(cat,g,title,body,value,delta,rankMovement,priority=0)=>out.push({cat,name:g,title,body,value,delta,rankMovement,date,interval,index,priority});
  for(const g of pair.both){
-  if(g.movement!==0){const direction=g.movement>0?'climbed':'fell';add('rank',g.name,g.name+' '+direction+' '+Math.abs(g.movement)+' '+(Math.abs(g.movement)===1?'place':'places'), 'Moved from #'+g.priorRank+' to #'+g.rank+'. '+(g.change===0?'Total recorded EXP was unchanged.':'Observed EXP '+(g.change>0?'increased by ':'changed by ')+sign(g.change)+'.'), '#'+g.priorRank+' → #'+g.rank,g.change,g.movement,2)}
-  else if(g.change!==0){add('xp',g.name,g.name+(g.change>0?' gained '+fmt(g.change)+' EXP':' changed EXP by '+sign(g.change)), 'Held rank #'+g.rank+' while its recorded total moved from '+fmt(g.priorXp)+' to '+fmt(g.xp)+' EXP.',sign(g.change)+' EXP',g.change,0,1)}
+  if(g.movement!==0){const direction=g.movement>0?'climbed':'fell';add('rank',g.name,g.name+' '+direction+' '+Math.abs(g.movement)+' '+(Math.abs(g.movement)===1?'place':'places'), 'Moved from #'+g.priorRank+' to #'+g.rank+'. '+(g.change===null?'EXP comparison unavailable.':g.change===0?'Total recorded EXP was unchanged.':'Observed EXP '+(g.change>0?'increased by ':'changed by ')+sign(g.change)+'.'), '#'+g.priorRank+' → #'+g.rank,g.change,g.movement,2)}
+  else if(g.change===null){add('steady',g.name,g.name+' at #'+g.rank+' — EXP unreported','Rank is verified, but EXP comparison is unavailable.','#'+g.rank,0,0,0)}
+   else if(g.change!==0){add('xp',g.name,g.name+(g.change>0?' gained '+fmt(g.change)+' EXP':' changed EXP by '+sign(g.change)), 'Held rank #'+g.rank+' while its recorded total moved from '+fmt(g.priorXp)+' to '+fmt(g.xp)+' EXP.',sign(g.change)+' EXP',g.change,0,1)}
   else {add('steady',g.name,g.name+' unchanged at #'+g.rank,'Both recorded rank and EXP total remained unchanged between these two snapshots.','#'+g.rank+' · '+fmt(g.xp)+' EXP',0,0,0)}
  }
- for(const g of pair.entrants)add('entry',g.name,g.name+' appears in tracked Top 50','First observed in this comparison at #'+g.rank+' with '+fmt(g.xp)+' EXP. Previous placement and EXP are not known.','Now #'+g.rank,0,0,2);
- for(const g of pair.departures)add('entry',g.name,g.name+' no longer appears in tracked Top 50','Previously recorded at #'+g.priorRank+' with '+fmt(g.priorXp)+' EXP. Later position and EXP are unknown.','Previously #'+g.priorRank,0,0,2);
+ for(const g of pair.entrants)add('entry',g.name,g.name+' appears in tracked Top 50','First observed in this comparison at #'+g.rank+' with '+(g.xp==null?'EXP not reported':fmt(g.xp)+' EXP')+'. Previous placement and EXP are not known.','Now #'+g.rank,0,0,2);
+ for(const g of pair.departures)add('entry',g.name,g.name+' no longer appears in tracked Top 50','Previously recorded at #'+g.priorRank+' with '+(g.priorXp==null?'EXP not reported':fmt(g.priorXp)+' EXP')+'. Later position and EXP are unknown.','Previously #'+g.priorRank,0,0,2);
  return out;
 }
 function storySort(a,b){
