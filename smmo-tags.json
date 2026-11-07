@@ -41,6 +41,14 @@
     {
       "id": "ghost-of-an-npc",
       "name": "Ghost of an NPC"
+    },
+    {
+      "id": "arg",
+      "name": "Arg"
+    },
+    {
+      "id": "turtle",
+      "name": "Turtle"
     }
   ]
 }
