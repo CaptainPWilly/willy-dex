@@ -13,18 +13,18 @@
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
 body{font:14px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:960px;margin:0 auto;padding:28px 18px 80px}
-h1,h2{font-family:Georgia,serif}h1{font-size:clamp(30px,6vw,45px);line-height:1.15;margin:7px 0 10px}h2{font-size:23px;margin:0}
+main{max-width:1240px;margin:0 auto;padding:18px 14px 62px}
+h1,h2{font-family:Georgia,serif}h1{font-size:clamp(25px,3.8vw,34px);line-height:1.1;margin:3px 0 5px}h2{font-size:18px;margin:0}
 p{margin:0}button,input{font:inherit}button{cursor:pointer}
 button:focus-visible,input:focus-visible{outline:2px solid #f8cb83;outline-offset:2px}
 .eyebrow{font-size:10px;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);font-weight:800}
-.hero{display:flex;gap:22px;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
-.intro{max-width:610px;color:#c8b49c;line-height:1.65}
+.hero{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-bottom:12px}
+.intro{max-width:700px;color:#c8b49c;line-height:1.4;font-size:12px}
 .pill{border-radius:99px;padding:7px 11px;border:1px solid #765838;color:var(--gold);font-size:11px;font-weight:800;white-space:nowrap}
-.panel{border:1px solid var(--line);background:linear-gradient(135deg,#241b15,#17120f);border-radius:13px;padding:20px;margin-top:15px}
-.panel-head{display:flex;gap:12px;justify-content:space-between;align-items:baseline;flex-wrap:wrap;margin-bottom:16px}
+.panel{border:1px solid var(--line);background:linear-gradient(135deg,#241b15,#17120f);border-radius:10px;padding:12px;margin-top:10px}
+.panel-head{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:9px}
 .subtle{font-size:12px;color:var(--muted)}
-.controls{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.controls{display:flex;gap:7px;align-items:center;flex:1;min-width:125px}
 input[type=search],input[type=text]{background:#120e0c;border:1px solid #73553a;border-radius:8px;color:var(--text);padding:11px 13px;min-height:44px;max-width:100%}
 input::placeholder{color:#8f7d6a}
 #search{flex:1;min-width:160px}
@@ -33,31 +33,32 @@ input::placeholder{color:#8f7d6a}
 .btn.primary{color:#21160d;background:#e7b97f;border-color:#e7b97f}
 .btn.primary:hover{background:#f7c98f}
 .btn.quiet{background:#1d1712}
-.format-row{display:flex;gap:13px;align-items:center;flex-wrap:wrap;margin:2px 0 19px}
+.format-row{display:flex;gap:7px;align-items:center;flex:0 0 auto;margin:0}
 .format-row .field-label{margin:0}
-.format-toggle{display:flex;align-items:stretch;gap:4px;background:#120e0c;border:1px solid #73553a;border-radius:11px;padding:4px}
-.format-toggle button{display:flex;align-items:center;gap:9px;justify-content:center;min-height:42px;padding:8px 14px;background:transparent;border:1px solid transparent;border-radius:8px;color:#bca68e;font-size:12px;cursor:pointer}
+.format-toggle{display:flex;align-items:stretch;gap:3px;background:#120e0c;border:1px solid #73553a;border-radius:9px;padding:3px}
+.format-toggle button{display:flex;align-items:center;gap:5px;justify-content:center;min-height:37px;padding:6px 9px;background:transparent;border:1px solid transparent;border-radius:6px;color:#bca68e;font-size:11px;cursor:pointer}
 .format-toggle button[aria-pressed=true]{background:#e7b97f;color:#21160d;border-color:#e7b97f;font-weight:800}
-.format-toggle code{font-size:13px;white-space:nowrap}
-.tag-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:11px}
-.tag-card{border:1px solid #715338;background:#211913;border-radius:11px;padding:15px;min-width:0}
-.tag-top{display:flex;justify-content:space-between;align-items:start;gap:9px;margin-bottom:13px}
-.tag-name{font:700 19px/1.25 Georgia,serif;overflow-wrap:anywhere}
-.tag-kind{font-size:10px;letter-spacing:.04em;color:#a99275;margin-top:4px}
-.copy-buttons{display:grid;grid-template-columns:1fr;gap:8px}
-.copy-btn{min-height:69px;min-width:0;border:1px solid #8e683e;border-radius:9px;background:#35271a;color:#f3dbb8;padding:9px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.copy-btn:hover{background:#4b3420;border-color:#ecc087}
-.copy-btn strong{font-size:12px;line-height:1.2}
-.copy-btn code{font:11px/1.3 ui-monospace,SFMono-Regular,Consolas,monospace;color:#eed4a9;overflow-wrap:anywhere}
-.delete{border:0;color:#c4aa8c;background:transparent;padding:3px 5px;font-size:12px;text-decoration:underline;text-underline-offset:3px}
-.delete:hover{color:#fff}
+.format-toggle code{font-size:11px;white-space:nowrap}
+.tag-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:6px}
+.tag-card{min-width:0}
+.tag-btn{display:block;width:100%;height:43px;min-width:0;border:1px solid #715338;border-radius:7px;background:#30241b;color:#f0d4ae;padding:0 7px;font-size:12px;font-weight:700;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .12s,border-color .12s}
+.tag-btn:hover{background:#4a3422;border-color:#ebbe83}
+.tag-btn:active{background:#765432;color:#fff}
+.tag-list.is-editing .tag-btn{background:#39211c;border-color:#a77060;color:#f4c5b7}
+.tag-list.is-editing .tag-btn::before{content:'× ';color:#f19c85}
+.tag-btn:focus-visible{position:relative;z-index:1;outline:2px solid #f8cb83;outline-offset:2px}
+.section-actions{display:flex;align-items:center;gap:7px}
+.section-actions .btn{min-height:32px;padding:5px 11px;font-size:11px}
+#editHint{font-size:11px;color:#e0a995;margin:0 0 9px}
+#editHint[hidden]{display:none!important}
+.tag-toolbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px;background:#1b1511;border:1px solid #614830;border-radius:10px;margin-bottom:10px;box-shadow:0 9px 20px #0004}
 .field-label{display:block;color:#ccb293;font-size:12px;font-weight:750;margin-bottom:6px}
 .add-form{display:flex;gap:9px;align-items:end;flex-wrap:wrap}
 .field{flex:1;min-width:170px}
 .field input{width:100%}
 .tools{display:flex;flex-wrap:wrap;gap:9px}
-.note{border-left:3px solid #ab8558;background:#19130e;padding:10px 12px;border-radius:5px;color:#bca790;font-size:12px;line-height:1.6;margin-top:17px}
-.blank{color:var(--muted);border:1px dashed #64503b;border-radius:9px;padding:24px;text-align:center}
+.note{border-left:2px solid #8e6b43;color:#a9947e;font-size:11px;line-height:1.45;margin-top:9px;padding-left:10px}
+.blank{color:var(--muted);border:1px dashed #64503b;border-radius:7px;padding:12px;text-align:center;font-size:12px}
 .notice{background:#292116;border:1px solid #947149;border-radius:9px;padding:15px;margin-bottom:16px}
 .notice strong{display:block;font-size:15px}
 .notice p{font-size:12px;color:#c6b094;margin:6px 0 12px}
@@ -65,31 +66,55 @@ input::placeholder{color:#8f7d6a}
 #toast{position:fixed;z-index:100;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#eac088;color:#27180b;border-radius:9px;padding:10px 16px;font-weight:800;font-size:12px;box-shadow:0 12px 35px #0009;max-width:calc(100vw - 32px);text-align:center}
 #toast[hidden]{display:none!important}
 .footer{margin-top:28px;color:var(--muted);font-size:12px;line-height:1.6}
-@media(max-width:650px){.format-row{align-items:stretch;flex-direction:column;gap:6px}.format-toggle{width:100%}.format-toggle button{flex:1;min-width:0;padding:9px 7px}main{padding:22px 12px 64px}.hero{display:block}.hero .pill{display:inline-block;margin-top:15px}.panel{padding:15px}.tag-list{grid-template-columns:1fr}.copy-btn{min-height:75px}.tools .btn{flex:1 1 130px}.btn{min-height:44px}}
+@media(max-width:650px){
+main{padding:13px 9px 50px}
+.hero{display:flex;align-items:start;gap:8px;margin-bottom:10px}
+.hero .pill{display:none}
+.eyebrow{font-size:9px}
+.intro{font-size:11px}
+.panel{padding:10px;margin-top:9px}
+.panel-head{margin-bottom:8px}
+h2{font-size:17px}
+.tag-toolbar{padding:6px;gap:6px}
+.format-row .field-label{display:none}
+.format-toggle button{padding:6px 7px}
+.format-toggle button strong{display:none}
+.format-toggle code{font-size:12px}
+#sharePage{display:none}
+#search{min-width:90px}
+.controls{min-width:92px}
+.tag-list{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:5px}
+.tag-btn{height:42px;font-size:11px;padding:0 5px}
+.tools .btn{flex:1 1 130px}
+}
+@media(prefers-reduced-motion:reduce){.tag-btn{transition:none}}
 </style>
 </head>
 <body>
 <div id="wc-app-mount"></div>
 <main>
-<header class="hero"><div><div class="eyebrow">Willy Corp / Community tools</div><h1>SMMO Tag Keyboard</h1><p class="intro">Tap a tag to copy its exact SMMO format, then paste it into the game. Keep personal tags on your device or share them with another pirate.</p></div><span class="pill">FREE · iPHONE + ANDROID</span></header>
+<header class="hero"><div><div class="eyebrow">Willy Corp / Community tools</div><h1>SMMO Tag Keyboard</h1><p class="intro">Select a format, tap a tag to copy, then paste into SMMO.</p></div><span class="pill">FREE · iPHONE + ANDROID</span></header>
 <div id="sharedNotice" class="notice" hidden>
 <strong id="sharedTitle">Someone shared a tag pack</strong><p id="sharedDetail"></p>
 <button type="button" id="acceptShared" class="btn primary">Add to my tags</button>
 <button type="button" id="dismissShared" class="btn quiet">Dismiss</button>
 </div>
-<div class="controls"><input type="search" id="search" placeholder="Find a tag…" aria-label="Find a tag" autocomplete="off"><button type="button" id="sharePage" class="btn">Share page</button></div>
-<div class="format-row"><span class="field-label" id="formatLabel">Tag format</span><div class="format-toggle" role="group" aria-labelledby="formatLabel">
-<button type="button" data-format="normal" aria-pressed="true"><strong>Normal</strong><code>[[…]]</code></button>
-<button type="button" data-format="sprite" aria-pressed="false"><strong>Sprite</strong><code>[!…!]</code></button>
+<div class="tag-toolbar">
+<div class="controls"><input type="search" id="search" placeholder="Find tags…" aria-label="Find tags" autocomplete="off"><button type="button" id="sharePage" class="btn">Share</button></div>
+<div class="format-row"><span class="field-label" id="formatLabel">Format</span><div class="format-toggle" role="group" aria-labelledby="formatLabel">
+<button type="button" data-format="normal" aria-label="Normal format: double brackets" aria-pressed="true"><strong>Normal</strong><code>[[…]]</code></button>
+<button type="button" data-format="sprite" aria-label="Sprite format: exclamation brackets" aria-pressed="false"><strong>Sprite</strong><code>[!…!]</code></button>
 </div></div>
+</div>
 <section class="panel" aria-labelledby="publicTitle">
 <div class="panel-head"><div><div class="eyebrow">Shared library</div><h2 id="publicTitle">Community tags</h2></div><span id="communityCount" class="subtle">Loading…</span></div>
 <div id="communityTags" class="tag-list"></div>
 <p id="communityEmpty" class="blank" hidden>No matching community tags.</p>
-<p class="note">Community tags are maintained in Willy Dex and update when you open this page. Visitors cannot change the public list.</p>
+<p class="note">Community tags update automatically. Tap any tag to copy its full formatted text.</p>
 </section>
 <section class="panel" aria-labelledby="myTitle">
-<div class="panel-head"><div><div class="eyebrow">Saved on this device</div><h2 id="myTitle">My tags</h2></div><span id="personalCount" class="subtle">0 tags</span></div>
+<div class="panel-head"><div><div class="eyebrow">Saved on this device</div><h2 id="myTitle">My tags</h2></div><div class="section-actions"><span id="personalCount" class="subtle">0 tags</span><button type="button" id="editPersonal" class="btn quiet" aria-pressed="false">Edit</button></div></div>
+<p id="editHint" hidden>Tap a personal tag to remove it.</p>
 <div id="personalTags" class="tag-list"></div>
 <p id="personalEmpty" class="blank" hidden>No personal tags yet.</p>
 <form id="addForm" class="add-form" autocomplete="off" style="margin-top:17px">
@@ -106,6 +131,6 @@ input::placeholder{color:#8f7d6a}
 <p class="footer">This is a free web-based tag picker, not a native keyboard extension. iPhone and Android browsers cannot insert a custom keyboard into the system keyboard switcher. Copy here, then paste into SMMO.</p>
 </main>
 <div id="toast" role="status" aria-live="polite" hidden></div>
-<script src="smmo-tags.js?v=2" defer></script>
+<script src="smmo-tags.js?v=3" defer></script>
 </body>
 </html>
