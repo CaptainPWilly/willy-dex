@@ -16,6 +16,9 @@
     {id:'media',title:'Media',pages:[
       {id:'videos',title:'Video Library',url:'checkins/index.html'},
       {id:'studio',title:'Video Studio',url:'checkins/studio.html'}
+    ]},
+    {id:'tools',title:'Tools',pages:[
+      {id:'tags',title:'SMMO Tags',url:'smmo-tags.html'}
     ]}
   ];
   function link(path){return new URL(path,base).href;}
