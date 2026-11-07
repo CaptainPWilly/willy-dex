@@ -1,19 +1,13 @@
-/* Willy Dex compact SMMO tags: one-tap copy, shared + personal tags. */
+/* Willy Dex compact public SMMO tags. */
 (function(){
 'use strict';
 var FORMAT_KEY='willydex-smmo-format-v1';
-var PERSONAL_KEY='willydex-smmo-personal-v1';
 var format='normal';
 var shared=[{name:'Willys Fish'}];
-var personal=[];
 var tags=document.getElementById('tags');
 var status=document.getElementById('status');
 var sorter=new Intl.Collator(undefined,{numeric:true,sensitivity:'base'});
 try{format=localStorage.getItem(FORMAT_KEY)==='sprite'?'sprite':'normal';}catch(e){}
-try{
-  var loaded=JSON.parse(localStorage.getItem(PERSONAL_KEY)||'[]');
-  if(Array.isArray(loaded))personal=loaded;
-}catch(e){}
 function nameOf(item){
   if(!item||typeof item!=='object'||typeof item.name!=='string')return '';
   return item.name.trim().slice(0,100);
@@ -23,7 +17,7 @@ function output(name){
 }
 function allTags(){
   var seen=new Set();
-  return shared.concat(personal).map(nameOf).filter(function(name){
+  return shared.map(nameOf).filter(function(name){
     var key=name.toLocaleLowerCase();
     if(!name||seen.has(key))return false;
     seen.add(key);return true;
