@@ -5,6 +5,30 @@
     {
       "id": "willys-fish",
       "name": "Willys Fish"
+    },
+    {
+      "id": "willys-coat",
+      "name": "Willys Coat"
+    },
+    {
+      "id": "willys-saber",
+      "name": "Willys Saber"
+    },
+    {
+      "id": "willys-pistol",
+      "name": "Willys Pistol"
+    },
+    {
+      "id": "willys-boots",
+      "name": "Willys Boots"
+    },
+    {
+      "id": "willys-booty",
+      "name": "Willys Booty"
+    },
+    {
+      "id": "willys-bird",
+      "name": "Willys Bird"
     }
   ]
 }
