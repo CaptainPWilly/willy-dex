@@ -43,8 +43,13 @@ function fallback(text){
 function copy(text,button){
   var success=function(){
     status.textContent='Copied '+text;
+    clearTimeout(button._copyTimer);
+    button.textContent='✓ Copied';
     button.classList.add('copied');
-    setTimeout(function(){button.classList.remove('copied');},550);
+    button._copyTimer=setTimeout(function(){
+      button.textContent=button.dataset.tagName;
+      button.classList.remove('copied');
+    },1100);
   };
   var failure=function(){if(fallback(text))success();else window.prompt('Copy tag:',text);};
   if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(text).then(success,failure);
@@ -56,6 +61,7 @@ function render(){
     var button=document.createElement('button');
     button.type='button';button.className='tag';button.textContent=name;
     button.title=name;
+    button.dataset.tagName=name;
     button.setAttribute('aria-label','Copy '+output(name));
     button.addEventListener('click',function(){copy(output(name),button);});
     fragment.appendChild(button);
