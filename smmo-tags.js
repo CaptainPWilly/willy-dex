@@ -3,6 +3,9 @@
 'use strict';
 var $=function(id){return document.getElementById(id);};
 var PERSONAL_KEY='willydex-smmo-personal-v1';
+var FORMAT_KEY='willydex-smmo-format-v1';
+var activeFormat=loadFormat();
+function loadFormat(){try{return localStorage.getItem(FORMAT_KEY)==='sprite'?'sprite':'normal';}catch(e){return 'normal';}}
 var defaultTags=[{id:'willys-fish',name:'Willys Fish'}];
 var communityTags=defaultTags.slice();
 var personalTags=loadLocal();
@@ -82,19 +85,20 @@ function createCard(tag,personal){
   }
   article.appendChild(top);
   var actions=document.createElement('div');actions.className='copy-buttons';
-  [['normal','Normal'],['sprite','Sprite only']].forEach(function(pair){
-    var output=format(tag.name,pair[0]);
-    var btn=document.createElement('button');btn.type='button';btn.className='copy-btn';
-    var label=document.createElement('strong');label.textContent=pair[1];
-    var snippet=document.createElement('code');snippet.textContent=output;
-    btn.append(label,snippet);
-    btn.setAttribute('aria-label','Copy '+output);
-    btn.addEventListener('click',function(){copyText(output);});
-    actions.appendChild(btn);
-  });
+  var output=format(tag.name,activeFormat);
+  var btn=document.createElement('button');btn.type='button';btn.className='copy-btn';
+  var label=document.createElement('strong');label.textContent='Copy tag';
+  var snippet=document.createElement('code');snippet.textContent=output;
+  btn.append(label,snippet);
+  btn.setAttribute('aria-label','Copy '+output);
+  btn.addEventListener('click',function(){copyText(output);});
+  actions.appendChild(btn);
   article.appendChild(actions);return article;
 }
 function render(){
+  document.querySelectorAll('.format-toggle [data-format]').forEach(function(button){
+    button.setAttribute('aria-pressed',String(button.dataset.format===activeFormat));
+  });
   var term=key($('search').value);
   [
     {items:communityTags,list:$('communityTags'),empty:$('communityEmpty'),count:$('communityCount'),personal:false},
@@ -163,6 +167,13 @@ function shareLink(url){
     });
   }else copyText(url);
 }
+document.querySelectorAll('.format-toggle [data-format]').forEach(function(button){
+  button.addEventListener('click',function(){
+    activeFormat=button.dataset.format;
+    try{localStorage.setItem(FORMAT_KEY,activeFormat);}catch(e){}
+    render();
+  });
+});
 $('search').addEventListener('input',render);
 $('addForm').addEventListener('submit',function(event){
   event.preventDefault();
