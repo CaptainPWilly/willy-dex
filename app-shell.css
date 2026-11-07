@@ -51,8 +51,8 @@ body{background:radial-gradient(ellipse 80% 35% at 50% 0,#30241b,var(--wc-ui-bg)
   #wc-app-shell .wc-app-emblem{width:31px;height:31px;border-radius:8px;font-size:15px}
   #wc-app-shell .wc-app-title{font-size:14px}
   #wc-app-shell .wc-app-brand small{font-size:8px}
-  #wc-app-shell .wc-app-areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding-bottom:8px}
-  #wc-app-shell .wc-app-area{font-size:11px;padding:10px 4px}
+  #wc-app-shell .wc-app-areas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding-bottom:8px}
+  #wc-app-shell .wc-app-area{font-size:10px;padding:10px 3px}
   #wc-app-shell .wc-app-area.is-active:after{bottom:-9px;left:20%;right:20%}
   #wc-app-shell .wc-app-sub{min-height:44px;gap:6px}
   #wc-app-shell .wc-app-context{display:none}
