@@ -15,15 +15,16 @@ main{width:100%;margin:auto;padding:10px}
 .toggle button{border:0;background:transparent;color:#bca58a;border-radius:6px;min-height:41px;min-width:100px;padding:8px 14px;font-size:15px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-weight:700;cursor:pointer}
 .toggle button[aria-pressed="true"]{background:var(--gold);color:#1d130c}
 .tags{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:5px}
-.tag{height:43px;min-width:0;padding:0 7px;background:var(--panel);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.tag{height:43px;min-width:0;padding:0 7px;background:var(--panel);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease}
 .tag:hover{background:#47301f;border-color:var(--gold)}
-.tag:active,.tag.copied{background:var(--gold);color:#20130a;border-color:var(--gold)}
+.tag:active{background:#57402a;border-color:#b48c60}
+.tag.copied{background:#3b3023;color:#f4d6ad;border-color:#b58d5d}
 button:focus-visible{outline:2px solid #ffe0a9;outline-offset:2px}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:500px){main{padding:6px}.tags{grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:4px}.tag{height:42px;font-size:11px}.toggle{margin-bottom:6px}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){.tag{transition:none}}
 </style>
-<script src="smmo-tags.js?v=5" defer></script>
+<script src="smmo-tags.js?v=6" defer></script>
 </head>
 <body>
 <main>
