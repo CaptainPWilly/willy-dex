@@ -109,6 +109,13 @@ test('never treats registry counts as a live membership count',async()=>{
   assert.match(r.answer,/not a live guild membership count/);
   assert.deepEqual(r.sources.map(s=>s.id),['cards']);
 });
+test('does not confuse other guilds\' war wins with the Cove\'s wins',async()=>{
+  useFixtures(()=>{throw Error('The model must not fabricate another guild\'s win count');});
+  const r=await verifiedAnswer('How many wars has Helheim won?');
+  assert.match(r.answer,/not helheim/i);
+  assert.match(r.answer,/cannot be verified/i);
+  assert.deepEqual(r.sources.map(s=>s.id),['wins']);
+});
 test('war victory counts come from wins, not active war snapshots',async()=>{
   useFixtures(()=>{throw Error('No model expected');});
   const r=await verifiedAnswer('How many wars has the Cove won?');
