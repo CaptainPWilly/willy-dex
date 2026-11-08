@@ -509,6 +509,20 @@ function archiveDateQuestion(q,captures){
   if(utc.getUTCFullYear()!==y||utc.getUTCMonth()+1!==m||utc.getUTCDate()!==d)return null;
   return [y,String(m).padStart(2,'0'),String(d).padStart(2,'0')].join('-');
 }
+function allArchiveDates(q,captures){
+  const lastYear=Number(String(captures.at(-1)?.capturedAt||'').slice(0,4))||2026;
+  const candidates=[];
+  for(const m of q.matchAll(/\b(20\d{2}) (\d{1,2}) (\d{1,2})\b/g))
+    candidates.push({index:m.index,y:Number(m[1]),month:Number(m[2]),day:Number(m[3])});
+  const wordDates=/\b(january|jan|february|feb|march|mar|april|apr|may|june|jun|july|jul|august|aug|september|sept|sep|october|oct|november|nov|december|dec)\s+(\d{1,2})(?:st|nd|rd|th)?(?:\s+(20\d{2}))?\b/g;
+  for(const m of q.matchAll(wordDates))
+    candidates.push({index:m.index,y:Number(m[3]||lastYear),month:monthIds[m[1]],day:Number(m[2])});
+  return candidates.sort((a,b)=>a.index-b.index).map(d=>{
+    const t=new Date(Date.UTC(d.y,d.month-1,d.day));
+    if(t.getUTCFullYear()!==d.y||t.getUTCMonth()+1!==d.month||t.getUTCDate()!==d.day)return null;
+    return [d.y,String(d.month).padStart(2,'0'),String(d.day).padStart(2,'0')].join('-');
+  }).filter(Boolean).filter((d,i,a)=>a.indexOf(d)===i);
+}
 function mentionedArchivedGuilds(question,names){
   const words=' '+norm(question)+' ';
   const matches=[];
@@ -603,6 +617,29 @@ async function precisionAnswer(message){
   const rows=(capture.guilds||[]).slice().sort((a,b)=>a.rank-b.rank);
   const allNames=[...new Set(ss.flatMap(s=>(s.guilds||[]).map(g=>g.name)))];
   const named=mentionedArchivedGuilds(message,allNames);
+  const windows=allArchiveDates(q,ss);
+  const wantsComparison=/\b(?:between|from|since|through|until|compared|versus|vs)\b/.test(q);
+  if((windows.length>=2||(windows.length===1&&/\bsince\b/.test(q)))&&wantsComparison){
+    const firstDate=windows[0],endDate=windows.length>1?windows[1]:null;
+    const start=ss.filter(s=>String(s.capturedAt).slice(0,10)===firstDate).at(-1);
+    const end=endDate?ss.filter(s=>String(s.capturedAt).slice(0,10)===endDate).at(-1):ss.at(-1);
+    if(!start||!end||sortDate(start.capturedAt)>=sortDate(end.capturedAt))
+      return preciseReply('There are not two comparable recorded GLB captures for the requested dates. I cannot invent missing dates or standings.','glb',{evidence:'insufficient'});
+    const past=new Map((start.guilds||[]).map(g=>[norm(g.name),g]));
+    const comparisons=(end.guilds||[]).filter(g=>past.has(norm(g.name))&&
+      digits(g.experience)!==null&&digits(past.get(norm(g.name)).experience)!==null)
+      .filter(g=>!named.length||named.some(n=>norm(n)===norm(g.name)))
+      .map(g=>({name:g.name,from:past.get(norm(g.name)),to:g,
+        delta:digits(g.experience)-digits(past.get(norm(g.name)).experience)}))
+      .sort((a,b)=>b.delta-a.delta);
+    if(!comparisons.length)return preciseReply('No requested guild has comparable XP and placement in both recorded snapshots.','glb',{evidence:'insufficient'});
+    const size=named.length?Math.min(8,comparisons.length):3;
+    return preciseReply('GLB comparison '+recordTime(start.capturedAt)+' to '+recordTime(end.capturedAt)+': '+
+      comparisons.slice(0,size).map(g=>g.name+' #'+g.from.rank+' → #'+g.to.rank+
+        ', '+(g.delta>=0?'+':'')+g.delta.toLocaleString('en-US')+' GXP').join('; ')+
+      '. Measured snapshot-to-snapshot, not a complete calendar-day total.','glb',
+      {capturedAt:end.capturedAt});
+  }
   const topMatch=q.match(/\btop (\d{1,2})\b/),requestedTop=topMatch?Math.max(1,Math.min(Number(topMatch[1]),50)):/\btop ten\b/.test(q)?10:/\btop five\b/.test(q)?5:null;
   const asksGrowth=/\b(?:gained|gain|grew|growth|increase|earned)\b/.test(q);
   const asksMost=/\b(?:most|biggest|highest|fastest|largest)\b/.test(q);
@@ -1258,4 +1295,4 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
 };
 
 // Exposed for offline regression testing only; no additional HTTP endpoint.
-module.exports.__test={directQuestion,routeTool,verifiedAnswer,precisionAnswer,archiveDateQuestion,mentionedArchivedGuilds,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,mismatchedGuildXpClaims,analyzeGLB,analyzeMembers,RESULTS};
+module.exports.__test={directQuestion,routeTool,verifiedAnswer,precisionAnswer,archiveDateQuestion,allArchiveDates,mentionedArchivedGuilds,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,mismatchedGuildXpClaims,analyzeGLB,analyzeMembers,RESULTS};
