@@ -310,7 +310,10 @@ function routeTool(message){
   if(/\b(?:video|recap|watch|download|clip|studio)\b/.test(q))return 'find_videos';
   if(/\b(?:war victories|victories|war wins|wars won|won wars|defeated|war rewards)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q))return 'find_wins';
   if(/\b(?:war|wars|victory|wins)\b/.test(q)&&/\b(?:reward|xp|experience|exp)\b/.test(q)&&!/\b(?:gxp|guild xp)\b/.test(q))return 'find_wins';
-  if(/\b(?:glb|leaderboard|gxp|xp|experience|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
+  // Player XP and Guild XP are different metrics. Cards track LEVELS, not XP earned.
+  if(/\b(?:who|player|member|officer|person|individual)\b/.test(q)&&/\b(?:xp|experience|level|growth)\b/.test(q)&&!/\b(?:gxp|guild xp|leaderboard|glb)\b/.test(q))return 'find_cards';
+  if(/\b(?:glb|leaderboard|gxp|guild xp|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
+  if(/\b(?:xp|experience)\b/.test(q)&&/\b(?:cove|guild|arg|our|we)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:war|wars|attack|kills|battles|opponents|enemy)\b/.test(q))return 'find_wars';
   if(/\b(?:joined|join|left|leave|removed|departed|tenure|careers|membership history)\b/.test(q))return 'find_careers';
   if(/\b(?:member|player|card|level|officer|founder|recruit|roles|alias)\b/.test(q))return 'find_cards';
@@ -381,7 +384,7 @@ async function chat(message,history){
     'Never claim you checked a source unless you called a tool for it in this turn. If a tool fails, be transparent. You are not browsing live SimpleMMO or Discord.',
     'For lists, rankings, counts and calculations always use the tools and exact results, never infer from a sample. If results are paginated, call more pages if needed, or label the answer incomplete.',
     'Records include archiveStatus metadata (lastRecordAt, daysSinceLastRecord, freshness). Treat stale snapshots as historical; NEVER describe archived counts as live. Unknown membership does not mean current member.',
-    'Source selection: GXP / seasonal XP comes from Global Leaderboard, not war victory reward XP; war KILLS from War Intel; completed wins from War Victories; card levels are historical card values. If a source is unavailable, do not substitute a different metric.',
+    'Source selection: GXP / seasonal XP comes from Global Leaderboard, not war victory reward XP; war KILLS from War Intel; completed wins from War Victories; card levels are historical card values, NOT player experience totals. Never infer player XP earned from level changes. If XP is ambiguous, ask briefly rather than substituting a different metric. If a source is unavailable, do not substitute a different metric.',
     'If a tool reports error, zero matches, partial pagination, or insufficient evidence, say so and avoid unsupported numeric answers. Never cite a source that was not successfully retrieved.',
     'IMPORTANT: Questions about the Cove’s biggest XP day or GXP earned per day MUST query find_leaderboard(mode=daily_gains, guilds=[The Pirate Cove]). Daily gain is the difference between successive local-date leaderboard snapshots, NOT war victory XP rewards. Quote the actual start/end capture times and explicitly say observed between-day gain, not an exact calendar-day or 24-hour record.',
     'Name the snapshot date for historical facts. Missing data means unknown. Never fabricate placement, timestamps, rank, player status or wars.',
