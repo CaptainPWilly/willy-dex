@@ -451,7 +451,7 @@
   {
     "number": "010",
     "name": "JoyBoy",
-    "type": "[ARG] Member",
+    "type": "[ARG] Officer",
     "image": null,
     "level": 1726,
     "date": "28 October 2026",
@@ -463,7 +463,7 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-010",
     "tags": [
-      "Member"
+      "Officer"
     ],
     "last_active": "2 days ago",
     "level_snapshots": [
@@ -481,7 +481,7 @@
       }
     ],
     "roles": [
-      "Member"
+      "Officer"
     ],
     "guild_join_history": [
       {
@@ -492,7 +492,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "role_verified_on": "2026-10-29",
+    "role_source": "User-confirmed Cove officer promotions on 2026-10-29"
   },
   {
     "number": "011",
@@ -3753,7 +3755,7 @@
   {
     "number": "073",
     "name": "ChezShork",
-    "type": "[ARG] Cove Intern",
+    "type": "[ARG] Officer",
     "image": null,
     "card_id": "willy-dex-073",
     "level": 378,
@@ -3765,10 +3767,10 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Cove Intern"
+      "Officer"
     ],
     "roles": [
-      "Cove Intern"
+      "Officer"
     ],
     "level_snapshots": [
       {
@@ -3790,7 +3792,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "role_verified_on": "2026-10-29",
+    "role_source": "User-confirmed Cove officer promotions on 2026-10-29"
   },
   {
     "number": "074",
