@@ -69,19 +69,30 @@ test('typing survives a failing Intl.Segmenter implementation',async()=>{
   assert.equal(el.send.disabled,false);
   assert.equal(el.notice.textContent,'');
 });
-test('chat waits for sleeping Render service to wake before sending question',async()=>{
-  let ready,chatRequests=0;
-  const readiness=new Promise(resolve=>{ready=resolve;});
-  const el=terminal(async()=>{chatRequests++;return {ok:true,json:async()=>({answer:'Answer after wake.',sources:[]})};},
-    {statusRequest:()=>readiness});
-  el.question.value='Wake Pete';el.composer.requestSubmit();
-  await settle();
-  assert.equal(chatRequests,0);
-  assert.equal(el.notice.textContent,'CONNECTING...');
-  ready({ok:true,json:async()=>({ready:true,accessConfigured:true})});
+test('chat sends immediately even if Render status check is stalled',async()=>{
+  let chatRequests=0;
+  const stalled=new Promise(()=>{});
+  const el=terminal(async()=>{
+    chatRequests++;
+    return {ok:true,json:async()=>({answer:'Archive answer.',sources:[]})};
+  },{statusRequest:()=>stalled});
+  el.question.value='Cove info';el.composer.requestSubmit();
   await settle();
   assert.equal(chatRequests,1);
   assert.equal(el.send.disabled,false);
+  assert.equal(el.notice.textContent,'');
+});
+test('failure to check status does not block a successful chat',async()=>{
+  let calls=0;
+  const el=terminal(async()=>{
+    calls++;
+    return {ok:true,json:async()=>({answer:'Pete is here.',sources:[]})};
+  },{statusRequest:()=>Promise.reject(new TypeError('status unavailable'))});
+  el.question.value='Ahoy';el.composer.requestSubmit();
+  await settle();
+  assert.equal(calls,1);
+  assert.equal(el.send.disabled,false);
+  assert.equal(el.notice.textContent,'');
 });
 test('authentication failures lock the session without leaving a stuck input',async()=>{
   const el=terminal(async()=>({ok:false,status:401,json:async()=>({error:'Invalid Pete key'})}));
