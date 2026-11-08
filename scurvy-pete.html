@@ -3,70 +3,166 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#100d0b">
-<title>Scurvy Pete | Willy Dex</title>
+<meta name="theme-color" content="#08140c">
+<title>Scurvy Pete // Willy Corp. Terminal</title>
 <link rel="stylesheet" href="app-shell.css?v=3">
 <style>
+:root{--phosphor:#a7e5a5;--phosphor-bright:#d6ffd0;--phosphor-dim:#73ac78;--phosphor-dark:#355a3f;--screen:#06150b;--amber:#f0c07d;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:#100d0b;color:#f3dfbd;font:14px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body.pete-terminal{margin:0;background:#0a0b08!important;color:var(--phosphor);font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
 button,textarea,input{font:inherit}
 button{cursor:pointer}
-main{max-width:1000px;margin:auto;padding:24px 15px 38px;min-height:calc(100dvh - 140px);display:flex;flex-direction:column;gap:14px}
-.head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.head h1{font:700 clamp(28px,5vw,39px) Georgia,serif;margin:0;letter-spacing:-.02em}
-.head .grow{flex:1}
-.state{display:inline-flex;gap:7px;align-items:center;color:#bea98e;font-size:11px;font-weight:700}
-.dot{width:7px;height:7px;border-radius:50%;background:#876b52}
-.state.online .dot{background:#b8d5a2}
-.outline{background:#211810;border:1px solid #715138;color:#e2bd8b;border-radius:8px;padding:7px 12px;min-height:35px;font-weight:700}
-.outline:hover{background:#302218;border-color:#e2bd8b}
-.chat{border:1px solid #6f5034;border-radius:14px;background:linear-gradient(145deg,#221913,#171210 64%);min-height:380px;flex:1;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 14px 40px #0004}
-.messages{padding:19px;flex:1;min-height:300px;max-height:calc(100dvh - 340px);overflow-y:auto;display:flex;flex-direction:column;gap:17px;scrollbar-color:#6e5139 transparent}
-.empty{margin:auto;text-align:center;color:#baa68a;font:18px Georgia,serif}
-.message{min-width:0;max-width:93%;display:flex;flex-direction:column;gap:5px}
-.message.user{align-self:flex-end;max-width:83%}
-.by{font-size:10px;font-weight:800;letter-spacing:.1em;color:#ab8e6b;text-transform:uppercase}
-.bubble{padding:12px 15px;border:1px solid #614a34;border-radius:11px;background:#241c16;color:#f2dfc1;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65}
-.message.user .bubble{background:#3a2a1c;border-color:#856244}
-.sources{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:5px}
-.sources a{font-size:11px;color:#dfb77f;text-decoration:none;border-bottom:1px solid #866345}
-.sources a:hover{color:#ffe1b3}
-.composer{display:flex;gap:9px;align-items:end;padding:12px;border-top:1px solid #5d442e;background:#17120f}
-.composer textarea{background:#211a14;color:#f3dfbd;border:1px solid #78593c;outline:none;border-radius:10px;padding:11px 12px;flex:1;min-width:0;resize:vertical;max-height:190px;min-height:45px}
-.composer textarea:focus{border-color:#d8af74}
-.composer button{background:#dfb47d;border:1px solid #dfb47d;color:#261b12;border-radius:9px;padding:10px 19px;min-height:45px;font-weight:800}
-.composer button:disabled{opacity:.5;cursor:default}
-#notice{min-height:18px;font-size:12px;color:#b8a38c}
-#notice.error{color:#edb6a3}
-.gate{border:1px solid #73543a;background:#241b15;padding:17px;border-radius:12px;display:flex;align-items:end;flex-wrap:wrap;gap:12px}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--phosphor-bright);outline-offset:2px}
+main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
+.terminal-case{position:relative;padding:clamp(9px,1.7vw,21px);border-radius:clamp(22px,4vw,40px);border:2px solid #353c30;background:linear-gradient(145deg,#3b4135 0%,#242a23 9%,#111713 55%,#383d32 100%);box-shadow:0 26px 65px #000b,inset 0 2px 1px #7d80664a,inset 0 -5px 9px #0008}
+.terminal-case:after{content:"";pointer-events:none;position:absolute;inset:4px;border:1px solid #7a84652b;border-radius:inherit}
+.screen{position:relative;isolation:isolate;overflow:hidden;min-height:min(76dvh,770px);border:2px solid #273b2c;border-radius:clamp(32px,6vw,70px) / clamp(22px,4vw,47px);background:radial-gradient(ellipse 115% 95% at 50% 45%,#0c2614 0%,#07190d 58%,#020a04 96%);box-shadow:inset 0 0 0 5px #0009,inset 0 0 54px #000,inset 0 0 125px #000c,0 0 12px #8dda7f16,0 0 3px #c0eebd26}
+.screen:before{content:"";pointer-events:none;position:absolute;z-index:8;inset:0;border-radius:inherit;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 2px,#0005 3px,#0002 4px);opacity:.35}
+.screen:after{content:"";pointer-events:none;position:absolute;z-index:8;inset:0;border-radius:inherit;background:radial-gradient(ellipse 83% 80% at 50% 47%,transparent 45%,#0009 100%),linear-gradient(100deg,transparent 0%,#d4ffdf08 47%,transparent 56%);mix-blend-mode:screen}
+.screen-body{position:relative;z-index:2;display:flex;flex-direction:column;min-height:min(76dvh,770px);padding:clamp(20px,4.5vw,52px) clamp(17px,5vw,60px) clamp(22px,3.5vw,38px);text-shadow:0 0 10px #7fe38435;filter:contrast(1.04)}
+.terminal-header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:15px;border-bottom:1px solid #42694891}
+.brand{min-width:0;flex:1}
+.brand-line{display:flex;align-items:center;min-height:clamp(41px,7vw,66px)}
+.brand h1{font-size:clamp(26px,5.8vw,54px);line-height:1.1;letter-spacing:.055em;color:var(--phosphor-bright);font-weight:800;margin:0;text-shadow:0 0 20px #69da70a1,0 0 3px #d6ffd0}
+.brand-sub{margin:9px 0 0;color:var(--phosphor-dim);font-size:clamp(10px,1.7vw,12px);letter-spacing:.17em}
+.brand-sub[hidden]{display:none!important}
+.block-cursor{display:inline-block;width:.63em;height:1em;background:currentColor;vertical-align:-.14em;margin-left:3px;animation:blink-block 1s steps(1,end) infinite;box-shadow:0 0 11px #baf5ac80}
+.logo-cursor{height:.81em;width:.48em;vertical-align:-.06em}
+@keyframes blink-block{0%,49%{opacity:1}50%,100%{opacity:0}}
+.skull-rig{width:clamp(65px,11vw,105px);height:clamp(75px,12vw,120px);flex:none;display:grid;place-items:center;filter:drop-shadow(0 0 12px #6cda7d6b);transform:rotate(-3deg)}
+.skull-rig svg{display:block;width:100%;height:100%}
+.skull-head{fill:#8fc59a;stroke:#c4f9be;stroke-width:2;stroke-linejoin:round}
+.skull-eye,.skull-nose{fill:#06230e}
+.skull-teeth{stroke:#123820;stroke-width:2;stroke-linecap:round}
+.skull-jaw{transform-origin:50% 63%;transform-box:view-box}
+.skull-rig.speaking .skull-jaw{animation:jaw-talk .22s steps(2,end) infinite}
+.skull-rig.speaking{filter:drop-shadow(0 0 16px #95fda2b4)}
+@keyframes jaw-talk{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(6px) rotate(5deg)}50%{transform:translateY(3px) rotate(-2deg)}75%{transform:translateY(8px) rotate(3deg)}}
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:11px;font-size:11px}
+.state{display:inline-flex;align-items:center;gap:7px;color:var(--phosphor-dim);margin-right:auto;letter-spacing:.04em}
+.dot{width:6px;height:6px;background:#566d54;box-shadow:0 0 6px #6d9769}
+.state.online .dot{background:#8bff9b;box-shadow:0 0 9px #8bff9b}
+.terminal-button{border:1px solid #507551;background:#102519;color:var(--phosphor);border-radius:2px;min-height:31px;padding:4px 11px;font-size:11px;letter-spacing:.04em}
+.terminal-button:hover{background:#234530;color:var(--phosphor-bright)}
+.terminal-button:disabled{opacity:.45;cursor:default}
+.terminal-button[hidden]{display:none!important}
+.gate{margin:clamp(24px,6vw,72px) 0 auto;max-width:720px}
 .gate[hidden]{display:none!important}
-.gate label{display:flex;flex-direction:column;gap:5px;font-size:12px;flex:1;min-width:175px;font-weight:700;color:#d9b78b}
-.gate input{background:#14100e;color:#f3dfbd;border:1px solid #836141;border-radius:8px;padding:10px 12px;width:100%;min-height:43px;outline:none}
-.gate input:focus{border-color:#dfb47d}
-.gate button{background:#dfb47d;color:#261b12;padding:10px 17px;min-height:43px;border:0;border-radius:8px;font-weight:800}
-[hidden]{display:none!important}
-button:focus-visible,a:focus-visible{outline:2px solid #ffe0aa;outline-offset:2px}
-@media(max-width:600px){main{padding:13px 8px 18px;gap:10px;min-height:calc(100dvh - 160px)}.messages{padding:12px;min-height:45dvh;max-height:calc(100dvh - 320px)}.bubble{padding:10px 12px}.message{max-width:98%}.message.user{max-width:93%}.composer{padding:8px}.composer button{padding:10px 14px}.head h1{font-size:29px}}
+.gate-title{font-size:clamp(15px,2.5vw,20px);letter-spacing:.015em;color:var(--phosphor-bright);font-weight:700;margin:0 0 14px}
+.gate-sub{color:var(--phosphor-dim);font-size:12px;margin-bottom:17px}
+.gate-line{display:flex;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid #56855c;margin-top:5px;padding-bottom:9px}
+.gate-line label{font-weight:700;color:var(--phosphor-dim);font-size:13px}
+.gate-input{position:relative;display:flex;align-items:center;flex:1;min-width:170px;max-width:420px}
+.gate-input input{width:100%;padding:7px 17px 7px 0;background:transparent;color:var(--phosphor-bright);border:0;outline:none;border-radius:0;caret-color:var(--phosphor-bright);letter-spacing:.1em;font-size:16px}
+.gate-input input:focus-visible{outline:none}
+.gate-input input::placeholder{color:#56765b}
+.gate-line button{background:var(--phosphor);color:#07140c;border:0;padding:9px 14px;font-weight:900;min-height:37px}
+.gate-line button:hover{background:var(--phosphor-bright)}
+.gate-key-cursor{position:absolute;left:0;pointer-events:none;font-size:22px;line-height:1}
+.gate-input input:not(:placeholder-shown) + .gate-key-cursor,.gate-input input:focus + .gate-key-cursor{display:none}
+.chat{display:flex;flex:1;flex-direction:column;min-height:0;padding-top:12px}
+.chat[hidden]{display:none!important}
+.messages{flex:1;overflow-y:auto;overscroll-behavior:contain;min-height:230px;max-height:calc(76dvh - 315px);padding:13px 2px 16px;display:flex;flex-direction:column;gap:22px;scrollbar-width:thin;scrollbar-color:#426344 transparent}
+.empty{margin:auto 0;color:var(--phosphor-dim);font-size:13px;letter-spacing:.04em}
+.message{max-width:100%;min-width:0;display:flex;flex-direction:column;gap:6px}
+.by{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--phosphor-dim)}
+.message.user .by{color:var(--amber)}
+.bubble{color:var(--phosphor-bright);font-size:clamp(12px,1.7vw,14px);line-height:1.7;overflow-wrap:anywhere;white-space:pre-wrap}
+.message.user .bubble{color:#dfc4a4}
+.message .bubble .typing-cursor{color:var(--phosphor);width:.53em;height:.91em}
+.message:not(.typing) .typing-cursor{display:none}
+.message.typing .bubble{cursor:pointer}
+.sources{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.sources a{font-size:11px;color:var(--phosphor-dim);text-decoration:none;border-bottom:1px solid #5d8b66}
+.sources a:hover{color:var(--phosphor-bright)}
+.composer{display:flex;gap:11px;align-items:flex-end;border-top:1px solid #42694891;padding-top:13px}
+.prompt-marker{flex:none;font-size:22px;color:var(--phosphor-bright);line-height:44px}
+.composer textarea{flex:1;min-width:0;max-height:180px;min-height:44px;background:transparent;border:none;outline:none;color:var(--phosphor-bright);padding:11px 0;resize:vertical;caret-color:var(--phosphor);font-size:14px}
+.composer textarea::placeholder{color:#729a71}
+.composer textarea:focus-visible{outline:none}
+.composer button{min-height:38px;background:var(--phosphor);border:0;border-radius:2px;color:#07180a;font-weight:900;padding:8px 14px}
+.composer button:disabled{opacity:.5;cursor:default}
+.status-line{display:flex;gap:12px;justify-content:space-between;align-items:center;min-height:26px;font-size:11px;color:var(--phosphor-dim);padding-top:5px}
+#notice.error{color:#f5b783}
+#skip[hidden]{display:none!important}
+.hint{color:#5a825d;font-size:10px;letter-spacing:.08em}
+@media(max-width:640px){
+main{padding:9px 5px 20px}
+.terminal-case{padding:6px;border-radius:22px}
+.screen{border-radius:34px / 25px;min-height:calc(100dvh - 180px)}
+.screen-body{padding:26px 18px 20px;min-height:calc(100dvh - 180px)}
+.skull-rig{width:64px;height:75px}
+.brand-line{min-height:37px}
+.brand h1{font-size:clamp(21px,6vw,29px)}
+.brand-sub{font-size:9px;letter-spacing:.05em}
+.messages{max-height:calc(100dvh - 410px);min-height:32dvh}
+.gate{margin-top:36px}
+.gate-title{font-size:15px}
+.gate-line{gap:7px}
+.gate-line button{width:100%}
+.hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+.skull-rig.speaking .skull-jaw{animation:none}
+.block-cursor{animation:none;opacity:1}
+}
 </style>
 <script src="app-shell.js?v=3" defer></script>
-<script src="scurvy-pete.js?v=1" defer></script>
+<script src="scurvy-pete.js?v=3" defer></script>
 </head>
-<body>
+<body class="pete-terminal">
 <div id="wc-app-mount"></div>
 <main>
-<div class="head"><h1>Scurvy Pete</h1><span class="grow"></span><span id="state" class="state"><span class="dot"></span><span id="state-label">Checking API</span></span><button type="button" class="outline" id="access-button">Access</button><button type="button" class="outline" id="clear-button">Clear</button></div>
+<div class="terminal-case">
+<section class="screen" aria-label="Willy Corp. terminal">
+<div class="screen-body">
+<header class="terminal-header">
+<div class="brand">
+<div class="brand-line"><h1><span id="wc-logo-type" aria-label="Willy Corp."> </span><span id="wc-logo-cursor" class="block-cursor logo-cursor" aria-hidden="true"></span></h1></div>
+<div id="brand-sub" class="brand-sub" hidden>SCURVY PETE // WILLY DEX INTELLIGENCE TERMINAL</div>
+</div>
+<div id="skull" class="skull-rig" role="img" aria-label="Scurvy Pete skull, jaw animated when speaking">
+<svg viewBox="0 0 100 120" aria-hidden="true" focusable="false">
+<path class="skull-head" d="M50 10 C25 10 12 27 12 48 C12 64 19 72 28 77 L29 86 L40 89 L60 89 L71 86 L72 77 C81 72 88 64 88 48 C88 27 75 10 50 10Z"/>
+<path class="skull-eye" d="M26 49 C27 39 35 36 42 42 L45 54 L38 60 L30 58Z"/>
+<path class="skull-eye" d="M74 49 C73 39 65 36 58 42 L55 54 L62 60 L70 58Z"/>
+<path class="skull-nose" d="M50 57 L43 70 L48 74 L50 70 L52 74 L57 70Z"/>
+<path d="M32 77 Q50 83 68 77 L68 85 Q50 90 32 85Z" fill="#d7f6cb"/>
+<path class="skull-teeth" d="M41 79 L41 87 M50 80 L50 88 M59 79 L59 87"/>
+<g class="skull-jaw">
+<path class="skull-head" d="M27 86 L31 98 Q50 114 69 98 L73 86 L67 91 L33 91Z"/>
+<path fill="#071e0d" d="M34 90 Q50 95 66 90 L65 97 Q50 102 35 97Z"/>
+<path class="skull-teeth" d="M40 91 L40 100 M48 93 L48 102 M56 93 L56 102 M63 91 L63 100"/>
+</g>
+</svg>
+</div>
+</header>
+<div class="toolbar">
+<span id="state" class="state"><span class="dot"></span><span id="state-label">LINK INITIALIZING</span></span>
+<button type="button" class="terminal-button" id="access-button">ACCESS</button>
+<button type="button" class="terminal-button" id="clear-button">CLEAR</button>
+</div>
 <form id="access-form" class="gate" hidden>
-<label>Access code<input id="access-code" type="password" autocomplete="off" placeholder="Scurvy Pete access code" minlength="12" maxlength="256" required></label>
-<button type="submit">Unlock</button>
+<p class="gate-title">ENTER Pete key to access Willy Corp. Terminal<span class="block-cursor" aria-hidden="true"></span></p>
+<div class="gate-sub">RESTRICTED ARCHIVE ACCESS // AUTHORIZATION REQUIRED</div>
+<div class="gate-line">
+<label for="access-code">KEY &gt;</label>
+<div class="gate-input"><input id="access-code" type="password" autocomplete="off" placeholder=" " minlength="12" maxlength="256" required><span class="gate-key-cursor block-cursor" aria-hidden="true"></span></div>
+<button type="submit">ENTER</button>
+</div>
 </form>
-<section class="chat" aria-label="Scurvy Pete conversation">
-<div class="messages" id="messages" role="log" aria-live="polite"><div id="empty" class="empty">Ask Pete about the Cove.</div></div>
+<section class="chat" id="chat" aria-label="Scurvy Pete conversation" hidden>
+<div class="messages" id="messages" role="log" aria-live="off"><div id="empty" class="empty">AWAITING QUERY<span class="block-cursor" aria-hidden="true"></span></div></div>
 <form class="composer" id="composer">
-<textarea id="question" aria-label="Message Scurvy Pete" placeholder="Ask Scurvy Pete..." rows="2" maxlength="1200" required></textarea>
-<button type="submit" id="send">Send</button>
+<span class="prompt-marker" aria-hidden="true">&gt;</span>
+<textarea id="question" aria-label="Ask Scurvy Pete" placeholder="Ask Pete about the Cove..." rows="2" maxlength="1200" required></textarea>
+<button type="submit" id="send">SEND</button>
 </form>
 </section>
-<div id="notice" role="status" aria-live="polite"></div>
+<div class="status-line"><div id="notice" role="status" aria-live="polite"></div><button type="button" id="skip" class="terminal-button" hidden>SKIP TYPING</button><span class="hint">WILLY CORP. // READ-ONLY ARCHIVE</span></div>
+</div>
+</section>
+</div>
 </main>
 </body>
 </html>
