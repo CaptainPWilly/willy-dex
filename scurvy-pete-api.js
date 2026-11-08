@@ -434,12 +434,12 @@ function directQuestion(message){
   // Social greetings are not archive questions. Never manufacture a knowledge citation.
   if(/^(?:ahoy|hello|hi|hey|yo|hiya|greetings|good morning|good evening|good afternoon|hey pete|ahoy pete|hello pete|hi pete)$/.test(q))return 'greeting';
   const roleWords=/\b(?:officers?|co leads?|co leaders?|recruits?|founders?|warriors?|guild leads?)\b/.test(q);
-  const roleQuestion=/\b(?:who are|who're|which|list|show|how many|count|name all|tell me who|names of)\b/.test(q);
+  const roleQuestion=/\b(?:who are|who re|which|what are|list|show|how many|count|name all|tell me who|names of)\b/.test(q);
   if(roleWords&&roleQuestion&&!/\b(?:helheim|umbral|coven|kairos|arcane|other guild|opponents)\b/.test(q)
     &&!/\b(?:when|promoted|joined|left|removed|historically)\b/.test(q))return 'recorded_role_list';
   const glbWord=/\b(?:glb|leaderboard|gxp|guild xp|guild experience|season)\b/.test(q);
   if(glbWord&&/\b(?:closest|tightest|close fights?|races?|smallest gap|narrowest|biggest leads?)\b/.test(q))return 'glb_races';
-  if(glbWord&&/\b(?:most gained|gained most|most growth|grew most|fastest growth|fastest growing|biggest gain|highest gain|earned most)\b/.test(q)
+  if(glbWord&&/\b(?:most gained|gained (?:the )?most|most growth|grew (?:the )?most|fastest growth|fastest growing|biggest gain|highest gain|earned (?:the )?most|largest increase)\b/.test(q)
     &&!/\b(?:daily|day|24 hour)\b/.test(q))
     return /\b(?:since last|last update|latest|previous snapshot|last snapshot|recent)\b/.test(q)?'glb_growth_latest':'glb_growth_season';
   if(glbWord&&/\b(?:who leads|who is first|who s first|top 5|top 10|top ten|top five|leaderboard leaders|glb leaders)\b/.test(q))return 'glb_top';
