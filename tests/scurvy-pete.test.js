@@ -119,7 +119,7 @@ test('unverified AI numeric claims are blocked even after a successful archive l
   await pete.handle(
     {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
     {origin:'https://captainpwilly.github.io',authorized:()=>true,
-     read:async()=>({message:'What is our most recent GLB experience?',history:[]}),
+     read:async()=>({message:'How does Helheim compare with the Cove on the latest GLB?',history:[]}),
      json:(_res,status,data)=>{response={status,data};}});
   assert.equal(response.status,200);
   assert.equal(response.data.evidence,'numeric-check-failed');
