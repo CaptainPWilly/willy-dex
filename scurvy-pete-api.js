@@ -475,7 +475,8 @@ function directQuestion(message){
   if(/^(?:ahoy|hello|hi|hey|yo|hiya|greetings|good morning|good evening|good afternoon|hey pete|ahoy pete|hello pete|hi pete)$/.test(q))return 'greeting';
   const roleWords=/\b(?:officers?|co leads?|co leaders?|recruits?|founders?|warriors?|guild leads?)\b/.test(q);
   const roleQuestion=/\b(?:who are|who re|which|what are|list|show|how many|count|name all|tell me who|names of)\b/.test(q);
-  if(roleWords&&roleQuestion&&!/\b(?:helheim|umbral|coven|kairos|arcane|other guild|opponents)\b/.test(q)
+  if(roleWords&&roleQuestion&&!(/\b(?:how many|count|number of|total)\b/.test(q)&&/\brecruits?\b/.test(q))
+    &&!/\b(?:helheim|umbral|coven|kairos|arcane|other guild|opponents)\b/.test(q)
     &&!/\b(?:when|promoted|joined|left|removed|historically)\b/.test(q))return 'recorded_role_list';
   const glbWord=/\b(?:glb|leaderboard|gxp|guild xp|guild experience|season)\b/.test(q);
   if(glbWord&&/\b(?:closest|tightest|close fights?|races?|smallest gap|narrowest|biggest leads?)\b/.test(q))return 'glb_races';
