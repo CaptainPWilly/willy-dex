@@ -5,6 +5,8 @@ const crypto=require('node:crypto');
 const peteApi=require('./scurvy-pete-api');
 const BASE='https://api.github.com/repos/CaptainPWilly/willy-dex/contents/';
 const origin=(process.env.ALLOWED_ORIGIN||'https://captainpwilly.github.io').replace(/\/$/,'');
+const officialOrigin='https://captainpwilly.github.io';
+const allowedOrigins=new Set([origin,officialOrigin]);
 const password=process.env.ADMIN_PASSWORD||'',githubToken=process.env.GITHUB_TOKEN||'';
 if(!password)console.warn('ADMIN_PASSWORD is missing; editor login is disabled. Public and Pete endpoints can still start.');
 if(!githubToken)console.warn('GITHUB_TOKEN is not configured; editor saves and uploads are disabled until configured.');
@@ -16,7 +18,19 @@ const VIDEO_STUDIO_URL='https://captainpwilly.github.io/willy-dex/checkins/playe
 const VIDEO_DAILY_CAP=6,VIDEO_HOURLY_CAP=2;
 
 const json=(r,status,data,headers={})=>{r.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...headers});r.end(JSON.stringify(data))};
-function cors(req,res){const requested=req.headers.origin;if(requested&&requested!==origin)return false;res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');res.setHeader('Access-Control-Allow-Methods','POST,OPTIONS');return true}
+function cors(req,res){
+  const requested=req.headers.origin;
+  if(requested&&!allowedOrigins.has(requested)){
+    console.warn('Willy Dex CORS rejected origin:',String(requested).slice(0,180));
+    return false;
+  }
+  res.setHeader('Access-Control-Allow-Origin',requested||origin);
+  res.setHeader('Vary','Origin');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');
+  res.setHeader('Access-Control-Allow-Methods','GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Max-Age','600');
+  return true;
+}
 function read(req){return new Promise((resolve,reject)=>{let s='',length=0;req.on('data',c=>{length+=c.length;if(length>5*1024*1024){reject(Error('Request exceeds 5MB'));req.destroy()}else s+=c});req.on('end',()=>{try{resolve(JSON.parse(s||'{}'))}catch{reject(Error('Invalid JSON'))}});req.on('error',reject)})}
 async function git(path,method='GET',body){if(!githubToken)throw Error('GitHub write credential is not configured on the server');const response=await fetch(BASE+path,{method,headers:{Authorization:'Bearer '+githubToken,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});const data=await response.json().catch(()=>({}));if(!response.ok)throw Error('GitHub '+response.status+': '+(data.message||'error'));return data}
 function authorized(req){const key=(req.headers.authorization||'').replace(/^Bearer /,'');if(!key)return false;const hash=crypto.createHash('sha256').update(key).digest('hex');const exp=sessions.get(hash);if(!exp)return false;if(Date.now()>exp){sessions.delete(hash);return false}return true}
@@ -25,7 +39,7 @@ function rateLimit(ip){const now=Date.now(),r=attempts.get(ip)||{count:0,until:n
 setInterval(()=>{const now=Date.now();for(const [k,v] of sessions)if(v<=now)sessions.delete(k);for(const [k,v] of attempts)if(v.until<now)attempts.delete(k)},600000).unref();
 http.createServer(async(req,res)=>{if(!cors(req,res))return json(res,403,{error:'Origin not allowed'});if(req.method==='OPTIONS'){res.writeHead(204);return res.end()}if(req.url==='/health'&&req.method==='GET')return json(res,200,{ok:true});
 try{
-if(await peteApi.handle(req,res,{json,read,authorized,origin}))return;
+if(await peteApi.handle(req,res,{json,read,authorized,origin:req.headers.origin||origin}))return;
 if(req.url==='/api/login'&&req.method==='POST'){if(!passHash)return json(res,503,{error:'Editor login not configured'});const ip=req.socket.remoteAddress||'unknown';if(rateLimit(ip))return json(res,429,{error:'Too many attempts. Try again later.'});const data=await read(req);const attempted=crypto.scryptSync(String(data.password||''),passSalt,64);if(!crypto.timingSafeEqual(attempted,passHash))return json(res,401,{error:'Wrong password'});attempts.delete(ip);const token=crypto.randomBytes(32).toString('base64url');sessions.set(crypto.createHash('sha256').update(token).digest('hex'),Date.now()+12*3600*1000);return json(res,200,{token,expiresIn:43200})}
 if(req.url==='/api/logout'&&req.method==='POST'){const key=(req.headers.authorization||'').replace(/^Bearer /,'');sessions.delete(crypto.createHash('sha256').update(key).digest('hex'));return json(res,200,{ok:true})}
 if(req.url==='/api/cards'&&req.method==='POST'){if(!authorized(req))return json(res,401,{error:'Editor locked'});const data=await read(req);const file=await git('cards.json');const list=JSON.parse(Buffer.from(file.content,'base64').toString('utf8'));if(!Array.isArray(list))throw Error('Invalid registry');const action=data.action;if(action!=='save'&&action!=='delete')return json(res,400,{error:'Invalid action'});
