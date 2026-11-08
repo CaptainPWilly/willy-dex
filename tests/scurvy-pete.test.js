@@ -44,11 +44,24 @@ test('detects numeric questions without using the language model',()=>{
   assert.equal(directQuestion('What was our highest GXP day?'),'best_gxp_day');
   assert.equal(directQuestion('How many wars has the Cove won?'),'war_win_count');
   assert.equal(directQuestion('How many Willy Dex cards?'),'card_count');
-  assert.equal(directQuestion('Who has the highest level?'),'highest_card_level');
+  assert.equal(directQuestion('Who has the highest level on Willy Dex cards?'),'highest_card_level');
+  assert.equal(directQuestion('Who has the highest level?'),null);
   assert.equal(directQuestion('What rank is the Cove?'),'cove_latest_rank');
   assert.equal(directQuestion('What was the Cove rank on October 29?'),null);
   assert.equal(directQuestion('What was the Cove rank in Season 14?'),null);
   assert.equal(directQuestion('Biggest war reward XP day?'),null);
+  assert.equal(directQuestion('Biggest XP day for Helheim?'),null);
+  assert.equal(directQuestion('How many wars has Helheim won?'),null);
+  assert.equal(directQuestion('How many cards does Helheim have?'),null);
+  assert.equal(directQuestion('How many current Cove members?'),'current_roster_unknown');
+  assert.equal(routeTool('Biggest XP day for Helheim?'),'find_leaderboard');
+});
+test('current Cove membership counts cannot be fabricated from card slots',async()=>{
+  useFixtures(()=>{throw Error('No model expected');});
+  const r=await verifiedAnswer('How many current Cove members?');
+  assert.match(r.answer,/not verified/i);
+  assert.match(r.answer,/not a live roster count/i);
+  assert.deepEqual(r.sources.map(x=>x.id),['cards']);
 });
 test('missing numeric values stay unknown rather than being converted to zero',()=>{
   const {digits}=pete.__test;
