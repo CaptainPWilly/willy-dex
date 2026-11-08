@@ -252,7 +252,7 @@ async function chat(message,history){
   let input=history.slice(-8).map(h=>({role:h.role,content:h.content})).concat([{role:'user',content:message}]);
   const sources=new Map();let calls=0;
   for(let round=0;round<4;round++){
-    const result=await queryAI(input,instructions,TOOLS,round===3?'none':'auto');
+    const result=await queryAI(input,instructions,TOOLS,round===0?'required':round===3?'none':'auto');
     const out=result.output||[];
     const wants=out.filter(x=>x.type==='function_call');
     if(!wants.length){
