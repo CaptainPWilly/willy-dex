@@ -40,7 +40,8 @@ function terminal(chatRequest,options={}){
   const intl=options.brokenSegmenter?{Segmenter:class{constructor(){throw TypeError('WebKit Segmenter failed');}}}:Intl;
   const win={Intl:intl,matchMedia:()=>({matches:true}),addEventListener(){},
     getComputedStyle:()=>({font:'16px monospace',letterSpacing:'normal',padding:'10px',lineHeight:'24px',tabSize:'8'})};
-  const fetch=async url=>url.endsWith('/status')?{ok:true,json:async()=>({ready:true,accessConfigured:true})}:chatRequest(url);
+  const fetch=async url=>url.endsWith('/status')?
+    (options.statusRequest?options.statusRequest():{ok:true,json:async()=>({ready:true,accessConfigured:true})}):chatRequest(url);
   class Abort{constructor(){this.signal={};}abort(){this.signal.aborted=true;}}
   vm.runInNewContext(frontend,{document:doc,window:win,fetch,AbortController:Abort,Intl:intl,
     setTimeout:(fn,delay)=>{if(delay<1000)fn();return 1;},clearTimeout(){},
@@ -67,6 +68,20 @@ test('typing survives a failing Intl.Segmenter implementation',async()=>{
   assert.equal(body.textContent,'Recorded answer.');
   assert.equal(el.send.disabled,false);
   assert.equal(el.notice.textContent,'');
+});
+test('chat waits for sleeping Render service to wake before sending question',async()=>{
+  let ready,chatRequests=0;
+  const readiness=new Promise(resolve=>{ready=resolve;});
+  const el=terminal(async()=>{chatRequests++;return {ok:true,json:async()=>({answer:'Answer after wake.',sources:[]})};},
+    {statusRequest:()=>readiness});
+  el.question.value='Wake Pete';el.composer.requestSubmit();
+  await settle();
+  assert.equal(chatRequests,0);
+  assert.equal(el.notice.textContent,'CONNECTING...');
+  ready({ok:true,json:async()=>({ready:true,accessConfigured:true})});
+  await settle();
+  assert.equal(chatRequests,1);
+  assert.equal(el.send.disabled,false);
 });
 test('authentication failures lock the session without leaving a stuck input',async()=>{
   const el=terminal(async()=>({ok:false,status:401,json:async()=>({error:'Invalid Pete key'})}));
