@@ -10,45 +10,64 @@ var $=function(id){return document.getElementById(id);};
 var form=$('composer'),field=$('question'),send=$('send'),messages=$('messages'),notice=$('notice'),
     gate=$('access-form'),code=$('access-code'),chat=$('chat'),skull=$('skull'),skip=$('skip'),
     composerEntry=$('composer-entry'),caretMirror=$('caret-mirror'),inputCaret=$('input-caret'),voiceButton=$('voice-button');
-var voiceEnabled=false,audioCtx=null,lastVoiceAt=-1;
+// Pete's voice is on by default, but Web Audio is unlocked ONLY by a user's tap.
+// No samples or copyrighted game audio: all chirps are synthesized locally.
+var voiceEnabled=true,audioCtx=null,lastVoiceAt=-1;
 function updateVoiceButton(){
   voiceButton.textContent=voiceEnabled?'VOICE ON':'VOICE OFF';
   voiceButton.setAttribute('aria-pressed',String(voiceEnabled));
 }
-function mumble(character,index){
-  if(!voiceEnabled||!audioCtx||audioCtx.state!=='running'||!/[\p{L}\p{N}]/u.test(character))return;
-  var time=audioCtx.currentTime;
-  if(time-lastVoiceAt<.077)return;
-  lastVoiceAt=time;
+function chirp(character,index,preview){
+  if(!voiceEnabled||!audioCtx||!preview&&audioCtx.state!=='running')return;
+  if(!preview&&!/[\p{L}\p{N}]/u.test(character))return;
+  var t=audioCtx.currentTime;
+  if(!preview&&t-lastVoiceAt<.092)return;
+  lastVoiceAt=t;
   try{
-    var code=character.codePointAt(0)||0;
-    var pitch=285+(code%13)*18+(Math.floor(index/7)%3)*13;
-    var osc=audioCtx.createOscillator(),filter=audioCtx.createBiquadFilter(),volume=audioCtx.createGain();
-    osc.type='triangle';
-    osc.frequency.setValueAtTime(pitch,time);
-    osc.frequency.exponentialRampToValueAtTime(pitch*(index%3===0?1.18:.88),time+.06);
-    filter.type='lowpass';filter.frequency.value=1100;
-    volume.gain.setValueAtTime(.0001,time);
-    volume.gain.exponentialRampToValueAtTime(.018,time+.012);
-    volume.gain.exponentialRampToValueAtTime(.0001,time+.074);
-    osc.connect(filter);filter.connect(volume);volume.connect(audioCtx.destination);
-    osc.start(time);osc.stop(time+.078);
-  }catch(e){/* Audio is an optional effect; never interfere with answers. */}
+    var code=character.codePointAt(0)||65;
+    var pitch=300+(code%11)*25+(Math.floor(index/8)%3)*16;
+    var osc=audioCtx.createOscillator(),filter=audioCtx.createBiquadFilter(),gain=audioCtx.createGain();
+    osc.type='square';
+    osc.frequency.setValueAtTime(pitch,t);
+    osc.frequency.exponentialRampToValueAtTime(pitch*(index%3===0?1.11:.92),t+.075);
+    filter.type='lowpass';
+    filter.frequency.value=1600;
+    gain.gain.setValueAtTime(.0001,t);
+    gain.gain.exponentialRampToValueAtTime(preview?.07:.055,t+.014);
+    gain.gain.exponentialRampToValueAtTime(.0001,t+.092);
+    osc.connect(filter);filter.connect(gain);gain.connect(audioCtx.destination);
+    osc.start(t);osc.stop(t+.1);
+  }catch(e){/* Optional audio never prevents chat from working. */}
+}
+function unlockVoice(preview){
+  if(!voiceEnabled)return;
+  var AudioCtor=window.AudioContext||window.webkitAudioContext;
+  if(!AudioCtor){voiceEnabled=false;voiceButton.textContent='VOICE N/A';voiceButton.disabled=true;return;}
+  try{
+    // Where supported, let the short synthesized sounds use normal media playback.
+    if(window.navigator&&window.navigator.audioSession){
+      try{window.navigator.audioSession.type='playback';}catch(e){}
+    }
+    if(!audioCtx)audioCtx=new AudioCtor();
+    if(audioCtx.state==='suspended'||audioCtx.state==='interrupted'){
+      var ready=audioCtx.resume();
+      if(ready&&ready.catch)ready.catch(function(){
+        voiceButton.textContent='VOICE TAP TO RETRY';
+      });
+    }
+    // Schedule the confirmation chirp directly inside the user gesture (iOS).
+    if(preview)chirp('P',0,true);
+  }catch(e){
+    voiceEnabled=false;
+    updateVoiceButton();
+  }
 }
 voiceButton.addEventListener('click',function(){
-  if(voiceEnabled){voiceEnabled=false;updateVoiceButton();return;}
-  var AudioCtor=window.AudioContext||window.webkitAudioContext;
-  if(!AudioCtor){voiceButton.textContent='VOICE N/A';voiceButton.disabled=true;return;}
-  try{
-    if(!audioCtx)audioCtx=new AudioCtor();
-    voiceEnabled=true;
-    if(audioCtx.state==='suspended'){
-      var resumed=audioCtx.resume();
-      if(resumed&&resumed.catch)resumed.catch(function(){voiceEnabled=false;updateVoiceButton();});
-    }
-    updateVoiceButton();
-  }catch(e){voiceEnabled=false;updateVoiceButton();}
+  voiceEnabled=!voiceEnabled;
+  updateVoiceButton();
+  if(voiceEnabled)unlockVoice(true); // instantly audible test when switched on
 });
+updateVoiceButton();
 empty=$('empty');
 var reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 function status(message,error){
@@ -197,7 +216,7 @@ function reveal(node,text){
       if(end>index){
         // A very short, softly pitched chirp every few characters, not a loud tone per keystroke.
         for(var i=end-1;i>=index;i--){
-          if(/[\p{L}\p{N}]/u.test(units[i])){mumble(units[i],i);break;}
+          if(/[\p{L}\p{N}]/u.test(units[i])){chirp(units[i],i,false);break;}
         }
         index=end;
         node.content.textContent=units.slice(0,index).join('');
@@ -267,6 +286,7 @@ function boot(){
   function done(){
     target.textContent=word;
     cursor.hidden=true;
+    cursor.remove(); // Never leave a blinking logo cursor in the terminal after boot.
     sub.hidden=false;
     booted=true;
     locked(true);
@@ -286,6 +306,7 @@ form.addEventListener('submit',function(e){
   var text=field.value.trim();
   if(!text)return;
   field.value='';
+  unlockVoice(false); // User's Send tap can resume audio after iOS interruption.
   scheduleCaret();
   ask(text);
 });
@@ -298,6 +319,7 @@ gate.addEventListener('submit',function(e){
   if(value.length<12){status('INVALID KEY FORMAT',true);return;}
   access=value;
   code.value='';
+  unlockVoice(true); // Enter tap unlocks sound on iPhone; gives a short confirmation chirp.
   locked(false);
   status('');
 });
