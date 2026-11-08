@@ -149,6 +149,45 @@ const RESULTS={
       const rows=ss.map(s=>({capturedAt:s.capturedAt||s.date,season:s.season||data.season,guilds:(s.guilds||[]).filter(g=>selected.length?selected.some(name=>matches(g.name,name)):norm(g.name)==='the pirate cove')}));
       return {...summary,totalMatches:rows.length,offset:start,more:start+n<rows.length,timeline:rows.slice(start,start+n)};
     }
+    if(mode==='daily_gains'){
+      // Choose the last actual capture on each local date, per guild. Compare only
+      // adjacent calendar dates. These are observed snapshot-to-snapshot changes,
+      // NOT exact midnight-to-midnight totals or rolling 24-hour maxima.
+      const requested=selected.length?selected:['The Pirate Cove'];
+      const byGuild=new Map();
+      for(const snap of ss){
+        const capturedAt=snap.capturedAt||snap.date;
+        const date=str(capturedAt,10);
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(date))continue;
+        for(const guild of snap.guilds||[]){
+          if(!requested.some(name=>matches(guild.name,name)))continue;
+          const key=norm(guild.name);
+          if(!byGuild.has(key))byGuild.set(key,{name:guild.name,days:new Map()});
+          const group=byGuild.get(key),existing=group.days.get(date);
+          if(!existing||sortDate(capturedAt)>sortDate(existing.capturedAt)){
+            group.days.set(date,{capturedAt,date,experience:number(guild.experience),rank:guild.rank});
+          }
+        }
+      }
+      const gains=[];
+      for(const group of byGuild.values()){
+        const days=[...group.days.values()].sort((a,b)=>a.date.localeCompare(b.date));
+        for(let i=1;i<days.length;i++){
+          const from=days[i-1],to=days[i];
+          const daysBetween=(Date.parse(to.date+'T00:00:00Z')-Date.parse(from.date+'T00:00:00Z'))/86400000;
+          if(daysBetween!==1)continue; // An unrecorded day is not a daily observation.
+          gains.push({guild:group.name,fromDate:from.date,toDate:to.date,
+            fromCapturedAt:from.capturedAt,toCapturedAt:to.capturedAt,
+            measuredHours:Number(((sortDate(to.capturedAt)-sortDate(from.capturedAt))/3600000).toFixed(2)),
+            fromXp:from.experience,toXp:to.experience,xpGain:to.experience-from.experience});
+        }
+      }
+      gains.sort((a,b)=>b.xpGain-a.xpGain||a.toDate.localeCompare(b.toDate)||a.guild.localeCompare(b.guild));
+      return {...summary,mode:'daily_gains',guildsChecked:requested,method:'Last recorded snapshot per local calendar date; adjacent dates only.',
+        largestObservedGain:gains[0]||null,totalMatches:gains.length,offset:start,more:start+n<gains.length,
+        dailyGains:gains.slice(start,start+n),
+        warning:'This is the largest OBSERVED between-day GXP increase, not the exact gain within a calendar day or fixed 24-hour window. Capture times differ; label both times. The archive may be incomplete.'};
+    }
     if(mode==='changes'){
       const first=ss[0],baseline=new Map((first.guilds||[]).map(g=>[norm(g.name),g]));
       const changes=(latest.guilds||[]).filter(g=>baseline.has(norm(g.name))).map(g=>{
@@ -190,7 +229,7 @@ const TYPES={
   find_careers:{description:'Find all archived membership records, join/leave ages, removals and roster status. Most statuses are unverified; do not assume current member.',props:{query:{type:'string'},status:{type:['string','null']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_wars:{description:'Query real war snapshots, including correct Cove-side kills, enemy kills and completion percentages. Scope latest or all recorded captures.',props:{guild:{type:['string','null']},opponent:{type:['string','null']},scope:{type:'string',enum:['latest','all']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_wins:{description:'Search completed war victory archive. Exact per-opponent frequency and victories with source order and rewards.',props:{opponent:{type:['string','null']},sort:{type:'string',enum:['source','opponent','reward']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
-  find_leaderboard:{description:'Exact Season 15 GLB archive. Choose latest standings, recorded timeline (for a guild or multiple guilds) or placement changes between actual first/last snapshots.',props:{guilds:{type:'array',items:{type:'string'},maxItems:8},mode:{type:'string',enum:['latest','timeline','changes']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
+  find_leaderboard:{description:'Exact GUILD XP (GXP) history and rankings from the Willy Dex Global Leaderboard. For BIGGEST XP DAY, MOST GXP IN A DAY, DAILY GUILD XP GAINS, or largest day-to-day increase, MUST use mode=daily_gains with guilds=[The Pirate Cove] for the Cove. This calculates observed differences between the last captured snapshots on successive dates. Mode=timeline gives historical snapshots, mode=latest current archived standings, and mode=changes compares first/latest placements. NEVER confuse war victory rewardExp with guild XP earned per day.',props:{guilds:{type:'array',items:{type:'string'},maxItems:8},mode:{type:'string',enum:['latest','timeline','daily_gains','changes']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_tags:{description:'Get the live published SMMO tags including exact double-bracket formats.',props:{query:{type:'string'},limit:{type:'integer',minimum:1,maximum:100}}},
   find_knowledge:{description:'Read public Cove knowledge and Scurvy Pete persona notes stored in the Willy Dex repository.',props:{query:{type:'string'}}},
   find_videos:{description:'Search Video Library published editions, player links, latest videos and recaps.',props:{query:{type:'string'},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}}
@@ -244,6 +283,7 @@ async function chat(message,history){
     'Willy Dex itself is your single source of guild records. You have read-only lookup functions accessing its existing JSON files, NOT a separate AI database. Use functions to retrieve evidence for ALL factual questions about the Cove.',
     'Never claim you checked a source unless you called a tool for it in this turn. If a tool fails, be transparent. You are not browsing live SimpleMMO or Discord.',
     'For lists, rankings, counts and calculations always use the tools and exact results, never infer from a sample. If results are paginated, call more pages if needed, or label the answer incomplete.',
+    'IMPORTANT: Questions about the Cove’s biggest XP day or GXP earned per day MUST query find_leaderboard(mode=daily_gains, guilds=[The Pirate Cove]). Daily gain is the difference between successive local-date leaderboard snapshots, NOT war victory XP rewards. Quote the actual start/end capture times and explicitly say observed between-day gain, not an exact calendar-day or 24-hour record.',
     'Name the snapshot date for historical facts. Missing data means unknown. Never fabricate placement, timestamps, rank, player status or wars.',
     'When evaluating wars, distinguish Cove earned kills from opposing kills regardless of guild A/B position. Do not confuse victory rewards (experience) with kill counts.',
     'For members, card roles/levels may be stale; most career membership statuses are unknown. Preserve chronological order of ambiguous relative-age notices.',
@@ -253,8 +293,11 @@ async function chat(message,history){
   ].filter(Boolean).join('\n');
   let input=history.slice(-8).map(h=>({role:h.role,content:h.content})).concat([{role:'user',content:message}]);
   const sources=new Map();let calls=0;
+  const dailyGxpQuestion=/\b(?:xp|gxp|experience)\b/i.test(message)&&/\b(?:day|daily|24.?hour|biggest|highest|most|record|peak|earned|gain|gained)\b/i.test(message);
+  // Route GXP/day questions to the leaderboard first, instead of the war-wins archive.
   for(let round=0;round<4;round++){
-    const result=await queryAI(input,instructions,TOOLS,round===0?'required':round===3?'none':'auto');
+    const choice=round===0?(dailyGxpQuestion?{type:'function',name:'find_leaderboard'}:'required'):round===3?'none':'auto';
+    const result=await queryAI(input,instructions,TOOLS,choice);
     const out=result.output||[];
     const wants=out.filter(x=>x.type==='function_call');
     if(!wants.length){
