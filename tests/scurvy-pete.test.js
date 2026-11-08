@@ -34,15 +34,15 @@ test.after(()=>{
 });
 test('routes war reward XP separately from guild season XP',()=>{
   assert.equal(routeTool('How much XP do war victories reward?'),'find_wins');
-  assert.equal(routeTool('How much GXP did the Cove gain this season?'),'find_leaderboard');
+  assert.equal(routeTool('How much GXP did the Cove gain this season?'),'analyze_glb');
   assert.equal(routeTool('Which player earned the most XP?'),'find_cards');
-  assert.equal(routeTool('How much guild XP did the Cove gain?'),'find_leaderboard');
+  assert.equal(routeTool('How much guild XP did the Cove gain?'),'analyze_glb');
   assert.equal(routeTool('Who was removed from the guild?'),'find_careers');
-  assert.equal(routeTool('Who are the officers?'),'find_cards');
-  assert.equal(routeTool('Who are the founders?'),'find_cards');
-  assert.equal(routeTool('Show me the current roster'),'find_cards');
-  assert.equal(routeTool('List our crew'),'find_cards');
-  assert.equal(routeTool('Who are the recruits?'),'find_cards');
+  assert.equal(routeTool('Who are the officers?'),'analyze_members');
+  assert.equal(routeTool('Who are the founders?'),'analyze_members');
+  assert.equal(routeTool('Show me the current roster'),'analyze_members');
+  assert.equal(routeTool('List our crew'),'analyze_members');
+  assert.equal(routeTool('Who are the recruits?'),'analyze_members');
   assert.equal(routeTool('What wars are on record?'),'find_wars');
   assert.equal(routeTool('Show me the new videos'),'find_videos');
   assert.equal(routeTool('What SMMO tags do we have?'),'find_tags');
@@ -119,7 +119,7 @@ test('unverified AI numeric claims are blocked even after a successful archive l
   await pete.handle(
     {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
     {origin:'https://captainpwilly.github.io',authorized:()=>true,
-     read:async()=>({message:'How does Helheim compare with the Cove on the latest GLB?',history:[]}),
+     read:async()=>({message:'Compare Helheim, the Cove, and Ascended on the latest GLB?',history:[]}),
      json:(_res,status,data)=>{response={status,data};}});
   assert.equal(response.status,200);
   assert.equal(response.data.evidence,'numeric-check-failed');
