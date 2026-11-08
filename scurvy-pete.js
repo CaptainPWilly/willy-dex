@@ -8,27 +8,80 @@ var API='https://willy-dex-editor.onrender.com';
 var history=[],loading=false,access='',epoch=0,requestController=null,activeReply=null,booted=false,empty=null;
 var $=function(id){return document.getElementById(id);};
 var form=$('composer'),field=$('question'),send=$('send'),messages=$('messages'),notice=$('notice'),
-    gate=$('access-form'),code=$('access-code'),chat=$('chat'),skull=$('skull'),skip=$('skip');
+    gate=$('access-form'),code=$('access-code'),chat=$('chat'),skull=$('skull'),skip=$('skip'),
+    composerEntry=$('composer-entry'),caretMirror=$('caret-mirror'),inputCaret=$('input-caret');
 empty=$('empty');
 var reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 function status(message,error){
   notice.textContent=message||'';
   notice.classList.toggle('error',!!error);
+  notice.classList.toggle('transmitting',message==='RECEIVING TRANSMISSION...');
 }
+/* Draw a true block typing caret at the user's textarea selection. The textarea
+ * remains a native control (keyboard, paste, selection, mobile and accessibility).
+ * If measurement fails, show its native caret instead. */
+var composing=false,caretFrame=0;
+function updateInputCaret(){
+  inputCaret.hidden=true;
+  composerEntry.classList.remove('custom-caret');
+  if(document.activeElement!==field||field.disabled||chat.hidden||composing)return;
+  if(field.selectionStart!==field.selectionEnd)return; // keep selection highlighting
+  try{
+    var css=window.getComputedStyle(field);
+    caretMirror.style.font=css.font;
+    caretMirror.style.letterSpacing=css.letterSpacing;
+    caretMirror.style.padding=css.padding;
+    caretMirror.style.lineHeight=css.lineHeight;
+    caretMirror.style.tabSize=css.tabSize||'8';
+    caretMirror.style.width=field.clientWidth+'px';
+    caretMirror.replaceChildren();
+    caretMirror.appendChild(document.createTextNode(field.value.slice(0,field.selectionStart)));
+    var marker=document.createElement('span');
+    marker.className='caret-marker';
+    marker.textContent='\u200b';
+    caretMirror.appendChild(marker);
+    var pos=marker.getBoundingClientRect(),box=composerEntry.getBoundingClientRect();
+    var x=pos.left-box.left-field.scrollLeft;
+    var y=pos.top-box.top-field.scrollTop;
+    if(!Number.isFinite(x)||!Number.isFinite(y)||x<0||y<0||x>field.clientWidth||y>field.clientHeight-3)return;
+    inputCaret.style.left=Math.min(x,field.clientWidth-9)+'px';
+    inputCaret.style.top=y+'px';
+    inputCaret.style.height=Math.min(parseFloat(css.lineHeight)||22,24)+'px';
+    composerEntry.classList.add('custom-caret');
+    inputCaret.hidden=false;
+  }catch(e){ // the native caret is a safe fallback on unusual browsers
+    inputCaret.hidden=true;
+    composerEntry.classList.remove('custom-caret');
+  }
+}
+function scheduleCaret(){
+  if(caretFrame)cancelAnimationFrame(caretFrame);
+  caretFrame=requestAnimationFrame(function(){caretFrame=0;updateInputCaret();});
+}
+['input','keyup','click','scroll','select','focus','blur'].forEach(function(event){
+  field.addEventListener(event,scheduleCaret);
+});
+field.addEventListener('compositionstart',function(){composing=true;scheduleCaret();});
+field.addEventListener('compositionend',function(){composing=false;scheduleCaret();});
+document.addEventListener('selectionchange',function(){
+  if(document.activeElement===field)scheduleCaret();
+});
+window.addEventListener('resize',scheduleCaret);
+
 function locked(show){
   gate.hidden=!show;
   chat.hidden=show;
   $('access-button').textContent=show?'ACCESS':'LOCK';
   if(show&&booted)code.focus();
   if(!show)field.focus();
+  scheduleCaret();
 }
 function resetMessages(){
   messages.replaceChildren();
   empty=document.createElement('div');
   empty.id='empty';empty.className='empty';
-  empty.appendChild(document.createTextNode('AWAITING QUERY'));
-  var cursor=document.createElement('span');cursor.className='block-cursor';cursor.setAttribute('aria-hidden','true');
-  empty.appendChild(cursor);messages.appendChild(empty);
+  empty.textContent='AWAITING QUERY';
+  messages.appendChild(empty);
 }
 function addSources(wrap,sources){
   if(!Array.isArray(sources)||!sources.length)return;
@@ -51,10 +104,6 @@ function bubble(role,text){
   var body=document.createElement('div');body.className='bubble';
   var content=document.createElement('span');content.className='type-content';content.textContent=text||'';
   body.appendChild(content);
-  if(role==='assistant'){
-    var cursor=document.createElement('span');cursor.className='block-cursor typing-cursor';
-    cursor.setAttribute('aria-hidden','true');body.appendChild(cursor);
-  }
   wrap.append(name,body);messages.appendChild(wrap);
   messages.scrollTop=messages.scrollHeight;
   return {wrap:wrap,content:content};
@@ -64,6 +113,7 @@ function busy(on,phase){
   send.disabled=on;
   field.disabled=on;
   send.textContent=on?(phase==='typing'?'PRINTING':'PROCESSING'):'SEND';
+  scheduleCaret();
 }
 function reveal(node,text){
   var full=String(text||'');
@@ -153,6 +203,7 @@ async function ask(text){
     if(id===epoch){
       busy(false);
       if(!chat.hidden)field.focus();
+      scheduleCaret();
     }
   }
 }
@@ -181,6 +232,7 @@ form.addEventListener('submit',function(e){
   var text=field.value.trim();
   if(!text)return;
   field.value='';
+  scheduleCaret();
   ask(text);
 });
 field.addEventListener('keydown',function(e){
@@ -214,6 +266,7 @@ $('clear-button').addEventListener('click',function(){
   history=[];
   resetMessages();
   field.value='';
+  scheduleCaret();
   status('TERMINAL LOG CLEARED');
 });
 skip.addEventListener('click',function(){if(activeReply)activeReply.finish();});
