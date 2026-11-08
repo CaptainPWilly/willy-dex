@@ -40,6 +40,18 @@ test('detects numeric questions without using the language model',()=>{
   assert.equal(directQuestion('How many Willy Dex cards?'),'card_count');
   assert.equal(directQuestion('Who has the highest level?'),'highest_card_level');
   assert.equal(directQuestion('What rank is the Cove?'),'cove_latest_rank');
+  assert.equal(directQuestion('What was the Cove rank on October 29?'),null);
+  assert.equal(directQuestion('What was the Cove rank in Season 14?'),null);
+  assert.equal(directQuestion('Biggest war reward XP day?'),null);
+});
+test('missing numeric values stay unknown rather than being converted to zero',()=>{
+  const {digits}=pete.__test;
+  assert.equal(digits(null),null);
+  assert.equal(digits(undefined),null);
+  assert.equal(digits('???'),null);
+  assert.equal(digits(''),null);
+  assert.equal(digits('0'),0);
+  assert.equal(digits('218374'),218374);
 });
 test('computes the largest observed between-day GXP increase from recorded snapshots',async()=>{
   useFixtures(()=>{throw Error('The model must not be called for this question');});
