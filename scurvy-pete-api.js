@@ -315,8 +315,8 @@ function routeTool(message){
   if(/\b(?:glb|leaderboard|gxp|guild xp|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:xp|experience)\b/.test(q)&&/\b(?:cove|guild|arg|our|we)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:war|wars|attack|kills|battles|opponents|enemy)\b/.test(q))return 'find_wars';
-  if(/\b(?:joined|join|left|leave|removed|departed|tenure|careers|membership history)\b/.test(q))return 'find_careers';
-  if(/\b(?:member|player|card|level|officer|founder|recruit|roles|alias)\b/.test(q))return 'find_cards';
+  if(/\b(?:joined|joins?|left|leaves?|removed|removals?|departed|departures?|tenure|careers?|membership history|membership records)\b/.test(q))return 'find_careers';
+  if(/\b(?:members?|players?|cards?|levels?|officers?|founders?|recruits?|roles?|aliases?|leaders?|captains?)\b/.test(q))return 'find_cards';
   return null;
 }
 function captureMetadata(id,doc){
