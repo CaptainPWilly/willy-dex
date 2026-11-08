@@ -67,12 +67,23 @@ document.addEventListener('selectionchange',function(){
 });
 window.addEventListener('resize',scheduleCaret);
 
+function autoFocusAllowed(){
+  // Mobile Safari should only open the keyboard when the user taps an input.
+  return !(window.matchMedia && (
+    window.matchMedia('(pointer: coarse)').matches ||
+    window.matchMedia('(max-width: 740px)').matches
+  ));
+}
 function locked(show){
   gate.hidden=!show;
   chat.hidden=show;
   $('access-button').textContent=show?'ACCESS':'LOCK';
-  if(show&&booted)code.focus();
-  if(!show)field.focus();
+  if(autoFocusAllowed()){
+    if(show&&booted)code.focus();
+    if(!show)field.focus();
+  }else if(!show&&document.activeElement===code){
+    code.blur();
+  }
   scheduleCaret();
 }
 function resetMessages(){
@@ -200,7 +211,7 @@ async function ask(text){
     if(requestController===abort)requestController=null;
     if(id===epoch){
       busy(false);
-      if(!chat.hidden)field.focus();
+      if(!chat.hidden&&autoFocusAllowed())field.focus();
       scheduleCaret();
     }
   }
