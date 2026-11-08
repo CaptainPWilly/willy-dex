@@ -550,6 +550,42 @@ async function precisionAnswer(message){
     ['Warrior',/\bwarriors?\b/]
   ];
   const role=rolePair.find(pair=>pair[1].test(q))?.[0];
+  const hasLevel=/\b(?:level|levels|leveled|levelled)\b/.test(q);
+  const isRoleRanking=!!role&&hasLevel&&/\b(?:highest|lowest|top|most|biggest|fastest|gained|growth|over|above|under|below)\b/.test(q);
+  if(isRoleRanking){
+    const cards=(await load('cards')).filter(c=>c&&norm(c.guild)==='arg'&&c.name&&c.name!=='???'
+      &&(c.roles||[]).some(label=>norm(label)===norm(role)));
+    const threshold=q.match(/\b(?:over|above|under|below)\s+(\d{1,9})\b/);
+    const increasing=/\b(?:growth|gained|gain|leveled|levelled|increased|fastest)\b/.test(q);
+    const ranked=cards.map(c=>{
+      const observations=(c.level_snapshots||[]).filter(s=>digits(s.level)!==null&&sortDate(s.date)>0)
+        .slice().sort((a,b)=>sortDate(a.date)-sortDate(b.date));
+      return {name:c.name,level:digits(c.level),captured:c.date||'unknown date',
+        first:observations[0],last:observations.at(-1),
+        growth:observations.length>=2?digits(observations.at(-1).level)-digits(observations[0].level):null};
+    }).filter(c=>(increasing?c.growth:c.level)!==null);
+    if(threshold){
+      const amount=Number(threshold[1]),upper=/\b(?:over|above)\b/.test(q);
+      const filtered=ranked.filter(c=>upper?c.level>amount:c.level<amount)
+        .sort((a,b)=>b.level-a.level);
+      return preciseReply(filtered.length+' recorded Cove '+role+
+        (filtered.length===1?'':'s')+' '+(upper?'over ':'under ')+amount.toLocaleString('en-US')+
+        ' levels: '+(filtered.map(c=>c.name+' ('+c.level.toLocaleString('en-US')+')').join(', ')||'none')+
+        '. Archived levels, not live.','cards',{recordedCount:filtered.length});
+    }
+    const asc=/\b(?:lowest|smallest)\b/.test(q);
+    ranked.sort((a,b)=>asc?(increasing?a.growth-b.growth:a.level-b.level):
+      (increasing?b.growth-a.growth:b.level-a.level));
+    const top=Math.min(10,Math.max(1,Number(q.match(/\btop (\d{1,2})\b/)?.[1]||1)));
+    const chosen=ranked.slice(0,top);
+    if(!chosen.length)return preciseReply('No '+role+' card has enough recorded level data for this ranking.','cards',{evidence:'insufficient'});
+    return preciseReply('Recorded Cove '+role+' '+(increasing?'level growth':'levels')+': '+
+      chosen.map((c,i)=>(i+1)+'. '+c.name+' — '+(increasing?
+        (c.growth>=0?'+':'')+c.growth.toLocaleString('en-US')+' levels ('+
+        c.first.date+' to '+c.last.date+')':
+        c.level.toLocaleString('en-US')+' (recorded '+c.captured+')')).join('; ')+
+      '. Different capture windows may not be directly comparable; not live stats.','cards');
+  }
   const wantsRole=/\b(?:who|which|list|show|count|how many|what are|name|names|roster|currently|this week)\b/.test(q);
   if(role&&wantsRole&&!/\b(?:highest|top|most|levels|growth|fastest)\b/.test(q)){
     const first=await load('glb');
