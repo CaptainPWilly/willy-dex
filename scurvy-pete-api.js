@@ -81,7 +81,126 @@ function summarizeCard(c){
     membershipStatus:c.membership_status||'unverified'
   };
 }
+// Staff-grade historical analytics: every comparison is derived from actual captures.
+async function analyzeGLB({mode,window,guilds,limit}){
+  const data=await load('glb');
+  const snaps=(data.snapshots||[]).slice().sort((a,b)=>sortDate(a.capturedAt||a.date)-sortDate(b.capturedAt||b.date));
+  const latest=snaps.at(-1),earlier=window==='latest'?snaps.at(-2):snaps[0];
+  const common={season:data.season,mode,window,snapshotCount:snaps.length,
+    latestCapturedAt:latest?.capturedAt||null,fromCapturedAt:earlier?.capturedAt||null,
+    warning:'Historical captured top-50 only. Absent guilds are unknown, not rank #51. No made-up ranks, rates, or missing-day XP.'};
+  if(!latest)return {...common,error:'No leaderboard captures'};
+  const latestRows=(latest.guilds||[]).slice().sort((a,b)=>a.rank-b.rank);
+  const names=snaps.flatMap(s=>(s.guilds||[]).map(g=>g.name));
+  const selected=(guilds||[]).flatMap(n=>resolveNames(names,n));
+  const selection=new Set(selected.map(norm));
+  const max=clamp(limit,1,50);
+  const previousRows=earlier?.guilds||[];
+  const previous=new Map(previousRows.map(g=>[norm(g.name),g]));
+  const hours=earlier?(sortDate(latest.capturedAt)-sortDate(earlier.capturedAt))/3600000:null;
+  const growth=latestRows.filter(g=>previous.has(norm(g.name))&&digits(g.experience)!==null&&digits(previous.get(norm(g.name)).experience)!==null)
+    .map(g=>{
+      const prior=previous.get(norm(g.name)),xpGain=digits(g.experience)-digits(prior.experience);
+      return {name:g.name,fromRank:prior.rank,toRank:g.rank,rankChange:prior.rank-g.rank,
+        fromXp:digits(prior.experience),toXp:digits(g.experience),xpGain,
+        measuredHours:Number.isFinite(hours)?Number(hours.toFixed(2)):null,
+        observedXpPerHour:hours>0?Number((xpGain/hours).toFixed(1)):null};
+    });
+  const missingPrior=latestRows.filter(g=>!previous.has(norm(g.name))).map(g=>g.name);
+  if(mode==='growth'){
+    const ordered=growth.filter(g=>!selected.length||selection.has(norm(g.name)))
+      .sort((a,b)=>b.xpGain-a.xpGain||a.toRank-b.toRank);
+    return {...common,metric:'recorded XP increase between two actual snapshots',comparableGuilds:growth.length,
+      missingFromEarlierSnapshot:missingPrior,selectedGuilds:selected,totalMatches:ordered.length,growth:ordered.slice(0,max)};
+  }
+  if(mode==='races'){
+    const gaps=[];
+    for(let i=1;i<latestRows.length;i++){
+      const above=latestRows[i-1],below=latestRows[i];
+      if(above.rank+1!==below.rank||digits(above.experience)===null||digits(below.experience)===null)continue;
+      if(selected.length&&!selection.has(norm(above.name))&&!selection.has(norm(below.name)))continue;
+      gaps.push({above:{name:above.name,rank:above.rank,xp:digits(above.experience)},
+        below:{name:below.name,rank:below.rank,xp:digits(below.experience)},
+        gapXp:digits(above.experience)-digits(below.experience)});
+    }
+    const narrow=gaps.slice().sort((a,b)=>a.gapXp-b.gapXp);
+    const large=gaps.slice().sort((a,b)=>b.gapXp-a.gapXp);
+    return {...common,metric:'recorded adjacent-rank XP gaps in latest capture',totalPairs:gaps.length,
+      closest:narrow.slice(0,max),largestLeads:large.slice(0,max)};
+  }
+  if(mode==='guild'){
+    const requested=selected.length?selected:['The Pirate Cove'];
+    const output=[];
+    for(const name of requested){
+      const index=latestRows.findIndex(g=>norm(g.name)===norm(name));
+      const current=index<0?null:latestRows[index],past=previous.get(norm(name))||null;
+      const above=index>0?latestRows[index-1]:null,below=index>=0&&index<latestRows.length-1?latestRows[index+1]:null;
+      const delta=growth.find(g=>norm(g.name)===norm(name))||null;
+      output.push({name,foundInLatest:!!current,
+        latest:current?{rank:current.rank,xp:digits(current.experience)}:null,
+        previous:past?{rank:past.rank,xp:digits(past.experience)}:null,growth:delta,
+        ahead:current&&above&&above.rank===current.rank-1?{name:above.name,rank:above.rank,gapXp:digits(above.experience)-digits(current.experience)}:null,
+        behind:current&&below&&below.rank===current.rank+1?{name:below.name,rank:below.rank,gapXp:digits(current.experience)-digits(below.experience)}:null});
+    }
+    return {...common,metric:'last observed guild performance and nearest-rank gaps',guilds:output.slice(0,max)};
+  }
+  const total=latestRows.filter(g=>!selected.length||selection.has(norm(g.name)));
+  return {...common,metric:'latest captured top-50 standings',totalMatches:total.length,standings:total.slice(0,max)};
+}
+async function analyzeMembers({mode,query,role,limit}){
+  const cards=(await load('cards')).filter(c=>c&&c.name&&c.name!=='???'&&norm(c.guild)==='arg');
+  const max=clamp(limit,1,100);
+  const matchesRole=(c,r)=>[...(c.roles||[]),...(c.tags||[])].some(x=>norm(x)===norm(r));
+  const publicCard=c=>({
+    name:c.name,number:c.number,aliases:c.aliases||[],roles:c.roles||[],
+    level:digits(c.level),levelCapturedAt:c.date||null,smmoJoined:c.smmo_joined==='???'?null:c.smmo_joined||null,
+    lastActiveAtCapture:c.last_active||null,description:c.description&&c.description!=='???'?c.description:null,
+    membershipStatus:c.membership_status||'unverified',
+    roleVerifiedOn:c.role_verified_on||null,roleSource:c.role_source||null
+  });
+  const base={mode,archivedCardCount:cards.length,
+    warning:'These are Willy Dex card records. Roles, membership, and levels are not live SimpleMMO checks; unknown current status stays unknown.'};
+  if(mode==='roles'){
+    const relevant=role?cards.filter(c=>matchesRole(c,role)):cards;
+    const counts={};
+    for(const c of cards)for(const name of new Set(c.roles||[]))counts[name]=(counts[name]||0)+1;
+    return {...base,role:role||null,roleTotals:counts,totalMatches:relevant.length,
+      members:relevant.slice().sort((a,b)=>a.name.localeCompare(b.name)).slice(0,max).map(publicCard)};
+  }
+  if(mode==='roster'){
+    const count={};
+    for(const c of cards)for(const name of new Set(c.roles||[]))count[name]=(count[name]||0)+1;
+    return {...base,countByRole:count,totalMatches:cards.length,
+      members:cards.slice().sort((a,b)=>number(a.number)-number(b.number)).slice(0,max).map(publicCard)};
+  }
+  const term=norm(query),allNames=cards.flatMap(c=>[c.name,...(c.aliases||[])]);
+  if(!term)return {...base,error:'Supply a player name for member or level-growth lookup'};
+  const matchedNames=resolveNames(allNames,query);
+  const selection=new Set(matchedNames.map(norm));
+  const matched=cards.filter(c=>selection.has(norm(c.name))||(c.aliases||[]).some(n=>selection.has(norm(n))));
+  if(mode==='member'){
+    const careerData=await load('careers').catch(()=>null);
+    const matchesCareer=c=>careerData?.members?.filter(m=>norm(m.name)===norm(c.name))||[];
+    return {...base,totalMatches:matched.length,members:matched.slice(0,max).map(c=>({
+      ...publicCard(c),levelHistory:c.level_snapshots||[],joinRecords:c.guild_join_history||[],
+      leaveRecords:c.guild_leave_history||[],removalRecords:c.guild_removal_history||[],
+      careerRecords:matchesCareer(c).map(m=>({status:m.membershipStatus||'unknown',periods:m.periods||[],departures:m.departures||[]}))
+    }))};
+  }
+  const growth=matched.map(c=>{
+    const history=(c.level_snapshots||[]).filter(h=>digits(h.level)!==null&&sortDate(h.date)>0)
+      .slice().sort((a,b)=>sortDate(a.date)-sortDate(b.date));
+    const first=history[0],last=history.at(-1);
+    return {...publicCard(c),firstLevel:first?digits(first.level):null,lastLevel:last?digits(last.level):null,
+      firstCapturedAt:first?.date||null,lastCapturedAt:last?.date||null,
+      observedGrowth:history.length>1?digits(last.level)-digits(first.level):null,snapshotCount:history.length};
+  });
+  return {...base,totalMatches:growth.length,members:growth.slice(0,max),
+    note:'Observed level change is not player XP earned; only differences between real level snapshots are counted.'};
+}
 const RESULTS={
+  async analyze_glb(args){return analyzeGLB(args);},
+  async analyze_members(args){return analyzeMembers(args);},
   async overview(){
     const ids=Object.keys(FILES);
     const entries=await Promise.all(ids.map(async id=>{
@@ -259,6 +378,8 @@ const RESULTS={
   }
 };
 const TYPES={
+  analyze_glb:{description:'STAFF-QUALITY GLOBAL LEADERBOARD ANALYSIS. Exact computed Season 15 recorded metrics: latest standings, per-guild latest/season movement and neighboring rank gaps (mode=guild), highest GXP gains among all guilds or named guilds (mode=growth), closest leaderboard races and largest leads (mode=races). window=latest compares the most recent two snapshots; window=season compares first to latest. Dates and missing comparisons are explicit; no interpolated ranks. For close fights, growth since last update, who gained most, gap to next guild, prefer this tool.',props:{mode:{type:'string',enum:['snapshot','growth','races','guild']},window:{type:'string',enum:['latest','season']},guilds:{type:'array',items:{type:'string'},maxItems:8},limit:{type:'integer',minimum:1,maximum:50}}},
+  analyze_members:{description:'STAFF-QUALITY COVE MEMBER/ROLE/LEVEL ANALYSIS. Reads ARG cards only, not live guild roster. mode=roles lists/counts exact role labels (Officer, Co-Lead, Recruit, Founder, Warrior); mode=member looks up specific member, aliases, their historical levels and career history; mode=growth calculates observed level gains from real level captures for the named member; mode=roster lists historically recorded ARG cards. Never call roles live. Name query must be provided for member/growth; empty for roles/roster.',props:{mode:{type:'string',enum:['roles','member','growth','roster']},query:{type:'string'},role:{type:['string','null']},limit:{type:'integer',minimum:1,maximum:100}}},
   overview:{description:'Get exact counts, capture dates, and status of all existing Willy Dex collections.',props:{}},
   find_cards:{description:'Exact current archived card registry: player names, aliases, roles, levels, history, level growth, founders and officers. Use role=Officer to find all matching officers; no guesswork.',props:{query:{type:'string'},role:{type:['string','null']},sort:{type:'string',enum:['number','name','level_desc','growth_desc']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_careers:{description:'Find all archived membership records, join/leave ages, removals and roster status. Most statuses are unverified; do not assume current member.',props:{query:{type:'string'},status:{type:['string','null']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
@@ -587,7 +708,7 @@ async function chat(message,history){
           const ids=call.name==='overview'
             ?(response.collections||[]).filter(c=>!c.unavailable).map(c=>c.id):[{
             find_cards:'cards',find_careers:'careers',find_wars:'wars',find_wins:'wins',
-            find_leaderboard:'glb',find_tags:'tags',find_knowledge:'knowledge',find_videos:'videos'
+            find_leaderboard:'glb',analyze_glb:'glb',analyze_members:'cards',find_tags:'tags',find_knowledge:'knowledge',find_videos:'videos'
           }[call.name]];
           for(const id of ids){
             if(!id||!FILES[id])continue;
@@ -662,4 +783,4 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
 };
 
 // Exposed for offline regression testing only; no additional HTTP endpoint.
-module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,RESULTS};
+module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,analyzeGLB,analyzeMembers,RESULTS};
