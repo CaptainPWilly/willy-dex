@@ -4,6 +4,8 @@ on:
     paths:
       - 'scurvy-pete-api.js'
       - 'tests/scurvy-pete.test.js'
+      - 'tests/scurvy-pete-frontend.test.js'
+      - 'tests/scurvy-pete-frontend.test.js'
       - 'package.json'
       - 'cards.json'
       - 'pirate-careers.json'
