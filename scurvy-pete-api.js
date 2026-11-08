@@ -224,7 +224,21 @@ async function analyzeMembers({mode,query,role,limit}){
   if(mode==='member'){
     const careerData=await load('careers').catch(()=>null);
     const matchesCareer=c=>careerData?.members?.filter(m=>norm(m.name)===norm(c.name))||[];
-    return {...base,totalMatches:matched.length,members:matched.slice(0,max).map(c=>({
+    if(!matched.length&&careerData){
+      const careerNames=resolveNames((careerData.members||[]).map(m=>m.name),query);
+      const allowed=new Set(careerNames.map(norm));
+      const found=(careerData.members||[]).filter(m=>allowed.has(norm(m.name)));
+      return {...base,sourceCollections:['careers'],cardFound:false,totalMatches:found.length,
+        members:found.slice(0,max).map(m=>({
+          name:m.name,number:null,aliases:[],roles:[],level:null,levelCapturedAt:null,
+          membershipStatus:m.membershipStatus||'unknown',cardFound:false,
+          careerRecords:[{status:m.membershipStatus||'unknown',periods:m.periods||[],departures:m.departures||[],
+            removals:m.removals||[]}]
+        })),
+        warning:'Player appears in Pirate Careers only; no Willy Dex card exists. Join/leave ages are historical, often relative, and current membership is unknown.'};
+    }
+    return {...base,sourceCollections:careerData?['cards','careers']:['cards'],
+      cardFound:true,totalMatches:matched.length,members:matched.slice(0,max).map(c=>({
       ...publicCard(c),levelHistory:c.level_snapshots||[],joinRecords:c.guild_join_history||[],
       leaveRecords:c.guild_leave_history||[],removalRecords:c.guild_removal_history||[],
       careerRecords:matchesCareer(c).map(m=>({status:m.membershipStatus||'unknown',periods:m.periods||[],departures:m.departures||[]}))
@@ -891,7 +905,8 @@ async function chat(message,history){
           const args=validToolArgs(call.name,JSON.parse(call.arguments||'{}'));
           response=await RESULTS[call.name](args);
           const ids=call.name==='overview'
-            ?(response.collections||[]).filter(c=>!c.unavailable).map(c=>c.id):[{
+            ?(response.collections||[]).filter(c=>!c.unavailable).map(c=>c.id):
+            call.name==='analyze_members'&&Array.isArray(response.sourceCollections)?response.sourceCollections:[{
             find_cards:'cards',find_careers:'careers',find_wars:'wars',find_wins:'wins',
             find_leaderboard:'glb',analyze_glb:'glb',analyze_members:'cards',find_tags:'tags',find_knowledge:'knowledge',find_videos:'videos'
           }[call.name]];
