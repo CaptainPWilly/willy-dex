@@ -238,6 +238,87 @@ const TOOLS=Object.entries(TYPES).map(([name,def])=>({
   type:'function',name,description:def.description,strict:true,
   parameters:{type:'object',properties:def.props,required:Object.keys(def.props),additionalProperties:false}
 }));
+// Record-first answers for common numerical questions. These never depend on
+// the model choosing the right tool, computing arithmetic, or inventing figures.
+function recordTime(value){
+  if(!value)return 'unknown date';
+  const date=new Date(value);
+  return Number.isFinite(date.getTime())
+    ?date.toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'})
+    :str(value,35);
+}
+function directQuestion(message){
+  const q=norm(message);
+  const dateWords=/\b(?:day|daily|24 hour|calendar day|per day)\b/;
+  const xpWords=/\b(?:xp|gxp|experience|guild xp)\b/;
+  const records=/\b(?:biggest|most|best|highest|largest|peak|record|maximum|top)\b/;
+  if(xpWords.test(q)&&dateWords.test(q)&&records.test(q))return 'best_gxp_day';
+  if(/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:victories|war wins|wars won|won wars)\b/.test(q))return 'war_win_count';
+  if(/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:cards|card slots|registry cards)\b/.test(q))return 'card_count';
+  if(/\b(?:highest level|biggest level|top level|highest leveled)\b/.test(q)&&!/\b(?:growth|gained)\b/.test(q))return 'highest_card_level';
+  if(/\b(?:our|cove|pirate cove|arg|we)\b/.test(q)&&/\b(?:rank|ranking|placement|place|position)\b/.test(q)&&!/\b(?:season history|over time|change|changes|compared|since)\b/.test(q))return 'cove_latest_rank';
+  return null;
+}
+async function verifiedAnswer(message){
+  const kind=directQuestion(message);
+  if(!kind)return null;
+  if(kind==='best_gxp_day'){
+    const stats=await RESULTS.find_leaderboard({guilds:['The Pirate Cove'],mode:'daily_gains',limit:1,offset:0});
+    const best=stats.largestObservedGain;
+    if(!best)return {answer:'The GLB archive has too few adjacent-day Cove snapshots to establish an observed biggest between-day XP gain.',sources:[source('glb')],evidence:'insufficient',method:'recorded comparison'};
+    return {answer:'The Cove’s largest observed between-day gain in the recorded Season '+stats.season+' snapshots was '+best.xpGain.toLocaleString('en-US')+' GXP, from '+recordTime(best.fromCapturedAt)+' to '+recordTime(best.toCapturedAt)+' ('+best.measuredHours+' hours). This is not an exact calendar-day or 24-hour maximum.',
+      sources:[source('glb')],evidence:'calculated',method:'adjacent captured dates',capturedAt:stats.lastCapturedAt};
+  }
+  if(kind==='war_win_count'){
+    const d=await load('wins');
+    return {answer:'The Cove has '+d.records.length.toLocaleString('en-US')+' recorded completed war victories as of '+str(d.capturedOn,10)+'. This is the archived total, not a verified live count.',
+      sources:[source('wins')],evidence:'calculated',capturedAt:d.capturedOn};
+  }
+  if(kind==='card_count'){
+    const cards=await load('cards');const populated=cards.filter(c=>c.name&&c.name!=='???').length;
+    return {answer:'Willy Dex has '+populated+' populated cards out of '+cards.length+' card slots. These are archived card records, not a live guild membership count.',
+      sources:[source('cards')],evidence:'calculated'};
+  }
+  if(kind==='highest_card_level'){
+    const result=await RESULTS.find_cards({query:'',role:null,sort:'level_desc',limit:100,offset:0});
+    const best=result.cards.find(c=>Number.isFinite(c.level));
+    if(!best)return {answer:'No recorded card levels are available.',sources:[source('cards')],evidence:'insufficient'};
+    return {answer:best.name+' has the highest level recorded on a Willy Dex card: '+best.level.toLocaleString('en-US')+' (last recorded '+str(best.lastLevelRecord,30)+'). This does not establish the current SimpleMMO roster or live level.',
+      sources:[source('cards')],evidence:'calculated'};
+  }
+  if(kind==='cove_latest_rank'){
+    const result=await RESULTS.find_leaderboard({guilds:['The Pirate Cove'],mode:'latest',limit:1,offset:0});
+    const row=result.standings?.find(g=>norm(g.name)==='the pirate cove');
+    if(!row)return {answer:'The Cove was not recorded in the most recent archived top-50 GLB snapshot ('+recordTime(result.lastCapturedAt)+'). Its current ranking is unknown.',sources:[source('glb')],evidence:'insufficient'};
+    return {answer:'The Cove was #'+row.rank+' with '+number(row.experience).toLocaleString('en-US')+' guild XP in the last recorded Season '+result.season+' GLB snapshot ('+recordTime(result.lastCapturedAt)+'). This is not a live ranking.',sources:[source('glb')],evidence:'calculated',capturedAt:result.lastCapturedAt};
+  }
+  return null;
+}
+// Choose domain-specific tools before the model plans further queries.
+// Ambiguous multi-domain questions can still invoke additional tools.
+function routeTool(message){
+  const q=norm(message);
+  if(/\b(?:tag|tags|sprite|saber|boots|fish)\b/.test(q))return 'find_tags';
+  if(/\b(?:video|recap|watch|download|clip|studio)\b/.test(q))return 'find_videos';
+  if(/\b(?:war victories|victories|war wins|wars won|defeated|war rewards)\b/.test(q))return 'find_wins';
+  if(/\b(?:glb|leaderboard|gxp|xp|experience|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
+  if(/\b(?:war|wars|attack|kills|battles|opponents|enemy)\b/.test(q))return 'find_wars';
+  if(/\b(?:joined|join|left|leave|removed|departed|tenure|careers|membership history)\b/.test(q))return 'find_careers';
+  if(/\b(?:member|player|card|level|officer|founder|recruit|roles|alias)\b/.test(q))return 'find_cards';
+  return null;
+}
+function captureMetadata(id,doc){
+  let at=null;
+  if(id==='glb'||id==='wars')at=(doc.snapshots||[]).reduce((latest,s)=>sortDate(s.capturedAt)>sortDate(latest)?s.capturedAt:latest,null);
+  else if(id==='wins')at=doc.capturedOn||null;
+  else if(id==='cards')at=doc.filter(c=>c.name&&c.name!=='???').flatMap(c=>[c.date,...(c.level_snapshots||[]).map(x=>x.date)]).reduce((latest,s)=>sortDate(s)>sortDate(latest)?s:latest,null);
+  else if(id==='videos')at=(doc.editions||[]).reduce((latest,s)=>sortDate(s.capturedAt)>sortDate(latest)?s.capturedAt:latest,null);
+  else if(id==='careers')at='2026-11-04'; // Last explicitly dated removal import in the current archive.
+  const days=at&&sortDate(at)?Math.max(0,Math.floor((Date.now()-sortDate(at))/86400000)):null;
+  return {collection:id,archived:true,lastRecordAt:at,daysSinceLastRecord:days,
+    freshness:days===null?'undated':days>3?'historical':'recently captured',
+    warning:'Not connected to live SimpleMMO; missing observations are not zeros or proof of absence.'};
+}
 function validKey(req,authorized){
   if(authorized(req))return true;
   const secret=process.env.PETE_ACCESS_CODE||'';
@@ -275,6 +356,9 @@ async function queryAI(input,instructions,tools,choice){
   return result;
 }
 async function chat(message,history){
+  // A failed deterministic source lookup must not be silently replaced by a guess.
+  const exact=await verifiedAnswer(message);
+  if(exact)return {...exact,model:'verified-willy-dex-calculation'};
   const persona=await load('knowledge').then(d=>str(d.persona,1500)).catch(()=>null);
   const instructions=[
     'You are Scurvy Pete, a precise, professional, efficient Willy Dex information assistant. Be calm, direct, and matter-of-fact. No roleplay, theatrics, pirate greetings, or filler.',
@@ -283,6 +367,9 @@ async function chat(message,history){
     'Willy Dex itself is your single source of guild records. You have read-only lookup functions accessing its existing JSON files, NOT a separate AI database. Use functions to retrieve evidence for ALL factual questions about the Cove.',
     'Never claim you checked a source unless you called a tool for it in this turn. If a tool fails, be transparent. You are not browsing live SimpleMMO or Discord.',
     'For lists, rankings, counts and calculations always use the tools and exact results, never infer from a sample. If results are paginated, call more pages if needed, or label the answer incomplete.',
+    'Records include archiveStatus metadata (lastRecordAt, daysSinceLastRecord, freshness). Treat stale snapshots as historical; NEVER describe archived counts as live. Unknown membership does not mean current member.',
+    'Source selection: GXP / seasonal XP comes from Global Leaderboard, not war victory reward XP; war KILLS from War Intel; completed wins from War Victories; card levels are historical card values. If a source is unavailable, do not substitute a different metric.',
+    'If a tool reports error, zero matches, partial pagination, or insufficient evidence, say so and avoid unsupported numeric answers. Never cite a source that was not successfully retrieved.',
     'IMPORTANT: Questions about the Cove’s biggest XP day or GXP earned per day MUST query find_leaderboard(mode=daily_gains, guilds=[The Pirate Cove]). Daily gain is the difference between successive local-date leaderboard snapshots, NOT war victory XP rewards. Quote the actual start/end capture times and explicitly say observed between-day gain, not an exact calendar-day or 24-hour record.',
     'Name the snapshot date for historical facts. Missing data means unknown. Never fabricate placement, timestamps, rank, player status or wars.',
     'When evaluating wars, distinguish Cove earned kills from opposing kills regardless of guild A/B position. Do not confuse victory rewards (experience) with kill counts.',
@@ -293,17 +380,20 @@ async function chat(message,history){
   ].filter(Boolean).join('\n');
   let input=history.slice(-8).map(h=>({role:h.role,content:h.content})).concat([{role:'user',content:message}]);
   const sources=new Map();let calls=0;
-  const dailyGxpQuestion=/\b(?:xp|gxp|experience)\b/i.test(message)&&/\b(?:day|daily|24.?hour|biggest|highest|most|record|peak|earned|gain|gained)\b/i.test(message);
-  // Route GXP/day questions to the leaderboard first, instead of the war-wins archive.
+  const preferred=routeTool(message);
   for(let round=0;round<4;round++){
-    const choice=round===0?(dailyGxpQuestion?{type:'function',name:'find_leaderboard'}:'required'):round===3?'none':'auto';
+    const choice=round===0?(preferred?{type:'function',name:preferred}:'required'):round===3?'none':'auto';
     const result=await queryAI(input,instructions,TOOLS,choice);
     const out=result.output||[];
     const wants=out.filter(x=>x.type==='function_call');
     if(!wants.length){
       const answer=outputText(result);
       if(!answer)throw Error('Pete returned no answer.');
-      return {answer,sources:[...sources.values()],model:process.env.PETE_MODEL||'gpt-6-luna'};
+      if(!sources.size){
+        // No successful archive lookup. Never present unverified guild facts as sourced.
+        return {answer:'I could not verify that from Willy Dex. The relevant records may be missing or unavailable.',sources:[],evidence:'unverified',model:process.env.PETE_MODEL||'gpt-6-luna'};
+      }
+      return {answer,sources:[...sources.values()],evidence:'archive-lookup',model:process.env.PETE_MODEL||'gpt-6-luna'};
     }
     input=input.concat(out);
     for(const call of wants){
@@ -315,11 +405,19 @@ async function chat(message,history){
           if(!Object.hasOwn(RESULTS,call.name))throw Error('Unsupported Willy Dex tool');
           const args=JSON.parse(call.arguments||'{}');
           response=await RESULTS[call.name](args);
-          const ids=call.name==='overview'?Object.keys(FILES):[{
+          const ids=call.name==='overview'
+            ?(response.collections||[]).filter(c=>!c.unavailable).map(c=>c.id):[{
             find_cards:'cards',find_careers:'careers',find_wars:'wars',find_wins:'wins',
             find_leaderboard:'glb',find_tags:'tags',find_knowledge:'knowledge',find_videos:'videos'
           }[call.name]];
-          for(const id of ids)if(id&&FILES[id])sources.set(id,source(id));
+          for(const id of ids){
+            if(!id||!FILES[id])continue;
+            sources.set(id,source(id));
+            if(call.name!=='overview'){
+              try{response.archiveStatus=captureMetadata(id,await load(id));}
+              catch(e){response.archiveStatus={collection:id,archived:true,freshness:'unavailable'};}
+            }
+          }
         }catch(e){response={error:str(e.message,170),source:call.name};}
       }
       let serialized=JSON.stringify(response);
@@ -353,3 +451,6 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
   finally{busy--;}
   return true;
 };
+
+// Exposed for offline regression testing only; no additional HTTP endpoint.
+module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,RESULTS};
