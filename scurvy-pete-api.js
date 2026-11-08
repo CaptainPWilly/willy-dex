@@ -537,25 +537,31 @@ async function precisionAnswer(message){
   ];
   const role=rolePair.find(pair=>pair[1].test(q))?.[0];
   const wantsRole=/\b(?:who|which|list|show|count|how many|what are|name|names|roster|currently|this week)\b/.test(q);
-  if(role&&wantsRole){
+  if(role&&wantsRole&&!/\b(?:highest|top|most|levels|growth|fastest)\b/.test(q)){
     const first=await load('glb');
     const allNames=[...new Set((first.snapshots||[]).flatMap(s=>(s.guilds||[]).map(g=>g.name)))];
     const named=mentionedArchivedGuilds(message,allNames).filter(n=>norm(n)!=='the pirate cove');
     const explicitOther=/(?:\b(?:officers?|recruits?|founders?|co leads?|warriors?)\b\s+(?:for|at|in|of)\s+|\b(?:does|do)\s+)/.test(q)&&
       named.length>0;
     const comparative=/\b(?:which guild|what guild|other guilds|most officers|most recruits|more officers|more recruits)\b/.test(q);
+    const requestedOther=q.match(/\b(?:how many|number of|count)\b.*?\b(?:officers?|recruits?|founders?)\b\s+(?:does|do)\s+(.+?)\s+(?:have|employ)\b/);
+    const owner=norm(requestedOther?.[1]||'');
+    const unknownOwner=owner&&!/^(?:the |our )?(?:pirate cove|cove|arg|guild|we|us)$/.test(owner);
+    if(unknownOwner&&!named.length)return preciseReply('Willy Dex only records the Cove’s archived roles. It cannot verify '+requestedOther[1]+'’s '+role.toLowerCase()+' count.','cards',{evidence:'insufficient'});
     if(named.length&& (explicitOther||comparative||!/\b(?:cove|our|we|us|arg)\b/.test(q)))
       return preciseReply('Willy Dex does not have '+named.join(' and ')+' staff-role records. It only records the Cove’s archived roles, so their '+role.toLowerCase()+' count is unknown.','cards',{evidence:'insufficient'});
     if(comparative&&!named.length)return preciseReply('The archive does not have other guilds’ staff rosters, so it cannot rank guilds by '+role.toLowerCase()+' count.','cards',{evidence:'insufficient'});
     if(/\b(?:today|now|current|currently|this week|last week|yesterday|on|in)\b/.test(q)&&
-      (/\b(?:today|now|current|currently|this week|last week|yesterday)\b/.test(q)||/\b(?:oct|nov|sep|20\d\d)\b/.test(q))){
+      (/\b(?:today|now|current|currently|this week|last week|yesterday)\b/.test(q)||!!archiveDateQuestion(q,first.snapshots||[]))){
       return preciseReply('The Cove’s '+role.toLowerCase()+' roles are archived card labels, not dated historical rosters or a live membership feed. I cannot verify that count for the requested time.','cards',{evidence:'insufficient'});
     }
     const cards=await analyzeMembers({mode:'roles',query:'',role,limit:100});
     const isCount=/\b(?:how many|count|number|total)\b/.test(q);
     const names=cards.members.map(c=>c.name).join(', ');
-    return preciseReply('Willy Dex records '+cards.totalMatches+' Cove '+role+(cards.totalMatches===1?'':'s')+
-      (isCount?'.':' — '+names+'.')+' These are historical card roles, not a verified live roster.','cards',
+    const noun=role==='Recruit'&&isCount?'recruit':role;
+    return preciseReply((isCount?'Willy Dex records '+cards.totalMatches+' Cove ':'Willy Dex lists '+cards.totalMatches+' recorded Cove ')+
+      noun+(cards.totalMatches===1?'':'s')+
+      (names?': '+names+'.':'.')+' These are archived card roles, not a verified live roster.','cards',
       {recordedCount:cards.totalMatches});
   }
   const isGLB=/\b(?:glb|leaderboard|gxp|guild xp|guild experience|standings|season|guild ranking|guild rank)\b/.test(q)
@@ -653,7 +659,9 @@ async function precisionAnswer(message){
     const someMissing=found.filter(x=>!x.row);
     const present=found.filter(x=>x.row);
     const body=present.map(x=>x.name+' #'+x.row.rank+' with '+digits(x.row.experience).toLocaleString('en-US')+' GXP').join('; ');
-    const gap=present.length===2?' XP gap: '+Math.abs(digits(present[0].row.experience)-digits(present[1].row.experience)).toLocaleString('en-US')+'.':'';
+    const gap=present.length===2?' '+present[0].name+' and '+present[1].name+' are '+
+      Math.abs(digits(present[0].row.experience)-digits(present[1].row.experience)).toLocaleString('en-US')+
+      ' GXP apart.':'';
     return preciseReply('GLB '+recordTime(capture.capturedAt)+': '+(body||'no matching guild recorded')+
       (someMissing.length?' Not recorded in this top-50: '+someMissing.map(x=>x.name).join(', ')+'.':'')+
       gap+' These are archived rankings.','glb',{capturedAt:capture.capturedAt,
