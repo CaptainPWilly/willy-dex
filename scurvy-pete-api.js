@@ -306,15 +306,15 @@ async function verifiedAnswer(message){
 // Ambiguous multi-domain questions can still invoke additional tools.
 function routeTool(message){
   const q=norm(message);
-  if(/\b(?:tag|tags|sprite|saber|boots|fish)\b/.test(q))return 'find_tags';
-  if(/\b(?:video|recap|watch|download|clip|studio)\b/.test(q))return 'find_videos';
+  if(/\b(?:tags?|sprites?|saber|boots|fish)\b/.test(q))return 'find_tags';
+  if(/\b(?:videos?|recaps?|watch|watching|downloads?|clips?|studio|player links?)\b/.test(q))return 'find_videos';
   if(/\b(?:war victories|victories|war wins|wars won|won wars|defeated|war rewards)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q))return 'find_wins';
   if(/\b(?:war|wars|victory|wins)\b/.test(q)&&/\b(?:reward|xp|experience|exp)\b/.test(q)&&!/\b(?:gxp|guild xp)\b/.test(q))return 'find_wins';
   // Player XP and Guild XP are different metrics. Cards track LEVELS, not XP earned.
   if(/\b(?:who|player|member|officer|person|individual)\b/.test(q)&&/\b(?:xp|experience|level|growth)\b/.test(q)&&!/\b(?:gxp|guild xp|leaderboard|glb)\b/.test(q))return 'find_cards';
   if(/\b(?:glb|leaderboard|gxp|guild xp|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:xp|experience)\b/.test(q)&&/\b(?:cove|guild|arg|our|we)\b/.test(q))return 'find_leaderboard';
-  if(/\b(?:war|wars|attack|kills|battles|opponents|enemy)\b/.test(q))return 'find_wars';
+  if(/\b(?:wars?|attacks?|kills?|battles?|opponents?|enemies|enemy)\b/.test(q))return 'find_wars';
   if(/\b(?:joined|joins?|left|leaves?|removed|removals?|departed|departures?|tenure|careers?|membership history|membership records)\b/.test(q))return 'find_careers';
   if(/\b(?:members?|players?|cards?|levels?|officers?|founders?|recruits?|roles?|aliases?|leaders?|captains?|crewmates?|crew|roster|pirates?)\b/.test(q))return 'find_cards';
   return null;
