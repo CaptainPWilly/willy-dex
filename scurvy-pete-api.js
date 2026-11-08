@@ -591,6 +591,23 @@ async function verifiedAnswer(message){
           ' (recorded '+on+').'+confirmed+unknown,
           sources:[source('cards')],evidence:'archive-lookup'};
       }
+      if(!candidates.length){
+        const careers=await load('careers').catch(()=>null);
+        const found=(careers?.members||[]).filter(m=>{
+          const name=norm(m.name);
+          return name.length>=4&&new RegExp('(?:^| )'+name+'(?: |$)').test(q);
+        });
+        if(found.length===1){
+          const person=found[0],joins=(person.periods||[]),departures=(person.departures||[]);
+          const recent=joins[0];
+          const date=recent?(recent.joined||('relative age "'+str(recent.ageText||'unknown',40)+'"')):'no join date';
+          return {answer:person.name+' appears in the historical Pirate Careers archive with '+
+            joins.length+' recorded join notice(s) and '+departures.length+
+            ' recorded departure(s). Most recent listed join: '+date+
+            '. No Willy Dex card is on file; their current Cove membership is unknown.',
+            sources:[source('careers')],evidence:'archive-lookup'};
+        }
+      }
     }
     // Only Cove wins are archived. An opponent named in the *subject* is not
     // credited the Cove's victories against that opponent.
