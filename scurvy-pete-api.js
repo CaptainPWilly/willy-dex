@@ -472,6 +472,49 @@ async function verifiedAnswer(message){
   const kind=directQuestion(message);
   if(!kind){
     const q=norm(message);
+    const memberQuestion=/^(?:who is|who s|tell me about|what level is|what role is|what role does|what roles does|is|did|when did|what happened to|how much has|how many levels has|how long has)\b/.test(q);
+    const differentDomain=/\b(?:glb|leaderboard|gxp|guild xp|war|wars|victories|guilds)\b/.test(q);
+    if(memberQuestion&&!differentDomain){
+      const cards=(await load('cards')).filter(c=>c&&c.name&&c.name!=='???'&&norm(c.guild)==='arg');
+      const candidates=[];
+      for(const card of cards){
+        for(const name of [card.name,...(card.aliases||[])]){
+          const n=norm(name);
+          if(n.length<3)continue;
+          if(q===n||new RegExp('(?:^| )'+n+'(?: |$)').test(q)){candidates.push(card);break;}
+        }
+      }
+      if(candidates.length===1){
+        const card=candidates[0],roles=(card.roles||[]).join(', ')||'role not recorded';
+        const level=digits(card.level),on=card.date||'undated capture';
+        const confirmed=card.role_verified_on?' Role update confirmed '+card.role_verified_on+'.':'';
+        const unknown=' Current membership and levels are not live-verified.';
+        const questionIsMembership=/\b(?:still|current|active|now|left|removed)\b/.test(q)&&/\b(?:is|with|in|member|guild|cove)\b/.test(q);
+        const isGrowth=/\b(?:level gained|level growth|leveled|levelled|levels gained|gain in levels|how much has|how many levels has)\b/.test(q);
+        if(isGrowth){
+          const snapshots=(card.level_snapshots||[]).filter(x=>digits(x.level)!==null&&sortDate(x.date)>0)
+            .slice().sort((a,b)=>sortDate(a.date)-sortDate(b.date));
+          const first=snapshots[0],last=snapshots.at(-1);
+          const gain=snapshots.length>=2?digits(last.level)-digits(first.level):null;
+          return {answer:gain===null?card.name+' has too few dated level snapshots to calculate growth.':
+            card.name+' grew '+gain.toLocaleString('en-US')+' levels from '+digits(first.level).toLocaleString('en-US')+
+            ' ('+first.date+') to '+digits(last.level).toLocaleString('en-US')+' ('+last.date+'). This is not XP earned.',
+            sources:[source('cards')],evidence:gain===null?'insufficient':'calculated'};
+        }
+        if(questionIsMembership)return {answer:card.name+' is listed as '+roles+' on Willy Dex, but the archive cannot confirm whether they are currently in the Cove.'+confirmed,
+          sources:[source('cards')],evidence:'insufficient'};
+        if(/\b(?:when did|how long has)\b/.test(q)&&/\b(?:join|joined|member|cove|guild|with us)\b/.test(q)){
+          const join=(card.guild_join_history||[]).at(-1);
+          const detail=join?(join.date?'joined on '+join.date:
+            'has a relative join notice labeled "'+str(join.reportedAge,40)+'" recorded '+str(join.reportedOn,25)):'has no dated join notice';
+          return {answer:card.name+' '+detail+'. This does not establish continuous tenure or live membership.',
+            sources:[source('cards')],evidence:join?'archive-lookup':'insufficient'};
+        }
+        return {answer:card.name+' — '+roles+', level '+(level===null?'unknown':level.toLocaleString('en-US'))+
+          ' (recorded '+on+').'+confirmed+unknown,
+          sources:[source('cards')],evidence:'archive-lookup'};
+      }
+    }
     // Only Cove wins are archived. An opponent named in the *subject* is not
     // credited the Cove's victories against that opponent.
     const foreignWinSubject=q.match(/\b(?:how many|number of|total)\b.*\b(?:wars|victories)\b.*\b(?:has|have)\s+(.+?)\s+\b(?:won|completed)\b/);
