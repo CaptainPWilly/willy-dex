@@ -21,7 +21,9 @@ function unique(list){
     var name=cleanName(typeof item==='string'?item:item&&item.name);
     if(!name||seen.has(key(name))||out.length>=500)return;
     seen.add(key(name));
-    out.push({id:item&&item.id?String(item.id).slice(0,120):key(name),name:name});
+    var tag={id:item&&item.id?String(item.id).slice(0,120):key(name),name:name};
+    if(item&&typeof item.fixedText==='string'&&item.fixedText.length<=300)tag.fixedText=item.fixedText;
+    out.push(tag);
   });
   return out;
 }
@@ -43,8 +45,9 @@ function toast(message){
   clearTimeout(noticeTimer);
   noticeTimer=setTimeout(function(){node.hidden=true;},3000);
 }
-function format(name,kind){
-  return kind==='sprite'?'[!'+name+'!]':'[['+name+']]';
+function format(tag,kind){
+  if(typeof tag.fixedText==='string')return tag.fixedText;
+  return kind==='sprite'?'[!'+tag.name+'!]':'[['+tag.name+']]';
 }
 function fallbackCopy(text){
   var input=document.createElement('textarea');
@@ -70,7 +73,7 @@ var tagSorter=new Intl.Collator(undefined,{numeric:true,sensitivity:'base'});
 function createCard(tag,personal){
   var article=document.createElement('div');article.className='tag-card';
   var button=document.createElement('button');button.type='button';button.className='tag-btn';
-  var output=format(tag.name,activeFormat);
+  var output=format(tag,activeFormat);
   button.textContent=tag.name;
   button.title=tag.name;
   button.setAttribute('aria-label',personal&&editPersonal?'Remove '+tag.name:'Copy '+output);
