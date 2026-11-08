@@ -63,6 +63,88 @@ test('current Cove membership counts cannot be fabricated from card slots',async
   assert.match(r.answer,/not a live roster count/i);
   assert.deepEqual(r.sources.map(x=>x.id),['cards']);
 });
+test('does not mistake Cove for Coven, or ambiguous guild aliases for an exact match',()=>{
+  const {resolveNames}=pete.__test;
+  assert.deepEqual(resolveNames(['The Pirate Cove','Coven','Wolf','Wolf Pack'],'Cove'),['The Pirate Cove']);
+  assert.deepEqual(resolveNames(['The Pirate Cove','Coven','Wolf','Wolf Pack'],'Wolf'),['Wolf']);
+  let error=null;
+  try{resolveNames(['The Pirate Cove',"Dread Pirate's Cove",'Coven'],'Cove');}catch(e){error=e;}
+  assert.ok(error);
+  assert.match(error.message,/ambiguous/i);
+});
+test('rejects malformed model tool arguments at the server',()=>{
+  const {validToolArgs}=pete.__test;
+  const valid={guilds:['The Pirate Cove'],mode:'latest',limit:10,offset:0};
+  assert.deepEqual(validToolArgs('find_leaderboard',valid),valid);
+  for(const args of [
+    {...valid,limit:5000},
+    {...valid,offset:-1},
+    {...valid,mode:'made_up'},
+    {...valid,privateSecret:true},
+    {...valid,guilds:[42]},
+    {...valid,guilds:Array(9).fill('x')}
+  ]){
+    let error=null;
+    try{validToolArgs('find_leaderboard',args);}catch(e){error=e;}
+    assert.ok(error);
+  }
+});
+test('flags numeric claims not present in source data',()=>{
+  const {unsupportedNumbers}=pete.__test;
+  assert.deepEqual(unsupportedNumbers('189,909 GXP in 2026','{"xpGain":189909,"date":"2026-10-30"}'),[]);
+  assert.deepEqual(unsupportedNumbers('999,999 GXP in 2026','{"xpGain":189909,"date":"2026-10-30"}'),['999999']);
+});
+test('time-scoped and comparative questions never use an all-time shortcut',()=>{
+  assert.equal(directQuestion('Biggest XP day for the Cove this week?'),null);
+  assert.equal(directQuestion('How many wars has Cove won this month?'),null);
+  assert.equal(directQuestion('Biggest XP day for Cove and Helheim?'),null);
+  assert.equal(directQuestion('Top 10 highest level Willy Dex cards'),null);
+  assert.equal(directQuestion('Who is the highest level active Cove member?'),null);
+  assert.equal(directQuestion('Biggest XP day for the Cove?'),'best_gxp_day');
+});
+test('unverified AI numeric claims are blocked even after a successful archive lookup',async()=>{
+  useFixtures(async (_req,turn)=>turn===1?{
+    output:[{type:'function_call',name:'find_leaderboard',call_id:'numbers-1',
+      arguments:JSON.stringify({guilds:['The Pirate Cove'],mode:'latest',limit:1,offset:0})}]
+  }:{output:[{type:'message',content:[{type:'output_text',text:'The Cove earned 999,999 XP today.'}]}]});
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+     read:async()=>({message:'What is our most recent GLB experience?',history:[]}),
+     json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(response.data.evidence,'numeric-check-failed');
+  assert.match(response.data.answer,/could not verify/i);
+});
+test('incomplete AI responses do not become published facts',async()=>{
+  useFixtures(async()=>({status:'incomplete',output:[{
+    type:'message',content:[{type:'output_text',text:'Invented claim 100000000 XP.'}]
+  }]}));
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+     read:async()=>({message:'Explain what the record says about members',history:[]}),
+     json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,502);
+  assert.ok(!JSON.stringify(response.data).includes('100000000'));
+});
+test('failed archive tool lookups cannot produce verified answers',async()=>{
+  useFixtures(async (_req,turn)=>turn===1?{
+    output:[{type:'function_call',name:'find_leaderboard',call_id:'bad-arg',
+      arguments:JSON.stringify({guilds:['The Pirate Cove'],mode:'latest',limit:5000,offset:0})}]
+  }:{output:[{type:'message',content:[{type:'output_text',text:'Pete fabricated a number 1234567.'}]}]});
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+     read:async()=>({message:'What was the last leaderboard?',history:[]}),
+     json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(response.data.evidence,'partial');
+  assert.ok(!response.data.answer.includes('1234567'));
+});
 test('missing numeric values stay unknown rather than being converted to zero',()=>{
   const {digits}=pete.__test;
   assert.equal(digits(null),null);
