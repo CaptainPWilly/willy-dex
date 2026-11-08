@@ -553,9 +553,12 @@ async function precisionAnswer(message){
   const hasLevel=/\b(?:level|levels|leveled|levelled)\b/.test(q);
   const isRoleRanking=!!role&&hasLevel&&/\b(?:highest|lowest|top|most|biggest|fastest|gained|growth|over|above|under|below)\b/.test(q);
   if(isRoleRanking){
+    if(/\b(?:today|yesterday|currently|right now|this week|last week|as of)\b/.test(q)||
+      /\b(?:on|in) (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w* \d{1,2}\b/.test(q))
+      return preciseReply('There is no verified time-specific staff-role roster to combine with those levels. The archived cards cannot establish this ranking for the requested date.','cards',{evidence:'insufficient'});
     const cards=(await load('cards')).filter(c=>c&&norm(c.guild)==='arg'&&c.name&&c.name!=='???'
       &&(c.roles||[]).some(label=>norm(label)===norm(role)));
-    const threshold=q.match(/\b(?:over|above|under|below)\s+(\d{1,9})\b/);
+    const threshold=String(message).match(/\b(?:over|above|under|below)\s+(\d[\d,]*)\b/i);
     const increasing=/\b(?:growth|gained|gain|leveled|levelled|increased|fastest)\b/.test(q);
     const ranked=cards.map(c=>{
       const observations=(c.level_snapshots||[]).filter(s=>digits(s.level)!==null&&sortDate(s.date)>0)
@@ -565,7 +568,7 @@ async function precisionAnswer(message){
         growth:observations.length>=2?digits(observations.at(-1).level)-digits(observations[0].level):null};
     }).filter(c=>(increasing?c.growth:c.level)!==null);
     if(threshold){
-      const amount=Number(threshold[1]),upper=/\b(?:over|above)\b/.test(q);
+      const amount=Number(threshold[1].replace(/,/g,'')),upper=/\b(?:over|above)\b/.test(q);
       const filtered=ranked.filter(c=>upper?c.level>amount:c.level<amount)
         .sort((a,b)=>b.level-a.level);
       return preciseReply(filtered.length+' recorded Cove '+role+
