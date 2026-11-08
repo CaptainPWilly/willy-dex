@@ -187,7 +187,13 @@ function busy(on,phase){
 }
 function reveal(node,text){
   var full=String(text||'');
-  var units=window.Intl&&Intl.Segmenter?Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(full),function(x){return x.segment;}):Array.from(full);
+  var units=Array.from(full);
+  // Some WebKit builds expose Intl.Segmenter but fail when constructing it.
+  // Plain Unicode code points are a safe fallback, never a terminal failure.
+  try{
+    if(window.Intl&&typeof Intl.Segmenter==='function')
+      units=Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(full),function(x){return x.segment;});
+  }catch(e){units=Array.from(full);}
   var duration=Math.min(18000,Math.max(600,units.length/62*1000));
   // Accessible: no per-character announcements. A single completion status is announced instead.
   return new Promise(function(resolve){
@@ -240,7 +246,8 @@ async function ask(text){
   if(!access){locked(true);status('AUTHORIZATION REQUIRED',true);return;}
   var id=++epoch;
   var previous=history.slice(-10);
-  bubble('user',text);
+  var userBubble=bubble('user',text);
+  var stage='request';
   busy(true,'thinking');status('');
   requestController=new AbortController();
   var abort=requestController;
@@ -251,6 +258,7 @@ async function ask(text){
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+access},
       body:JSON.stringify({message:text,history:previous})
     });
+    stage='response';
     var data=await response.json().catch(function(){return {};});
     if(id!==epoch)return;
     if(!response.ok){
@@ -258,6 +266,7 @@ async function ask(text){
       throw Error(data.error||'REQUEST FAILED ('+response.status+')');
     }
     if(typeof data.answer!=='string')throw Error('EMPTY RESPONSE FROM PETE');
+    stage='display';
     var node=bubble('assistant','');
     busy(true,'typing');
     status('');
@@ -268,7 +277,15 @@ async function ask(text){
     status('');
   }catch(e){
     if(id!==epoch)return;
-    var error=e.name==='AbortError'?'CONNECTION TIMED OUT':e.message;
+    if(typeof console!=='undefined'&&console.error)console.error('Pete request failed at '+stage,e);
+    var error=e.name==='AbortError'?'REQUEST TIMED OUT. TRY AGAIN.'
+      :e.name==='TypeError'?(stage==='request'?'CONNECTION FAILED. CHECK NETWORK AND RETRY.':'TERMINAL ERROR. TRY AGAIN.')
+      :e.message||'REQUEST FAILED. TRY AGAIN.';
+    // Don't lose a question simply because Safari dropped the fetch.
+    if(stage!=='display'&&userBubble&&userBubble.wrap&&userBubble.wrap.remove){
+      userBubble.wrap.remove();
+      if(!field.value.trim())field.value=text;
+    }
     status(error,true);
   }finally{
     clearTimeout(timer);
