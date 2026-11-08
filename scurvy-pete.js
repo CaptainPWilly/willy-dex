@@ -9,7 +9,46 @@ var history=[],loading=false,access='',epoch=0,requestController=null,activeRepl
 var $=function(id){return document.getElementById(id);};
 var form=$('composer'),field=$('question'),send=$('send'),messages=$('messages'),notice=$('notice'),
     gate=$('access-form'),code=$('access-code'),chat=$('chat'),skull=$('skull'),skip=$('skip'),
-    composerEntry=$('composer-entry'),caretMirror=$('caret-mirror'),inputCaret=$('input-caret');
+    composerEntry=$('composer-entry'),caretMirror=$('caret-mirror'),inputCaret=$('input-caret'),voiceButton=$('voice-button');
+var voiceEnabled=false,audioCtx=null,lastVoiceAt=-1;
+function updateVoiceButton(){
+  voiceButton.textContent=voiceEnabled?'VOICE ON':'VOICE OFF';
+  voiceButton.setAttribute('aria-pressed',String(voiceEnabled));
+}
+function mumble(character,index){
+  if(!voiceEnabled||!audioCtx||audioCtx.state!=='running'||!/[\p{L}\p{N}]/u.test(character))return;
+  var time=audioCtx.currentTime;
+  if(time-lastVoiceAt<.077)return;
+  lastVoiceAt=time;
+  try{
+    var code=character.codePointAt(0)||0;
+    var pitch=285+(code%13)*18+(Math.floor(index/7)%3)*13;
+    var osc=audioCtx.createOscillator(),filter=audioCtx.createBiquadFilter(),volume=audioCtx.createGain();
+    osc.type='triangle';
+    osc.frequency.setValueAtTime(pitch,time);
+    osc.frequency.exponentialRampToValueAtTime(pitch*(index%3===0?1.18:.88),time+.06);
+    filter.type='lowpass';filter.frequency.value=1100;
+    volume.gain.setValueAtTime(.0001,time);
+    volume.gain.exponentialRampToValueAtTime(.018,time+.012);
+    volume.gain.exponentialRampToValueAtTime(.0001,time+.074);
+    osc.connect(filter);filter.connect(volume);volume.connect(audioCtx.destination);
+    osc.start(time);osc.stop(time+.078);
+  }catch(e){/* Audio is an optional effect; never interfere with answers. */}
+}
+voiceButton.addEventListener('click',function(){
+  if(voiceEnabled){voiceEnabled=false;updateVoiceButton();return;}
+  var AudioCtor=window.AudioContext||window.webkitAudioContext;
+  if(!AudioCtor){voiceButton.textContent='VOICE N/A';voiceButton.disabled=true;return;}
+  try{
+    if(!audioCtx)audioCtx=new AudioCtor();
+    voiceEnabled=true;
+    if(audioCtx.state==='suspended'){
+      var resumed=audioCtx.resume();
+      if(resumed&&resumed.catch)resumed.catch(function(){voiceEnabled=false;updateVoiceButton();});
+    }
+    updateVoiceButton();
+  }catch(e){voiceEnabled=false;updateVoiceButton();}
+});
 empty=$('empty');
 var reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 function status(message,error){
@@ -123,6 +162,8 @@ function busy(on,phase){
   send.disabled=on;
   field.disabled=on;
   send.textContent='SEND';
+  skull.classList.toggle('thinking',Boolean(on&&phase==='thinking'));
+  if(!on)skull.classList.remove('speaking');
   scheduleCaret();
 }
 function reveal(node,text){
@@ -154,6 +195,10 @@ function reveal(node,text){
       if(!start)start=now;
       var end=Math.min(units.length,Math.floor(((now-start)/duration)*units.length)+1);
       if(end>index){
+        // A very short, softly pitched chirp every few characters, not a loud tone per keystroke.
+        for(var i=end-1;i>=index;i--){
+          if(/[\p{L}\p{N}]/u.test(units[i])){mumble(units[i],i);break;}
+        }
         index=end;
         node.content.textContent=units.slice(0,index).join('');
         messages.scrollTop=messages.scrollHeight;
@@ -177,7 +222,7 @@ async function ask(text){
   var id=++epoch;
   var previous=history.slice(-10);
   bubble('user',text);
-  busy(true,'thinking');status('SEARCHING WILLY DEX...');
+  busy(true,'thinking');status('');
   requestController=new AbortController();
   var abort=requestController;
   var timer=setTimeout(function(){abort.abort();},60000);
