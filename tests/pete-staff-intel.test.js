@@ -155,3 +155,42 @@ test('guild-vs-guild latest comparison identifies values with proper owners',asy
   assert.match(r.answer,/17,284,418 GXP apart/);
   assert.deepEqual(r.sources.map(x=>x.id),['glb']);
 });
+
+test('career-only guild members are discoverable with truthful history provenance',async()=>{
+  const r=await analyzeMembers({mode:'member',query:'Don866',role:null,limit:10});
+  assert.equal(r.cardFound,false);
+  assert.equal(r.totalMatches,1);
+  assert.equal(r.members[0].name,'Don866');
+  assert.equal(r.members[0].level,null);
+  assert.deepEqual(r.sourceCollections,['careers']);
+  assert.equal(r.members[0].membershipStatus,'unknown');
+});
+test('direct career-only answers do not convert relative notices to today',async()=>{
+  const r=await verifiedAnswer('Who is Don866?');
+  assert.match(r.answer,/Pirate Careers archive/);
+  assert.match(r.answer,/12 hours ago/);
+  assert.match(r.answer,/2026-10-29/);
+  assert.match(r.answer,/membership is unknown/i);
+  assert.deepEqual(r.sources.map(s=>s.id),['careers']);
+});
+test('GLB biggest recorded rank movers come from actual placement changes',async()=>{
+  assert.equal(directQuestion('Which guild moved up the most on the GLB?'),'glb_movers');
+  const r=await verifiedAnswer('Which guild moved up the most on the GLB?');
+  assert.match(r.answer,/biggest risers/i);
+  assert.match(r.answer,/Biggest falls/i);
+  assert.match(r.answer,/Only guilds recorded in both snapshots/i);
+  assert.deepEqual(r.sources.map(s=>s.id),['glb']);
+});
+test('Cove lead question returns the specific next-rank gaps, not a made-up lead',async()=>{
+  assert.equal(directQuestion('How much of a lead does the Cove have?'),'cove_nearest_ranks');
+  const r=await verifiedAnswer('How much of a lead does the Cove have?');
+  assert.match(r.answer,/132,125/);
+  assert.match(r.answer,/66,966/);
+});
+test('member roles and historical snapshots never assert confirmed live status',async()=>{
+  const cases=['Who is ChezShork?','Who is SAWTOOTH?','Who are the officers?','How many recruits do we have?'];
+  for(const question of cases){
+    const r=await verifiedAnswer(question);
+    assert.match(r.answer,/not live|not verified live|not a verified live roster/i);
+  }
+});
