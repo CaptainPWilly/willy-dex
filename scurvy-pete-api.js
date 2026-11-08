@@ -561,7 +561,7 @@ async function precisionAnswer(message){
     const noun=role==='Recruit'&&isCount?'recruit':role;
     return preciseReply((isCount?'Willy Dex records '+cards.totalMatches+' Cove ':'Willy Dex lists '+cards.totalMatches+' recorded Cove ')+
       noun+(cards.totalMatches===1?'':'s')+
-      (names?': '+names+'.':'.')+' These are archived card roles, not a verified live roster.','cards',
+      (names?': '+names+'.':'.')+' Roles are archived, not verified live.','cards',
       {recordedCount:cards.totalMatches});
   }
   const isGLB=/\b(?:glb|leaderboard|gxp|guild xp|guild experience|standings|season|guild ranking|guild rank)\b/.test(q)
