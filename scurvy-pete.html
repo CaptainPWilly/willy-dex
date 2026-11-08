@@ -69,21 +69,26 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 .message.user .by{color:var(--amber)}
 .bubble{color:var(--phosphor-bright);font-size:clamp(12px,1.7vw,14px);line-height:1.7;overflow-wrap:anywhere;white-space:pre-wrap}
 .message.user .bubble{color:#dfc4a4}
-.message .bubble .typing-cursor{color:var(--phosphor);width:.53em;height:.91em}
-.message:not(.typing) .typing-cursor{display:none}
-.message.typing .bubble{cursor:pointer}
+.message.typing .bubble{color:var(--phosphor-bright)}
 .sources{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
 .sources a{font-size:11px;color:var(--phosphor-dim);text-decoration:none;border-bottom:1px solid #5d8b66}
 .sources a:hover{color:var(--phosphor-bright)}
 .composer{display:flex;gap:11px;align-items:flex-end;border-top:1px solid #42694891;padding-top:13px}
 .prompt-marker{flex:none;font-size:22px;color:var(--phosphor-bright);line-height:44px}
-.composer textarea{flex:1;min-width:0;max-height:180px;min-height:44px;background:transparent;border:none;outline:none;color:var(--phosphor-bright);padding:11px 0;resize:vertical;caret-color:var(--phosphor);font-size:14px}
+.composer-entry{position:relative;flex:1;min-width:0;display:flex;align-items:stretch}
+.composer textarea{width:100%;min-width:0;max-height:180px;min-height:44px;background:transparent;border:none;outline:none;color:var(--phosphor-bright);padding:11px 0;resize:vertical;caret-color:var(--phosphor);font-size:14px;line-height:1.6;tab-size:8}
 .composer textarea::placeholder{color:#729a71}
 .composer textarea:focus-visible{outline:none}
+.composer-entry.custom-caret textarea{caret-color:transparent}
+.caret-mirror{position:absolute;top:0;left:0;width:100%;padding:11px 0;white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;visibility:hidden;pointer-events:none;box-sizing:border-box;font-size:14px;line-height:1.6;tab-size:8}
+.caret-marker{display:inline-block;width:0;height:1em;vertical-align:-.1em;pointer-events:none}
+.input-caret{position:absolute;z-index:3;left:0;top:0;width:.64em;height:1.45em;background:var(--phosphor-bright);box-shadow:0 0 9px #a7e5a575;pointer-events:none;animation:blink-block 1s steps(1,end) infinite}
+.input-caret[hidden]{display:none!important}
 .composer button{min-height:38px;background:var(--phosphor);border:0;border-radius:2px;color:#07180a;font-weight:900;padding:8px 14px}
 .composer button:disabled{opacity:.5;cursor:default}
 .status-line{display:flex;gap:12px;justify-content:space-between;align-items:center;min-height:26px;font-size:11px;color:var(--phosphor-dim);padding-top:5px}
 #notice.error{color:#f5b783}
+#notice.transmitting:after{content:"";display:inline-block;width:6px;height:10px;margin-left:7px;background:var(--phosphor-bright);vertical-align:-1px;animation:blink-block .65s steps(1,end) infinite}
 #skip[hidden]{display:none!important}
 .hint{color:#5a825d;font-size:10px;letter-spacing:.08em}
 @media(max-width:640px){
@@ -104,11 +109,11 @@ main{padding:9px 5px 20px}
 }
 @media(prefers-reduced-motion:reduce){
 .skull-rig.speaking .skull-jaw{animation:none}
-.block-cursor{animation:none;opacity:1}
+.block-cursor,.input-caret,#notice.transmitting:after{animation:none;opacity:1}
 }
 </style>
 <script src="app-shell.js?v=3" defer></script>
-<script src="scurvy-pete.js?v=3" defer></script>
+<script src="scurvy-pete.js?v=4" defer></script>
 </head>
 <body class="pete-terminal">
 <div id="wc-app-mount"></div>
@@ -143,7 +148,7 @@ main{padding:9px 5px 20px}
 <button type="button" class="terminal-button" id="clear-button">CLEAR</button>
 </div>
 <form id="access-form" class="gate" hidden>
-<p class="gate-title">ENTER Pete key to access Willy Corp. Terminal<span class="block-cursor" aria-hidden="true"></span></p>
+<p class="gate-title">ENTER Pete key to access Willy Corp. Terminal</p>
 <div class="gate-sub">RESTRICTED ARCHIVE ACCESS // AUTHORIZATION REQUIRED</div>
 <div class="gate-line">
 <label for="access-code">KEY &gt;</label>
@@ -152,10 +157,10 @@ main{padding:9px 5px 20px}
 </div>
 </form>
 <section class="chat" id="chat" aria-label="Scurvy Pete conversation" hidden>
-<div class="messages" id="messages" role="log" aria-live="off"><div id="empty" class="empty">AWAITING QUERY<span class="block-cursor" aria-hidden="true"></span></div></div>
+<div class="messages" id="messages" role="log" aria-live="off"><div id="empty" class="empty">AWAITING QUERY</div></div>
 <form class="composer" id="composer">
 <span class="prompt-marker" aria-hidden="true">&gt;</span>
-<textarea id="question" aria-label="Ask Scurvy Pete" placeholder="Ask Pete about the Cove..." rows="2" maxlength="1200" required></textarea>
+<div class="composer-entry" id="composer-entry"><textarea id="question" aria-label="Ask Scurvy Pete" placeholder="Ask Pete about the Cove..." rows="2" maxlength="1200" required></textarea><div id="caret-mirror" class="caret-mirror" aria-hidden="true"></div><span id="input-caret" class="input-caret" aria-hidden="true" hidden></span></div>
 <button type="submit" id="send">SEND</button>
 </form>
 </section>
