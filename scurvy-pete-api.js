@@ -497,8 +497,10 @@ function directQuestion(message){
   if(glbWord&&/\b(?:most gained|gained (?:the )?most|most growth|grew (?:the )?most|fastest growth|fastest growing|biggest gain|highest gain|earned (?:the )?most|largest increase)\b/.test(q)
     &&!/\b(?:daily|day|24 hour)\b/.test(q))
     return /\b(?:since last|last update|latest|previous snapshot|last snapshot|recent)\b/.test(q)?'glb_growth_latest':'glb_growth_season';
+  if(glbWord&&/\b(?:moved up|move up|climbed|rose|risers?|rank movers?|biggest moves?|biggest movement|fell|dropped|fallers?|rank changes?)\b/.test(q))
+    return 'glb_movers';
   if(glbWord&&/\b(?:who leads|who is first|who s first|top 5|top 10|top ten|top five|leaderboard leaders|glb leaders)\b/.test(q))return 'glb_top';
-  if(/\b(?:cove|our|ours|we|us|arg|the pirate cove)\b/.test(q)&&/\b(?:gap|how far|behind us|ahead of us|above us|below us|rank above|rank below|next rank|next place|catching us)\b/.test(q)
+  if(/\b(?:cove|our|ours|we|us|arg|the pirate cove)\b/.test(q)&&/\b(?:gap|lead|how far|behind us|ahead of us|above us|below us|rank above|rank below|next rank|next place|catching us)\b/.test(q)
     &&!/\b(?:versus|vs|and|compared|between)\b/.test(q))return 'cove_nearest_ranks';
   const coveScope=/\b(?:the pirate cove|cove|our|ours|we|us|arg)\b/.test(q);
   const registryScope=/\b(?:willy dex|willydex|registry|card slots)\b/.test(q);
@@ -657,6 +659,18 @@ async function verifiedAnswer(message){
       '. Only guilds present in both snapshots are compared.':
       'No guilds appear with recorded XP in both snapshots, so a growth comparison is unavailable.',
       sources:[source('glb')],evidence:top.length?'calculated':'insufficient'};
+  }
+  if(kind==='glb_movers'){
+    const data=await analyzeGLB({mode:'movement',window:/\b(?:last|latest|previous|recent|since)\b/.test(norm(message))?'latest':'season',guilds:[],limit:50});
+    const all=data.growth||[];
+    const topUp=all.filter(g=>g.rankChange>0).sort((a,b)=>b.rankChange-a.rankChange).slice(0,3);
+    const topDown=all.filter(g=>g.rankChange<0).sort((a,b)=>a.rankChange-b.rankChange).slice(0,3);
+    const summary=arr=>arr.length?arr.map(g=>g.name+' #'+g.fromRank+' → #'+g.toRank+
+      ' ('+(g.rankChange>0?'+':'')+g.rankChange+' places)').join('; '):'none in compared records';
+    return {answer:'Season '+data.season+' recorded placement changes ('+recordTime(data.fromCapturedAt)+
+      ' to '+recordTime(data.latestCapturedAt)+'): biggest risers: '+summary(topUp)+
+      '. Biggest falls: '+summary(topDown)+'. Only guilds recorded in both snapshots are compared.',
+      sources:[source('glb')],evidence:all.length?'calculated':'insufficient'};
   }
   if(kind==='glb_top'){
     const data=await analyzeGLB({mode:'snapshot',window:'latest',guilds:[],limit:10});
