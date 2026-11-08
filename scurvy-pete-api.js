@@ -82,10 +82,19 @@ function summarizeCard(c){
   };
 }
 // Staff-grade historical analytics: every comparison is derived from actual captures.
-async function analyzeGLB({mode,window,guilds,limit}){
+async function analyzeGLB({mode,window,guilds,limit,from,to}){
   const data=await load('glb');
   const snaps=(data.snapshots||[]).slice().sort((a,b)=>sortDate(a.capturedAt||a.date)-sortDate(b.capturedAt||b.date));
   const latest=snaps.at(-1),earlier=window==='latest'?snaps.at(-2):snaps[0];
+  // Date-only selection uses the last actual captured snapshot on that date.
+  // Exact timestamps must match the source; never interpolate missing captures.
+  const findCapture=when=>{
+    if(!when)return null;
+    const requested=String(when);
+    if(/^\d{4}-\d{2}-\d{2}$/.test(requested))
+      return snaps.filter(row=>String(row.capturedAt||row.date).slice(0,10)===requested).at(-1)||null;
+    return snaps.find(row=>String(row.capturedAt||row.date)===requested)||null;
+  };
   const common={season:data.season,mode,window,snapshotCount:snaps.length,
     latestCapturedAt:latest?.capturedAt||null,fromCapturedAt:earlier?.capturedAt||null,
     warning:'Historical captured top-50 only. Absent guilds are unknown, not rank #51. No made-up ranks, rates, or missing-day XP.'};
@@ -110,9 +119,40 @@ async function analyzeGLB({mode,window,guilds,limit}){
         observedXpPerHour:hours>0?Number((xpGain/hours).toFixed(1)):null};
     });
   const missingPrior=latestRows.filter(g=>!previous.has(norm(g.name))).map(g=>g.name);
-  if(mode==='growth'){
-    const ordered=growth.filter(g=>!selected.length||selection.has(norm(g.name)))
+  if(mode==='at'){
+    const snap=findCapture(to);
+    if(!snap)return {...common,error:'No actual GLB snapshot for '+str(to||'unspecified date',50),
+      availableCaptureTimes:snaps.map(s=>s.capturedAt||s.date),standings:[]};
+    const rows=(snap.guilds||[]).slice().sort((a,b)=>a.rank-b.rank)
+      .filter(g=>!selected.length||selection.has(norm(g.name)));
+    return {...common,requestedAt:to,capturedAt:snap.capturedAt||snap.date,
+      captureCountOnDate:snaps.filter(s=>(s.capturedAt||s.date).slice(0,10)===(snap.capturedAt||snap.date).slice(0,10)).length,
+      totalMatches:rows.length,standings:rows.slice(0,max)};
+  }
+  if(mode==='compare'){
+    const start=findCapture(from),end=to?findCapture(to):latest;
+    if(!start||!end||sortDate(start.capturedAt||start.date)>=sortDate(end.capturedAt||end.date))
+      return {...common,error:'Need two existing GLB captures, ordered earlier then later.',
+        availableCaptureTimes:snaps.map(s=>s.capturedAt||s.date),changes:[]};
+    const startRows=new Map((start.guilds||[]).map(g=>[norm(g.name),g]));
+    const endRows=new Map((end.guilds||[]).map(g=>[norm(g.name),g]));
+    const shared=(end.guilds||[]).filter(g=>startRows.has(norm(g.name))&&
+      digits(g.experience)!==null&&digits(startRows.get(norm(g.name)).experience)!==null)
+      .map(g=>{const first=startRows.get(norm(g.name));return {name:g.name,
+        fromRank:first.rank,toRank:g.rank,rankChange:first.rank-g.rank,
+        fromXp:digits(first.experience),toXp:digits(g.experience),
+        xpGain:digits(g.experience)-digits(first.experience)};});
+    const filtered=shared.filter(g=>!selected.length||selection.has(norm(g.name)))
       .sort((a,b)=>b.xpGain-a.xpGain||a.toRank-b.toRank);
+    return {...common,fromCapturedAt:start.capturedAt||start.date,toCapturedAt:end.capturedAt||end.date,
+      comparableGuilds:shared.length,notInEarlierSnapshot:(end.guilds||[]).filter(g=>!startRows.has(norm(g.name))).map(g=>g.name),
+      notInLaterSnapshot:(start.guilds||[]).filter(g=>!endRows.has(norm(g.name))).map(g=>g.name),
+      totalMatches:filtered.length,changes:filtered.slice(0,max),
+      warning:'Only guilds present in BOTH requested captures can be compared. Missing ranks are unknown.'};
+  }
+  if(mode==='growth'||mode==='movement'){
+    const ordered=growth.filter(g=>!selected.length||selection.has(norm(g.name)))
+      .sort((a,b)=>mode==='movement'?(Math.abs(b.rankChange)-Math.abs(a.rankChange)||b.xpGain-a.xpGain):(b.xpGain-a.xpGain||a.toRank-b.toRank));
     return {...common,metric:'recorded XP increase between two actual snapshots',comparableGuilds:growth.length,
       missingFromEarlierSnapshot:missingPrior,selectedGuilds:selected,unknownGuilds:unknownRequested,totalMatches:ordered.length,growth:ordered.slice(0,max)};
   }
@@ -385,7 +425,7 @@ const RESULTS={
   }
 };
 const TYPES={
-  analyze_glb:{description:'STAFF-QUALITY GLOBAL LEADERBOARD ANALYSIS. Exact computed Season 15 recorded metrics: latest standings, per-guild latest/season movement and neighboring rank gaps (mode=guild), highest GXP gains among all guilds or named guilds (mode=growth), closest leaderboard races and largest leads (mode=races). window=latest compares the most recent two snapshots; window=season compares first to latest. Dates and missing comparisons are explicit; no interpolated ranks. For close fights, growth since last update, who gained most, gap to next guild, prefer this tool.',props:{mode:{type:'string',enum:['snapshot','growth','races','guild']},window:{type:'string',enum:['latest','season']},guilds:{type:'array',items:{type:'string'},maxItems:8},limit:{type:'integer',minimum:1,maximum:50}}},
+  analyze_glb:{description:'Exact Global Leaderboard analytics. mode=snapshot: latest top-50; growth: most GXP gained; movement: rank changes; races: closest fights; guild: named guild rank, gains, neighbor gaps; at: last captured snapshot on requested date (to=YYYY-MM-DD) or exact timestamp; compare: changes between two ACTUAL snapshots (from=YYYY-MM-DD,to=YYYY-MM-DD or null for latest). window=latest compares latest two, window=season compares first and latest. Always supply from and to as null unless needed. No fabricated ranks, dates, interpolations or unrecorded scores.',props:{mode:{type:'string',enum:['snapshot','growth','movement','races','guild','at','compare']},window:{type:'string',enum:['latest','season']},guilds:{type:'array',items:{type:'string'},maxItems:8},limit:{type:'integer',minimum:1,maximum:50},from:{type:['string','null']},to:{type:['string','null']}}},
   analyze_members:{description:'STAFF-QUALITY COVE MEMBER/ROLE/LEVEL ANALYSIS. Reads ARG cards only, not live guild roster. mode=roles lists/counts exact role labels (Officer, Co-Lead, Recruit, Founder, Warrior); mode=member looks up specific member, aliases, their historical levels and career history; mode=growth calculates observed level gains from real level captures for the named member; mode=roster lists historically recorded ARG cards. Never call roles live. Name query must be provided for member/growth; empty for roles/roster.',props:{mode:{type:'string',enum:['roles','member','growth','roster']},query:{type:'string'},role:{type:['string','null']},limit:{type:'integer',minimum:1,maximum:100}}},
   overview:{description:'Get exact counts, capture dates, and status of all existing Willy Dex collections.',props:{}},
   find_cards:{description:'Exact current archived card registry: player names, aliases, roles, levels, history, level growth, founders and officers. Use role=Officer to find all matching officers; no guesswork.',props:{query:{type:'string'},role:{type:['string','null']},sort:{type:'string',enum:['number','name','level_desc','growth_desc']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
@@ -671,7 +711,7 @@ function routeTool(message){
   // Player XP and Guild XP are different metrics. Cards track LEVELS, not XP earned.
   if(/\b(?:who|player|member|officer|person|individual)\b/.test(q)&&/\b(?:xp|experience|level|growth)\b/.test(q)&&!/\b(?:gxp|guild xp|leaderboard|glb)\b/.test(q))return 'find_cards';
   if(/\b(?:glb|leaderboard|gxp|guild xp|season|ranking|standings)\b/.test(q)){
-    if(/\b(?:growth|grew|gain|gained|changes|change|gap|races?|ahead|behind|closest|compare|comparison|moved|movement|trend|trends|lead|leaders)\b/.test(q))
+    if(/\b(?:growth|grew|gain|gained|changes|change|gap|races?|ahead|behind|closest|compare|comparison|moved|movement|trend|trends|lead|leaders|rose|fell|drop|dropped|snapshot|on|since|between)\b/.test(q))
       return 'analyze_glb';
     return 'find_leaderboard';
   }
@@ -780,6 +820,8 @@ async function chat(message,history){
     'If a tool reports error, zero matches, partial pagination, or insufficient evidence, say so and avoid unsupported numeric answers. Never cite a source that was not successfully retrieved.',
     'IMPORTANT: Questions about the Cove’s biggest XP day or GXP earned per day MUST query find_leaderboard(mode=daily_gains, guilds=[The Pirate Cove]). Daily gain is the difference between successive local-date leaderboard snapshots, NOT war victory XP rewards. Quote the actual start/end capture times and explicitly say observed between-day gain, not an exact calendar-day or 24-hour record.',
     'Name the snapshot date for historical facts. Missing data means unknown. Never fabricate placement, timestamps, rank, player status or wars.',
+    'For GLB questions prefer analyze_glb. mode=growth computes captured XP gains; movement finds actual rank changes; races gives adjacent rank gaps; guild details nearest ranks; at returns an exact date capture; compare uses requested real captures. No interpolation or invented data. Always distinguish the most recent two snapshots from first-to-latest season comparisons.',
+    'For member questions prefer analyze_members for role counts, exact player names, aliases, recorded levels, historical growth and joins. Never claim current guild membership based on archived cards or career rows.',
     'When evaluating wars, distinguish Cove earned kills from opposing kills regardless of guild A/B position. Do not confuse victory rewards (experience) with kill counts.',
     'For members, card roles/levels may be stale; most career membership statuses are unknown. Count role labels such as Recruit, Officer or Founder from cards using find_cards with the correct role filter, NEVER count recruits from Pirate Careers membershipStatus. Zero career role labels does not mean zero recruits. Preserve chronological order of ambiguous relative-age notices.',
     'Use the minimum wording needed to communicate the useful answer. Include exact numbers when present. Mention the source name in compact brackets when giving archive facts (e.g., [Cards]); include capture dates when recency matters. Do not repeat the same citation in every sentence.',
