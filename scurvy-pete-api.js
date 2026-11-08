@@ -256,14 +256,18 @@ function recordTime(value){
 }
 function directQuestion(message){
   const q=norm(message);
+  const coveScope=/\b(?:the pirate cove|cove|our|ours|we|us|arg)\b/.test(q);
+  const registryScope=/\b(?:willy dex|willydex|registry|card slots)\b/.test(q);
+  const comparisons=/\b(?:against|versus|vs|compared|comparison|rather than|between)\b/.test(q);
   const dateWords=/\b(?:day|daily|24 hour|calendar day|per day)\b/;
   const xpWords=/\b(?:xp|gxp|experience|guild xp)\b/;
   const records=/\b(?:biggest|most|best|highest|largest|peak|record|maximum|top)\b/;
-  if(xpWords.test(q)&&dateWords.test(q)&&records.test(q)&&(!/\b(?:war|wars|battle|victory|reward)\b/.test(q)||/\b(?:gxp|guild xp)\b/.test(q)))return 'best_gxp_day';
-  if(/\b(?:how many|number of|count|total)\b/.test(q)&&(/\b(?:victories|war wins|wars won|won wars)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q)))return 'war_win_count';
-  if(/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:cards|card slots|registry cards)\b/.test(q))return 'card_count';
-  if(/\b(?:highest level|biggest level|top level|highest leveled)\b/.test(q)&&!/\b(?:growth|gained)\b/.test(q))return 'highest_card_level';
-  if(/\b(?:our|cove|pirate cove|arg|we)\b/.test(q)&&/\b(?:rank|ranking|placement|place|position)\b/.test(q)&&!/\b(?:season history|over time|change|changes|compared|since|yesterday|previous|last week)\b/.test(q)&&!/\b(?:season\s+\d+|jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|\d{4}\s+\d{1,2})\b/.test(q))return 'cove_latest_rank';
+  if(coveScope&&!comparisons&&xpWords.test(q)&&dateWords.test(q)&&records.test(q)&&(!/\b(?:war|wars|battle|victory|reward)\b/.test(q)||/\b(?:gxp|guild xp)\b/.test(q)))return 'best_gxp_day';
+  if(coveScope&&!comparisons&&/\b(?:how many|number of|count|total)\b/.test(q)&&(/\b(?:victories|war wins|wars won|won wars)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q)))return 'war_win_count';
+  if(registryScope&&/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:cards|card slots|registry cards)\b/.test(q))return 'card_count';
+  if((coveScope||registryScope)&&!comparisons&&/\b(?:highest level|biggest level|top level|highest leveled)\b/.test(q)&&!/\b(?:growth|gained)\b/.test(q))return 'highest_card_level';
+  if(/\b(?:current|right now|active|today|now|live)\b/.test(q)&&/\b(?:members?|roster|membership)\b/.test(q)&&/\b(?:how many|number of|count|total)\b/.test(q)&&coveScope)return 'current_roster_unknown';
+  if(coveScope&&!comparisons&&/\b(?:rank|ranking|placement|place|position)\b/.test(q)&&!/\b(?:season history|over time|change|changes|compared|since|yesterday|previous|last week)\b/.test(q)&&!/\b(?:season\s+\d+|jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|\d{4}\s+\d{1,2})\b/.test(q))return 'cove_latest_rank';
   return null;
 }
 async function verifiedAnswer(message){
@@ -275,6 +279,11 @@ async function verifiedAnswer(message){
     if(!best)return {answer:'The GLB archive has too few adjacent-day Cove snapshots to establish an observed biggest between-day XP gain.',sources:[source('glb')],evidence:'insufficient',method:'recorded comparison'};
     return {answer:'The Cove’s largest observed between-day gain in the recorded Season '+stats.season+' snapshots was '+best.xpGain.toLocaleString('en-US')+' GXP, from '+recordTime(best.fromCapturedAt)+' to '+recordTime(best.toCapturedAt)+' ('+best.measuredHours+' hours). This is not an exact calendar-day or 24-hour maximum.',
       sources:[source('glb')],evidence:'calculated',method:'adjacent captured dates',capturedAt:stats.lastCapturedAt};
+  }
+  if(kind==='current_roster_unknown'){
+    const cards=await load('cards');
+    const populated=cards.filter(c=>c.name&&c.name!=='???').length;
+    return {answer:'The current Cove membership count is not verified in Willy Dex. There are '+populated+' populated historical cards, but that is not a live roster count.',sources:[source('cards')],evidence:'insufficient'};
   }
   if(kind==='war_win_count'){
     const d=await load('wins');
@@ -313,6 +322,7 @@ function routeTool(message){
   // Player XP and Guild XP are different metrics. Cards track LEVELS, not XP earned.
   if(/\b(?:who|player|member|officer|person|individual)\b/.test(q)&&/\b(?:xp|experience|level|growth)\b/.test(q)&&!/\b(?:gxp|guild xp|leaderboard|glb)\b/.test(q))return 'find_cards';
   if(/\b(?:glb|leaderboard|gxp|guild xp|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
+  if(/\b(?:xp|experience)\b/.test(q)&&!/\b(?:war|wars|war reward|victory|player|member|officer|individual)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:xp|experience)\b/.test(q)&&/\b(?:cove|guild|arg|our|we)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:wars?|attacks?|kills?|battles?|opponents?|enemies|enemy)\b/.test(q))return 'find_wars';
   if(/\b(?:joined|joins?|left|leaves?|removed|removals?|departed|departures?|tenure|careers?|membership history|membership records)\b/.test(q))return 'find_careers';
