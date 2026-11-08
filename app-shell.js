@@ -19,6 +19,9 @@
     ]},
     {id:'tools',title:'Tools',pages:[
       {id:'tags',title:'SMMO Tags',url:'smmo-tags.html'}
+    ]},
+    {id:'pete',title:'Scurvy Pete',pages:[
+      {id:'pete-chat',title:'AI Chat',url:'scurvy-pete.html'}
     ]}
   ];
   function link(path){return new URL(path,base).href;}
