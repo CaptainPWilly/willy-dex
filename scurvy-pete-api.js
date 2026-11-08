@@ -305,14 +305,18 @@ function directQuestion(message){
   const q=norm(message);
   const coveScope=/\b(?:the pirate cove|cove|our|ours|we|us|arg)\b/.test(q);
   const registryScope=/\b(?:willy dex|willydex|registry|card slots)\b/.test(q);
-  const comparisons=/\b(?:against|versus|vs|compared|comparison|rather than|between)\b/.test(q);
+  const comparisons=/\b(?:against|versus|vs|compared|comparison|rather than|between|both|each|and|either|or)\b/.test(q);
+  // The deterministic answers are ALL-TIME archive answers. Time-restricted
+  // questions need an explicitly filtered query; never reply with a lifetime total.
+  const timeFilter=/\b(?:today|tonight|yesterday|tomorrow|this week|last week|this month|last month|this year|last year|past|recent|since|before|after|during|in\s+\d{4}|season\s+\d+|on\s+\d{4}|jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b/.test(q);
+  const multiple=/\b(?:top\s+\d+|top ten|list|show all|all of|how many|rankings|multiple)\b/.test(q);
   const dateWords=/\b(?:day|daily|24 hour|calendar day|per day)\b/;
   const xpWords=/\b(?:xp|gxp|experience|guild xp)\b/;
   const records=/\b(?:biggest|most|best|highest|largest|peak|record|maximum|top)\b/;
-  if(coveScope&&!comparisons&&xpWords.test(q)&&dateWords.test(q)&&records.test(q)&&(!/\b(?:war|wars|battle|victory|reward)\b/.test(q)||/\b(?:gxp|guild xp)\b/.test(q)))return 'best_gxp_day';
-  if(coveScope&&!comparisons&&/\b(?:how many|number of|count|total)\b/.test(q)&&(/\b(?:victories|war wins|wars won|won wars)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q)))return 'war_win_count';
+  if(coveScope&&!comparisons&&!timeFilter&&xpWords.test(q)&&dateWords.test(q)&&records.test(q)&&(!/\b(?:war|wars|battle|victory|reward)\b/.test(q)||/\b(?:gxp|guild xp)\b/.test(q)))return 'best_gxp_day';
+  if(coveScope&&!comparisons&&!timeFilter&&/\b(?:how many|number of|count|total)\b/.test(q)&&(/\b(?:victories|war wins|wars won|won wars)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q)))return 'war_win_count';
   if(registryScope&&/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:cards|card slots|registry cards)\b/.test(q))return 'card_count';
-  if((coveScope||registryScope)&&!comparisons&&/\b(?:highest level|biggest level|top level|highest leveled)\b/.test(q)&&!/\b(?:growth|gained)\b/.test(q))return 'highest_card_level';
+  if((coveScope||registryScope)&&!comparisons&&!timeFilter&&!multiple&&!/\b(?:current|live|active|now|today|roster)\b/.test(q)&&/\b(?:highest level|biggest level|top level|highest leveled)\b/.test(q)&&!/\b(?:growth|gained)\b/.test(q))return 'highest_card_level';
   if(/\b(?:current|right now|active|today|now|live)\b/.test(q)&&/\b(?:members?|roster|membership)\b/.test(q)&&/\b(?:how many|number of|count|total)\b/.test(q)&&coveScope)return 'current_roster_unknown';
   if(coveScope&&!comparisons&&/\b(?:rank|ranking|placement|place|position)\b/.test(q)&&!/\b(?:season history|over time|change|changes|compared|since|yesterday|previous|last week)\b/.test(q)&&!/\b(?:season\s+\d+|jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|\d{4}\s+\d{1,2})\b/.test(q))return 'cove_latest_rank';
   return null;
