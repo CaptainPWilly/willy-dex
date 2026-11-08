@@ -68,7 +68,7 @@ function busy(on,phase){
 function reveal(node,text){
   var full=String(text||'');
   var units=window.Intl&&Intl.Segmenter?Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(full),function(x){return x.segment;}):Array.from(full);
-  var duration=Math.min(13000,Math.max(600,units.length/85*1000));
+  var duration=Math.min(18000,Math.max(600,units.length/62*1000));
   // Accessible: no per-character announcements. A single completion status is announced instead.
   return new Promise(function(resolve){
     var finished=false,frame=0,index=0,start=0,wrap=node.wrap;
