@@ -33,6 +33,11 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 .skull-rig svg{display:block;width:100%;height:100%}
 .skull-head{fill:#8fc59a;stroke:#c4f9be;stroke-width:2;stroke-linejoin:round}
 .skull-eye,.skull-nose{fill:#06230e}
+.skull-eye{transition:fill .16s ease,filter .16s ease}
+.skull-rig.thinking .skull-eye{fill:#7cbc81;filter:drop-shadow(0 0 3px #7ee786) drop-shadow(0 0 5px #8de991)}
+.skull-rig.speaking .skull-eye{fill:#ceffd0;filter:drop-shadow(0 0 4px #b9ffbe) drop-shadow(0 0 9px #75ef87);animation:pete-eye-talk .55s ease-in-out infinite alternate}
+@keyframes pete-eye-talk{from{opacity:.74}to{opacity:1}}
+
 .skull-teeth{stroke:#123820;stroke-width:2;stroke-linecap:round}
 .skull-jaw{transform-origin:50% 63%;transform-box:view-box}
 .skull-rig.speaking .skull-jaw{animation:jaw-talk .22s steps(2,end) infinite}
@@ -105,11 +110,11 @@ main{padding:9px 5px 20px}
 }
 @media(prefers-reduced-motion:reduce){
 .skull-rig.speaking .skull-jaw{animation:none}
-.block-cursor,.input-caret{animation:none;opacity:1}
+.block-cursor,.input-caret,.skull-rig.speaking .skull-eye{animation:none;opacity:1}
 }
 </style>
 <script src="app-shell.js?v=3" defer></script>
-<script src="scurvy-pete.js?v=6" defer></script>
+<script src="scurvy-pete.js?v=7" defer></script>
 </head>
 <body class="pete-terminal">
 <div id="wc-app-mount"></div>
@@ -141,6 +146,7 @@ main{padding:9px 5px 20px}
 <div class="toolbar">
 <button type="button" class="terminal-button" id="access-button">ACCESS</button>
 <button type="button" class="terminal-button" id="clear-button">CLEAR</button>
+<button type="button" class="terminal-button" id="voice-button" aria-pressed="false" title="Toggle Pete's synthesized NPC mumble">VOICE OFF</button>
 </div>
 <form id="access-form" class="gate" hidden>
 <p class="gate-title">ENTER Pete key to access Willy Corp. Terminal</p>
