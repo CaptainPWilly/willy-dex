@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#100d0b">
+<title>Scurvy Pete | Willy Dex</title>
+<link rel="stylesheet" href="app-shell.css?v=3">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#100d0b;color:#f3dfbd;font:14px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,textarea,input{font:inherit}
+button{cursor:pointer}
+main{max-width:1000px;margin:auto;padding:24px 15px 38px;min-height:calc(100dvh - 140px);display:flex;flex-direction:column;gap:14px}
+.head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.head h1{font:700 clamp(28px,5vw,39px) Georgia,serif;margin:0;letter-spacing:-.02em}
+.head .grow{flex:1}
+.state{display:inline-flex;gap:7px;align-items:center;color:#bea98e;font-size:11px;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;background:#876b52}
+.state.online .dot{background:#b8d5a2}
+.outline{background:#211810;border:1px solid #715138;color:#e2bd8b;border-radius:8px;padding:7px 12px;min-height:35px;font-weight:700}
+.outline:hover{background:#302218;border-color:#e2bd8b}
+.chat{border:1px solid #6f5034;border-radius:14px;background:linear-gradient(145deg,#221913,#171210 64%);min-height:380px;flex:1;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 14px 40px #0004}
+.messages{padding:19px;flex:1;min-height:300px;max-height:calc(100dvh - 340px);overflow-y:auto;display:flex;flex-direction:column;gap:17px;scrollbar-color:#6e5139 transparent}
+.empty{margin:auto;text-align:center;color:#baa68a;font:18px Georgia,serif}
+.message{min-width:0;max-width:93%;display:flex;flex-direction:column;gap:5px}
+.message.user{align-self:flex-end;max-width:83%}
+.by{font-size:10px;font-weight:800;letter-spacing:.1em;color:#ab8e6b;text-transform:uppercase}
+.bubble{padding:12px 15px;border:1px solid #614a34;border-radius:11px;background:#241c16;color:#f2dfc1;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65}
+.message.user .bubble{background:#3a2a1c;border-color:#856244}
+.sources{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:5px}
+.sources a{font-size:11px;color:#dfb77f;text-decoration:none;border-bottom:1px solid #866345}
+.sources a:hover{color:#ffe1b3}
+.composer{display:flex;gap:9px;align-items:end;padding:12px;border-top:1px solid #5d442e;background:#17120f}
+.composer textarea{background:#211a14;color:#f3dfbd;border:1px solid #78593c;outline:none;border-radius:10px;padding:11px 12px;flex:1;min-width:0;resize:vertical;max-height:190px;min-height:45px}
+.composer textarea:focus{border-color:#d8af74}
+.composer button{background:#dfb47d;border:1px solid #dfb47d;color:#261b12;border-radius:9px;padding:10px 19px;min-height:45px;font-weight:800}
+.composer button:disabled{opacity:.5;cursor:default}
+#notice{min-height:18px;font-size:12px;color:#b8a38c}
+#notice.error{color:#edb6a3}
+.gate{border:1px solid #73543a;background:#241b15;padding:17px;border-radius:12px;display:flex;align-items:end;flex-wrap:wrap;gap:12px}
+.gate[hidden]{display:none!important}
+.gate label{display:flex;flex-direction:column;gap:5px;font-size:12px;flex:1;min-width:175px;font-weight:700;color:#d9b78b}
+.gate input{background:#14100e;color:#f3dfbd;border:1px solid #836141;border-radius:8px;padding:10px 12px;width:100%;min-height:43px;outline:none}
+.gate input:focus{border-color:#dfb47d}
+.gate button{background:#dfb47d;color:#261b12;padding:10px 17px;min-height:43px;border:0;border-radius:8px;font-weight:800}
+[hidden]{display:none!important}
+button:focus-visible,a:focus-visible{outline:2px solid #ffe0aa;outline-offset:2px}
+@media(max-width:600px){main{padding:13px 8px 18px;gap:10px;min-height:calc(100dvh - 160px)}.messages{padding:12px;min-height:45dvh;max-height:calc(100dvh - 320px)}.bubble{padding:10px 12px}.message{max-width:98%}.message.user{max-width:93%}.composer{padding:8px}.composer button{padding:10px 14px}.head h1{font-size:29px}}
+</style>
+<script src="app-shell.js?v=3" defer></script>
+<script src="scurvy-pete.js?v=1" defer></script>
+</head>
+<body>
+<div id="wc-app-mount"></div>
+<main>
+<div class="head"><h1>Scurvy Pete</h1><span class="grow"></span><span id="state" class="state"><span class="dot"></span><span id="state-label">Checking API</span></span><button type="button" class="outline" id="access-button">Access</button><button type="button" class="outline" id="clear-button">Clear</button></div>
+<form id="access-form" class="gate" hidden>
+<label>Access code<input id="access-code" type="password" autocomplete="off" placeholder="Scurvy Pete access code" minlength="12" maxlength="256" required></label>
+<button type="submit">Unlock</button>
+</form>
+<section class="chat" aria-label="Scurvy Pete conversation">
+<div class="messages" id="messages" role="log" aria-live="polite"><div id="empty" class="empty">Ask Pete about the Cove.</div></div>
+<form class="composer" id="composer">
+<textarea id="question" aria-label="Message Scurvy Pete" placeholder="Ask Scurvy Pete..." rows="2" maxlength="1200" required></textarea>
+<button type="submit" id="send">Send</button>
+</form>
+</section>
+<div id="notice" role="status" aria-live="polite"></div>
+</main>
+</body>
+</html>
