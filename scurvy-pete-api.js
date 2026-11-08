@@ -474,6 +474,193 @@ function validToolArgs(name,args){
   }
   return args;
 }
+// High-confidence question resolution. Determine entity + metric + requested
+// snapshot BEFORE choosing any response. No model-generated statistics here.
+const monthIds={jan:1,january:1,feb:2,february:2,mar:3,march:3,apr:4,april:4,
+  may:5,jun:6,june:6,jul:7,july:7,aug:8,august:8,sep:9,sept:9,september:9,
+  oct:10,october:10,nov:11,november:11,dec:12,december:12};
+function archiveDateQuestion(q,captures){
+  const year=Number(String(captures.at(-1)?.capturedAt||'').slice(0,4))||null;
+  const iso=q.match(/\b(20\d{2}) (\d{1,2}) (\d{1,2})\b/);
+  const parts=q.split(' ');
+  let date=null;
+  if(iso)date=[Number(iso[1]),Number(iso[2]),Number(iso[3])];
+  if(!date){
+    for(let i=0;i<parts.length-1;i++){
+      const month=monthIds[parts[i]],day=Number(parts[i+1]);
+      if(month&&day>=1&&day<=31){
+        const explicit=Number(parts[i+2]);
+        date=[explicit>=2020&&explicit<=2099?explicit:year,month,day];break;
+      }
+    }
+  }
+  if(!date&&/\b(today|yesterday)\b/.test(q)){
+    const formatter=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',
+      year:'numeric',month:'2-digit',day:'2-digit'});
+    const p=formatter.formatToParts(new Date());
+    const fields=Object.fromEntries(p.map(item=>[item.type,item.value]));
+    const offset=q.includes('yesterday')?-1:0;
+    const t=new Date(Date.UTC(Number(fields.year),Number(fields.month)-1,Number(fields.day)+offset));
+    date=[t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate()];
+  }
+  if(!date||!date[0])return null;
+  const [y,m,d]=date;
+  const utc=new Date(Date.UTC(y,m-1,d));
+  if(utc.getUTCFullYear()!==y||utc.getUTCMonth()+1!==m||utc.getUTCDate()!==d)return null;
+  return [y,String(m).padStart(2,'0'),String(d).padStart(2,'0')].join('-');
+}
+function mentionedArchivedGuilds(question,names){
+  const words=' '+norm(question)+' ';
+  const matches=[];
+  for(const name of names){
+    const n=' '+norm(name)+' ';
+    if(words.includes(n)&&!matches.some(other=>norm(other)===norm(name)))matches.push(name);
+  }
+  if(/\b(cove|our guild|our|we|us|arg)\b/.test(norm(question))&&
+    !matches.some(n=>norm(n)==='the pirate cove'))matches.push('The Pirate Cove');
+  return matches;
+}
+function preciseReply(answer,id,meta={}){
+  return {answer,sources:[source(id)],evidence:'calculated',...meta};
+}
+async function precisionAnswer(message){
+  const q=norm(message);
+  // The role database is solely for the Pirate Cove. Never mistake
+  // another guild's officers or recruits for ours.
+  const rolePair=[
+    ['Co-Lead',/\b(?:co leads?|co leaders?)\b/],
+    ['Guild Lead',/\bguild leads?\b/],
+    ['Officer',/\bofficers?\b/],
+    ['Recruit',/\brecruits?\b/],
+    ['Founder',/\bfounders?\b/],
+    ['Warrior',/\bwarriors?\b/]
+  ];
+  const role=rolePair.find(pair=>pair[1].test(q))?.[0];
+  const wantsRole=/\b(?:who|which|list|show|count|how many|what are|name|names|roster|currently|this week)\b/.test(q);
+  if(role&&wantsRole){
+    const first=await load('glb');
+    const allNames=[...new Set((first.snapshots||[]).flatMap(s=>(s.guilds||[]).map(g=>g.name)))];
+    const named=mentionedArchivedGuilds(message,allNames).filter(n=>norm(n)!=='the pirate cove');
+    const explicitOther=/(?:\b(?:officers?|recruits?|founders?|co leads?|warriors?)\b\s+(?:for|at|in|of)\s+|\b(?:does|do)\s+)/.test(q)&&
+      named.length>0;
+    const comparative=/\b(?:which guild|what guild|other guilds|most officers|most recruits|more officers|more recruits)\b/.test(q);
+    if(named.length&& (explicitOther||comparative||!/\b(?:cove|our|we|us|arg)\b/.test(q)))
+      return preciseReply('Willy Dex does not have '+named.join(' and ')+' staff-role records. It only records the Cove’s archived roles, so their '+role.toLowerCase()+' count is unknown.','cards',{evidence:'insufficient'});
+    if(comparative&&!named.length)return preciseReply('The archive does not have other guilds’ staff rosters, so it cannot rank guilds by '+role.toLowerCase()+' count.','cards',{evidence:'insufficient'});
+    if(/\b(?:today|now|current|currently|this week|last week|yesterday|on|in)\b/.test(q)&&
+      (/\b(?:today|now|current|currently|this week|last week|yesterday)\b/.test(q)||/\b(?:oct|nov|sep|20\d\d)\b/.test(q))){
+      return preciseReply('The Cove’s '+role.toLowerCase()+' roles are archived card labels, not dated historical rosters or a live membership feed. I cannot verify that count for the requested time.','cards',{evidence:'insufficient'});
+    }
+    const cards=await analyzeMembers({mode:'roles',query:'',role,limit:100});
+    const isCount=/\b(?:how many|count|number|total)\b/.test(q);
+    const names=cards.members.map(c=>c.name).join(', ');
+    return preciseReply('Willy Dex records '+cards.totalMatches+' Cove '+role+(cards.totalMatches===1?'':'s')+
+      (isCount?'.':' — '+names+'.')+' These are historical card roles, not a verified live roster.','cards',
+      {recordedCount:cards.totalMatches});
+  }
+  const isGLB=/\b(?:glb|leaderboard|gxp|guild xp|guild experience|standings|season|guild ranking|guild rank)\b/.test(q)
+    ||(/\b(?:rank|ranking|xp|experience)\b/.test(q)&&/\b(?:cove|umbral|helheim|guilds?)\b/.test(q));
+  const isMemberGrowth=/\b(?:members?|guildies|players?|cove|cards?)\b/.test(q)
+    &&/\b(?:levels?|growth|gained|gain|highest|top|fastest)\b/.test(q)
+    &&/\b(?:top|most|fastest|biggest|highest)\b/.test(q)
+    &&!/\b(?:gxp|glb|leaderboard|guild xp|season)\b/.test(q);
+  if(isMemberGrowth){
+    const cards=(await load('cards')).filter(c=>norm(c.guild)==='arg'&&c.name&&c.name!=='???');
+    const ranked=cards.map(c=>{
+      const captures=(c.level_snapshots||[]).filter(x=>digits(x.level)!==null&&sortDate(x.date)>0)
+        .slice().sort((a,b)=>sortDate(a.date)-sortDate(b.date));
+      return {name:c.name,first:captures[0],last:captures.at(-1),
+        delta:captures.length>1?digits(captures.at(-1).level)-digits(captures[0].level):null};
+    }).filter(x=>x.delta!==null).sort((a,b)=>b.delta-a.delta||a.name.localeCompare(b.name));
+    const requested=Number(q.match(/\btop (\d{1,2})\b/)?.[1]||5),size=Math.max(1,Math.min(requested,10));
+    return preciseReply('Largest recorded Cove card-level gains (different observation windows): '+
+      ranked.slice(0,size).map((x,i)=>(i+1)+'. '+x.name+' +'+x.delta.toLocaleString('en-US')+
+        ' levels ('+x.first.date+' to '+x.last.date+')').join('; ')+
+      '. These are not XP totals or a fair equal-time activity ranking.','cards');
+  }
+  if(!isGLB)return null;
+  const data=await load('glb');
+  const ss=(data.snapshots||[]).slice().sort((a,b)=>sortDate(a.capturedAt)-sortDate(b.capturedAt));
+  if(!ss.length)return preciseReply('There are no recorded GLB snapshots.','glb',{evidence:'insufficient'});
+  const requestedSeason=Number(q.match(/\bseason (\d{1,3})\b/)?.[1]||0);
+  if(requestedSeason&&requestedSeason!==Number(data.season))
+    return preciseReply('The Willy Dex GLB archive contains Season '+data.season+', not Season '+requestedSeason+'. I cannot verify that season’s standings.','glb',{evidence:'insufficient'});
+  const date=archiveDateQuestion(q,ss);
+  const explicitTime=/\b(?:today|yesterday)\b/.test(q);
+  const dateRequested=!!date;
+  const hasDateTerm=/\b(?:on|during|as of|at)\b/.test(q)||explicitTime;
+  const useDate=dateRequested&&(hasDateTerm||/\b(?:top|races?|lead|rank|gained)\b/.test(q));
+  const sameDate=useDate?ss.filter(s=>String(s.capturedAt||s.date).slice(0,10)===date):[];
+  if(useDate&&!sameDate.length)
+    return preciseReply('There is no recorded Season '+data.season+' GLB snapshot for '+date+'. I cannot supply standings or gains for that date.','glb',{evidence:'insufficient'});
+  const capture=useDate?sameDate.at(-1):ss.at(-1);
+  const rows=(capture.guilds||[]).slice().sort((a,b)=>a.rank-b.rank);
+  const allNames=[...new Set(ss.flatMap(s=>(s.guilds||[]).map(g=>g.name)))];
+  const named=mentionedArchivedGuilds(message,allNames);
+  const topMatch=q.match(/\btop (\d{1,2})\b/),requestedTop=topMatch?Math.max(1,Math.min(Number(topMatch[1]),50)):/\btop ten\b/.test(q)?10:/\btop five\b/.test(q)?5:null;
+  const asksGrowth=/\b(?:gained|gain|grew|growth|increase|earned)\b/.test(q);
+  const asksMost=/\b(?:most|biggest|highest|fastest|largest)\b/.test(q);
+  const asksRace=/\b(?:race|races|closest|tightest|narrowest|smallest gap|close fight)\b/.test(q);
+  const asksRank=/\b(?:rank|ranking|position|place|placement)\b/.test(q);
+  const asksLeader=/\b(?:who led|who leads|leader|first place|number one|rank 1)\b/.test(q);
+  const asks24=/\b(?:24 hour|24 hours|calendar day|exact day|midnight)\b/.test(q);
+  // We cannot calculate exact 24-hour or calendar-day XP from irregular snapshots.
+  if(asks24&&asksGrowth)return preciseReply(
+    'Willy Dex records irregular GLB snapshots, not continuous XP. It cannot establish the biggest exact 24-hour or calendar-day gain. I can compare actual captured intervals instead.',
+    'glb',{evidence:'insufficient'});
+  if(useDate&&asksGrowth){
+    if(sameDate.length<2)return preciseReply(
+      'There is only one GLB capture on '+date+'. No within-date XP increase can be measured. It is not evidence of zero XP gained.',
+      'glb',{evidence:'insufficient'});
+    const first=sameDate[0],last=sameDate.at(-1);
+    const baseline=new Map((first.guilds||[]).map(g=>[norm(g.name),g]));
+    const matches=(last.guilds||[]).filter(g=>baseline.has(norm(g.name))&&
+      digits(g.experience)!==null&&digits(baseline.get(norm(g.name)).experience)!==null)
+      .map(g=>({name:g.name,gain:digits(g.experience)-digits(baseline.get(norm(g.name)).experience)}))
+      .filter(g=>!named.length||named.some(n=>norm(n)===norm(g.name)))
+      .sort((a,b)=>b.gain-a.gain);
+    if(!matches.length)return preciseReply('No requested guild has comparable GLB XP in both '+date+' captures.','glb',{evidence:'insufficient'});
+    const best=matches.slice(0,asksMost?3:5);
+    return preciseReply('Observed GXP change on '+date+' between actual captures at '+recordTime(first.capturedAt)+
+      ' and '+recordTime(last.capturedAt)+': '+best.map(g=>g.name+' +'+g.gain.toLocaleString('en-US')).join('; ')+
+      '. This is not the entire day’s XP gain.','glb',{capturedAt:last.capturedAt});
+  }
+  if(asksRace){
+    const adjacent=[];
+    for(let i=1;i<rows.length;i++){
+      const up=rows[i-1],down=rows[i];
+      if(up.rank+1!==down.rank||digits(up.experience)===null||digits(down.experience)===null)continue;
+      if(named.length&&!named.some(n=>norm(n)===norm(up.name)||norm(n)===norm(down.name)))continue;
+      adjacent.push({up,down,gap:digits(up.experience)-digits(down.experience)});
+    }
+    adjacent.sort((a,b)=>a.gap-b.gap);
+    if(!adjacent.length)return preciseReply('There are no comparable adjacent ranks in the requested capture.','glb',{evidence:'insufficient'});
+    const size=requestedTop||3;
+    return preciseReply('Closest recorded GLB races ('+recordTime(capture.capturedAt)+'): '+
+      adjacent.slice(0,size).map(g=>'#'+g.up.rank+' '+g.up.name+' vs #'+g.down.rank+' '+
+        g.down.name+' — '+g.gap.toLocaleString('en-US')+' GXP apart').join('; ')+
+      '. Historical capture, not live.','glb',{capturedAt:capture.capturedAt});
+  }
+  if((requestedTop||asksLeader)&&!asksGrowth){
+    const take=requestedTop||1;
+    return preciseReply('Season '+data.season+' GLB ('+recordTime(capture.capturedAt)+'): '+
+      rows.slice(0,take).map(g=>'#'+g.rank+' '+g.name+' '+digits(g.experience).toLocaleString('en-US')+' GXP').join('; ')+
+      '. Archived snapshot, not live.','glb',{capturedAt:capture.capturedAt});
+  }
+  if((useDate||named.length>=2)&&!asksGrowth&&(asksRank||/\b(?:vs|versus|compare|against)\b/.test(q))){
+    const requested=named.length?named:['The Pirate Cove'];
+    const found=requested.map(name=>({name,row:rows.find(g=>norm(g.name)===norm(name))}));
+    const someMissing=found.filter(x=>!x.row);
+    const present=found.filter(x=>x.row);
+    const body=present.map(x=>x.name+' #'+x.row.rank+' with '+digits(x.row.experience).toLocaleString('en-US')+' GXP').join('; ');
+    const gap=present.length===2?' XP gap: '+Math.abs(digits(present[0].row.experience)-digits(present[1].row.experience)).toLocaleString('en-US')+'.':'';
+    return preciseReply('GLB '+recordTime(capture.capturedAt)+': '+(body||'no matching guild recorded')+
+      (someMissing.length?' Not recorded in this top-50: '+someMissing.map(x=>x.name).join(', ')+'.':'')+
+      gap+' These are archived rankings.','glb',{capturedAt:capture.capturedAt,
+      evidence:present.length?'calculated':'insufficient'});
+  }
+  return null;
+}
 // Record-first answers for common numerical questions. These never depend on
 // the model choosing the right tool, computing arithmetic, or inventing figures.
 function recordTime(value){
@@ -526,6 +713,8 @@ function directQuestion(message){
   return null;
 }
 async function verifiedAnswer(message){
+  const resolved=await precisionAnswer(message);
+  if(resolved)return resolved;
   const kind=directQuestion(message);
   if(!kind){
     const q=norm(message);
@@ -1015,4 +1204,4 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
 };
 
 // Exposed for offline regression testing only; no additional HTTP endpoint.
-module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,analyzeGLB,analyzeMembers,RESULTS};
+module.exports.__test={directQuestion,routeTool,verifiedAnswer,precisionAnswer,archiveDateQuestion,mentionedArchivedGuilds,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,analyzeGLB,analyzeMembers,RESULTS};
