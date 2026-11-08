@@ -602,7 +602,8 @@ async function verifiedAnswer(message){
         if(found.length===1){
           const person=found[0],joins=(person.periods||[]),departures=(person.departures||[]);
           const recent=joins[0];
-          const date=recent?(recent.joined||('relative age "'+str(recent.ageText||'unknown',40)+'"')):'no join date';
+          const date=recent?(recent.joined||('relative age "'+str(recent.ageText||'unknown',40)+
+            '" as reported '+str(recent.reportedOn||careers.importMetadata?.recordedAt||'on an undated import',28))):'no join date';
           return {answer:person.name+' appears in the historical Pirate Careers archive with '+
             joins.length+' recorded join notice(s) and '+departures.length+
             ' recorded departure(s). Most recent listed join: '+date+
