@@ -61,6 +61,15 @@
     {
       "id": "willys-portside-ball",
       "name": "Willys Portside Ball"
+    },
+    {
+      "id": "anchor-statue",
+      "name": "Anchor Statue"
+    },
+    {
+      "id": "first-mates-glass-eye",
+      "name": "First Mate's Glass Eye",
+      "fixedText": "[!First Mate's Glass Eye!]🫦 [!First Mate's Glass Eye!]"
     }
   ]
 }
