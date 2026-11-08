@@ -145,6 +145,25 @@ test('failed archive tool lookups cannot produce verified answers',async()=>{
   assert.equal(response.data.evidence,'partial');
   assert.ok(!response.data.answer.includes('1234567'));
 });
+test('resolved GLB lookup never mistakes Cove for Coven',async()=>{
+  useFixtures(()=>{throw Error('No model expected');});
+  const r=await RESULTS.find_leaderboard({guilds:['Cove'],mode:'latest',limit:10,offset:0});
+  assert.ok(r.standings.length===1);
+  assert.equal(r.standings[0].name,'The Pirate Cove');
+});
+test('rapid wrong access-key guesses are throttled before AI is called',async()=>{
+  useFixtures(()=>{throw Error('AI must not be called for invalid access keys');});
+  const origin='https://captainpwilly.github.io';
+  const statuses=[];
+  for(let i=0;i<13;i++){
+    await pete.handle({url:'/api/pete/chat',method:'POST',socket:{remoteAddress:'192.0.2.199'},headers:{origin,authorization:'Bearer wrong-code'}},{},{
+      origin,authorized:()=>false,read:async()=>({message:'Ping',history:[]}),
+      json:(_res,status)=>statuses.push(status)
+    });
+  }
+  assert.deepEqual(statuses.slice(0,12),Array(12).fill(401));
+  assert.equal(statuses[12],429);
+});
 test('missing numeric values stay unknown rather than being converted to zero',()=>{
   const {digits}=pete.__test;
   assert.equal(digits(null),null);
