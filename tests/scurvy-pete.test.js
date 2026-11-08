@@ -3,6 +3,10 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
+// The API is always mocked in this suite. A dummy env key lets the HTTP
+// handler exercise its real validation path without CI secrets or network.
+const originalApiKey=process.env.OPENAI_API_KEY;
+process.env.OPENAI_API_KEY='scurvy-pete-offline-test-only';
 const pete=require('../scurvy-pete-api');
 const {directQuestion,routeTool,verifiedAnswer,captureMetadata,RESULTS}=pete.__test;
 const prefix='https://raw.githubusercontent.com/CaptainPWilly/willy-dex/main/';
@@ -23,7 +27,11 @@ function useFixtures(model){
     throw Error('Unexpected test URL: '+uri);
   };
 }
-test.after(()=>{global.fetch=originalFetch;});
+test.after(()=>{
+  global.fetch=originalFetch;
+  if(originalApiKey===undefined)delete process.env.OPENAI_API_KEY;
+  else process.env.OPENAI_API_KEY=originalApiKey;
+});
 test('routes war reward XP separately from guild season XP',()=>{
   assert.equal(routeTool('How much XP do war victories reward?'),'find_wins');
   assert.equal(routeTool('How much GXP did the Cove gain this season?'),'find_leaderboard');
