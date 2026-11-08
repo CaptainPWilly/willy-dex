@@ -67,7 +67,7 @@ $('access-button').addEventListener('click',function(){locked(gate.hidden);});
 $('clear-button').addEventListener('click',function(){history=[];messages.replaceChildren();var el=document.createElement('div');el.id='empty';el.className='empty';el.textContent='Ask Pete about the Cove.';messages.appendChild(el);empty=el;field.value='';status('Conversation cleared.');});
 fetch(API+'/api/pete/status',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error();return r.json();}).then(function(data){
   var live=!!data.ready;
-  $('state').classList.toggle('online',live);$('state-label').textContent=live?'API ready':'API setup needed';
+  $('state').classList.toggle('online',live);$('state-label').textContent=live?(data.integration==='read-only-live-willy-dex-collections'?'Willy Dex linked':'API ready'):'API setup needed';
   if(!live)status('Add OPENAI_API_KEY to the Render service to activate Scurvy Pete.',true);
   else if(!data.accessConfigured)status('Set PETE_ACCESS_CODE on Render to enable team access.',true);
   if(!access)locked(true);
