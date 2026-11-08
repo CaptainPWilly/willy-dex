@@ -38,10 +38,7 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 .skull-rig.speaking .skull-jaw{animation:jaw-talk .22s steps(2,end) infinite}
 .skull-rig.speaking{filter:drop-shadow(0 0 16px #95fda2b4)}
 @keyframes jaw-talk{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(6px) rotate(5deg)}50%{transform:translateY(3px) rotate(-2deg)}75%{transform:translateY(8px) rotate(3deg)}}
-.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:11px;font-size:11px}
-.state{display:inline-flex;align-items:center;gap:7px;color:var(--phosphor-dim);margin-right:auto;letter-spacing:.04em}
-.dot{width:6px;height:6px;background:#566d54;box-shadow:0 0 6px #6d9769}
-.state.online .dot{background:#8bff9b;box-shadow:0 0 9px #8bff9b}
+.toolbar{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-top:11px;font-size:11px}
 .terminal-button{border:1px solid #507551;background:#102519;color:var(--phosphor);border-radius:2px;min-height:31px;padding:4px 11px;font-size:11px;letter-spacing:.04em}
 .terminal-button:hover{background:#234530;color:var(--phosphor-bright)}
 .terminal-button:disabled{opacity:.45;cursor:default}
@@ -49,7 +46,6 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 .gate{margin:clamp(24px,6vw,72px) 0 auto;max-width:720px}
 .gate[hidden]{display:none!important}
 .gate-title{font-size:clamp(15px,2.5vw,20px);letter-spacing:.015em;color:var(--phosphor-bright);font-weight:700;margin:0 0 14px}
-.gate-sub{color:var(--phosphor-dim);font-size:12px;margin-bottom:17px}
 .gate-line{display:flex;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid #56855c;margin-top:5px;padding-bottom:9px}
 .gate-line label{font-weight:700;color:var(--phosphor-dim);font-size:13px}
 .gate-input{position:relative;display:flex;align-items:center;flex:1;min-width:170px;max-width:420px}
@@ -87,11 +83,11 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 .input-caret[hidden]{display:none!important}
 .composer button{min-height:38px;background:var(--phosphor);border:0;border-radius:2px;color:#07180a;font-weight:900;padding:8px 14px}
 .composer button:disabled{opacity:.5;cursor:default}
-.status-line{display:flex;gap:12px;justify-content:space-between;align-items:center;min-height:26px;font-size:11px;color:var(--phosphor-dim);padding-top:5px}
+.status-line{display:flex;gap:12px;justify-content:flex-end;align-items:center;font-size:11px;color:var(--phosphor-dim);padding-top:8px}
+.status-line:has(#notice:empty):has(#skip[hidden]){display:none}
+#notice{flex:1;min-width:0}
 #notice.error{color:#f5b783}
-#notice.transmitting:after{content:"";display:inline-block;width:6px;height:10px;margin-left:7px;background:var(--phosphor-bright);vertical-align:-1px;animation:blink-block .65s steps(1,end) infinite}
 #skip[hidden]{display:none!important}
-.hint{color:#5a825d;font-size:10px;letter-spacing:.08em}
 @media(max-width:640px){
 main{padding:9px 5px 20px}
 .terminal-case{padding:6px;border-radius:22px}
@@ -106,15 +102,14 @@ main{padding:9px 5px 20px}
 .gate-title{font-size:15px}
 .gate-line{gap:7px}
 .gate-line button{width:100%}
-.hint{display:none}
 }
 @media(prefers-reduced-motion:reduce){
 .skull-rig.speaking .skull-jaw{animation:none}
-.block-cursor,.input-caret,#notice.transmitting:after{animation:none;opacity:1}
+.block-cursor,.input-caret{animation:none;opacity:1}
 }
 </style>
 <script src="app-shell.js?v=3" defer></script>
-<script src="scurvy-pete.js?v=4" defer></script>
+<script src="scurvy-pete.js?v=5" defer></script>
 </head>
 <body class="pete-terminal">
 <div id="wc-app-mount"></div>
@@ -144,13 +139,11 @@ main{padding:9px 5px 20px}
 </div>
 </header>
 <div class="toolbar">
-<span id="state" class="state"><span class="dot"></span><span id="state-label">LINK INITIALIZING</span></span>
 <button type="button" class="terminal-button" id="access-button">ACCESS</button>
 <button type="button" class="terminal-button" id="clear-button">CLEAR</button>
 </div>
 <form id="access-form" class="gate" hidden>
 <p class="gate-title">ENTER Pete key to access Willy Corp. Terminal</p>
-<div class="gate-sub">RESTRICTED ARCHIVE ACCESS // AUTHORIZATION REQUIRED</div>
 <div class="gate-line">
 <label for="access-code">KEY &gt;</label>
 <div class="gate-input"><input id="access-code" type="password" autocomplete="off" placeholder=" " minlength="12" maxlength="256" required><span class="gate-key-cursor block-cursor" aria-hidden="true"></span></div>
@@ -158,14 +151,14 @@ main{padding:9px 5px 20px}
 </div>
 </form>
 <section class="chat" id="chat" aria-label="Scurvy Pete conversation" hidden>
-<div class="messages" id="messages" role="log" aria-live="off"><div id="empty" class="empty">AWAITING QUERY</div></div>
+<div class="messages" id="messages" role="log" aria-live="off"><div id="empty" class="empty">ASK PETE ABOUT THE COVE</div></div>
 <form class="composer" id="composer">
 <span class="prompt-marker" aria-hidden="true">&gt;</span>
 <div class="composer-entry" id="composer-entry"><textarea id="question" aria-label="Ask Scurvy Pete" placeholder="Ask Pete about the Cove..." rows="2" maxlength="1200" required></textarea><div id="caret-mirror" class="caret-mirror" aria-hidden="true"></div><span id="input-caret" class="input-caret" aria-hidden="true" hidden></span></div>
 <button type="submit" id="send">SEND</button>
 </form>
 </section>
-<div class="status-line"><div id="notice" role="status" aria-live="polite"></div><button type="button" id="skip" class="terminal-button" hidden>SKIP TYPING</button><span class="hint">WILLY CORP. // READ-ONLY ARCHIVE</span></div>
+<div class="status-line"><div id="notice" role="status" aria-live="polite"></div><button type="button" id="skip" class="terminal-button" hidden>SKIP</button></div>
 </div>
 </section>
 </div>
