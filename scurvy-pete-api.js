@@ -512,6 +512,28 @@ async function verifiedAnswer(message){
   const kind=directQuestion(message);
   if(!kind){
     const q=norm(message);
+    const comparingGLB=/\b(?:vs|versus|against|compare|comparing|comparison|gap between|difference between)\b/.test(q)
+      &&/\b(?:glb|leaderboard|gxp|guild xp|rank|ranking|experience)\b/.test(q);
+    if(comparingGLB){
+      const data=await load('glb');
+      const latest=(data.snapshots||[]).slice().sort((a,b)=>sortDate(a.capturedAt)-sortDate(b.capturedAt)).at(-1);
+      const rows=latest?.guilds||[];
+      const selected=rows.filter(g=>{
+        const key=norm(g.name);
+        return new RegExp('(?:^| )'+key+'(?: |$)').test(q)||
+          (key==='the pirate cove'&&/\b(?:our|ours|we|us|the cove|cove)\b/.test(q));
+      });
+      if(selected.length===2){
+        const [a,b]=selected;
+        const ax=digits(a.experience),bx=digits(b.experience);
+        return {answer:'Archived Season '+data.season+' GLB ('+recordTime(latest.capturedAt)+'): '+
+          a.name+' #'+a.rank+' with '+(ax===null?'unknown':ax.toLocaleString('en-US'))+' GXP; '+
+          b.name+' #'+b.rank+' with '+(bx===null?'unknown':bx.toLocaleString('en-US'))+' GXP. '+
+          (ax===null||bx===null?'Their XP gap is unknown.':a.name+' and '+b.name+
+          ' are '+Math.abs(ax-bx).toLocaleString('en-US')+' GXP apart.')+' Not live.',
+          sources:[source('glb')],evidence:'calculated'};
+      }
+    }
     const memberQuestion=/^(?:who is|who s|tell me about|what level is|what role is|what role does|what roles does|is|did|when did|what happened to|how much has|how many levels has|how long has)\b/.test(q);
     const differentDomain=/\b(?:glb|leaderboard|gxp|guild xp|war|wars|victories|guilds)\b/.test(q);
     if(memberQuestion&&!differentDomain){
