@@ -19,7 +19,11 @@ let busy=0;
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,Number(v)||min));
 const str=(v,n=150)=>String(v==null?'':v).slice(0,n);
 const norm=v=>str(v,400).normalize('NFKC').toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
-const digits=v=>Number.isFinite(Number(v))?Number(v):null;
+const digits=v=>{
+  if(v===null||v===undefined||typeof v==='string'&&(!v.trim()||v.trim()==='???'))return null;
+  const parsed=Number(v);
+  return Number.isFinite(parsed)?parsed:null;
+};
 const number=v=>Number.isFinite(Number(v))?Number(v):0;
 const since=v=>v||'not recorded';
 const source=id=>({id,title:FILES[id][1],url:SITE+FILES[id][2]});
@@ -108,13 +112,14 @@ const RESULTS={
     const chosen=scope==='all'?snaps:snaps.slice(-1);
     const threshold=number(data.threshold)||1500;
     let records=chosen.flatMap(s=>(s.wars||[]).map(w=>{
-      const a=number(w.killsA),b=number(w.killsB);
+      const a=digits(w.killsA),b=digits(w.killsB);
+      const percent=value=>value===null?null:Number((value/threshold*100).toFixed(2));
       const coveSide=norm(w.guildA)==='the pirate cove'?'A':norm(w.guildB)==='the pirate cove'?'B':null;
       return {capturedAt:s.capturedAt,warId:w.warId,guildA:w.guildA,guildB:w.guildB,killsA:a,killsB:b,
         coveKills:coveSide?(coveSide==='A'?a:b):null,
         coveOpponentKills:coveSide?(coveSide==='A'?b:a):null,
-        coveProgressPercent:coveSide?Number(((coveSide==='A'?a:b)/threshold*100).toFixed(2)):null,
-        progressA:Number((a/threshold*100).toFixed(2)),progressB:Number((b/threshold*100).toFixed(2)),
+        coveProgressPercent:coveSide?percent(coveSide==='A'?a:b):null,
+        progressA:percent(a),progressB:percent(b),
         recordedStatus:w.status||'unknown',reportedAge:w.ageText||null};
     }));
     if(guild)records=records.filter(w=>matches(w.guildA,guild)||matches(w.guildB,guild));
@@ -161,11 +166,13 @@ const RESULTS={
         if(!/^\d{4}-\d{2}-\d{2}$/.test(date))continue;
         for(const guild of snap.guilds||[]){
           if(!requested.some(name=>matches(guild.name,name)))continue;
+          const xp=digits(guild.experience);
+          if(xp===null)continue; // Missing XP is unknown, not zero.
           const key=norm(guild.name);
           if(!byGuild.has(key))byGuild.set(key,{name:guild.name,days:new Map()});
           const group=byGuild.get(key),existing=group.days.get(date);
           if(!existing||sortDate(capturedAt)>sortDate(existing.capturedAt)){
-            group.days.set(date,{capturedAt,date,experience:number(guild.experience),rank:guild.rank});
+            group.days.set(date,{capturedAt,date,experience:xp,rank:guild.rank});
           }
         }
       }
@@ -190,7 +197,7 @@ const RESULTS={
     }
     if(mode==='changes'){
       const first=ss[0],baseline=new Map((first.guilds||[]).map(g=>[norm(g.name),g]));
-      const changes=(latest.guilds||[]).filter(g=>baseline.has(norm(g.name))).map(g=>{
+      const changes=(latest.guilds||[]).filter(g=>baseline.has(norm(g.name))&&digits(g.experience)!==null&&digits(baseline.get(norm(g.name)).experience)!==null).map(g=>{
         const b=baseline.get(norm(g.name));return {name:g.name,fromRank:b.rank,toRank:g.rank,rankChange:b.rank-g.rank,fromXp:b.experience,toXp:g.experience,xpGain:g.experience-b.experience};
       });
       changes.sort((a,b)=>Math.abs(b.rankChange)-Math.abs(a.rankChange)||b.xpGain-a.xpGain);
@@ -290,7 +297,8 @@ async function verifiedAnswer(message){
     const result=await RESULTS.find_leaderboard({guilds:['The Pirate Cove'],mode:'latest',limit:1,offset:0});
     const row=result.standings?.find(g=>norm(g.name)==='the pirate cove');
     if(!row)return {answer:'The Cove was not recorded in the most recent archived top-50 GLB snapshot ('+recordTime(result.lastCapturedAt)+'). Its current ranking is unknown.',sources:[source('glb')],evidence:'insufficient'};
-    return {answer:'The Cove was #'+row.rank+' with '+number(row.experience).toLocaleString('en-US')+' guild XP in the last recorded Season '+result.season+' GLB snapshot ('+recordTime(result.lastCapturedAt)+'). This is not a live ranking.',sources:[source('glb')],evidence:'calculated',capturedAt:result.lastCapturedAt};
+    const xp=digits(row.experience);
+    return {answer:'The Cove was #'+row.rank+(xp===null?' (XP not recorded)':' with '+xp.toLocaleString('en-US')+' guild XP')+' in the last recorded Season '+result.season+' GLB snapshot ('+recordTime(result.lastCapturedAt)+'). This is not a live ranking.',sources:[source('glb')],evidence:'calculated',capturedAt:result.lastCapturedAt};
   }
   return null;
 }
@@ -471,4 +479,4 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
 };
 
 // Exposed for offline regression testing only; no additional HTTP endpoint.
-module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,RESULTS};
+module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,digits,RESULTS};
