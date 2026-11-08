@@ -316,7 +316,7 @@ function routeTool(message){
   if(/\b(?:xp|experience)\b/.test(q)&&/\b(?:cove|guild|arg|our|we)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:war|wars|attack|kills|battles|opponents|enemy)\b/.test(q))return 'find_wars';
   if(/\b(?:joined|joins?|left|leaves?|removed|removals?|departed|departures?|tenure|careers?|membership history|membership records)\b/.test(q))return 'find_careers';
-  if(/\b(?:members?|players?|cards?|levels?|officers?|founders?|recruits?|roles?|aliases?|leaders?|captains?)\b/.test(q))return 'find_cards';
+  if(/\b(?:members?|players?|cards?|levels?|officers?|founders?|recruits?|roles?|aliases?|leaders?|captains?|crewmates?|crew|roster|pirates?)\b/.test(q))return 'find_cards';
   return null;
 }
 function captureMetadata(id,doc){
