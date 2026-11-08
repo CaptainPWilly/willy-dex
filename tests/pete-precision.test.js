@@ -134,3 +134,64 @@ test('no retrospective role claims on unknown opponents',async()=>{
   assert.equal(r.evidence,'insufficient');
   assert.match(r.answer,/only records the Cove|does not have Helheim/i);
 });
+
+test('highest level officer is selected among officers, not all cards',async()=>{
+  const r=await ask('Who has the highest level officer?');
+  assert.match(r.answer,/C H I M C K E N/);
+  assert.match(r.answer,/63,771/);
+  assert.doesNotMatch(r.answer,/SAWTOOTH/);
+  assert.deepEqual(r.sources.map(x=>x.id),['cards']);
+});
+test('top three recruits are selected by actual recorded levels',async()=>{
+  const r=await ask('Top 3 recruits by level');
+  assert.match(r.answer,/SAWTOOTH/);
+  assert.match(r.answer,/218,374/);
+  assert.match(r.answer,/Unspeakable Deep III/);
+  assert.match(r.answer,/The Ghostwriter/);
+  assert.doesNotMatch(r.answer,/4\./);
+});
+test('role-level threshold reads comma-formatted numbers correctly',async()=>{
+  const r=await ask('How many officers over 10,000 levels?');
+  assert.match(r.answer,/5 recorded Cove Officers over 10,000 levels/);
+  assert.doesNotMatch(r.answer,/JoyBoy/);
+});
+test('no retrospective level ranking without role-at-date evidence',async()=>{
+  const r=await ask('Who was the highest level officer on October 20?');
+  assert.equal(r.evidence,'insufficient');
+  assert.match(r.answer,/no verified time-specific staff-role roster/i);
+});
+test('officer level gain is from exact dated level captures, not XP',async()=>{
+  const r=await ask('Which officer gained the most levels?');
+  assert.match(r.answer,/C H I M C K E N/);
+  assert.match(r.answer,/\+309 levels/);
+  assert.match(r.answer,/2026-10-20 to 2026-10-28/);
+});
+test('wrong guild ownership is blocked in full mocked AI chat despite real number',async()=>{
+  const outer=global.fetch;
+  let aiCount=0,reply=null;
+  global.fetch=async(url,opts)=>{
+    const uri=String(url);
+    if(uri.startsWith(PREFIX))return {ok:true,status:200,json:async()=>fixture(uri.slice(PREFIX.length))};
+    if(uri==='https://api.openai.com/v1/responses'){
+      aiCount++;
+      return {ok:true,status:200,json:async()=>aiCount===1?{
+        output:[{type:'function_call',call_id:'glb-actual-data',name:'analyze_glb',
+          arguments:JSON.stringify({mode:'snapshot',window:'latest',guilds:[],limit:50,from:null,to:null})}]
+      }:{
+        output:[{type:'message',content:[{type:'output_text',text:'The Pirate Cove has 26,281,385 GXP and is ranked #1.'}]}]
+      }};
+    }
+    throw Error('Unexpected fetch '+uri);
+  };
+  try{
+    await pete.handle(
+      {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+      {origin:'https://captainpwilly.github.io',authorized:()=>true,
+        read:async()=>({message:'Summarize recent GLB trends across the Cove, Umbral, and Helheim.',history:[]}),
+        json:(_res,status,data)=>{reply={status,data};}});
+    assert.equal(reply.status,200);
+    assert.equal(reply.data.evidence,'numeric-check-failed');
+    assert.doesNotMatch(reply.data.answer,/The Pirate Cove has 26,281,385 GXP/);
+    assert.equal(aiCount,2);
+  }finally{global.fetch=outer;}
+});
