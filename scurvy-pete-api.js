@@ -14,7 +14,7 @@ const FILES={
   knowledge:['scurvy-pete-knowledge.json','Cove Knowledge','scurvy-pete-knowledge.json'],
   videos:['checkins/manifest.json','Video Library','checkins/index.html']
 };
-const cache=new Map(),requests=[];
+const cache=new Map(),requests=[],failedKeys=new Map();
 let busy=0;
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,Number(v)||min));
 const str=(v,n=150)=>String(v==null?'':v).slice(0,n);
@@ -407,6 +407,21 @@ function captureMetadata(id,doc){
     freshness:days===null?'undated':days>3?'historical':'recently captured',
     warning:'Not connected to live SimpleMMO; missing observations are not zeros or proof of absence.'};
 }
+// Per-connection limits for guessing the shared terminal access key.
+// Use the socket peer, not a spoofable forwarded-IP header.
+function deniedKeyTooOften(req){
+  const key=req.socket?.remoteAddress||'unknown';
+  const now=Date.now(),history=(failedKeys.get(key)||[]).filter(t=>now-t<10*60000);
+  if(history.length)failedKeys.set(key,history);else failedKeys.delete(key);
+  return history.length>=12;
+}
+function noteBadKey(req){
+  const key=req.socket?.remoteAddress||'unknown';
+  const now=Date.now(),history=(failedKeys.get(key)||[]).filter(t=>now-t<10*60000);
+  history.push(now);failedKeys.set(key,history);
+  // Keep bounded across attackers and connections without a persistent store.
+  if(failedKeys.size>1500)failedKeys.delete(failedKeys.keys().next().value);
+}
 function validKey(req,authorized){
   if(authorized(req))return true;
   const secret=process.env.PETE_ACCESS_CODE||'';
@@ -557,11 +572,15 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
   if(path!=='/api/pete/chat'||req.method!=='POST')return false;
   if(req.headers.origin!==origin){json(res,403,{error:'Open Pete from Willy Dex.'});return true;}
   if(!process.env.OPENAI_API_KEY){json(res,503,{error:'OPENAI_API_KEY missing on Render.'});return true;}
-  if(!validKey(req,authorized)){json(res,401,{error:'Enter a valid Scurvy Pete access code.'});return true;}
-  if(busy>=2){json(res,429,{error:'Pete is handling another conversation.'});return true;}
+  if(deniedKeyTooOften(req)){json(res,429,{error:'Too many incorrect access codes. Try again later.'});return true;}
+  if(!validKey(req,authorized)){
+    noteBadKey(req);
+    json(res,401,{error:'Enter a valid Scurvy Pete access code.'});return true;
+  }
   const body=await read(req);
   if(typeof body.message!=='string'||!body.message.trim()||body.message.length>1200){json(res,400,{error:'Question must be 1–1200 characters.'});return true;}
   if(!checked(body.history)||body.history.length>12||body.history.some(x=>!x||!['user','assistant'].includes(x.role)||typeof x.content!=='string'||x.content.length>1400)){json(res,400,{error:'Invalid conversation history.'});return true;}
+  if(busy>=2){json(res,429,{error:'Pete is handling another conversation.'});return true;}
   if(rateLimited()){json(res,429,{error:'Pete reached the shared hourly or daily limit.'});return true;}
   busy++;
   try{json(res,200,await chat(body.message.trim(),body.history));}
