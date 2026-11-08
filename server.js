@@ -2,6 +2,7 @@
 // Never place ADMIN_PASSWORD or GITHUB_TOKEN in the GitHub Pages frontend.
 const http=require('node:http');
 const crypto=require('node:crypto');
+const peteApi=require('./scurvy-pete-api');
 const BASE='https://api.github.com/repos/CaptainPWilly/willy-dex/contents/';
 const origin=(process.env.ALLOWED_ORIGIN||'https://captainpwilly.github.io').replace(/\/$/,'');
 const password=process.env.ADMIN_PASSWORD||'',githubToken=process.env.GITHUB_TOKEN||'';
