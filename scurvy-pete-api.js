@@ -235,7 +235,7 @@ const TYPES={
   find_cards:{description:'Exact current archived card registry: player names, aliases, roles, levels, history, level growth, founders and officers. Use role=Officer to find all matching officers; no guesswork.',props:{query:{type:'string'},role:{type:['string','null']},sort:{type:'string',enum:['number','name','level_desc','growth_desc']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_careers:{description:'Find all archived membership records, join/leave ages, removals and roster status. Most statuses are unverified; do not assume current member.',props:{query:{type:'string'},status:{type:['string','null']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_wars:{description:'Query real war snapshots, including correct Cove-side kills, enemy kills and completion percentages. Scope latest or all recorded captures.',props:{guild:{type:['string','null']},opponent:{type:['string','null']},scope:{type:'string',enum:['latest','all']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
-  find_wins:{description:'Search completed war victory archive. Exact per-opponent frequency and victories with source order and rewards.',props:{opponent:{type:['string','null']},sort:{type:'string',enum:['source','opponent','reward']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
+  find_wins:{description:'Search The Pirate Cove’s OWN completed war victory archive (not opponents’ own total wins). The opponent field identifies whom the Cove defeated. Exact Cove per-opponent frequencies, recorded rewards and source order.',props:{opponent:{type:['string','null']},sort:{type:'string',enum:['source','opponent','reward']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_leaderboard:{description:'Exact GUILD XP (GXP) history and rankings from the Willy Dex Global Leaderboard. For BIGGEST XP DAY, MOST GXP IN A DAY, DAILY GUILD XP GAINS, or largest day-to-day increase, MUST use mode=daily_gains with guilds=[The Pirate Cove] for the Cove. This calculates observed differences between the last captured snapshots on successive dates. Mode=timeline gives historical snapshots, mode=latest current archived standings, and mode=changes compares first/latest placements. NEVER confuse war victory rewardExp with guild XP earned per day.',props:{guilds:{type:'array',items:{type:'string'},maxItems:8},mode:{type:'string',enum:['latest','timeline','daily_gains','changes']},limit:{type:'integer',minimum:1,maximum:100},offset:{type:'integer',minimum:0}}},
   find_tags:{description:'Get the live published SMMO tags including exact double-bracket formats.',props:{query:{type:'string'},limit:{type:'integer',minimum:1,maximum:100}}},
   find_knowledge:{description:'Read public Cove knowledge and Scurvy Pete persona notes stored in the Willy Dex repository.',props:{query:{type:'string'}}},
@@ -272,7 +272,18 @@ function directQuestion(message){
 }
 async function verifiedAnswer(message){
   const kind=directQuestion(message);
-  if(!kind)return null;
+  if(!kind){
+    const q=norm(message);
+    // Only Cove wins are archived. An opponent named in the *subject* is not
+    // credited the Cove's victories against that opponent.
+    const foreignWinSubject=q.match(/\b(?:how many|number of|total)\b.*\b(?:wars|victories)\b.*\b(?:has|have)\s+(.+?)\s+\b(?:won|completed)\b/);
+    if(foreignWinSubject&&
+       !/^(?:the pirate cove|pirate cove|the cove|cove|our guild|we|us|arg)$/.test(foreignWinSubject[1])){
+      return {answer:'Willy Dex records The Pirate Cove’s completed war victories, not '+str(foreignWinSubject[1],65)+'’s overall war-win total. That total cannot be verified from this archive.',
+        sources:[source('wins')],evidence:'insufficient'};
+    }
+    return null;
+  }
   if(kind==='best_gxp_day'){
     const stats=await RESULTS.find_leaderboard({guilds:['The Pirate Cove'],mode:'daily_gains',limit:1,offset:0});
     const best=stats.largestObservedGain;
