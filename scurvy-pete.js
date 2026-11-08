@@ -251,7 +251,7 @@ async function ask(text){
   busy(true,'thinking');status('');
   requestController=new AbortController();
   var abort=requestController;
-  var timer=setTimeout(function(){abort.abort();},60000);
+  var timer=setTimeout(function(){abort.abort();},120000);
   try{
     var response=await fetch(API+'/api/pete/chat',{
       method:'POST',signal:abort.signal,
@@ -363,12 +363,8 @@ $('clear-button').addEventListener('click',function(){
   status('');
 });
 skip.addEventListener('click',function(){if(activeReply)activeReply.finish();});
-fetch(API+'/api/pete/status',{cache:'no-store'})
-  .then(function(r){if(!r.ok)throw Error();return r.json();})
-  .then(function(data){
-    if(!data.ready)status('AI SERVICE UNAVAILABLE',true);
-    else if(!data.accessConfigured)status('TERMINAL ACCESS UNAVAILABLE',true);
-  })
-  .catch(function(){status('WILLY DEX CONNECTION UNAVAILABLE',true);});
+/* Warm the service in the background, but never block chat or show a false
+ * offline warning just because a status request timed out during a cold start. */
+fetch(API+'/api/pete/status',{cache:'no-store'}).catch(function(){});
 boot();
 })();
