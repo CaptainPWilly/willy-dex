@@ -47,6 +47,23 @@ function matches(hay,needle){
   const words=b.split(' ').filter(Boolean);
   return words.every(w=>a.includes(w));
 }
+// Resolve a named guild/opponent to an actual archived name. Exact matches win.
+// Short fragments must identify one unique entity; never merge Cove and Coven.
+function resolveNames(names,query){
+  if(query===null||query===undefined||!String(query).trim())return [];
+  const unique=[...new Map(names.filter(Boolean).map(n=>[norm(n),n])).values()];
+  const term=norm(query);
+  if(!term)return [];
+  const exact=unique.filter(n=>norm(n)===term);
+  if(exact.length)return exact;
+  const whole=new RegExp('(?:^| )'+term.replace(/ +/g,' +')+'(?: |$)');
+  const wordMatch=unique.filter(n=>whole.test(norm(n)));
+  if(wordMatch.length===1)return wordMatch;
+  if(wordMatch.length>1)throw Error('Ambiguous archive name: '+str(query,50)+'. Matches: '+wordMatch.slice(0,6).join(', '));
+  const partial=unique.filter(n=>matches(n,query));
+  if(partial.length>1)throw Error('Ambiguous archive name: '+str(query,50)+'. Matches: '+partial.slice(0,6).join(', '));
+  return partial;
+}
 function summarizeCard(c){
   const lv=checked(c.level_snapshots)?c.level_snapshots:[];
   return {
@@ -122,15 +139,23 @@ const RESULTS={
         progressA:percent(a),progressB:percent(b),
         recordedStatus:w.status||'unknown',reportedAge:w.ageText||null};
     }));
-    if(guild)records=records.filter(w=>matches(w.guildA,guild)||matches(w.guildB,guild));
-    if(opponent)records=records.filter(w=>matches(w.guildA,opponent)||matches(w.guildB,opponent));
+    const knownGuilds=records.flatMap(w=>[w.guildA,w.guildB]);
+    if(guild){
+      const allowed=new Set(resolveNames(knownGuilds,guild).map(norm));
+      records=records.filter(w=>allowed.has(norm(w.guildA))||allowed.has(norm(w.guildB)));
+    }
+    if(opponent){
+      const allowed=new Set(resolveNames(knownGuilds,opponent).map(norm));
+      records=records.filter(w=>allowed.has(norm(w.guildA))||allowed.has(norm(w.guildB)));
+    }
     const start=clamp(offset,0,10000),n=clamp(limit,1,100);
     return {scope,captureDates:chosen.map(s=>s.capturedAt),totalMatches:records.length,threshold,offset:start,more:start+n<records.length,
       wars:records.slice(start,start+n),warning:'Each result is a historical capture. Guild order determines which side earned each kill count. Do not claim these wars are still active today.'};
   },
   async find_wins({opponent,sort,limit,offset}){
     const data=await load('wins');const all=data.records||[];
-    let found=all.filter(r=>matches(r.opponent,opponent));
+    const allowed=opponent?new Set(resolveNames(all.map(r=>r.opponent),opponent).map(norm)):null;
+    let found=all.filter(r=>!allowed||allowed.has(norm(r.opponent)));
     if(sort==='reward')found.sort((a,b)=>number(b.rewardExp)-number(a.rewardExp));
     else if(sort==='opponent')found.sort((a,b)=>a.opponent.localeCompare(b.opponent));
     else found.sort((a,b)=>number(a.sourceOrder)-number(b.sourceOrder));
@@ -145,13 +170,16 @@ const RESULTS={
     const data=await load('glb');
     const ss=(data.snapshots||[]).slice().sort((a,b)=>sortDate(a.capturedAt||a.date)-sortDate(b.capturedAt||b.date));
     const latest=ss.at(-1);
-    const selected=(guilds||[]).filter(Boolean).slice(0,8);
+    const requested=(guilds||[]).filter(Boolean).slice(0,8);
+    const allGuildNames=ss.flatMap(s=>(s.guilds||[]).map(g=>g.name));
+    const selected=requested.flatMap(name=>resolveNames(allGuildNames,name));
+    const selection=new Set(selected.map(norm));
     const start=clamp(offset,0,10000),n=clamp(limit,1,100);
     const summary={mode,season:data.season,snapshots:ss.length,firstCapturedAt:ss[0]?.capturedAt||null,lastCapturedAt:latest?.capturedAt||null,requestGuilds:selected,
       warning:'Only ranks explicitly present in captured top-50 snapshots are known. No interpolation, invented placements, or live standings.'};
     if(!latest)return summary;
     if(mode==='timeline'){
-      const rows=ss.map(s=>({capturedAt:s.capturedAt||s.date,season:s.season||data.season,guilds:(s.guilds||[]).filter(g=>selected.length?selected.some(name=>matches(g.name,name)):norm(g.name)==='the pirate cove')}));
+      const rows=ss.map(s=>({capturedAt:s.capturedAt||s.date,season:s.season||data.season,guilds:(s.guilds||[]).filter(g=>selected.length?selection.has(norm(g.name)):norm(g.name)==='the pirate cove')}));
       return {...summary,totalMatches:rows.length,offset:start,more:start+n<rows.length,timeline:rows.slice(start,start+n)};
     }
     if(mode==='daily_gains'){
@@ -165,7 +193,7 @@ const RESULTS={
         const date=str(capturedAt,10);
         if(!/^\d{4}-\d{2}-\d{2}$/.test(date))continue;
         for(const guild of snap.guilds||[]){
-          if(!requested.some(name=>matches(guild.name,name)))continue;
+          if(!requested.some(name=>norm(name)===norm(guild.name)))continue;
           const xp=digits(guild.experience);
           if(xp===null)continue; // Missing XP is unknown, not zero.
           const key=norm(guild.name);
@@ -205,7 +233,7 @@ const RESULTS={
         comparableGuilds:changes.length,totalMatches:changes.length,offset:start,more:start+n<changes.length,changes:changes.slice(start,start+n),
         caveat:'Only guilds appearing in both snapshots have directly comparable placements.'};
     }
-    const rows=(latest.guilds||[]).filter(g=>selected.length?selected.some(name=>matches(g.name,name)):true);
+    const rows=(latest.guilds||[]).filter(g=>selected.length?selection.has(norm(g.name)):true);
     return {...summary,totalMatches:rows.length,offset:start,more:start+n<rows.length,standings:rows.slice(start,start+n),
       cove:latest.guilds.find(g=>norm(g.name)==='the pirate cove')||null};
   },
@@ -503,4 +531,4 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
 };
 
 // Exposed for offline regression testing only; no additional HTTP endpoint.
-module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,digits,RESULTS};
+module.exports.__test={directQuestion,routeTool,verifiedAnswer,captureMetadata,digits,resolveNames,RESULTS};
