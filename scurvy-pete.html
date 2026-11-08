@@ -33,12 +33,19 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 .skull-rig{width:clamp(65px,11vw,105px);height:clamp(75px,12vw,120px);flex:none;display:grid;place-items:center;filter:drop-shadow(0 0 12px #6cda7d6b);transform:rotate(-3deg)}
 .skull-rig svg{display:block;width:100%;height:100%}
 .skull-head{fill:#8fc59a;stroke:#c4f9be;stroke-width:2;stroke-linejoin:round}
-.skull-eye,.skull-nose{fill:#06230e}
-.skull-eye{transition:fill .16s ease,filter .16s ease}
-.skull-rig.thinking .skull-eye{fill:#7cbc81;filter:drop-shadow(0 0 3px #7ee786) drop-shadow(0 0 5px #8de991)}
-.skull-rig.speaking .skull-eye{fill:#ceffd0;filter:drop-shadow(0 0 4px #b9ffbe) drop-shadow(0 0 9px #75ef87);animation:pete-eye-talk .55s ease-in-out infinite alternate}
-@keyframes pete-eye-talk{from{opacity:.74}to{opacity:1}}
-
+/* Always keep the eye sockets dark. Two bright inner lenses provide actual
+   contrast instead of washing the entire eye socket into the skull color. */
+.skull-eye,.skull-nose{fill:#03150a}
+.eye-halo{fill:#347746;opacity:.42;transition:fill .15s,opacity .15s}
+.eye-core{fill:#8ed39b;stroke:#143821;stroke-width:.8;opacity:.9;transition:fill .15s,filter .15s}
+.eye-glint{fill:#e4ffe3;opacity:.6}
+.skull-rig.thinking .eye-halo{fill:#3dfa76;opacity:.82}
+.skull-rig.thinking .eye-core{fill:#d1ffdb;opacity:1;filter:drop-shadow(0 0 3px #99ffac) drop-shadow(0 0 7px #40ff75)}
+.skull-rig.thinking .eye-glint{fill:#fff;opacity:1}
+.skull-rig.speaking .eye-halo{fill:#4dff8c;opacity:1;filter:drop-shadow(0 0 4px #47ff76)}
+.skull-rig.speaking .eye-core{fill:#f5fff2;opacity:1;stroke:#a4ffb1;filter:drop-shadow(0 0 4px #f1fff1) drop-shadow(0 0 10px #4eff82);animation:pete-eye-talk .55s ease-in-out infinite alternate}
+.skull-rig.speaking .eye-glint{fill:#fff;opacity:1}
+@keyframes pete-eye-talk{from{filter:drop-shadow(0 0 3px #d6ffd9) drop-shadow(0 0 7px #45ff82)}to{filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 12px #42ff7f)}}
 .skull-teeth{stroke:#123820;stroke-width:2;stroke-linecap:round}
 .skull-jaw{transform-origin:50% 63%;transform-box:view-box}
 .skull-rig.speaking .skull-jaw{animation:jaw-talk .22s steps(2,end) infinite}
@@ -111,7 +118,7 @@ main{padding:9px 5px 20px}
 }
 @media(prefers-reduced-motion:reduce){
 .skull-rig.speaking .skull-jaw{animation:none}
-.block-cursor,.input-caret,.skull-rig.speaking .skull-eye{animation:none;opacity:1}
+.block-cursor,.input-caret,.skull-rig.speaking .eye-core{animation:none;opacity:1}
 }
 </style>
 <script src="app-shell.js?v=3" defer></script>
@@ -133,6 +140,14 @@ main{padding:9px 5px 20px}
 <path class="skull-head" d="M50 10 C25 10 12 27 12 48 C12 64 19 72 28 77 L29 86 L40 89 L60 89 L71 86 L72 77 C81 72 88 64 88 48 C88 27 75 10 50 10Z"/>
 <path class="skull-eye" d="M26 49 C27 39 35 36 42 42 L45 54 L38 60 L30 58Z"/>
 <path class="skull-eye" d="M74 49 C73 39 65 36 58 42 L55 54 L62 60 L70 58Z"/>
+<g class="eye-lights" aria-hidden="true">
+  <ellipse class="eye-halo" cx="35.7" cy="51" rx="7.8" ry="8.2"/>
+  <ellipse class="eye-halo" cx="64.3" cy="51" rx="7.8" ry="8.2"/>
+  <ellipse class="eye-core" cx="35.7" cy="51.5" rx="5.6" ry="6.5"/>
+  <ellipse class="eye-core" cx="64.3" cy="51.5" rx="5.6" ry="6.5"/>
+  <ellipse class="eye-glint" cx="34.1" cy="48.7" rx="1.7" ry="2.1"/>
+  <ellipse class="eye-glint" cx="62.7" cy="48.7" rx="1.7" ry="2.1"/>
+</g>
 <path class="skull-nose" d="M50 57 L43 70 L48 74 L50 70 L52 74 L57 70Z"/>
 <path d="M32 77 Q50 83 68 77 L68 85 Q50 90 32 85Z" fill="#d7f6cb"/>
 <path class="skull-teeth" d="M41 79 L41 87 M50 80 L50 88 M59 79 L59 87"/>
