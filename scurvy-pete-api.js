@@ -640,12 +640,15 @@ async function precisionAnswer(message){
       adjacent.push({up,down,gap:digits(up.experience)-digits(down.experience)});
     }
     adjacent.sort((a,b)=>a.gap-b.gap);
-    if(!adjacent.length)return preciseReply('There are no comparable adjacent ranks in the requested capture.','glb',{evidence:'insufficient'});
+    const ties=adjacent.filter(g=>g.gap===0).length;
+    const contests=adjacent.filter(g=>g.gap>0);
+    if(!contests.length)return preciseReply('No positive XP gaps between adjacent recorded ranks in this capture; '+ties+' pair(s) are tied.','glb',{evidence:'insufficient'});
     const size=requestedTop||3;
     return preciseReply('Closest recorded GLB races ('+recordTime(capture.capturedAt)+'): '+
-      adjacent.slice(0,size).map(g=>'#'+g.up.rank+' '+g.up.name+' vs #'+g.down.rank+' '+
+      contests.slice(0,size).map(g=>'#'+g.up.rank+' '+g.up.name+' vs #'+g.down.rank+' '+
         g.down.name+' — '+g.gap.toLocaleString('en-US')+' GXP apart').join('; ')+
-      '. Historical capture, not live.','glb',{capturedAt:capture.capturedAt});
+      '. '+(ties?ties+' zero-gap tied pair(s) listed separately. ':'')+
+      'Historical capture, not live.','glb',{capturedAt:capture.capturedAt});
   }
   if((requestedTop||asksLeader)&&!asksGrowth){
     const take=requestedTop||1;
@@ -1068,13 +1071,16 @@ function mismatchedGuildXpClaims(answer, archive){
       const occurrences=[];
       for(const name of names){
         const normalized=norm(name),at=(' '+prefix+' ').lastIndexOf(' '+normalized+' ');
-        if(at>=0)occurrences.push({name,at});
+        if(at>=0)occurrences.push({name,at,length:normalized.length});
       }
-      if(/\b(?:cove|our guild|the cove)\b/.test(prefix))
-        occurrences.push({name:'The Pirate Cove',at:(' '+prefix+' ').lastIndexOf(' cove ')});
+      if(/\b(?:cove|our guild|the cove)\b/.test(prefix)&&
+        !occurrences.some(m=>norm(m.name)==='the pirate cove')){
+        const at=prefix.lastIndexOf('cove');
+        if(at>=0)occurrences.push({name:'The Pirate Cove',at,length:4});
+      }
       if(!occurrences.length)continue;
       const nearest=occurrences.sort((a,b)=>b.at-a.at)[0];
-      const after=prefix.slice(nearest.at+norm(nearest.name).length).trim();
+      const after=prefix.slice(nearest.at+nearest.length).trim();
       // Only assert directly attributed XP totals. Gaps, rates, and gains are
       // separate metrics and must use the archive's computed tools.
       if(/\b(?:gap|difference|apart|ahead|behind|trails|lead|gained|increase|by)\b/.test(after))continue;
