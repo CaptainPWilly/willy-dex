@@ -4,8 +4,10 @@ on:
     paths:
       - 'scurvy-pete-api.js'
       - 'tests/scurvy-pete.test.js'
+      - 'tests/pete-staff-intel.test.js'
+      - 'tests/pete-precision.test.js'
       - 'tests/scurvy-pete-frontend.test.js'
-      - 'tests/scurvy-pete-frontend.test.js'
+      - 'scurvy-pete.js'
       - 'package.json'
       - 'cards.json'
       - 'pirate-careers.json'
@@ -16,6 +18,9 @@ on:
     paths:
       - 'scurvy-pete-api.js'
       - 'tests/scurvy-pete.test.js'
+      - 'tests/pete-staff-intel.test.js'
+      - 'tests/pete-precision.test.js'
+      - 'scurvy-pete.js'
       - 'package.json'
   workflow_dispatch:
 permissions:
