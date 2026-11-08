@@ -9,7 +9,7 @@
 <style>
 :root{--phosphor:#a7e5a5;--phosphor-bright:#d6ffd0;--phosphor-dim:#73ac78;--phosphor-dark:#355a3f;--screen:#06150b;--amber:#f0c07d;color-scheme:dark}
 *{box-sizing:border-box}
-body.pete-terminal{margin:0;background:#0a0b08!important;color:var(--phosphor);font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+body.pete-terminal{margin:0;background:#0a0b08!important;color:var(--phosphor);font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 button,textarea,input{font:inherit}
 button{cursor:pointer}
 button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--phosphor-bright);outline-offset:2px}
@@ -72,12 +72,12 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 .composer{display:flex;gap:11px;align-items:flex-end;border-top:1px solid #42694891;padding-top:13px}
 .prompt-marker{flex:none;font-size:22px;color:var(--phosphor-bright);line-height:44px}
 .composer-entry{position:relative;flex:1;min-width:0;display:flex;align-items:stretch}
-.composer textarea{width:100%;min-width:0;max-height:180px;min-height:44px;background:transparent;border:none;outline:none;color:var(--phosphor-bright);padding:11px 0;resize:vertical;caret-color:var(--phosphor);font-size:14px;line-height:1.6;tab-size:8}
+.composer textarea{width:100%;min-width:0;max-height:180px;min-height:44px;background:transparent;border:none;outline:none;color:var(--phosphor-bright);padding:11px 0;resize:vertical;caret-color:var(--phosphor);font-size:16px;line-height:1.6;tab-size:8}
 .composer textarea::placeholder{color:#729a71}
 .composer textarea:focus::placeholder{color:transparent}
 .composer textarea:focus-visible{outline:none}
 .composer-entry.custom-caret textarea{caret-color:transparent}
-.caret-mirror{position:absolute;top:0;left:0;width:100%;padding:11px 0;white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;visibility:hidden;pointer-events:none;box-sizing:border-box;font-size:14px;line-height:1.6;tab-size:8}
+.caret-mirror{position:absolute;top:0;left:0;width:100%;padding:11px 0;white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;visibility:hidden;pointer-events:none;box-sizing:border-box;font-size:16px;line-height:1.6;tab-size:8}
 .caret-marker{display:inline-block;width:0;height:1em;vertical-align:-.1em;pointer-events:none}
 .input-caret{position:absolute;z-index:3;left:0;top:0;width:.64em;height:1.45em;background:var(--phosphor-bright);box-shadow:0 0 9px #a7e5a575;pointer-events:none;animation:blink-block 1s steps(1,end) infinite}
 .input-caret[hidden]{display:none!important}
@@ -91,13 +91,13 @@ main{max-width:1160px;margin:auto;padding:24px clamp(8px,2vw,26px) 36px}
 @media(max-width:640px){
 main{padding:9px 5px 20px}
 .terminal-case{padding:6px;border-radius:22px}
-.screen{border-radius:34px / 25px;min-height:calc(100dvh - 180px)}
-.screen-body{padding:26px 18px 20px;min-height:calc(100dvh - 180px)}
+.screen{border-radius:34px / 25px;min-height:calc(100svh - 180px)}
+.screen-body{padding:26px 18px 20px;min-height:calc(100svh - 180px)}
 .skull-rig{width:64px;height:75px}
 .brand-line{min-height:37px}
 .brand h1{font-size:clamp(21px,6vw,29px)}
 .brand-sub{font-size:9px;letter-spacing:.05em}
-.messages{max-height:calc(100dvh - 410px);min-height:32dvh}
+.messages{max-height:calc(100svh - 410px);min-height:32svh}
 .gate{margin-top:36px}
 .gate-title{font-size:15px}
 .gate-line{gap:7px}
@@ -109,7 +109,7 @@ main{padding:9px 5px 20px}
 }
 </style>
 <script src="app-shell.js?v=3" defer></script>
-<script src="scurvy-pete.js?v=5" defer></script>
+<script src="scurvy-pete.js?v=6" defer></script>
 </head>
 <body class="pete-terminal">
 <div id="wc-app-mount"></div>
