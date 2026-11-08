@@ -253,7 +253,7 @@ function directQuestion(message){
   const xpWords=/\b(?:xp|gxp|experience|guild xp)\b/;
   const records=/\b(?:biggest|most|best|highest|largest|peak|record|maximum|top)\b/;
   if(xpWords.test(q)&&dateWords.test(q)&&records.test(q))return 'best_gxp_day';
-  if(/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:victories|war wins|wars won|won wars)\b/.test(q))return 'war_win_count';
+  if(/\b(?:how many|number of|count|total)\b/.test(q)&&(/\b(?:victories|war wins|wars won|won wars)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q)))return 'war_win_count';
   if(/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:cards|card slots|registry cards)\b/.test(q))return 'card_count';
   if(/\b(?:highest level|biggest level|top level|highest leveled)\b/.test(q)&&!/\b(?:growth|gained)\b/.test(q))return 'highest_card_level';
   if(/\b(?:our|cove|pirate cove|arg|we)\b/.test(q)&&/\b(?:rank|ranking|placement|place|position)\b/.test(q)&&!/\b(?:season history|over time|change|changes|compared|since)\b/.test(q))return 'cove_latest_rank';
@@ -300,7 +300,8 @@ function routeTool(message){
   const q=norm(message);
   if(/\b(?:tag|tags|sprite|saber|boots|fish)\b/.test(q))return 'find_tags';
   if(/\b(?:video|recap|watch|download|clip|studio)\b/.test(q))return 'find_videos';
-  if(/\b(?:war victories|victories|war wins|wars won|defeated|war rewards)\b/.test(q))return 'find_wins';
+  if(/\b(?:war victories|victories|war wins|wars won|won wars|defeated|war rewards)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q))return 'find_wins';
+  if(/\b(?:war|wars|victory|wins)\b/.test(q)&&/\b(?:reward|xp|experience|exp)\b/.test(q)&&!/\b(?:gxp|guild xp)\b/.test(q))return 'find_wins';
   if(/\b(?:glb|leaderboard|gxp|xp|experience|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:war|wars|attack|kills|battles|opponents|enemy)\b/.test(q))return 'find_wars';
   if(/\b(?:joined|join|left|leave|removed|departed|tenure|careers|membership history)\b/.test(q))return 'find_careers';
@@ -313,7 +314,11 @@ function captureMetadata(id,doc){
   else if(id==='wins')at=doc.capturedOn||null;
   else if(id==='cards')at=doc.filter(c=>c.name&&c.name!=='???').flatMap(c=>[c.date,...(c.level_snapshots||[]).map(x=>x.date)]).reduce((latest,s)=>sortDate(s)>sortDate(latest)?s:latest,null);
   else if(id==='videos')at=(doc.editions||[]).reduce((latest,s)=>sortDate(s.capturedAt)>sortDate(latest)?s.capturedAt:latest,null);
-  else if(id==='careers')at='2026-11-04'; // Last explicitly dated removal import in the current archive.
+  else if(id==='careers'){
+    const dates=[doc.importMetadata?.recordedAt,doc.departureImport?.reportedOn,doc.removalImport?.reportedOn,
+      ...(doc.additionalRemovalImports||[]).map(e=>e.reportedOn)].filter(Boolean);
+    at=dates.reduce((latest,s)=>sortDate(s)>sortDate(latest)?s:latest,null);
+  }
   const days=at&&sortDate(at)?Math.max(0,Math.floor((Date.now()-sortDate(at))/86400000)):null;
   return {collection:id,archived:true,lastRecordAt:at,daysSinceLastRecord:days,
     freshness:days===null?'undated':days>3?'historical':'recently captured',
@@ -421,8 +426,21 @@ async function chat(message,history){
         }catch(e){response={error:str(e.message,170),source:call.name};}
       }
       let serialized=JSON.stringify(response);
-      // Record counts and paging flags stay intact; avoid gigantic tool results.
-      if(serialized.length>42000)serialized=JSON.stringify({error:'Too many records for one response; repeat tool call with smaller limit.',hint:'Use offset/limit pagination.'});
+      // Preserve totals and paging flags when a result is too large for model context.
+      if(serialized.length>42000){
+        const key=['cards','records','wars','timeline','standings','dailyGains','editions','changes','tags'].find(k=>Array.isArray(response?.[k]));
+        if(key){
+          const available=response[key].length;
+          response={...response,[key]:response[key].slice(0,12).map(item=>{
+            if(key==='cards')return {number:item.number,name:item.name,level:item.level,roles:item.roles,lastLevelRecord:item.lastLevelRecord,recordedGrowth:item.recordedGrowth};
+            if(key==='records'&&'periods' in item)return {name:item.name,membershipStatus:item.membershipStatus,periodCount:(item.periods||[]).length,periods:(item.periods||[]).slice(0,3)};
+            return item;
+          }),partial:true,returnedFromThisPage:Math.min(12,available),more:true,
+            warning:'Partial preview due to size. Use narrower filters or smaller pages before giving an exhaustive answer.'};
+          serialized=JSON.stringify(response);
+        }
+        if(serialized.length>42000)serialized=JSON.stringify({error:'Tool result exceeds size limit; use a smaller limit.',totalMatches:response?.totalMatches||null,partial:true});
+      }
       input.push({type:'function_call_output',call_id:call.call_id,output:serialized});
     }
   }
