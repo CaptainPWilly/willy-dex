@@ -172,6 +172,57 @@ test('rapid wrong access-key guesses are throttled before AI is called',async()=
   assert.deepEqual(statuses.slice(0,12),Array(12).fill(401));
   assert.equal(statuses[12],429);
 });
+test('Ahoy is conversational and never opens an irrelevant archive',async()=>{
+  useFixtures(()=>{throw Error('A greeting must not invoke AI.');});
+  const r=await verifiedAnswer('Ahoy!');
+  assert.match(r.answer,/ahoy/i);
+  assert.deepEqual(r.sources,[]);
+  assert.equal(r.evidence,'conversation');
+  assert.equal(modelRequests.length,0);
+});
+test('season status is calculated from actual first and latest GLB snapshots',async()=>{
+  useFixtures(()=>{throw Error('The model must not invent season stats.');});
+  const r=await verifiedAnswer('How is the cove doing this season?');
+  const d=fixture('glb.json');
+  const observations=d.snapshots.slice().sort((a,b)=>Date.parse(a.capturedAt)-Date.parse(b.capturedAt))
+    .map(s=>({capturedAt:s.capturedAt,cove:s.guilds.find(g=>g.name==='The Pirate Cove')}))
+    .filter(s=>s.cove);
+  const first=observations[0],last=observations.at(-1),previous=observations.at(-2);
+  const total=last.cove.experience-first.cove.experience;
+  assert.match(r.answer,new RegExp(total.toLocaleString('en-US')));
+  assert.match(r.answer,new RegExp(last.cove.experience.toLocaleString('en-US')));
+  assert.match(r.answer,new RegExp('#'+last.cove.rank));
+  assert.match(r.answer,new RegExp((last.cove.experience-previous.cove.experience).toLocaleString('en-US')));
+  assert.match(r.answer,/archived snapshots, not live/i);
+  assert.deepEqual(r.sources.map(x=>x.id),['glb']);
+  assert.equal(modelRequests.length,0);
+});
+test('latest Cove GXP is direct, date-stamped and sourced to GLB',async()=>{
+  useFixtures(()=>{throw Error('No AI should be needed for latest GXP.');});
+  const r=await verifiedAnswer('Latest guild xp for the cove');
+  const last=fixture('glb.json').snapshots.at(-1);
+  const row=last.guilds.find(x=>x.name==='The Pirate Cove');
+  assert.match(r.answer,new RegExp(row.experience.toLocaleString('en-US')));
+  assert.match(r.answer,new RegExp('#'+row.rank));
+  assert.match(r.answer,/not live data/i);
+  assert.deepEqual(r.sources.map(x=>x.id),['glb']);
+});
+test('Cove recruit count uses Recruit-tagged cards, not career status',async()=>{
+  useFixtures(()=>{throw Error('No AI should be needed for recorded recruits.');});
+  const r=await verifiedAnswer('How many recruits do we have');
+  const cards=fixture('cards.json');
+  const recruits=cards.filter(c=>(c.roles||[]).includes('Recruit')&&String(c.guild).toUpperCase()==='ARG');
+  assert.match(r.answer,new RegExp('\\b'+recruits.length+' Cove recruits\\b'));
+  for(const card of recruits)assert.ok(r.answer.includes(card.name));
+  assert.match(r.answer,/not a verified live roster/i);
+  assert.deepEqual(r.sources.map(x=>x.id),['cards']);
+  assert.equal(modelRequests.length,0);
+});
+test('another guild recruit count does not inherit Cove records',async()=>{
+  assert.equal(directQuestion('How many recruits does Helheim have?'),null);
+  assert.equal(directQuestion('How many recruits are in Umbral?'),null);
+  assert.equal(directQuestion('How many recruits do we have'),'recruit_count');
+});
 test('missing numeric values stay unknown rather than being converted to zero',()=>{
   const {digits}=pete.__test;
   assert.equal(digits(null),null);
