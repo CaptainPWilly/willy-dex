@@ -27,6 +27,8 @@ test.after(()=>{global.fetch=originalFetch;});
 test('routes war reward XP separately from guild season XP',()=>{
   assert.equal(routeTool('How much XP do war victories reward?'),'find_wins');
   assert.equal(routeTool('How much GXP did the Cove gain this season?'),'find_leaderboard');
+  assert.equal(routeTool('Which player earned the most XP?'),'find_cards');
+  assert.equal(routeTool('How much guild XP did the Cove gain?'),'find_leaderboard');
   assert.equal(routeTool('Who was removed from the guild?'),'find_careers');
   assert.equal(routeTool('Who are the officers?'),'find_cards');
   assert.equal(routeTool('What wars are on record?'),'find_wars');
