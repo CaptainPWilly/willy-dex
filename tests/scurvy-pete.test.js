@@ -31,6 +31,10 @@ test('routes war reward XP separately from guild season XP',()=>{
   assert.equal(routeTool('How much guild XP did the Cove gain?'),'find_leaderboard');
   assert.equal(routeTool('Who was removed from the guild?'),'find_careers');
   assert.equal(routeTool('Who are the officers?'),'find_cards');
+  assert.equal(routeTool('Who are the founders?'),'find_cards');
+  assert.equal(routeTool('Show me the current roster'),'find_cards');
+  assert.equal(routeTool('List our crew'),'find_cards');
+  assert.equal(routeTool('Who are the recruits?'),'find_cards');
   assert.equal(routeTool('What wars are on record?'),'find_wars');
   assert.equal(routeTool('Show me the new videos'),'find_videos');
   assert.equal(routeTool('What SMMO tags do we have?'),'find_tags');
