@@ -6,9 +6,9 @@ const peteApi=require('./scurvy-pete-api');
 const BASE='https://api.github.com/repos/CaptainPWilly/willy-dex/contents/';
 const origin=(process.env.ALLOWED_ORIGIN||'https://captainpwilly.github.io').replace(/\/$/,'');
 const password=process.env.ADMIN_PASSWORD||'',githubToken=process.env.GITHUB_TOKEN||'';
-if(!password){console.error('Missing ADMIN_PASSWORD');process.exit(1)}
+if(!password)console.warn('ADMIN_PASSWORD is missing; editor login is disabled. Public and Pete endpoints can still start.');
 if(!githubToken)console.warn('GITHUB_TOKEN is not configured; editor saves and uploads are disabled until configured.');
-const passSalt=crypto.randomBytes(32),passHash=crypto.scryptSync(password,passSalt,64);
+const passSalt=crypto.randomBytes(32),passHash=password?crypto.scryptSync(password,passSalt,64):null;
 const sessions=new Map(),attempts=new Map();
 const anonymousVideoRequests=new Map();
 let anonymousVideoBusy=false;
@@ -26,7 +26,7 @@ setInterval(()=>{const now=Date.now();for(const [k,v] of sessions)if(v<=now)sess
 http.createServer(async(req,res)=>{if(!cors(req,res))return json(res,403,{error:'Origin not allowed'});if(req.method==='OPTIONS'){res.writeHead(204);return res.end()}if(req.url==='/health'&&req.method==='GET')return json(res,200,{ok:true});
 try{
 if(await peteApi.handle(req,res,{json,read,authorized,origin}))return;
-if(req.url==='/api/login'&&req.method==='POST'){const ip=req.socket.remoteAddress||'unknown';if(rateLimit(ip))return json(res,429,{error:'Too many attempts. Try again later.'});const data=await read(req);const attempted=crypto.scryptSync(String(data.password||''),passSalt,64);if(!crypto.timingSafeEqual(attempted,passHash))return json(res,401,{error:'Wrong password'});attempts.delete(ip);const token=crypto.randomBytes(32).toString('base64url');sessions.set(crypto.createHash('sha256').update(token).digest('hex'),Date.now()+12*3600*1000);return json(res,200,{token,expiresIn:43200})}
+if(req.url==='/api/login'&&req.method==='POST'){if(!passHash)return json(res,503,{error:'Editor login not configured'});const ip=req.socket.remoteAddress||'unknown';if(rateLimit(ip))return json(res,429,{error:'Too many attempts. Try again later.'});const data=await read(req);const attempted=crypto.scryptSync(String(data.password||''),passSalt,64);if(!crypto.timingSafeEqual(attempted,passHash))return json(res,401,{error:'Wrong password'});attempts.delete(ip);const token=crypto.randomBytes(32).toString('base64url');sessions.set(crypto.createHash('sha256').update(token).digest('hex'),Date.now()+12*3600*1000);return json(res,200,{token,expiresIn:43200})}
 if(req.url==='/api/logout'&&req.method==='POST'){const key=(req.headers.authorization||'').replace(/^Bearer /,'');sessions.delete(crypto.createHash('sha256').update(key).digest('hex'));return json(res,200,{ok:true})}
 if(req.url==='/api/cards'&&req.method==='POST'){if(!authorized(req))return json(res,401,{error:'Editor locked'});const data=await read(req);const file=await git('cards.json');const list=JSON.parse(Buffer.from(file.content,'base64').toString('utf8'));if(!Array.isArray(list))throw Error('Invalid registry');const action=data.action;if(action!=='save'&&action!=='delete')return json(res,400,{error:'Invalid action'});
 let number;if(action==='delete'){number=String(data.number);if(!/^\d{3}$/.test(number))throw Error('Invalid number');const idx=list.findIndex(x=>x.number===number);if(idx<0)throw Error('Card not found');list[idx]={number,name:'???',type:'???',image:null}}
