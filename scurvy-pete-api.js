@@ -94,6 +94,9 @@ async function analyzeGLB({mode,window,guilds,limit}){
   const names=snaps.flatMap(s=>(s.guilds||[]).map(g=>g.name));
   const selected=(guilds||[]).flatMap(n=>resolveNames(names,n));
   const selection=new Set(selected.map(norm));
+  const unknownRequested=(guilds||[]).filter(requested=>!selected.some(known=>norm(known)===norm(requested)));
+  if((guilds||[]).length&&!selected.length)return {...common,requestedGuilds:guilds,unknownGuilds:guilds,
+    error:'None of the requested guild names appears in recorded top-50 snapshots; no Cove fallback.',guilds:[],growth:[],closest:[],standings:[]};
   const max=clamp(limit,1,50);
   const previousRows=earlier?.guilds||[];
   const previous=new Map(previousRows.map(g=>[norm(g.name),g]));
@@ -111,7 +114,7 @@ async function analyzeGLB({mode,window,guilds,limit}){
     const ordered=growth.filter(g=>!selected.length||selection.has(norm(g.name)))
       .sort((a,b)=>b.xpGain-a.xpGain||a.toRank-b.toRank);
     return {...common,metric:'recorded XP increase between two actual snapshots',comparableGuilds:growth.length,
-      missingFromEarlierSnapshot:missingPrior,selectedGuilds:selected,totalMatches:ordered.length,growth:ordered.slice(0,max)};
+      missingFromEarlierSnapshot:missingPrior,selectedGuilds:selected,unknownGuilds:unknownRequested,totalMatches:ordered.length,growth:ordered.slice(0,max)};
   }
   if(mode==='races'){
     const gaps=[];
@@ -142,7 +145,7 @@ async function analyzeGLB({mode,window,guilds,limit}){
         ahead:current&&above&&above.rank===current.rank-1?{name:above.name,rank:above.rank,gapXp:digits(above.experience)-digits(current.experience)}:null,
         behind:current&&below&&below.rank===current.rank+1?{name:below.name,rank:below.rank,gapXp:digits(current.experience)-digits(below.experience)}:null});
     }
-    return {...common,metric:'last observed guild performance and nearest-rank gaps',guilds:output.slice(0,max)};
+    return {...common,metric:'last observed guild performance and nearest-rank gaps',unknownGuilds:unknownRequested,guilds:output.slice(0,max)};
   }
   const total=latestRows.filter(g=>!selected.length||selection.has(norm(g.name)));
   return {...common,metric:'latest captured top-50 standings',totalMatches:total.length,standings:total.slice(0,max)};
@@ -293,10 +296,14 @@ const RESULTS={
     const allGuildNames=ss.flatMap(s=>(s.guilds||[]).map(g=>g.name));
     const selected=requested.flatMap(name=>resolveNames(allGuildNames,name));
     const selection=new Set(selected.map(norm));
+    const unknownRequested=requested.filter(name=>!selected.some(found=>norm(name)===norm(found)));
     const start=clamp(offset,0,10000),n=clamp(limit,1,100);
     const summary={mode,season:data.season,snapshots:ss.length,firstCapturedAt:ss[0]?.capturedAt||null,lastCapturedAt:latest?.capturedAt||null,requestGuilds:selected,
       warning:'Only ranks explicitly present in captured top-50 snapshots are known. No interpolation, invented placements, or live standings.'};
     if(!latest)return summary;
+    if(requested.length&&!selected.length)return {...summary,unknownGuilds:requested,totalMatches:0,
+      standings:[],timeline:[],dailyGains:[],changes:[],largestObservedGain:null,
+      warning:'Requested guild not present in any archived top-50 snapshot. Do not substitute another guild.'};
     if(mode==='timeline'){
       const rows=ss.map(s=>({capturedAt:s.capturedAt||s.date,season:s.season||data.season,guilds:(s.guilds||[]).filter(g=>selected.length?selection.has(norm(g.name)):norm(g.name)==='the pirate cove')}));
       return {...summary,totalMatches:rows.length,offset:start,more:start+n<rows.length,timeline:rows.slice(start,start+n)};
@@ -426,6 +433,18 @@ function directQuestion(message){
   const q=norm(message);
   // Social greetings are not archive questions. Never manufacture a knowledge citation.
   if(/^(?:ahoy|hello|hi|hey|yo|hiya|greetings|good morning|good evening|good afternoon|hey pete|ahoy pete|hello pete|hi pete)$/.test(q))return 'greeting';
+  const roleWords=/\b(?:officers?|co leads?|co leaders?|recruits?|founders?|warriors?|guild leads?)\b/.test(q);
+  const roleQuestion=/\b(?:who are|who're|which|list|show|how many|count|name all|tell me who|names of)\b/.test(q);
+  if(roleWords&&roleQuestion&&!/\b(?:helheim|umbral|coven|kairos|arcane|other guild|opponents)\b/.test(q)
+    &&!/\b(?:when|promoted|joined|left|removed|historically)\b/.test(q))return 'recorded_role_list';
+  const glbWord=/\b(?:glb|leaderboard|gxp|guild xp|guild experience|season)\b/.test(q);
+  if(glbWord&&/\b(?:closest|tightest|close fights?|races?|smallest gap|narrowest|biggest leads?)\b/.test(q))return 'glb_races';
+  if(glbWord&&/\b(?:most gained|gained most|most growth|grew most|fastest growth|fastest growing|biggest gain|highest gain|earned most)\b/.test(q)
+    &&!/\b(?:daily|day|24 hour)\b/.test(q))
+    return /\b(?:since last|last update|latest|previous snapshot|last snapshot|recent)\b/.test(q)?'glb_growth_latest':'glb_growth_season';
+  if(glbWord&&/\b(?:who leads|who is first|who s first|top 5|top 10|top ten|top five|leaderboard leaders|glb leaders)\b/.test(q))return 'glb_top';
+  if(/\b(?:cove|our|ours|we|us|arg|the pirate cove)\b/.test(q)&&/\b(?:gap|how far|behind us|ahead of us|above us|below us|rank above|rank below|next rank|next place|catching us)\b/.test(q)
+    &&!/\b(?:versus|vs|and|compared|between)\b/.test(q))return 'cove_nearest_ranks';
   const coveScope=/\b(?:the pirate cove|cove|our|ours|we|us|arg)\b/.test(q);
   const registryScope=/\b(?:willy dex|willydex|registry|card slots)\b/.test(q);
   const comparisons=/\b(?:against|versus|vs|compare|compares|comparing|compared|comparison|rather than|between|both|each|and|either|or)\b/.test(q);
@@ -462,6 +481,60 @@ async function verifiedAnswer(message){
         sources:[source('wins')],evidence:'insufficient'};
     }
     return null;
+  }
+  if(kind==='recorded_role_list'){
+    const q=norm(message);
+    const roles=[['co lead',/\bco leads?\b|\bco leaders?\b/],['Guild Lead',/\bguild leads?\b/],
+      ['Officer',/\bofficers?\b/],['Recruit',/\brecruits?\b/],
+      ['Founder',/\bfounders?\b/],['Warrior',/\bwarriors?\b/]];
+    const entry=roles.find(([name,test])=>test.test(q));
+    const role=entry?.[0]==='co lead'?'Co-Lead':entry?.[0];
+    if(role){
+      const rows=await analyzeMembers({mode:'roles',query:'',role,limit:100});
+      const names=rows.members.map(c=>c.name).join(', ');
+      return {answer:'Willy Dex lists '+rows.totalMatches+' recorded Cove '+role+
+        (rows.totalMatches===1?'':'s')+(names?': '+names+'.':'.')+
+        ' Roles are archived, not verified live.',
+        sources:[source('cards')],evidence:'calculated',count:rows.totalMatches};
+    }
+  }
+  if(kind==='glb_races'){
+    const data=await analyzeGLB({mode:'races',window:'latest',guilds:[],limit:5});
+    const top=data.closest?.slice(0,3)||[];
+    return {answer:top.length?
+      'Closest recorded Season '+data.season+' GLB fights ('+recordTime(data.latestCapturedAt)+'): '+
+      top.map(r=>'#'+r.above.rank+' '+r.above.name+' vs #'+r.below.rank+' '+r.below.name+
+        ' — '+r.gapXp.toLocaleString('en-US')+' GXP apart').join('; ')+'. Historical snapshot, not live.':
+      'There are no comparable adjacent-ranked guilds in the archived GLB capture.',
+      sources:[source('glb')],evidence:top.length?'calculated':'insufficient'};
+  }
+  if(kind==='glb_growth_latest'||kind==='glb_growth_season'){
+    const window=kind==='glb_growth_latest'?'latest':'season';
+    const data=await analyzeGLB({mode:'growth',window,guilds:[],limit:5});
+    const top=data.growth||[];
+    return {answer:top.length?
+      'Most recorded Season '+data.season+' GXP gained from '+recordTime(data.fromCapturedAt)+
+      ' to '+recordTime(data.latestCapturedAt)+': '+
+      top.slice(0,5).map((g,i)=>(i+1)+'. '+g.name+' +'+g.xpGain.toLocaleString('en-US')+
+        ' GXP (#'+g.fromRank+' → #'+g.toRank+')').join('; ')+
+      '. Only guilds present in both snapshots are compared.':
+      'No guilds appear with recorded XP in both snapshots, so a growth comparison is unavailable.',
+      sources:[source('glb')],evidence:top.length?'calculated':'insufficient'};
+  }
+  if(kind==='glb_top'){
+    const data=await analyzeGLB({mode:'snapshot',window:'latest',guilds:[],limit:10});
+    return {answer:'Season '+data.season+' latest recorded top 10 ('+recordTime(data.latestCapturedAt)+'): '+
+      (data.standings||[]).map(g=>'#'+g.rank+' '+g.name+' '+digits(g.experience).toLocaleString('en-US')+' GXP').join('; ')+
+      '. Historical capture, not live.',sources:[source('glb')],evidence:'calculated'};
+  }
+  if(kind==='cove_nearest_ranks'){
+    const data=await analyzeGLB({mode:'guild',window:'latest',guilds:['The Pirate Cove'],limit:1});
+    const row=data.guilds?.[0];
+    if(!row?.latest)return {answer:'The Cove has no rank in the latest captured top-50.',sources:[source('glb')],evidence:'insufficient'};
+    const ahead=row.ahead?'#'+row.ahead.rank+' '+row.ahead.name+' is '+row.ahead.gapXp.toLocaleString('en-US')+' GXP ahead':'No recorded guild directly ahead';
+    const behind=row.behind?'#'+row.behind.rank+' '+row.behind.name+' is '+row.behind.gapXp.toLocaleString('en-US')+' GXP behind':'No recorded guild directly behind';
+    return {answer:'The Cove is #'+row.latest.rank+' in the archived Season '+data.season+' GLB ('+recordTime(data.latestCapturedAt)+'). '+ahead+'. '+behind+'. Not live.',
+      sources:[source('glb')],evidence:'calculated'};
   }
   if(kind==='greeting'){
     return {answer:'Ahoy. What do you need?',sources:[],evidence:'conversation'};
@@ -554,12 +627,16 @@ function routeTool(message){
   if(/\b(?:war|wars|victory|wins)\b/.test(q)&&/\b(?:reward|xp|experience|exp)\b/.test(q)&&!/\b(?:gxp|guild xp)\b/.test(q))return 'find_wins';
   // Player XP and Guild XP are different metrics. Cards track LEVELS, not XP earned.
   if(/\b(?:who|player|member|officer|person|individual)\b/.test(q)&&/\b(?:xp|experience|level|growth)\b/.test(q)&&!/\b(?:gxp|guild xp|leaderboard|glb)\b/.test(q))return 'find_cards';
-  if(/\b(?:glb|leaderboard|gxp|guild xp|season|ranking|standings)\b/.test(q))return 'find_leaderboard';
+  if(/\b(?:glb|leaderboard|gxp|guild xp|season|ranking|standings)\b/.test(q)){
+    if(/\b(?:growth|grew|gain|gained|changes|change|gap|races?|ahead|behind|closest|compare|comparison|moved|movement|trend|trends|lead|leaders)\b/.test(q))
+      return 'analyze_glb';
+    return 'find_leaderboard';
+  }
   if(/\b(?:xp|experience)\b/.test(q)&&!/\b(?:war|wars|war reward|victory|player|member|officer|individual)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:xp|experience)\b/.test(q)&&/\b(?:cove|guild|arg|our|we)\b/.test(q))return 'find_leaderboard';
   if(/\b(?:wars?|attacks?|kills?|battles?|opponents?|enemies|enemy)\b/.test(q))return 'find_wars';
   if(/\b(?:joined|joins?|left|leaves?|removed|removals?|departed|departures?|tenure|careers?|membership history|membership records)\b/.test(q))return 'find_careers';
-  if(/\b(?:members?|players?|cards?|levels?|officers?|founders?|recruits?|roles?|aliases?|leaders?|captains?|crewmates?|crew|roster|pirates?)\b/.test(q))return 'find_cards';
+  if(/\b(?:members?|players?|cards?|levels?|officers?|founders?|recruits?|roles?|aliases?|leaders?|captains?|crewmates?|crew|roster|pirates?|promotions?|promoted|growth)\b/.test(q))return 'analyze_members';
   return null;
 }
 function captureMetadata(id,doc){
