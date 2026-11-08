@@ -252,11 +252,11 @@ function directQuestion(message){
   const dateWords=/\b(?:day|daily|24 hour|calendar day|per day)\b/;
   const xpWords=/\b(?:xp|gxp|experience|guild xp)\b/;
   const records=/\b(?:biggest|most|best|highest|largest|peak|record|maximum|top)\b/;
-  if(xpWords.test(q)&&dateWords.test(q)&&records.test(q))return 'best_gxp_day';
+  if(xpWords.test(q)&&dateWords.test(q)&&records.test(q)&&(!/\b(?:war|wars|battle|victory|reward)\b/.test(q)||/\b(?:gxp|guild xp)\b/.test(q)))return 'best_gxp_day';
   if(/\b(?:how many|number of|count|total)\b/.test(q)&&(/\b(?:victories|war wins|wars won|won wars)\b/.test(q)||/\bwars?\b.*\bwon\b/.test(q)))return 'war_win_count';
   if(/\b(?:how many|number of|count|total)\b/.test(q)&&/\b(?:cards|card slots|registry cards)\b/.test(q))return 'card_count';
   if(/\b(?:highest level|biggest level|top level|highest leveled)\b/.test(q)&&!/\b(?:growth|gained)\b/.test(q))return 'highest_card_level';
-  if(/\b(?:our|cove|pirate cove|arg|we)\b/.test(q)&&/\b(?:rank|ranking|placement|place|position)\b/.test(q)&&!/\b(?:season history|over time|change|changes|compared|since)\b/.test(q))return 'cove_latest_rank';
+  if(/\b(?:our|cove|pirate cove|arg|we)\b/.test(q)&&/\b(?:rank|ranking|placement|place|position)\b/.test(q)&&!/\b(?:season history|over time|change|changes|compared|since|yesterday|previous|last week)\b/.test(q)&&!/\b(?:season\s+\d+|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|\d{4}\s+\d{1,2})\b/.test(q))return 'cove_latest_rank';
   return null;
 }
 async function verifiedAnswer(message){
