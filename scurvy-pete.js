@@ -15,7 +15,6 @@ var reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: re
 function status(message,error){
   notice.textContent=message||'';
   notice.classList.toggle('error',!!error);
-  notice.classList.toggle('transmitting',message==='RECEIVING TRANSMISSION...');
 }
 /* Draw a true block typing caret at the user's textarea selection. The textarea
  * remains a native control (keyboard, paste, selection, mobile and accessibility).
@@ -80,7 +79,7 @@ function resetMessages(){
   messages.replaceChildren();
   empty=document.createElement('div');
   empty.id='empty';empty.className='empty';
-  empty.textContent='AWAITING QUERY';
+  empty.textContent='ASK PETE ABOUT THE COVE';
   messages.appendChild(empty);
 }
 function addSources(wrap,sources){
@@ -112,7 +111,7 @@ function busy(on,phase){
   loading=on;
   send.disabled=on;
   field.disabled=on;
-  send.textContent=on?(phase==='typing'?'PRINTING':'PROCESSING'):'SEND';
+  send.textContent='SEND';
   scheduleCaret();
 }
 function reveal(node,text){
@@ -167,7 +166,7 @@ async function ask(text){
   var id=++epoch;
   var previous=history.slice(-10);
   bubble('user',text);
-  busy(true,'thinking');status('QUERYING WILLY DEX ARCHIVES...');
+  busy(true,'thinking');status('SEARCHING WILLY DEX...');
   requestController=new AbortController();
   var abort=requestController;
   var timer=setTimeout(function(){abort.abort();},60000);
@@ -186,17 +185,16 @@ async function ask(text){
     if(typeof data.answer!=='string')throw Error('EMPTY RESPONSE FROM PETE');
     var node=bubble('assistant','');
     busy(true,'typing');
-    status('RECEIVING TRANSMISSION...');
+    status('');
     var completed=await reveal(node,data.answer);
     if(!completed||id!==epoch)return;
     addSources(node.wrap,data.sources);
     history.push({role:'user',content:text},{role:'assistant',content:data.answer});
-    status('TRANSMISSION COMPLETE');
+    status('');
   }catch(e){
     if(id!==epoch)return;
     var error=e.name==='AbortError'?'CONNECTION TIMED OUT':e.message;
     status(error,true);
-    bubble('assistant','TRANSMISSION INTERRUPTED. '+error);
   }finally{
     clearTimeout(timer);
     if(requestController===abort)requestController=null;
@@ -216,7 +214,7 @@ function boot(){
     sub.hidden=false;
     booted=true;
     locked(true);
-    status('AWAITING AUTHORIZATION');
+    status('');
   }
   if(reduced){done();return;}
   function next(){
@@ -245,7 +243,7 @@ gate.addEventListener('submit',function(e){
   access=value;
   code.value='';
   locked(false);
-  status('AUTHORIZATION RECEIVED // WILLY DEX LINK ACTIVE');
+  status('');
 });
 $('access-button').addEventListener('click',function(){
   if(!booted)return;
@@ -255,10 +253,10 @@ $('access-button').addEventListener('click',function(){
     history=[];
     resetMessages();
     locked(true);
-    status('TERMINAL LOCKED');
+    status('');
   }else{
     locked(true);
-    status('ENTER PETE KEY');
+    status('');
   }
 });
 $('clear-button').addEventListener('click',function(){
@@ -267,18 +265,15 @@ $('clear-button').addEventListener('click',function(){
   resetMessages();
   field.value='';
   scheduleCaret();
-  status('TERMINAL LOG CLEARED');
+  status('');
 });
 skip.addEventListener('click',function(){if(activeReply)activeReply.finish();});
 fetch(API+'/api/pete/status',{cache:'no-store'})
   .then(function(r){if(!r.ok)throw Error();return r.json();})
   .then(function(data){
-    var online=!!data.ready;
-    $('state').classList.toggle('online',online);
-    $('state-label').textContent=online?(data.integration==='read-only-live-willy-dex-collections'?'WILLY DEX LINKED':'AI LINK ONLINE'):'AI LINK OFFLINE';
-    if(!online)status('OPENAI API KEY IS NOT CONFIGURED',true);
-    else if(!data.accessConfigured)status('PETE ACCESS CODE NOT CONFIGURED',true);
+    if(!data.ready)status('AI SERVICE UNAVAILABLE',true);
+    else if(!data.accessConfigured)status('TERMINAL ACCESS UNAVAILABLE',true);
   })
-  .catch(function(){$('state-label').textContent='LINK UNAVAILABLE';$('state').classList.remove('online');});
+  .catch(function(){status('WILLY DEX CONNECTION UNAVAILABLE',true);});
 boot();
 })();
