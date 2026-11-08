@@ -1,0 +1,30 @@
+name: Scurvy Pete reliability
+on:
+  push:
+    paths:
+      - 'scurvy-pete-api.js'
+      - 'tests/scurvy-pete.test.js'
+      - 'package.json'
+      - 'cards.json'
+      - 'pirate-careers.json'
+      - 'wars.json'
+      - 'war-victories.json'
+      - 'glb.json'
+  pull_request:
+    paths:
+      - 'scurvy-pete-api.js'
+      - 'tests/scurvy-pete.test.js'
+      - 'package.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
