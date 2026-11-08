@@ -307,7 +307,7 @@ function directQuestion(message){
   if(/^(?:ahoy|hello|hi|hey|yo|hiya|greetings|good morning|good evening|good afternoon|hey pete|ahoy pete|hello pete|hi pete)$/.test(q))return 'greeting';
   const coveScope=/\b(?:the pirate cove|cove|our|ours|we|us|arg)\b/.test(q);
   const registryScope=/\b(?:willy dex|willydex|registry|card slots)\b/.test(q);
-  const comparisons=/\b(?:against|versus|vs|compared|comparison|rather than|between|both|each|and|either|or)\b/.test(q);
+  const comparisons=/\b(?:against|versus|vs|compare|compares|comparing|compared|comparison|rather than|between|both|each|and|either|or)\b/.test(q);
   // The deterministic answers are ALL-TIME archive answers. Time-restricted
   // questions need an explicitly filtered query; never reply with a lifetime total.
   const timeFilter=/\b(?:today|tonight|yesterday|tomorrow|this week|last week|this month|last month|this year|last year|past|recent|since|before|after|during|in\s+\d{4}|season\s+\d+|on\s+\d{4}|jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b/.test(q);
