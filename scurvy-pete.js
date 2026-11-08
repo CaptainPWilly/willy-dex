@@ -6,6 +6,28 @@
 'use strict';
 var API='https://willy-dex-editor.onrender.com';
 var history=[],loading=false,access='',epoch=0,requestController=null,activeReply=null,booted=false,empty=null;
+var lastApiPing=0,apiWakePromise=null;
+function checkApi(){
+  // A free Render instance sleeps when idle. Wake it before posting a chat
+  // question so the cold start cannot consume the entire response timeout.
+  if(lastApiPing&&Date.now()-lastApiPing<4*60*1000)return Promise.resolve();
+  if(apiWakePromise)return apiWakePromise;
+  function ping(){
+    return fetch(API+'/api/pete/status',{cache:'no-store'}).then(function(r){
+      if(!r.ok)throw Error('TERMINAL SERVER UNAVAILABLE ('+r.status+')');
+      return r.json();
+    }).then(function(data){
+      if(!data.ready)throw Error('AI SERVICE UNAVAILABLE');
+      if(!data.accessConfigured)throw Error('TERMINAL ACCESS UNAVAILABLE');
+      lastApiPing=Date.now();
+    });
+  }
+  apiWakePromise=ping().catch(function(){
+    // Retrying a cheap readiness request is safe; never auto-retry AI chats.
+    return new Promise(function(resolve){setTimeout(resolve,1200);}).then(ping);
+  }).finally(function(){apiWakePromise=null;});
+  return apiWakePromise;
+}
 var $=function(id){return document.getElementById(id);};
 var form=$('composer'),field=$('question'),send=$('send'),messages=$('messages'),notice=$('notice'),
     gate=$('access-form'),code=$('access-code'),chat=$('chat'),skull=$('skull'),skip=$('skip'),
@@ -247,12 +269,17 @@ async function ask(text){
   var id=++epoch;
   var previous=history.slice(-10);
   var userBubble=bubble('user',text);
-  var stage='request';
-  busy(true,'thinking');status('');
+  var stage='wake';
+  busy(true,'thinking');status('CONNECTING...');
   requestController=new AbortController();
   var abort=requestController;
-  var timer=setTimeout(function(){abort.abort();},60000);
+  var timer=setTimeout(function(){abort.abort();},135000);
   try{
+    await checkApi();
+    if(id!==epoch)return;
+    if(abort.signal.aborted)throw new DOMException('Timed out','AbortError');
+    stage='request';
+    status('');
     var response=await fetch(API+'/api/pete/chat',{
       method:'POST',signal:abort.signal,
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+access},
@@ -279,7 +306,7 @@ async function ask(text){
     if(id!==epoch)return;
     if(typeof console!=='undefined'&&console.error)console.error('Pete request failed at '+stage,e);
     var error=e.name==='AbortError'?'REQUEST TIMED OUT. TRY AGAIN.'
-      :e.name==='TypeError'?(stage==='request'?'CONNECTION FAILED. CHECK NETWORK AND RETRY.':'TERMINAL ERROR. TRY AGAIN.')
+      :e.name==='TypeError'?(stage==='wake'?'PETE SERVER UNREACHABLE. RETRY.':stage==='request'?'CONNECTION FAILED. CHECK NETWORK AND RETRY.':'TERMINAL ERROR. TRY AGAIN.')
       :e.message||'REQUEST FAILED. TRY AGAIN.';
     // Don't lose a question simply because Safari dropped the fetch.
     if(stage!=='display'&&userBubble&&userBubble.wrap&&userBubble.wrap.remove){
@@ -363,12 +390,7 @@ $('clear-button').addEventListener('click',function(){
   status('');
 });
 skip.addEventListener('click',function(){if(activeReply)activeReply.finish();});
-fetch(API+'/api/pete/status',{cache:'no-store'})
-  .then(function(r){if(!r.ok)throw Error();return r.json();})
-  .then(function(data){
-    if(!data.ready)status('AI SERVICE UNAVAILABLE',true);
-    else if(!data.accessConfigured)status('TERMINAL ACCESS UNAVAILABLE',true);
-  })
-  .catch(function(){status('WILLY DEX CONNECTION UNAVAILABLE',true);});
+checkApi()
+  .catch(function(e){if(!loading)status(e.message||'WILLY DEX CONNECTION UNAVAILABLE',true);});
 boot();
 })();
