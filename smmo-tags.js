@@ -12,16 +12,19 @@ function nameOf(item){
   if(!item||typeof item!=='object'||typeof item.name!=='string')return '';
   return item.name.trim().slice(0,100);
 }
-function output(name){
+function output(tag){
+  if(typeof tag.fixedText==='string')return tag.fixedText;
+  var name=nameOf(tag);
   return format==='sprite'?'[!'+name+'!]':'[['+name+']]';
 }
 function allTags(){
   var seen=new Set();
-  return shared.map(nameOf).filter(function(name){
+  return shared.filter(function(tag){
+    var name=nameOf(tag);
     var key=name.toLocaleLowerCase();
     if(!name||seen.has(key))return false;
     seen.add(key);return true;
-  }).sort(sorter.compare);
+  }).sort(function(a,b){return sorter.compare(nameOf(a),nameOf(b));});
 }
 function setMode(value){
   format=value;
@@ -57,13 +60,14 @@ function copy(text,button){
 }
 function render(){
   var fragment=document.createDocumentFragment();
-  allTags().forEach(function(name){
+  allTags().forEach(function(tag){
+    var name=nameOf(tag);
     var button=document.createElement('button');
     button.type='button';button.className='tag';button.textContent=name;
     button.title=name;
     button.dataset.tagName=name;
-    button.setAttribute('aria-label','Copy '+output(name));
-    button.addEventListener('click',function(){copy(output(name),button);});
+    button.setAttribute('aria-label','Copy '+output(tag));
+    button.addEventListener('click',function(){copy(output(tag),button);});
     fragment.appendChild(button);
   });
   tags.replaceChildren(fragment);
