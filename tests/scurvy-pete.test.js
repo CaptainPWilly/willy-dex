@@ -223,6 +223,28 @@ test('another guild recruit count does not inherit Cove records',async()=>{
   assert.equal(directQuestion('How many recruits are in Umbral?'),null);
   assert.equal(directQuestion('How many recruits do we have'),'recruit_count');
 });
+test('the Pete HTTP chat endpoint returns all three corrected answers without model calls',async()=>{
+  useFixtures(()=>{throw Error('The model should not be called for these prompts');});
+  const origin='https://captainpwilly.github.io';
+  const queries=[
+    ['Ahoy!',/Ahoy/,0],
+    ['How is the cove doing this season?',/Season \d+:/,1],
+    ['How many recruits do we have',/Cove recruits:/,1],
+    ['Latest guild xp for the cove',/GXP, rank #/,1]
+  ];
+  for(const [message,regex,expectedSources] of queries){
+    let response;
+    await pete.handle(
+      {url:'/api/pete/chat',method:'POST',socket:{remoteAddress:'198.51.100.45'},headers:{origin}},{},
+      {origin,authorized:()=>true,read:async()=>({message,history:[]}),
+      json:(_res,status,data)=>{response={status,data};}}
+    );
+    assert.equal(response.status,200);
+    assert.match(response.data.answer,regex);
+    assert.equal(response.data.sources.length,expectedSources);
+  }
+  assert.equal(modelRequests.length,0);
+});
 test('missing numeric values stay unknown rather than being converted to zero',()=>{
   const {digits}=pete.__test;
   assert.equal(digits(null),null);
