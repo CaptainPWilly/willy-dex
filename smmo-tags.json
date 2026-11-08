@@ -49,6 +49,18 @@
     {
       "id": "turtle",
       "name": "Turtle"
+    },
+    {
+      "id": "willys-shirt",
+      "name": "Willys Shirt"
+    },
+    {
+      "id": "willys-starboard-ball",
+      "name": "Willys Starboard Ball"
+    },
+    {
+      "id": "willys-portside-ball",
+      "name": "Willys Portside Ball"
     }
   ]
 }
