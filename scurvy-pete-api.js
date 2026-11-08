@@ -1046,6 +1046,45 @@ function unsupportedNumbers(answer,evidence){
   const allowed=new Set(numericTokens(evidence));
   return [...new Set(numericTokens(answer))].filter(n=>!allowed.has(n));
 }
+// A number occurring anywhere in GLB is NOT proof that it belongs to the
+// guild named in an AI response. Reject explicit "X has Y GXP" claims when
+// Y was never recorded for X. Other calculated comparisons use server tools.
+function mismatchedGuildXpClaims(answer, archive){
+  const snapshots=archive?.snapshots||[];
+  if(!snapshots.length)return [];
+  const names=[...new Set(snapshots.flatMap(s=>(s.guilds||[]).map(g=>g.name)))];
+  const permitted=new Map(names.map(name=>[norm(name),new Set()]));
+  for(const s of snapshots)for(const g of s.guilds||[]){
+    const value=digits(g.experience);
+    if(value!==null)permitted.get(norm(g.name))?.add(value);
+  }
+  const bad=[];
+  for(const clause of String(answer||'').split(/[;.!?\n]+/)){
+    const regex=/(\d{1,3}(?:,\d{3})+|\d{4,})\s*(?:GXP|guild XP|guild experience)\b/ig;
+    for(const match of clause.matchAll(regex)){
+      const value=Number(match[1].replace(/,/g,''));
+      const prefix=norm(clause.slice(0,match.index));
+      if(!prefix)continue;
+      const occurrences=[];
+      for(const name of names){
+        const normalized=norm(name),at=(' '+prefix+' ').lastIndexOf(' '+normalized+' ');
+        if(at>=0)occurrences.push({name,at});
+      }
+      if(/\b(?:cove|our guild|the cove)\b/.test(prefix))
+        occurrences.push({name:'The Pirate Cove',at:(' '+prefix+' ').lastIndexOf(' cove ')});
+      if(!occurrences.length)continue;
+      const nearest=occurrences.sort((a,b)=>b.at-a.at)[0];
+      const after=prefix.slice(nearest.at+norm(nearest.name).length).trim();
+      // Only assert directly attributed XP totals. Gaps, rates, and gains are
+      // separate metrics and must use the archive's computed tools.
+      if(/\b(?:gap|difference|apart|ahead|behind|trails|lead|gained|increase|by)\b/.test(after))continue;
+      if(!/\b(?:has|had|with|at|recorded|total|totals|sits|scored|stands|is)\b/.test(after))continue;
+      if(!permitted.get(norm(nearest.name))?.has(value))
+        bad.push({guild:nearest.name,claimedXp:value});
+    }
+  }
+  return bad;
+}
 function outputText(r){
   if(r.output_text&&typeof r.output_text==='string')return r.output_text.trim();
   return (r.output||[]).filter(x=>x.type==='message').flatMap(x=>x.content||[]).filter(x=>x.type==='output_text').map(x=>x.text).join('\n').trim();
@@ -1112,7 +1151,8 @@ async function chat(message,history){
         return {answer:'I could not verify that from Willy Dex. The relevant records may be missing or unavailable.',sources:[],evidence:'unverified',model:process.env.PETE_MODEL||'gpt-6-luna'};
       }
       const notSupported=unsupportedNumbers(answer,evidencePayloads.join(' '));
-      if(notSupported.length){
+      const wrongOwner=sources.has('glb')?mismatchedGuildXpClaims(answer,await load('glb')):[];
+      if(notSupported.length||wrongOwner.length){
         console.warn('Pete blocked unsupported numerical claim(s); count=',notSupported.length);
         return {answer:'I found relevant Willy Dex records, but could not verify every number in that response. Ask for a more specific statistic.',
           sources:[...sources.values()],evidence:'numeric-check-failed',model:process.env.PETE_MODEL||'gpt-6-luna'};
@@ -1212,4 +1252,4 @@ module.exports.handle=async function(req,res,{json,read,authorized,origin}){
 };
 
 // Exposed for offline regression testing only; no additional HTTP endpoint.
-module.exports.__test={directQuestion,routeTool,verifiedAnswer,precisionAnswer,archiveDateQuestion,mentionedArchivedGuilds,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,analyzeGLB,analyzeMembers,RESULTS};
+module.exports.__test={directQuestion,routeTool,verifiedAnswer,precisionAnswer,archiveDateQuestion,mentionedArchivedGuilds,captureMetadata,digits,resolveNames,validToolArgs,unsupportedNumbers,mismatchedGuildXpClaims,analyzeGLB,analyzeMembers,RESULTS};
