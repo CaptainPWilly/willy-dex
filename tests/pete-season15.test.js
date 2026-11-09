@@ -50,7 +50,7 @@ test('unknown and ambiguous guilds never silently become the Cove or another gui
   assert.deepEqual(ambiguous.found,['Wolf']);
   const noExact=resolveGuildNames(['Wolf Pack','Gold Wolf'],['Wolf']);
   assert.equal(noExact.ambiguous.length,1);
-  assert.match(ask('history',{guilds:['Golden']}).error,/ambiguous/i);
+  assert.match(ask('history',{guilds:['The']}).error,/ambiguous/i);
 });
 test('named guilds not in the latest top 50 retain history but latest status remains unknown',()=>{
   const earliestNames=new Set(ss[0].guilds.map(x=>x.name));
@@ -72,7 +72,7 @@ test('date lookup picks the LAST actual observation on that date and no imaginar
 });
 test('an exact timestamp selects its own snapshot, not a same-day neighbor',()=>{
   const timestamp=ss.find(s=>s.capturedAt.startsWith('2026-10-28'));
-  const result=ask('snapshot',{at:timestamp.capturedAt});
+  const result=ask('snapshot',{at:timestamp.capturedAt,guilds:[]});
   assert.equal(result.capturedAt,timestamp.capturedAt);
   assert.equal(result.standings[0].experience,timestamp.guilds[0].experience);
 });
