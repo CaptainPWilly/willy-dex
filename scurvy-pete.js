@@ -194,7 +194,7 @@ function reveal(node,text){
     if(window.Intl&&typeof Intl.Segmenter==='function')
       units=Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(full),function(x){return x.segment;});
   }catch(e){units=Array.from(full);}
-  var duration=Math.min(18000,Math.max(600,units.length/62*1000));
+  var duration=Math.min(8000,Math.max(350,units.length/125*1000));
   // Accessible: no per-character announcements. A single completion status is announced instead.
   return new Promise(function(resolve){
     var finished=false,frame=0,index=0,start=0,wrap=node.wrap;
@@ -245,7 +245,7 @@ function cancelWork(){
 async function ask(text){
   if(!access){locked(true);status('AUTHORIZATION REQUIRED',true);return;}
   var id=++epoch;
-  var previous=history.slice(-10);
+  var previous=history.slice(-12);
   var userBubble=bubble('user',text);
   var stage='request';
   busy(true,'thinking');status('');
