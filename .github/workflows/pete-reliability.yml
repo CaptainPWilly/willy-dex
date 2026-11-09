@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - 'scurvy-pete-api.js'
+      - 'scurvy-pete-season15.js'
+      - 'tests/pete-season15.test.js'
       - 'tests/scurvy-pete.test.js'
       - 'tests/pete-staff-intel.test.js'
       - 'tests/pete-precision.test.js'
@@ -17,6 +19,8 @@ on:
   pull_request:
     paths:
       - 'scurvy-pete-api.js'
+      - 'scurvy-pete-season15.js'
+      - 'tests/pete-season15.test.js'
       - 'tests/scurvy-pete.test.js'
       - 'tests/pete-staff-intel.test.js'
       - 'tests/pete-precision.test.js'
