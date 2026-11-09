@@ -98,11 +98,17 @@ test('two-date GLB growth compares both specified dates, not just the first',asy
 });
 test('a since-date GLB comparison uses that capture and latest',async()=>{
   const r=await ask('How much GXP did the Cove gain since Oct 29?');
-  assert.match(r.answer,/690,865 GXP/);
-  assert.match(r.answer,/Nov 7, 2026/);
+  const captures=fixture('glb.json').snapshots;
+  const start=captures.filter(s=>s.date==='2026-10-29').at(-1);
+  const end=captures.at(-1);
+  const startXp=start.guilds.find(g=>g.name==='The Pirate Cove').experience;
+  const endXp=end.guilds.find(g=>g.name==='The Pirate Cove').experience;
+  assert.ok(r.answer.includes((endXp-startXp).toLocaleString('en-US')+' GXP'));
+  const endDate=new Date(end.capturedAt).toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric'});
+  assert.ok(r.answer.includes(endDate));
 });
 test('missing capture does not become a guessed result',async()=>{
-  const r=await ask('What was the GLB on November 8?');
+  const r=await ask('What was the GLB on November 8, 2027?');
   assert.equal(r.evidence,'insufficient');
   assert.match(r.answer,/no recorded.*snapshot/i);
 });
