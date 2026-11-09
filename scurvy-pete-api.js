@@ -1247,7 +1247,10 @@ async function chat(message,history){
     try{
       const archive=await load('glb');
       const names=[...new Set((archive.snapshots||[]).flatMap(s=>(s.guilds||[]).map(g=>norm(g.name))))];
-      namedGuild=names.some(n=>n.length>=6&&n!=='friendly'&&(' '+topic+' ').includes(' '+n+' '));
+      const guildContext=/\b(?:glb|gxp|guild|season|leaderboard|rank|ranking|placement|stats|history|trend|xp|growth|points|gap|ahead|behind|rival|compare)\b/.test(topic+' '+priorTopic);
+      namedGuild=names.some(n=>(n.length>=6||guildContext||
+        (!['wolf','solo','friendly','peaceful','legacy'].includes(n)))&&
+        (' '+topic+' ').includes(' '+n+' '));
       if(namedGuild)requiresArchive=true;
     }catch(e){/* If this is a guild question, the archive tool will report availability. */}
   }
