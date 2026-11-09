@@ -388,3 +388,28 @@ test('a short GLB follow-up retains the previous guild question',async()=>{
   assert.equal(response.data.evidence,'archive-lookup');
   assert.deepEqual(response.data.sources.map(x=>x.id),['glb']);
 });
+
+
+test('an unsupported numerical draft can be corrected from real GLB evidence',async()=>{
+  const capture=fixture('glb.json').snapshots.at(-1);
+  const cove=capture.guilds.find(g=>g.name==='The Pirate Cove');
+  const corrected='The Pirate Cove recorded '+cove.experience.toLocaleString('en-US')+
+    ' GXP at rank #'+cove.rank+' in the latest archived leaderboard.';
+  useFixtures(async (_request,turn)=>turn===1?{
+    output:[{type:'function_call',name:'find_leaderboard',call_id:'repair-1',
+      arguments:JSON.stringify({guilds:['The Pirate Cove'],mode:'latest',limit:1,offset:0})}]
+  }:turn===2?{
+    output:[{type:'message',content:[{type:'output_text',text:'The Cove earned 999,999 GXP today.'}]}]
+  }:{output:[{type:'message',content:[{type:'output_text',text:corrected}]}]});
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+      read:async()=>({message:'Tell me the recent league performance of the Cove.',history:[]}),
+      json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(response.data.evidence,'archive-lookup-corrected');
+  assert.equal(response.data.answer,corrected);
+  assert.equal(modelRequests.length,3);
+  assert.deepEqual(response.data.sources.map(s=>s.id),['glb']);
+});
