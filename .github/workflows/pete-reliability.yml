@@ -4,6 +4,7 @@ on:
     paths:
       - 'scurvy-pete-api.js'
       - 'scurvy-pete-season15.js'
+      - '.github/workflows/pete-reliability.yml'
       - 'tests/pete-season15.test.js'
       - 'tests/scurvy-pete.test.js'
       - 'tests/pete-staff-intel.test.js'
@@ -20,6 +21,7 @@ on:
     paths:
       - 'scurvy-pete-api.js'
       - 'scurvy-pete-season15.js'
+      - '.github/workflows/pete-reliability.yml'
       - 'tests/pete-season15.test.js'
       - 'tests/scurvy-pete.test.js'
       - 'tests/pete-staff-intel.test.js'
