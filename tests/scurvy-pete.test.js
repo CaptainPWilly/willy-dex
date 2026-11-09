@@ -345,3 +345,46 @@ test('unverified model assertions do not become a source-grounded answer',async(
   assert.match(response.data.answer,/could not verify/);
   assert.equal(response.data.sources.length,0);
 });
+
+
+test('ordinary conversation works without forcing a Willy Dex lookup',async()=>{
+  useFixtures(async()=>({output:[{type:'message',content:[
+    {type:'output_text',text:'Start with the option you can reverse most easily, then gather evidence.'}
+  ]}]}));
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+      read:async()=>({message:'Help me think through a tricky decision.',history:[]}),
+      json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(response.data.evidence,'conversation');
+  assert.deepEqual(response.data.sources,[]);
+  assert.match(response.data.answer,/option you can reverse/i);
+  assert.equal(modelRequests[0].tool_choice,'auto');
+});
+test('a short GLB follow-up retains the previous guild question',async()=>{
+  const history=[
+    {role:'user',content:'What is the latest Cove GXP?'},
+    {role:'assistant',content:'The Cove is #24 in the recorded leaderboard.'}
+  ];
+  assert.equal(pete.__test.conversationalFollowup('And Helheim?',history),true);
+  assert.equal(pete.__test.archiveQuestion('And Helheim?',history,true),true);
+  useFixtures(async (_request,turn)=>turn===1?{
+    output:[{type:'function_call',name:'find_leaderboard',call_id:'followup-1',
+      arguments:JSON.stringify({guilds:['Helheim'],mode:'latest',limit:1,offset:0})}]
+  }:{output:[{type:'message',content:[
+    {type:'output_text',text:'Helheim appears in the latest recorded Season 15 standings.'}
+  ]}]});
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+      read:async()=>({message:'And Helheim?',history}),
+      json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(modelRequests[0].tool_choice.name,'find_leaderboard');
+  assert.ok(modelRequests[0].input.some(x=>x.role==='user'&&x.content==='What is the latest Cove GXP?'));
+  assert.equal(response.data.evidence,'archive-lookup');
+  assert.deepEqual(response.data.sources.map(x=>x.id),['glb']);
+});
