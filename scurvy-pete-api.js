@@ -1239,18 +1239,21 @@ async function chat(message,history){
   const sources=new Map();let calls=0,hadFailedLookup=false,firstIssue='',evidencePayloads=[];
   const previousUser=history.slice().reverse().find(h=>h.role==='user'&&h.content?.trim());
   const topic=norm(message),priorTopic=norm(previousUser?.content||'');
-  const deeper=/\b(?:history|historical|progress|progression|trajectory|throughout|over time|over the season|every snapshot|all snapshots|peak|best rank|worst rank|rival|matchup|head to head|versus|vs|compared to|dominance|dominated|different guilds|guild performance|placement history|placements)\b/.test(topic);
+  const deeper=/\b(?:history|historical|progress|progression|trajectory|throughout|over time|over the season|every snapshot|all snapshots|peak|best rank|worst rank|rival|matchup|head to head|versus|vs|compared to|dominance|dominated|different guilds|guild performance|placement history|placements)\b/.test(topic+' '+(followup?priorTopic:''));
   const legacy=routeTool(message)||(followup&&previousUser?routeTool(previousUser.content):null);
   const likelyGlb=/\b(?:glb|gxp|leaderboard|season|rank|placement|guild stats|guild xp)\b/.test(topic+' '+(followup?priorTopic:''));
   let requiresArchive=archiveQuestion(message,history,followup),namedGuild=false;
   if(!requiresArchive&&/\b(?:who|what|how|did|has|better|worse|compare|show|tell|rank|ahead|behind)\b/.test(topic)){
     try{
       const archive=await load('glb');
-      const names=[...new Set((archive.snapshots||[]).flatMap(s=>(s.guilds||[]).map(g=>norm(g.name))))];
+      const names=[...new Set((archive.snapshots||[]).flatMap(s=>(s.guilds||[]).map(g=>g.name)))];
       const guildContext=/\b(?:glb|gxp|guild|season|leaderboard|rank|ranking|placement|stats|history|trend|xp|growth|points|gap|ahead|behind|rival|compare)\b/.test(topic+' '+priorTopic);
-      namedGuild=names.some(n=>(n.length>=6||guildContext||
-        (!['wolf','solo','friendly','peaceful','legacy'].includes(n)))&&
-        (' '+topic+' ').includes(' '+n+' '));
+      namedGuild=names.some(name=>{
+        const n=norm(name),explicit=(' '+message+' ').includes(' '+name+' ');
+        return (explicit||n.length>=6||guildContext||
+          !['wolf','solo','friendly','peaceful','legacy'].includes(n))&&
+          (' '+topic+' ').includes(' '+n+' ');
+      });
       if(namedGuild)requiresArchive=true;
     }catch(e){/* If this is a guild question, the archive tool will report availability. */}
   }
