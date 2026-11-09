@@ -1246,7 +1246,7 @@ async function chat(message,history){
   if(!requiresArchive&&/\b(?:who|what|how|did|has|better|worse|compare|show|tell|rank|ahead|behind)\b/.test(topic)){
     try{
       const archive=await load('glb');
-      const names=[...new Set((archive.snapshots||[]).flatMap(s=>(s.guilds||[]).map(g=>norm(g.name)))];
+      const names=[...new Set((archive.snapshots||[]).flatMap(s=>(s.guilds||[]).map(g=>norm(g.name))))];
       namedGuild=names.some(n=>n.length>=6&&n!=='friendly'&&(' '+topic+' ').includes(' '+n+' '));
       if(namedGuild)requiresArchive=true;
     }catch(e){/* If this is a guild question, the archive tool will report availability. */}
