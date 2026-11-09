@@ -198,6 +198,6 @@ test('wrong guild ownership is blocked in full mocked AI chat despite real numbe
     assert.equal(reply.status,200);
     assert.equal(reply.data.evidence,'numeric-check-failed');
     assert.doesNotMatch(reply.data.answer,/The Pirate Cove has 26,281,385 GXP/);
-    assert.equal(aiCount,2);
+    assert.equal(aiCount,3);
   }finally{global.fetch=outer;}
 });
