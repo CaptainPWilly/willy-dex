@@ -413,3 +413,55 @@ test('an unsupported numerical draft can be corrected from real GLB evidence',as
   assert.equal(modelRequests.length,3);
   assert.deepEqual(response.data.sources.map(s=>s.id),['glb']);
 });
+
+
+test('Coven by itself routes to the Season 15 intelligence engine, not the Cove',async()=>{
+  useFixtures(async (_request,turn)=>turn===1?{
+    output:[{type:'function_call',name:'season15_intel',call_id:'coven-history',
+      arguments:JSON.stringify({mode:'history',guilds:['Coven'],at:null,from:null,to:null,sort:'gain',limit:20})}]
+  }:{output:[{type:'message',content:[{type:'output_text',text:'Coven has archived Season 15 leaderboard history.'}]}]});
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+      read:async()=>({message:'How is Coven doing?',history:[]}),
+      json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(modelRequests[0].tool_choice.name,'season15_intel');
+  assert.deepEqual(response.data.sources.map(x=>x.id),['glb']);
+  assert.equal(response.data.evidence,'archive-lookup');
+});
+test('a Season 15 history follow-up stays on the complete timeline analysis tool',async()=>{
+  useFixtures(async (_request,turn)=>turn===1?{
+    output:[{type:'function_call',name:'season15_intel',call_id:'history-followup',
+      arguments:JSON.stringify({mode:'history',guilds:['Coven'],at:null,from:null,to:null,sort:'gain',limit:20})}]
+  }:{output:[{type:'message',content:[{type:'output_text',text:'Coven appears in the Season 15 captures.'}]}]});
+  const history=[
+    {role:'user',content:'Show me the full Season 15 history of Helheim.'},
+    {role:'assistant',content:'Here is the recorded progression across all captures.'}
+  ];
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+      read:async()=>({message:'And Coven?',history}),
+      json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(modelRequests[0].tool_choice.name,'season15_intel');
+  assert.equal(response.data.evidence,'archive-lookup');
+});
+test('the short guild name SOLO resolves to a guild when used as a proper name',async()=>{
+  useFixtures(async (_request,turn)=>turn===1?{
+    output:[{type:'function_call',name:'season15_intel',call_id:'solo',
+      arguments:JSON.stringify({mode:'matchup',guilds:['SOLO'],at:null,from:null,to:null,sort:'gain',limit:10})}]
+  }:{output:[{type:'message',content:[{type:'output_text',text:'SOLO is recorded in the latest Season 15 snapshot.'}]}]});
+  let response;
+  await pete.handle(
+    {url:'/api/pete/chat',method:'POST',headers:{origin:'https://captainpwilly.github.io'}},{},
+    {origin:'https://captainpwilly.github.io',authorized:()=>true,
+      read:async()=>({message:'How is SOLO doing?',history:[]}),
+      json:(_res,status,data)=>{response={status,data};}});
+  assert.equal(response.status,200);
+  assert.equal(modelRequests[0].tool_choice.name,'season15_intel');
+  assert.deepEqual(response.data.sources.map(x=>x.id),['glb']);
+});
