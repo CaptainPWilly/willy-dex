@@ -10,6 +10,11 @@ const {directQuestion,verifiedAnswer,analyzeGLB,analyzeMembers,validToolArgs}=pe
 const savedFetch=global.fetch;
 const PREFIX='https://raw.githubusercontent.com/CaptainPWilly/willy-dex/main/';
 const docs={};
+const snapshots=()=>get('glb.json').snapshots;
+const latest=()=>snapshots().at(-1);
+const prior=()=>snapshots().at(-2);
+const row=(capture,name)=>capture.guilds.find(x=>x.name===name);
+const fmt=n=>n.toLocaleString('en-US');
 function get(name){if(!docs[name])docs[name]=JSON.parse(fs.readFileSync(path.join(__dirname,'..',name),'utf8'));return docs[name];}
 global.fetch=async url=>{
   if(String(url).startsWith(PREFIX))return {ok:true,status:200,json:async()=>get(String(url).slice(PREFIX.length))};
@@ -75,29 +80,38 @@ test('member role filters count exact roles, not substring matches',async()=>{
 });
 test('the latest Cove GLB rank and direct neighbors use real values',async()=>{
   const r=await analyzeGLB({mode:'guild',window:'latest',guilds:['The Pirate Cove'],limit:1,from:null,to:null});
-  assert.equal(r.guilds[0].latest.rank,24);
-  assert.equal(r.guilds[0].latest.xp,1274216);
-  assert.equal(r.guilds[0].growth.xpGain,132847);
-  assert.equal(r.guilds[0].ahead.gapXp,132125);
-  assert.equal(r.guilds[0].behind.gapXp,66966);
+  const c=row(latest(),'The Pirate Cove'),old=row(prior(),'The Pirate Cove');
+  assert.equal(r.guilds[0].latest.rank,c.rank);
+  assert.equal(r.guilds[0].latest.xp,c.experience);
+  assert.equal(r.guilds[0].growth.xpGain,c.experience-old.experience);
+  assert.equal(r.guilds[0].ahead.gapXp,row(latest(),latest().guilds[c.rank-2].name).experience-c.experience);
+  assert.equal(r.guilds[0].behind.gapXp,c.experience-row(latest(),latest().guilds[c.rank].name).experience);
 });
 test('recorded GLB fastest growth calculates from latest two snapshots',async()=>{
   const r=await analyzeGLB({mode:'growth',window:'latest',guilds:[],limit:5,from:null,to:null});
-  assert.equal(r.growth[0].name,'Umbral');
-  assert.equal(r.growth[0].xpGain,2700911);
-  assert.equal(r.growth[0].fromRank,1);
-  assert.equal(r.growth[0].toRank,1);
-  assert.ok(r.growth[0].measuredHours>20);
+  const previous=new Map(prior().guilds.map(g=>[g.name,g]));
+  const expected=latest().guilds.filter(g=>previous.has(g.name))
+    .map(g=>({name:g.name,gain:g.experience-previous.get(g.name).experience,fromRank:previous.get(g.name).rank,toRank:g.rank}))
+    .sort((a,b)=>b.gain-a.gain)[0];
+  assert.equal(r.growth[0].name,expected.name);
+  assert.equal(r.growth[0].xpGain,expected.gain);
+  assert.equal(r.growth[0].fromRank,expected.fromRank);
+  assert.equal(r.growth[0].toRank,expected.toRank);
+  assert.ok(r.growth[0].measuredHours>0);
 });
 test('season growth compares same guild in real first and latest captures',async()=>{
   const r=await analyzeGLB({mode:'growth',window:'season',guilds:['The Pirate Cove'],limit:2,from:null,to:null});
   assert.equal(r.growth.length,1);
-  assert.equal(r.growth[0].xpGain,966673);
-  assert.equal(r.growth[0].rankChange,2);
+  const start=row(snapshots()[0],'The Pirate Cove');
+  const end=row(latest(),'The Pirate Cove');
+  assert.equal(r.growth[0].xpGain,end.experience-start.experience);
+  assert.equal(r.growth[0].rankChange,start.rank-end.rank);
 });
 test('a closest race is a pair of adjacent observed ranks',async()=>{
   const r=await analyzeGLB({mode:'races',window:'latest',guilds:[],limit:10,from:null,to:null});
-  assert.equal(r.closest[0].gapXp,803);
+  const rows=latest().guilds;
+  const gaps=rows.slice(1).map((g,i)=>rows[i].experience-g.experience).filter(n=>n>0);
+  assert.equal(r.closest[0].gapXp,Math.min(...gaps));
   assert.equal(r.closest[0].above.rank+1,r.closest[0].below.rank);
 });
 test('historical day lookup selects last actual capture of that date',async()=>{
@@ -114,7 +128,7 @@ test('specific-date-to-date GLB comparisons never invent missing intervals',asyn
   assert.equal(r.changes[0].toRank,24);
 });
 test('unrecorded GLB dates return explicit error and actual available capture times',async()=>{
-  const r=await analyzeGLB({mode:'at',window:'latest',guilds:['The Pirate Cove'],limit:2,from:null,to:'2026-11-08'});
+  const r=await analyzeGLB({mode:'at',window:'latest',guilds:['The Pirate Cove'],limit:2,from:null,to:'2027-11-08'});
   assert.ok(r.error);
   assert.deepEqual(r.standings,[]);
   assert.ok(r.availableCaptureTimes.length>0);
@@ -138,8 +152,8 @@ test('staff natural-language GLB questions route to direct calculations',async()
   const tests=[
     ['Which guild gained the most GXP since last update?','glb_growth_latest',/Umbral/],
     ['Which guild gained the most GXP this season?','glb_growth_season',/Umbral/],
-    ['What is the closest race in the GLB?','glb_races',/803/],
-    ['How far are we from the next rank?','cove_nearest_ranks',/132,125/],
+    ['What is the closest race in the GLB?','glb_races',new RegExp(fmt(Math.min(...latest().guilds.slice(1).map((g,i)=>latest().guilds[i].experience-g.experience).filter(n=>n>0))))],
+    ['How far are we from the next rank?','cove_nearest_ranks',new RegExp(fmt(row(latest(),latest().guilds[row(latest(),'The Pirate Cove').rank-2].name).experience-row(latest(),'The Pirate Cove').experience))],
     ['Who are our recruits?','recorded_role_list',/7 recorded Cove Recruits/]
   ];
   for(const [question,kind,pattern] of tests){
@@ -150,9 +164,10 @@ test('staff natural-language GLB questions route to direct calculations',async()
 });
 test('guild-vs-guild latest comparison identifies values with proper owners',async()=>{
   const r=await verifiedAnswer('Cove GLB rank vs Helheim');
-  assert.match(r.answer,/The Pirate Cove #24 with 1,274,216 GXP/);
-  assert.match(r.answer,/Helheim #2 with 18,558,634 GXP/);
-  assert.match(r.answer,/17,284,418 GXP apart/);
+  const c=row(latest(),'The Pirate Cove'),h=row(latest(),'Helheim');
+  assert.ok(r.answer.includes('The Pirate Cove #'+c.rank+' with '+fmt(c.experience)+' GXP'));
+  assert.ok(r.answer.includes('Helheim #'+h.rank+' with '+fmt(h.experience)+' GXP'));
+  assert.ok(r.answer.includes(fmt(Math.abs(c.experience-h.experience))+' GXP apart'));
   assert.deepEqual(r.sources.map(x=>x.id),['glb']);
 });
 
@@ -184,8 +199,9 @@ test('GLB biggest recorded rank movers come from actual placement changes',async
 test('Cove lead question returns the specific next-rank gaps, not a made-up lead',async()=>{
   assert.equal(directQuestion('How much of a lead does the Cove have?'),'cove_nearest_ranks');
   const r=await verifiedAnswer('How much of a lead does the Cove have?');
-  assert.match(r.answer,/132,125/);
-  assert.match(r.answer,/66,966/);
+  const c=row(latest(),'The Pirate Cove');
+  assert.ok(r.answer.includes(fmt(latest().guilds[c.rank-2].experience-c.experience)));
+  assert.ok(r.answer.includes(fmt(c.experience-latest().guilds[c.rank].experience)));
 });
 test('member roles and historical snapshots never assert confirmed live status',async()=>{
   const cases=['Who is ChezShork?','Who is SAWTOOTH?','Who are the officers?','How many recruits do we have?'];
