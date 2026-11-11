@@ -12,7 +12,18 @@
           "left": null,
           "ageText": "12 hours ago",
           "source": "SMMO join notification pasted 2026-10-29",
-          "datePrecision": "relative-only"
+          "datePrecision": "relative-only",
+          "observations": [
+            {
+              "joined": null,
+              "left": null,
+              "ageText": "1 week ago",
+              "reportedOn": "2026-11-11",
+              "source": "SMMO guild join notifications supplied 2026-11-11",
+              "datePrecision": "relative-only",
+              "sourceOrder": 13
+            }
+          ]
         }
       ]
     },
@@ -26,7 +37,18 @@
           "left": null,
           "ageText": "17 hours ago",
           "source": "SMMO join notification pasted 2026-10-29",
-          "datePrecision": "relative-only"
+          "datePrecision": "relative-only",
+          "observations": [
+            {
+              "joined": null,
+              "left": null,
+              "ageText": "1 week ago",
+              "reportedOn": "2026-11-11",
+              "source": "SMMO guild join notifications supplied 2026-11-11",
+              "datePrecision": "relative-only",
+              "sourceOrder": 14
+            }
+          ]
         }
       ]
     },
@@ -5172,7 +5194,7 @@
     {
       "name": "Uralis",
       "cardId": null,
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -5189,7 +5211,17 @@
           "reportedOn": "2026-10-29",
           "datePrecision": "relative-only",
           "source": "SMMO departure notices posted 2026-10-29",
-          "sameAgeRepetition": false
+          "sameAgeRepetition": false,
+          "observations": [
+            {
+              "left": null,
+              "ageText": "1 month ago",
+              "reportedOn": "2026-11-11",
+              "datePrecision": "relative-only",
+              "source": "SMMO guild departure notifications supplied 2026-11-11",
+              "sourceOrder": 4
+            }
+          ]
         }
       ]
     },
@@ -7646,7 +7678,7 @@
     {
       "name": "Ellef",
       "cardId": null,
-      "membershipStatus": "unknown",
+      "membershipStatus": "former",
       "periods": [
         {
           "joined": null,
@@ -7663,7 +7695,17 @@
           "reportedOn": "2026-10-29",
           "datePrecision": "relative-only",
           "source": "SMMO departure notices posted 2026-10-29",
-          "sameAgeRepetition": false
+          "sameAgeRepetition": false,
+          "observations": [
+            {
+              "left": null,
+              "ageText": null,
+              "reportedOn": "2026-11-11",
+              "datePrecision": "unknown",
+              "source": "SMMO guild departure notifications supplied 2026-11-11",
+              "sourceOrder": 5
+            }
+          ]
         }
       ]
     },
@@ -14779,6 +14821,255 @@
           "identityAmbiguous": false
         }
       ]
+    },
+    {
+      "name": "iDopey",
+      "cardId": null,
+      "membershipStatus": "former",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "23 hours ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 0
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "5 hours ago",
+          "reportedOn": "2026-11-11",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild departure notifications supplied 2026-11-11",
+          "sourceOrder": 0
+        }
+      ]
+    },
+    {
+      "name": "MEGALOW",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "1 day ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 1
+        }
+      ]
+    },
+    {
+      "name": "Ra I Cursed God of the Sun",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "1 day ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 2
+        }
+      ]
+    },
+    {
+      "name": "GOODLUCKGG",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "2 days ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 3
+        }
+      ]
+    },
+    {
+      "name": "CarbonX",
+      "cardId": null,
+      "membershipStatus": "former",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "3 days ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 4
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "2 days ago",
+          "reportedOn": "2026-11-11",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild departure notifications supplied 2026-11-11",
+          "sourceOrder": 1
+        }
+      ]
+    },
+    {
+      "name": "FartHammer",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "3 days ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 5
+        }
+      ]
+    },
+    {
+      "name": "Vladimir056",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "6 days ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 6
+        }
+      ]
+    },
+    {
+      "name": "Dogdeath",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "6 days ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 7
+        }
+      ]
+    },
+    {
+      "name": "Edschgar",
+      "cardId": null,
+      "membershipStatus": "former",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "6 days ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 8
+        }
+      ],
+      "departures": [
+        {
+          "left": null,
+          "ageText": "6 days ago",
+          "reportedOn": "2026-11-11",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild departure notifications supplied 2026-11-11",
+          "sourceOrder": 2
+        }
+      ]
+    },
+    {
+      "name": "Akumar",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "1 week ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 9
+        }
+      ]
+    },
+    {
+      "name": "Darkym",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "1 week ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 10
+        }
+      ]
+    },
+    {
+      "name": "CactusJ1912",
+      "cardId": null,
+      "membershipStatus": "unknown",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "1 week ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 11
+        }
+      ]
+    },
+    {
+      "name": "unknown",
+      "cardId": null,
+      "membershipStatus": "former",
+      "periods": [
+        {
+          "joined": null,
+          "left": null,
+          "ageText": "1 week ago",
+          "reportedOn": "2026-11-11",
+          "source": "SMMO guild join notifications supplied 2026-11-11",
+          "datePrecision": "relative-only",
+          "sourceOrder": 12
+        }
+      ],
+      "identityAmbiguous": true,
+      "departures": [
+        {
+          "left": null,
+          "ageText": "1 week ago",
+          "reportedOn": "2026-11-11",
+          "datePrecision": "relative-only",
+          "source": "SMMO guild departure notifications supplied 2026-11-11",
+          "sourceOrder": 3
+        }
+      ]
     }
   ],
   "importMetadata": {
@@ -14815,6 +15106,28 @@
       "relativeDatesOnly": true,
       "chronology": "Newest to oldest within pasted notification batch; original line order preserved with sourceOrder 0–13.",
       "note": "Removals are distinct from voluntary departures. Relative-minute labels are preserved; no calendar minute is fabricated."
+    }
+  ],
+  "additionalJoinImports": [
+    {
+      "source": "SMMO guild join notifications supplied 2026-11-11",
+      "reportedOn": "2026-11-11",
+      "eventCount": 15,
+      "newEventCount": 13,
+      "relativeDatesOnly": true,
+      "chronology": "Newest to oldest; sourceOrder 0–14 preserves exact pasted order.",
+      "note": "Don866 and SAWTOOTH are overlapping observations of existing notices, not asserted rejoins."
+    }
+  ],
+  "additionalDepartureImports": [
+    {
+      "source": "SMMO guild departure notifications supplied 2026-11-11",
+      "reportedOn": "2026-11-11",
+      "eventCount": 6,
+      "newEventCount": 4,
+      "relativeDatesOnly": true,
+      "chronology": "Newest to oldest; sourceOrder 0–5 preserves exact pasted order.",
+      "note": "Uralis and Ellef overlap the existing departure list; retained as observations, not asserted additional departures. Ellef has no age label in this batch."
     }
   ]
 }
