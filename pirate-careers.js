@@ -27,7 +27,10 @@ function ageDays(age){
  const unit=match[2].toLowerCase();return Number(match[1])*({minute:1/1440,hour:1/24,day:1,week:7,month:30.44,year:365.25}[unit]);
 }
 function eventDistance(e){
- if(e.ageText)return ageDays(e.ageText);
+ if(e.ageText){
+  const reported=dayOnly(e.reportedOn)||REFERENCE_DATE;
+  return ageDays(e.ageText)+(REFERENCE_MS-Date.parse(reported+'T12:00:00Z'))/86400000;
+ }
  const day=dayOnly(e.day);return day?Math.max(0,(REFERENCE_MS-Date.parse(day+'T12:00:00Z'))/86400000):Infinity;
 }
 function eventDate(e){return dateLabel(e.day)||(e.ageText?e.ageText:'Date unknown')}
@@ -39,7 +42,10 @@ function eventPrecision(e){
 function eventsFor(p){
  const rows=[],add=(list,kind,field)=>{
   for(let i=0;i<list.length;i++){
-   const x=list[i]||{};
+   const original=list[i]||{};
+   const observations=original.observations||[];
+   const latest=observations[observations.length-1];
+   const x=latest&&latest.ageText?{...original,...latest}:original;
    rows.push({owner:p,kind,index:i+1,day:x[field]||null,ageText:x.ageText||null,
      reportedOn:x.reportedOn||x.reportedAt||(/2026-10-29/.test(x.source||'')?REFERENCE_DATE:null),
      source:x.source||'User-supplied SMMO guild notification',
@@ -58,7 +64,7 @@ function eventsFor(p){
 // Alphabetical tie-breaking loses this signal. When no ordinal survived the
 // member-grouping import, archive order is a fallback, NOT a verified timestamp.
 function sourceTie(a,b){
- if(a.kind===b.kind){
+ if(a.kind===b.kind&&a.source===b.source&&a.reportedOn===b.reportedOn){
   if(a.sourceOrder!==null&&b.sourceOrder!==null)return a.sourceOrder-b.sourceOrder;
   // The first 601 archive members are first sightings from the original join
   // list, stored newest-first. Other repeated notices lost their interleaving.
@@ -143,7 +149,7 @@ function stats(){
   ['Recorded dates',reliable,'Day known; most reports approximate']
  ];
  $('stats').innerHTML=values.map(([label,value,detail])=>'<article class="stat"><span class="small">'+escape(label)+'</span><strong>'+fmt(value)+'</strong><span class="detail">'+escape(detail)+'</span></article>').join('');
- $('archiveLabel').textContent=fmt(allEvents.length)+' notifications · Source reference Oct 29, 2026';
+ $('archiveLabel').textContent=fmt(allEvents.length)+' notifications · Latest update Nov 11, 2026';
  $('evidenceCount').textContent=fmt(allEvents.length-reliable)+' relative-age reports';
  const total=allEvents.length||1;
  $('donutTotal').textContent=fmt(allEvents.length);
