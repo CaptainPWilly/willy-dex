@@ -2,10 +2,10 @@
   {
     "number": "001",
     "name": "Captain P Willy",
-    "type": "[[ARG]] Guild Lead · Founder · Warrior",
+    "type": "[[ARG]] Guild Lead · Warrior · Founder",
     "image": null,
-    "level": 7618,
-    "date": "28 October 2026",
+    "level": 7922,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Founder of the Pirate Cove · Joined 15 April 2022",
     "guild": "ARG",
@@ -13,15 +13,15 @@
     "card_id": "willy-dex-001",
     "tags": [
       "Guild Lead",
-      "Founder",
-      "Warrior"
+      "Warrior",
+      "Founder"
     ],
     "front_text": "Founder of the Pirate Cove · Joined 15 April 2022",
     "back_text": "",
     "roles": [
       "Guild Lead",
-      "Founder",
-      "Warrior"
+      "Warrior",
+      "Founder"
     ],
     "level_snapshots": [
       {
@@ -35,6 +35,10 @@
       {
         "date": "2026-10-28",
         "level": 7618
+      },
+      {
+        "date": "2026-11-14",
+        "level": 7922
       }
     ],
     "last_active": "1 second ago",
@@ -47,15 +51,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "002",
     "name": "ThatsVeryCheese",
     "type": "[ARG] Co-Lead · Warrior",
     "image": null,
-    "level": 23661,
-    "date": "28 October 2026",
+    "level": 24071,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Cheese collector",
     "front_text": "Cheese collector · Joined 14 Mar 2021",
@@ -84,6 +90,10 @@
       {
         "date": "2026-10-28",
         "level": 23661
+      },
+      {
+        "date": "2026-11-14",
+        "level": 24071
       }
     ],
     "guild_join_history": [
@@ -95,15 +105,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "003",
     "name": "The Ghost of Willys Bird",
     "type": "[ARG] Co-Lead · Warrior",
     "image": null,
-    "level": 9432,
-    "date": "28 October 2026",
+    "level": 9517,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Dead bird",
     "front_text": "Ldmgb · Dead bird · PNN Reporter · Joined 29 Jan 2022",
@@ -113,7 +125,6 @@
     "card_id": "willy-dex-003",
     "tags": [
       "Co-Lead",
-      "PNN Reporter",
       "Warrior"
     ],
     "aliases": [
@@ -121,7 +132,6 @@
     ],
     "roles": [
       "Co-Lead",
-      "PNN Reporter",
       "Warrior"
     ],
     "level_snapshots": [
@@ -136,6 +146,10 @@
       {
         "date": "2026-10-28",
         "level": 9432
+      },
+      {
+        "date": "2026-11-14",
+        "level": 9517
       }
     ],
     "last_active": "2 hours ago",
@@ -148,7 +162,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "004",
@@ -156,7 +172,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1412,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -180,6 +196,10 @@
       {
         "date": "2026-10-28",
         "level": 1412
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1412
       }
     ],
     "roles": [
@@ -194,15 +214,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "005",
     "name": "Arrogaddu",
     "type": "[ARG] Officer · Warrior · Founder",
     "image": null,
-    "level": 4125,
-    "date": "28 October 2026",
+    "level": 4127,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -233,6 +255,10 @@
       {
         "date": "2026-10-28",
         "level": 4125
+      },
+      {
+        "date": "2026-11-14",
+        "level": 4127
       }
     ],
     "guild_join_history": [
@@ -262,15 +288,17 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "006",
     "name": "Gimbly",
     "type": "[ARG] Member",
     "image": null,
-    "level": 2128,
-    "date": "28 October 2026",
+    "level": 2134,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -294,6 +322,10 @@
       {
         "date": "2026-10-28",
         "level": 2128
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2134
       }
     ],
     "roles": [
@@ -308,15 +340,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "007",
     "name": "Titant8",
     "type": "[ARG] Member",
     "image": null,
-    "level": 5922,
-    "date": "28 October 2026",
+    "level": 6169,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -340,6 +374,10 @@
       {
         "date": "2026-10-28",
         "level": 5922
+      },
+      {
+        "date": "2026-11-14",
+        "level": 6169
       }
     ],
     "roles": [
@@ -354,15 +392,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "008",
     "name": "Sulfrum",
     "type": "[ARG] Member",
     "image": null,
-    "level": 18903,
-    "date": "28 October 2026",
+    "level": 19093,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -386,6 +426,10 @@
       {
         "date": "2026-10-28",
         "level": 18903
+      },
+      {
+        "date": "2026-11-14",
+        "level": 19093
       }
     ],
     "roles": [
@@ -400,15 +444,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "009",
     "name": "g0jiraz",
     "type": "[ARG] Member",
     "image": null,
-    "level": 39462,
-    "date": "28 October 2026",
+    "level": 39502,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -432,6 +478,10 @@
       {
         "date": "2026-10-28",
         "level": 39462
+      },
+      {
+        "date": "2026-11-14",
+        "level": 39502
       }
     ],
     "roles": [
@@ -446,15 +496,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "010",
     "name": "JoyBoy",
     "type": "[ARG] Officer",
     "image": null,
-    "level": 1726,
-    "date": "28 October 2026",
+    "level": 1737,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -478,6 +530,10 @@
       {
         "date": "2026-10-28",
         "level": 1726
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1737
       }
     ],
     "roles": [
@@ -494,7 +550,9 @@
       }
     ],
     "role_verified_on": "2026-10-29",
-    "role_source": "User-confirmed Cove officer promotions on 2026-10-29"
+    "role_source": "User-confirmed Cove officer promotions on 2026-10-29",
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "011",
@@ -502,7 +560,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 8726,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -526,6 +584,10 @@
       {
         "date": "2026-10-28",
         "level": 8726
+      },
+      {
+        "date": "2026-11-14",
+        "level": 8726
       }
     ],
     "roles": [
@@ -540,7 +602,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "012",
@@ -548,7 +612,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1379,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -572,6 +636,10 @@
       {
         "date": "2026-10-28",
         "level": 1379
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1379
       }
     ],
     "roles": [
@@ -586,15 +654,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "013",
     "name": "Hannahbae",
     "type": "[ARG] Member",
     "image": null,
-    "level": 1194,
-    "date": "28 October 2026",
+    "level": 1198,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -618,6 +688,10 @@
       {
         "date": "2026-10-28",
         "level": 1194
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1198
       }
     ],
     "roles": [
@@ -632,15 +706,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "014",
     "name": "C H I M C K E N",
     "type": "[ARG] Officer",
     "image": null,
-    "level": 63771,
-    "date": "28 October 2026",
+    "level": 65744,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -664,6 +740,10 @@
       {
         "date": "2026-10-28",
         "level": 63771
+      },
+      {
+        "date": "2026-11-14",
+        "level": 65744
       }
     ],
     "roles": [
@@ -678,15 +758,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "015",
     "name": "Roronoa Zoro",
-    "type": "[ARG] Member · Warrior",
+    "type": "[ARG] Warrior",
     "image": null,
-    "level": 5384,
-    "date": "28 October 2026",
+    "level": 5389,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -695,8 +777,7 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-015",
     "tags": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "last_active": "11 hours ago",
     "level_snapshots": [
@@ -711,11 +792,14 @@
       {
         "date": "2026-10-28",
         "level": 5384
+      },
+      {
+        "date": "2026-11-14",
+        "level": 5389
       }
     ],
     "roles": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "guild_join_history": [
       {
@@ -726,15 +810,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "016",
     "name": "SocietyWithered",
     "type": "[ARG] Member",
     "image": null,
-    "level": 1398,
-    "date": "28 October 2026",
+    "level": 1418,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -758,6 +844,10 @@
       {
         "date": "2026-10-28",
         "level": 1398
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1418
       }
     ],
     "aliases": [
@@ -790,6 +880,11 @@
         "source": "SMMO guild removal notification batch supplied 2026-10-29",
         "identityAmbiguous": false
       }
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14",
+    "roles": [
+      "Member"
     ]
   },
   {
@@ -798,7 +893,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 913,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -822,6 +917,10 @@
       {
         "date": "2026-10-28",
         "level": 913
+      },
+      {
+        "date": "2026-11-14",
+        "level": 913
       }
     ],
     "roles": [
@@ -836,15 +935,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "018",
     "name": "AsdAsd998",
     "type": "[ARG] Member",
     "image": null,
-    "level": 5392,
-    "date": "28 October 2026",
+    "level": 5399,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -868,6 +969,10 @@
       {
         "date": "2026-10-28",
         "level": 5392
+      },
+      {
+        "date": "2026-11-14",
+        "level": 5399
       }
     ],
     "roles": [
@@ -882,15 +987,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "019",
     "name": "Lilith",
     "type": "[ARG] Officer",
     "image": null,
-    "level": 31387,
-    "date": "28 October 2026",
+    "level": 31497,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -914,6 +1021,10 @@
       {
         "date": "2026-10-28",
         "level": 31387
+      },
+      {
+        "date": "2026-11-14",
+        "level": 31497
       }
     ],
     "roles": [
@@ -928,7 +1039,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "020",
@@ -936,7 +1049,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2906,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -960,6 +1073,10 @@
       {
         "date": "2026-10-28",
         "level": 2906
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2906
       }
     ],
     "roles": [
@@ -974,15 +1091,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "021",
     "name": "DARDMAN",
     "type": "[ARG] Member",
     "image": null,
-    "level": 67,
-    "date": "28 October 2026",
+    "level": 116,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1006,6 +1125,10 @@
       {
         "date": "2026-10-28",
         "level": 67
+      },
+      {
+        "date": "2026-11-14",
+        "level": 116
       }
     ],
     "roles": [
@@ -1020,7 +1143,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "022",
@@ -1028,7 +1153,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2201,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1052,6 +1177,10 @@
       {
         "date": "2026-10-28",
         "level": 2201
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2201
       }
     ],
     "roles": [
@@ -1066,15 +1195,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "023",
     "name": "Sebulbatron",
-    "type": "[ARG] Member · Warrior",
+    "type": "[ARG] Warrior",
     "image": null,
     "level": 5773,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1083,8 +1214,7 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-023",
     "tags": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "last_active": "1 week ago",
     "level_snapshots": [
@@ -1099,11 +1229,14 @@
       {
         "date": "2026-10-28",
         "level": 5773
+      },
+      {
+        "date": "2026-11-14",
+        "level": 5773
       }
     ],
     "roles": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "guild_join_history": [
       {
@@ -1114,7 +1247,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "024",
@@ -1172,7 +1307,8 @@
         "sourceOrder": 2
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "025",
@@ -1180,7 +1316,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 408,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1204,6 +1340,10 @@
       {
         "date": "2026-10-28",
         "level": 408
+      },
+      {
+        "date": "2026-11-14",
+        "level": 408
       }
     ],
     "roles": [
@@ -1218,15 +1358,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "026",
     "name": "Mortician Of Graveyard Islands",
-    "type": "[ARG] Member · Warrior",
+    "type": "[ARG] Officer · Warrior",
     "image": null,
-    "level": 4351,
-    "date": "28 October 2026",
+    "level": 4548,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1235,8 +1377,8 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-026",
     "tags": [
-      "Warrior",
-      "Member"
+      "Officer",
+      "Warrior"
     ],
     "last_active": "58 seconds ago",
     "level_snapshots": [
@@ -1251,11 +1393,15 @@
       {
         "date": "2026-10-28",
         "level": 4351
+      },
+      {
+        "date": "2026-11-14",
+        "level": 4548
       }
     ],
     "roles": [
-      "Warrior",
-      "Member"
+      "Officer",
+      "Warrior"
     ],
     "guild_join_history": [
       {
@@ -1300,15 +1446,17 @@
         "source": "SMMO guild removal notification batch supplied 2026-10-29",
         "identityAmbiguous": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "027",
     "name": "Toasty I Harbinger of Crumbs",
     "type": "[ARG] Member",
     "image": null,
-    "level": 5678,
-    "date": "28 October 2026",
+    "level": 5682,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1332,6 +1480,10 @@
       {
         "date": "2026-10-28",
         "level": 5678
+      },
+      {
+        "date": "2026-11-14",
+        "level": 5682
       }
     ],
     "roles": [
@@ -1364,15 +1516,17 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "028",
     "name": "Techliar",
-    "type": "[ARG] Founder",
+    "type": "[ARG] Member · Founder",
     "image": null,
-    "level": 13257,
-    "date": "28 October 2026",
+    "level": 13258,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -1381,10 +1535,12 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-028",
     "tags": [
+      "Member",
       "Founder"
     ],
     "last_active": "4 weeks ago",
     "roles": [
+      "Member",
       "Founder"
     ],
     "level_snapshots": [
@@ -1399,6 +1555,10 @@
       {
         "date": "2026-10-28",
         "level": 13257
+      },
+      {
+        "date": "2026-11-14",
+        "level": 13258
       }
     ],
     "guild_join_history": [
@@ -1444,7 +1604,9 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "029",
@@ -1452,7 +1614,7 @@
     "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
     "level": 7482,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -1483,6 +1645,10 @@
       {
         "date": "2026-10-28",
         "level": 7482
+      },
+      {
+        "date": "2026-11-14",
+        "level": 7482
       }
     ],
     "guild_join_history": [
@@ -1512,15 +1678,17 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "030",
     "name": "Zcatcool",
-    "type": "[ARG] Member · Warrior",
+    "type": "[ARG] Warrior",
     "image": null,
     "level": 1411,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1529,8 +1697,7 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-030",
     "tags": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "last_active": "1 month ago",
     "level_snapshots": [
@@ -1545,11 +1712,14 @@
       {
         "date": "2026-10-28",
         "level": 1411
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1411
       }
     ],
     "roles": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "guild_join_history": [
       {
@@ -1560,7 +1730,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "031",
@@ -1568,7 +1740,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2859,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1591,6 +1763,10 @@
       },
       {
         "date": "2026-10-28",
+        "level": 2859
+      },
+      {
+        "date": "2026-11-14",
         "level": 2859
       }
     ],
@@ -1624,7 +1800,9 @@
         "source": "SMMO guild removal notification batch supplied 2026-10-29",
         "identityAmbiguous": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "032",
@@ -1632,7 +1810,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1156,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1656,6 +1834,10 @@
       {
         "date": "2026-10-28",
         "level": 1156
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1156
       }
     ],
     "roles": [
@@ -1670,7 +1852,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "033",
@@ -1678,7 +1862,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2528,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1702,6 +1886,10 @@
       {
         "date": "2026-10-28",
         "level": 2528
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2528
       }
     ],
     "roles": [
@@ -1716,7 +1904,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "034",
@@ -1724,7 +1914,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2377,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1747,6 +1937,10 @@
       },
       {
         "date": "2026-10-28",
+        "level": 2377
+      },
+      {
+        "date": "2026-11-14",
         "level": 2377
       }
     ],
@@ -1780,7 +1974,9 @@
         "source": "SMMO guild removal notification batch supplied 2026-10-29",
         "identityAmbiguous": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "035",
@@ -1788,7 +1984,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 3170,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1812,6 +2008,10 @@
       {
         "date": "2026-10-28",
         "level": 3170
+      },
+      {
+        "date": "2026-11-14",
+        "level": 3170
       }
     ],
     "roles": [
@@ -1826,7 +2026,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "036",
@@ -1834,7 +2036,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1513,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1858,6 +2060,10 @@
       {
         "date": "2026-10-28",
         "level": 1513
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1513
       }
     ],
     "roles": [
@@ -1872,15 +2078,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "037",
     "name": "KhanPrince",
-    "type": "[ARG] Member · Warrior",
+    "type": "[ARG] Warrior",
     "image": null,
     "level": 1167,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -1889,8 +2097,7 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-037",
     "tags": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "last_active": "1 month ago",
     "level_snapshots": [
@@ -1905,11 +2112,14 @@
       {
         "date": "2026-10-28",
         "level": 1167
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1167
       }
     ],
     "roles": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "guild_join_history": [
       {
@@ -1920,15 +2130,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "038",
     "name": "RyderRocketship",
     "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
-    "level": 8706,
-    "date": "28 October 2026",
+    "level": 8730,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -1959,6 +2171,10 @@
       {
         "date": "2026-10-28",
         "level": 8706
+      },
+      {
+        "date": "2026-11-14",
+        "level": 8730
       }
     ],
     "guild_join_history": [
@@ -1988,7 +2204,9 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "039",
@@ -2046,7 +2264,8 @@
         "sourceOrder": 3
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "040",
@@ -2054,7 +2273,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2205,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2078,6 +2297,10 @@
       {
         "date": "2026-10-28",
         "level": 2205
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2205
       }
     ],
     "roles": [
@@ -2092,7 +2315,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "041",
@@ -2100,7 +2325,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 93,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2124,6 +2349,10 @@
       {
         "date": "2026-10-28",
         "level": 93
+      },
+      {
+        "date": "2026-11-14",
+        "level": 93
       }
     ],
     "roles": [
@@ -2138,15 +2367,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "042",
     "name": "Luna I The crazy cannoneer",
     "type": "[ARG] Co-Lead · Warrior · Founder",
     "image": null,
-    "level": 11054,
-    "date": "28 October 2026",
+    "level": 12096,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "Pirate Cove Founder",
     "front_text": "Pirate Cove Founder",
@@ -2177,6 +2408,10 @@
       {
         "date": "2026-10-28",
         "level": 11054
+      },
+      {
+        "date": "2026-11-14",
+        "level": 12096
       }
     ],
     "guild_join_history": [
@@ -2198,15 +2433,17 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "043",
     "name": "brinymouse",
-    "type": "[ARG] Member",
+    "type": "Member",
     "image": null,
     "level": 1511,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2229,6 +2466,10 @@
       },
       {
         "date": "2026-10-28",
+        "level": 1511
+      },
+      {
+        "date": "2026-11-14",
         "level": 1511
       }
     ],
@@ -2262,7 +2503,9 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "044",
@@ -2291,7 +2534,8 @@
         "date": "2026-10-26",
         "level": 15
       }
-    ]
+    ],
+    "active_member": false
   },
   {
     "number": "045",
@@ -2320,7 +2564,8 @@
         "date": "2026-10-26",
         "level": 21
       }
-    ]
+    ],
+    "active_member": false
   },
   {
     "number": "046",
@@ -2328,7 +2573,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 1617,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2352,6 +2597,10 @@
       {
         "date": "2026-10-28",
         "level": 1617
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1617
       }
     ],
     "roles": [
@@ -2366,15 +2615,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "047",
     "name": "OtherEnergy",
     "type": "[ARG] Member",
     "image": null,
-    "level": 5117,
-    "date": "28 October 2026",
+    "level": 5678,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2398,6 +2649,10 @@
       {
         "date": "2026-10-28",
         "level": 5117
+      },
+      {
+        "date": "2026-11-14",
+        "level": 5678
       }
     ],
     "roles": [
@@ -2412,15 +2667,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "048",
     "name": "Exor732",
-    "type": "[ARG] Member · Warrior",
+    "type": "[ARG] Warrior",
     "image": null,
     "level": 2638,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2429,8 +2686,7 @@
     "smmo_joined": "???",
     "card_id": "willy-dex-048",
     "tags": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "last_active": "3 months ago",
     "level_snapshots": [
@@ -2445,11 +2701,14 @@
       {
         "date": "2026-10-28",
         "level": 2638
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2638
       }
     ],
     "roles": [
-      "Warrior",
-      "Member"
+      "Warrior"
     ],
     "guild_join_history": [
       {
@@ -2460,15 +2719,17 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "049",
     "name": "junny",
-    "type": "[ARG] Officer Warrior",
+    "type": "[ARG] Officer · Warrior",
     "image": null,
-    "level": 27504,
-    "date": "28 October 2026",
+    "level": 27511,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2493,6 +2754,10 @@
       {
         "date": "2026-10-28",
         "level": 27504
+      },
+      {
+        "date": "2026-11-14",
+        "level": 27511
       }
     ],
     "roles": [
@@ -2508,7 +2773,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "050",
@@ -2516,7 +2783,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 790,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2540,6 +2807,10 @@
       {
         "date": "2026-10-28",
         "level": 790
+      },
+      {
+        "date": "2026-11-14",
+        "level": 790
       }
     ],
     "roles": [
@@ -2554,7 +2825,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "051",
@@ -2612,7 +2885,8 @@
         "sourceOrder": 4
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "052",
@@ -2620,7 +2894,7 @@
     "type": "[ARG] Officer",
     "image": null,
     "level": 15562,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2644,6 +2918,10 @@
       {
         "date": "2026-10-28",
         "level": 15562
+      },
+      {
+        "date": "2026-11-14",
+        "level": 15562
       }
     ],
     "roles": [
@@ -2658,7 +2936,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "053",
@@ -2716,7 +2996,8 @@
         "sourceOrder": 1
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "054",
@@ -2774,7 +3055,8 @@
         "sourceOrder": 0
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "055",
@@ -2782,7 +3064,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2828,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2806,6 +3088,10 @@
       {
         "date": "2026-10-28",
         "level": 2828
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2828
       }
     ],
     "roles": [
@@ -2820,7 +3106,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "056",
@@ -2878,7 +3166,8 @@
         "sourceOrder": 5
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "057",
@@ -2886,7 +3175,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 3394,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -2910,6 +3199,10 @@
       {
         "date": "2026-10-28",
         "level": 3394
+      },
+      {
+        "date": "2026-11-14",
+        "level": 3394
       }
     ],
     "roles": [
@@ -2924,7 +3217,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "058",
@@ -2982,7 +3277,8 @@
         "sourceOrder": 6
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "059",
@@ -3040,7 +3336,8 @@
         "sourceOrder": 7
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "060",
@@ -3098,7 +3395,8 @@
         "sourceOrder": 8
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "061",
@@ -3106,7 +3404,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 4032,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3130,6 +3428,10 @@
       {
         "date": "2026-10-28",
         "level": 4032
+      },
+      {
+        "date": "2026-11-14",
+        "level": 4032
       }
     ],
     "roles": [
@@ -3144,7 +3446,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "062",
@@ -3152,7 +3456,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 2931,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3176,6 +3480,10 @@
       {
         "date": "2026-10-28",
         "level": 2931
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2931
       }
     ],
     "roles": [
@@ -3190,7 +3498,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "063",
@@ -3198,7 +3508,7 @@
     "type": "[ARG] Member",
     "image": null,
     "level": 3754,
-    "date": "28 October 2026",
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3222,6 +3532,10 @@
       {
         "date": "2026-10-28",
         "level": 3754
+      },
+      {
+        "date": "2026-11-14",
+        "level": 3754
       }
     ],
     "roles": [
@@ -3236,7 +3550,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "064",
@@ -3294,7 +3610,8 @@
         "sourceOrder": 9
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "065",
@@ -3352,7 +3669,8 @@
         "sourceOrder": 10
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "066",
@@ -3412,7 +3730,8 @@
         "sourceOrder": 11
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "067",
@@ -3504,7 +3823,8 @@
         "identityAmbiguous": false
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "068",
@@ -3562,16 +3882,17 @@
         "sourceOrder": 13
       }
     ],
-    "membership_status": "former"
+    "membership_status": "former",
+    "active_member": false
   },
   {
     "number": "069",
     "name": "BOBBY Jon",
-    "type": "[ARG] Recruit",
+    "type": "[ARG] Member",
     "image": null,
     "card_id": "willy-dex-069",
-    "level": 416,
-    "date": "28 October 2026",
+    "level": 417,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3579,10 +3900,10 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Recruit"
+      "Member"
     ],
     "roles": [
-      "Recruit"
+      "Member"
     ],
     "level_snapshots": [
       {
@@ -3592,6 +3913,10 @@
       {
         "date": "2026-10-28",
         "level": 416
+      },
+      {
+        "date": "2026-11-14",
+        "level": 417
       }
     ],
     "last_active": "4 hours ago",
@@ -3604,16 +3929,18 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "070",
     "name": "Demon",
-    "type": "[ARG] Recruit",
+    "type": "[ARG] Member",
     "image": null,
     "card_id": "willy-dex-070",
-    "level": 90,
-    "date": "28 October 2026",
+    "level": 91,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3621,10 +3948,10 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Recruit"
+      "Member"
     ],
     "roles": [
-      "Recruit"
+      "Member"
     ],
     "level_snapshots": [
       {
@@ -3634,6 +3961,10 @@
       {
         "date": "2026-10-28",
         "level": 90
+      },
+      {
+        "date": "2026-11-14",
+        "level": 91
       }
     ],
     "last_active": "4 hours ago",
@@ -3646,16 +3977,18 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "071",
     "name": "Unspeakable Deep III",
-    "type": "[ARG] Recruit",
+    "type": "[ARG] Member",
     "image": null,
     "card_id": "willy-dex-071",
-    "level": 2931,
-    "date": "28 October 2026",
+    "level": 2933,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3663,10 +3996,10 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Recruit"
+      "Member"
     ],
     "roles": [
-      "Recruit"
+      "Member"
     ],
     "level_snapshots": [
       {
@@ -3676,6 +4009,10 @@
       {
         "date": "2026-10-28",
         "level": 2931
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2933
       }
     ],
     "last_active": "10 hours ago",
@@ -3688,16 +4025,18 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "072",
     "name": "Scarlet",
-    "type": "[ARG] Officer · Warrior",
+    "type": "[ARG] Warrior",
     "image": null,
     "card_id": "willy-dex-072",
-    "level": 12293,
-    "date": "28 October 2026",
+    "level": 12450,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3705,11 +4044,9 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Officer",
       "Warrior"
     ],
     "roles": [
-      "Officer",
       "Warrior"
     ],
     "level_snapshots": [
@@ -3720,6 +4057,10 @@
       {
         "date": "2026-10-28",
         "level": 12293
+      },
+      {
+        "date": "2026-11-14",
+        "level": 12450
       }
     ],
     "last_active": "2 days ago",
@@ -3750,16 +4091,18 @@
         "source": "SMMO departure notices posted 2026-10-29",
         "ambiguousIdentity": false
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "073",
     "name": "ChezShork",
-    "type": "[ARG] Officer",
+    "type": "[ARG] Officer · Warrior",
     "image": null,
     "card_id": "willy-dex-073",
-    "level": 378,
-    "date": "28 October 2026",
+    "level": 1425,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3767,10 +4110,12 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Officer"
+      "Officer",
+      "Warrior"
     ],
     "roles": [
-      "Officer"
+      "Officer",
+      "Warrior"
     ],
     "level_snapshots": [
       {
@@ -3780,6 +4125,10 @@
       {
         "date": "2026-10-28",
         "level": 378
+      },
+      {
+        "date": "2026-11-14",
+        "level": 1425
       }
     ],
     "last_active": "5 hours ago",
@@ -3794,16 +4143,18 @@
       }
     ],
     "role_verified_on": "2026-10-29",
-    "role_source": "User-confirmed Cove officer promotions on 2026-10-29"
+    "role_source": "User-confirmed Cove officer promotions on 2026-10-29",
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "074",
     "name": "TurtleHermit",
-    "type": "[ARG] Recruit",
+    "type": "[ARG] Member",
     "image": null,
     "card_id": "willy-dex-074",
-    "level": 60,
-    "date": "28 October 2026",
+    "level": 67,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3811,10 +4162,10 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Recruit"
+      "Member"
     ],
     "roles": [
-      "Recruit"
+      "Member"
     ],
     "level_snapshots": [
       {
@@ -3824,6 +4175,10 @@
       {
         "date": "2026-10-28",
         "level": 60
+      },
+      {
+        "date": "2026-11-14",
+        "level": 67
       }
     ],
     "last_active": "2 days ago",
@@ -3836,16 +4191,18 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "075",
     "name": "The Ghostwriter",
-    "type": "[ARG] Recruit",
+    "type": "[ARG] Author",
     "image": null,
     "card_id": "willy-dex-075",
-    "level": 1525,
-    "date": "28 October 2026",
+    "level": 2465,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3853,10 +4210,10 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Recruit"
+      "Author"
     ],
     "roles": [
-      "Recruit"
+      "Author"
     ],
     "level_snapshots": [
       {
@@ -3866,6 +4223,10 @@
       {
         "date": "2026-10-28",
         "level": 1525
+      },
+      {
+        "date": "2026-11-14",
+        "level": 2465
       }
     ],
     "last_active": "2 minutes ago",
@@ -3881,7 +4242,9 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "076",
@@ -3912,16 +4275,17 @@
         "left": null,
         "source": "User-supplied SMMO guild join notification on 2026-10-29"
       }
-    ]
+    ],
+    "active_member": false
   },
   {
     "number": "077",
     "name": "SAWTOOTH",
-    "type": "[ARG] Recruit",
+    "type": "[ARG] Officer · Warrior",
     "image": null,
     "card_id": "willy-dex-077",
-    "level": 218374,
-    "date": "28 October 2026",
+    "level": 218602,
+    "date": "14 November 2026",
     "portrait": null,
     "description": "???",
     "front_text": "???",
@@ -3929,15 +4293,21 @@
     "guild": "ARG",
     "smmo_joined": "???",
     "tags": [
-      "Recruit"
+      "Officer",
+      "Warrior"
     ],
     "roles": [
-      "Recruit"
+      "Officer",
+      "Warrior"
     ],
     "level_snapshots": [
       {
         "date": "2026-10-28",
         "level": 218374
+      },
+      {
+        "date": "2026-11-14",
+        "level": 218602
       }
     ],
     "guild_join_history": [
@@ -3949,7 +4319,9 @@
         "left": null,
         "source": "User-supplied SMMO guild recruitment announcement on 2026-10-28"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "078",
@@ -3972,10 +4344,14 @@
       {
         "date": "2026-10-28",
         "level": 4070
+      },
+      {
+        "date": "2026-11-14",
+        "level": 4124
       }
     ],
-    "level": 4070,
-    "date": "28 October 2026",
+    "level": 4124,
+    "date": "14 November 2026",
     "last_active": "15 hours ago",
     "guild_join_history": [
       {
@@ -3986,160 +4362,536 @@
         "left": null,
         "source": "SMMO join notification pasted 2026-10-29"
       }
-    ]
+    ],
+    "active_member": true,
+    "member_roster_verified_on": "2026-11-14"
   },
   {
     "number": "079",
-    "name": "???",
-    "type": "???",
+    "name": "FartHammer",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-079"
+    "card_id": "willy-dex-079",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 186
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 186,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "080",
-    "name": "???",
-    "type": "???",
+    "name": "Dogdeath",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-080"
+    "card_id": "willy-dex-080",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 4346
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 4346,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "081",
-    "name": "???",
-    "type": "???",
+    "name": "Ra I Cursed God of the Sun",
+    "type": "Member",
     "image": null,
-    "card_id": "willy-dex-081"
+    "card_id": "willy-dex-081",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 59767
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 59767,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "082",
-    "name": "???",
-    "type": "???",
+    "name": "Vamp1r1zum",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-082"
+    "card_id": "willy-dex-082",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 139
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 139,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "083",
-    "name": "???",
-    "type": "???",
+    "name": "Zanarkan",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-083"
+    "card_id": "willy-dex-083",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 718
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 718,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "084",
-    "name": "???",
-    "type": "???",
+    "name": "Edward",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-084"
+    "card_id": "willy-dex-084",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 29
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 29,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "085",
-    "name": "???",
-    "type": "???",
+    "name": "Reckoning",
+    "type": "Warrior",
     "image": null,
-    "card_id": "willy-dex-085"
+    "card_id": "willy-dex-085",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 1501
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 1501,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Warrior"
+    ],
+    "tags": [
+      "Warrior"
+    ]
   },
   {
     "number": "086",
-    "name": "???",
-    "type": "???",
+    "name": "MEGALOW",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-086"
+    "card_id": "willy-dex-086",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 19746
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 19746,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "087",
-    "name": "???",
-    "type": "???",
+    "name": "Vladimir056",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-087"
+    "card_id": "willy-dex-087",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 20103
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 20103,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "088",
-    "name": "???",
-    "type": "???",
+    "name": "GOODLUCKGG",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-088"
+    "card_id": "willy-dex-088",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 547
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 547,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "089",
-    "name": "???",
-    "type": "???",
+    "name": "Alchenz",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-089"
+    "card_id": "willy-dex-089",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 52
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 52,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "090",
-    "name": "???",
-    "type": "???",
+    "name": "Akumar",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-090"
+    "card_id": "willy-dex-090",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 377
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 377,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "091",
-    "name": "???",
-    "type": "???",
+    "name": "CactusJ1912",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-091"
+    "card_id": "willy-dex-091",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 1085
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 1085,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "092",
-    "name": "???",
-    "type": "???",
+    "name": "Wind Peak",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-092"
+    "card_id": "willy-dex-092",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 35
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 35,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "093",
-    "name": "???",
-    "type": "???",
+    "name": "Don866",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-093"
+    "card_id": "willy-dex-093",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 1479
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 1479,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "094",
-    "name": "???",
-    "type": "???",
+    "name": "Darkym",
+    "type": "[ARG] Member",
     "image": null,
-    "card_id": "willy-dex-094"
+    "card_id": "willy-dex-094",
+    "active_member": true,
+    "portrait": null,
+    "description": "???",
+    "front_text": "???",
+    "back_text": "",
+    "smmo_joined": "???",
+    "guild_join_history": [],
+    "level_snapshots": [
+      {
+        "date": "2026-11-14",
+        "level": 952
+      }
+    ],
+    "member_roster_verified_on": "2026-11-14",
+    "level": 952,
+    "date": "14 November 2026",
+    "guild": "ARG",
+    "roles": [
+      "Member"
+    ],
+    "tags": [
+      "Member"
+    ]
   },
   {
     "number": "095",
     "name": "???",
     "type": "???",
     "image": null,
-    "card_id": "willy-dex-095"
+    "card_id": "willy-dex-095",
+    "active_member": false
   },
   {
     "number": "096",
     "name": "???",
     "type": "???",
     "image": null,
-    "card_id": "willy-dex-096"
+    "card_id": "willy-dex-096",
+    "active_member": false
   },
   {
     "number": "097",
     "name": "???",
     "type": "???",
     "image": null,
-    "card_id": "willy-dex-097"
+    "card_id": "willy-dex-097",
+    "active_member": false
   },
   {
     "number": "098",
     "name": "???",
     "type": "???",
     "image": null,
-    "card_id": "willy-dex-098"
+    "card_id": "willy-dex-098",
+    "active_member": false
   },
   {
     "number": "099",
     "name": "???",
     "type": "???",
     "image": null,
-    "card_id": "willy-dex-099"
+    "card_id": "willy-dex-099",
+    "active_member": false
   },
   {
     "number": "100",
     "name": "???",
     "type": "???",
     "image": null,
-    "card_id": "willy-dex-100"
+    "card_id": "willy-dex-100",
+    "active_member": false
   }
 ]
